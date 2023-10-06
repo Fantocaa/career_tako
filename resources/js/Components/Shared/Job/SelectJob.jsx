@@ -31,7 +31,7 @@ const SelectJob = () => {
                 <div className="text-xs pt-4">Batas Lamaran : 15 July 2025</div>
                 <div className="flex pt-4 gap-2">
                     <div className="w-full">
-                        <Link href="/">
+                        <Link href="/job/detail">
                             <button className="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full">
                                 Lihat Detail
                             </button>

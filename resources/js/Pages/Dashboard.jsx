@@ -1,11 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import DataDashboard from "./DataDashboard";
-import SidebarLayout from "@/Components/SidebarLayout";
+import Sidebar from "@/Components/Dashboard/Sidebar";
 
 export default function Dashboard({ auth }) {
     return (
-        <DataDashboard>
+        <Sidebar>
             <AuthenticatedLayout
                 user={auth.user}
                 header={
@@ -25,8 +24,8 @@ export default function Dashboard({ auth }) {
                         </div>
                     </div>
                 </div>
-                <SidebarLayout />
+                {/* <SidebarLayout /> */}
             </AuthenticatedLayout>
-        </DataDashboard>
+        </Sidebar>
     );
 }

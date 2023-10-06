@@ -26,7 +26,6 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'pageTitle' => 'Beranda - Tako Karir',
     ]);
 });
 
@@ -56,6 +55,10 @@ Route::get('/job/internship', function () {
 
 Route::get('/job/profesional', function () {
     return Inertia::render('Profesional');
+});
+
+Route::get('/job/detail', function () {
+    return Inertia::render('DetailLoker');
 });
 
 Route::get('/faq', function () {
