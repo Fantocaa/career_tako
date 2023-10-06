@@ -1,0 +1,54 @@
+/* Navbar dengan latar belakang transparan */
+.bg-transparent {
+  background-color: transparent;
+  transition: background-color 0.3s ease-in;
+}
+
+/* Navbar dengan latar belakang berwarna */
+.scrolled-bg {
+  background-color: #FFFFFF; /* Ganti dengan warna yang Anda inginkan */
+  transition: background-color 0.3s ease-in;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Atur shadow sesuai keinginan */
+}
+
+/* Warna teks ketika navbar transparan */
+.text-transparent {
+  /* color: transparent; */
+  color: #1E1E1E;
+  transition: color 0.3s ease-in;
+}
+
+/* Warna teks ketika navbar berwarna */
+.text-scrolled {
+  color: #213C90; /* Ganti dengan warna teks yang Anda inginkan */
+  transition: color 0.3s ease-in;
+}
+
+/* Ubah ikon hamburger menjadi "X" saat tombol ditekan */
+/* .rotate-45 {
+  transform: rotate(45deg);
+} */
+
+.hamburger-icon {
+  width: 32px;
+  height: 32px;
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+}
+
+.hamburger-icon.open {
+  transform: rotate(180deg);
+}
+
+/* BackToTop.css */
+.back-to-top {
+  display: fixed;
+  transition: opacity 0.3s, transform 0.3s;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: scale(1);
+}
