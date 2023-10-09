@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "@/Components/Shared/Footer";
 import HeaderPro from "@/Components/HeaderPro";
 import NavElse from "@/Components/Shared/Else/NavElse";
-import SelectJob from "@/Components/Shared/Job/SelectJob";
+import SelectJobPro from "@/Components/Shared/Job/SelectJobPro";
 
 const Profesional = () => {
     return (
@@ -20,9 +20,7 @@ const Profesional = () => {
                         </p>
                     </div>
                     <div className="pt-8 md:grid grid-cols-2 gap-4">
-                        <SelectJob />
-                        <SelectJob />
-                        <SelectJob />
+                        <SelectJobPro />
                     </div>
                 </div>
             </div>

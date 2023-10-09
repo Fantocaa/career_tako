@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Navbar from "@/Components/Shared/Homepage/Navbar";
 import Footer from "@/Components/Shared/Footer";
 import emailjs from "@emailjs/browser";
 import SelectGender from "@/Components/Form/SelectGender";
@@ -18,6 +17,16 @@ const FormEmail = () => {
 
     const formRef = useRef(null);
 
+    // Buat objek dengan nilai-nilai awal untuk input select
+    const initialSelectValues = {
+        gender: "", // Atur nilai default sesuai kebutuhan Anda
+        program: "", // Atur nilai default sesuai kebutuhan Anda
+        agama: "", // Atur nilai default sesuai kebutuhan Anda
+    };
+
+    // State untuk menyimpan nilai-nilai input select
+    const [selectValues, setSelectValues] = useState(initialSelectValues);
+
     // Mengirim email
     const sendEmail = (data) => {
         emailjs
@@ -29,11 +38,21 @@ const FormEmail = () => {
             )
             .then(
                 (result) => {
+                    // console.log(result.text);
+                    // formRef.current.reset();
+
                     console.log(result.text);
+                    // Reset formulir
+                    // reset(initialSelectValues); // Reset input select
                     formRef.current.reset();
                 },
                 (error) => {
+                    // console.log(error.text);
+                    // formRef.current.reset();
+
                     console.log(error.text);
+                    // Reset formulir
+                    // reset(initialSelectValues); // Reset input select
                     formRef.current.reset();
                 }
             );
@@ -84,75 +103,132 @@ const FormEmail = () => {
                             )}
                         </div>
 
-                        {/* Gender */}
-                        <div className="w-full">
-                            <h1 className="pb-2">
-                                Jenis Kelamin
-                                <span className="text-RedTako">*</span>
-                            </h1>
-                            <SelectGender />
-                            {/* <select
-                        {...register("gender")}
-                        className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
-                    >
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                        <option value="other">other</option>
-                    </select> */}
-                        </div>
+                        <div className="flex gap-4">
+                            {/* Gender */}
+                            <div className="w-1/2">
+                                <h1 className="pb-2">
+                                    Jenis Kelamin
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                {/* <SelectGender /> */}
+                                <select
+                                    {...register("gender", { required: true })}
+                                    // value={gender}
+                                    // onChange={handleGenderChange}
+                                    value={selectValues.gender} // Gunakan nilai dari state
+                                    onChange={(e) => {
+                                        setSelectValues({
+                                            ...selectValues,
+                                            gender: e.target.value,
+                                        });
+                                    }}
+                                    className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
+                                    placeholder="Pilih Jenis Kelamin Anda"
+                                >
+                                    <option value="Laki-Laki">Laki-Laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                                {errors.gender && (
+                                    <span className="text-RedTako">
+                                        Jenis Kelamin harus dipilih
+                                    </span>
+                                )}
+                            </div>
 
-                        {/* Program */}
-                        <div className="w-full">
-                            <h1 className="pb-2">
-                                Program<span className="text-RedTako">*</span>
-                            </h1>
-                            <SelectProgram />
-                            {/* <select
-                        {...register("gender")}
-                        className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
-                    >
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                        <option value="other">other</option>
-                    </select> */}
+                            {/* Program */}
+                            <div className="w-1/2">
+                                <h1 className="pb-2">
+                                    Program
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                {/* <SelectProgram /> */}
+                                <select
+                                    {...register("program", { required: true })}
+                                    // value={gender}
+                                    // onChange={handleGenderChange}
+                                    value={selectValues.program} // Gunakan nilai dari state
+                                    onChange={(e) => {
+                                        setSelectValues({
+                                            ...selectValues,
+                                            program: e.target.value,
+                                        });
+                                    }}
+                                    className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
+                                    placeholder="Pilih Program Anda"
+                                >
+                                    <option value="Internship">
+                                        Internship
+                                    </option>
+                                    <option value="Profesional">
+                                        Profesional
+                                    </option>
+                                    {/* <option value="Lainnya">Lainnya</option> */}
+                                </select>
+                                {errors.program && (
+                                    <span className="text-RedTako">
+                                        Program harus dipilih
+                                    </span>
+                                )}
+                            </div>
                         </div>
+                        <div className="flex gap-4">
+                            {/* Agama */}
+                            <div className="w-full">
+                                <h1 className="pb-2">
+                                    Agama<span className="text-RedTako">*</span>
+                                </h1>
+                                {/* <SelectReligion /> */}
+                                <select
+                                    {...register("agama", { required: true })}
+                                    // value={gender}
+                                    // onChange={handleGenderChange}
+                                    value={selectValues.agama} // Gunakan nilai dari state
+                                    onChange={(e) => {
+                                        setSelectValues({
+                                            ...selectValues,
+                                            agama: e.target.value,
+                                        });
+                                    }}
+                                    className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
+                                    placeholder="Pilih Program Anda"
+                                >
+                                    <option value="Islam">Islam</option>
+                                    <option value="Kristen">Kristen</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Budha">Budha</option>
+                                    <option value="Kong Hu Chu">
+                                        Kong Hu Chu
+                                    </option>
+                                    {/* <option value="Lainnya">Lainnya</option> */}
+                                </select>
+                                {errors.agama && (
+                                    <span className="text-RedTako">
+                                        Program harus dipilih
+                                    </span>
+                                )}
+                            </div>
 
-                        {/* Agama */}
-                        <div className="w-full">
-                            <h1 className="pb-2">
-                                Agama<span className="text-RedTako">*</span>
-                            </h1>
-                            <SelectReligion />
-                            {/* <select
-                        {...register("gender")}
-                        className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
-                    >
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                        <option value="other">other</option>
-                    </select> */}
+                            {/* Tanggal Lahir */}
+                            <div className="w-full">
+                                <h1 className="pb-2">
+                                    Tanggal Lahir
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register("tanggal_lahir", {
+                                        required: true,
+                                    })}
+                                    type="date"
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                />
+                                {errors.tanggal_lahir && (
+                                    <span className="text-RedTako">
+                                        Tanggal Lahir jangan sampai kosong
+                                    </span>
+                                )}
+                            </div>
                         </div>
-
-                        {/* Tanggal Lahir */}
-                        <div className="w-full">
-                            <h1 className="pb-2">
-                                Tanggal Lahir
-                                <span className="text-RedTako">*</span>
-                            </h1>
-                            <input
-                                {...register("tanggal_lahir", {
-                                    required: true,
-                                })}
-                                type="date"
-                                className="w-full p-2 border-grey border-opacity-30 rounded"
-                            />
-                            {errors.tanggal_lahir && (
-                                <span className="text-RedTako">
-                                    Tanggal Lahir jangan sampai kosong
-                                </span>
-                            )}
-                        </div>
-
                         {/* Email */}
                         <div className="w-full">
                             <h1 className="pb-2">
@@ -169,21 +245,6 @@ const FormEmail = () => {
                                 </span>
                             )}
                         </div>
-
-                        {/* NIK */}
-                        {/* <div className="w-full">
-                    <h1 className="pb-2">NIK</h1>
-                    <input
-                        {...register("nik", { required: true })}
-                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                        placeholder="Masukkan NIK Anda"
-                    />
-                    {errors.nik && (
-                        <span className="text-RedTako">
-                            Email jangan sampai kosong
-                        </span>
-                    )}
-                </div> */}
 
                         {/* Tempat Lahir*/}
                         <div className="w-full">

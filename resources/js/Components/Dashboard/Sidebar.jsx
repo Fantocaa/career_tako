@@ -6,7 +6,7 @@ const Sidebar = ({ children }) => {
     return (
         <React.Fragment>
             <div className="flex font-inter">
-                <div className="w-1/6 bg-white">
+                {/* <div className="w-1/6 bg-white">
                     <div className="flex justify-center">
                         <img
                             src="/images/logo-footer.png"
@@ -55,7 +55,7 @@ const Sidebar = ({ children }) => {
                             )}
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="w-full">{children}</div>
             </div>
         </React.Fragment>

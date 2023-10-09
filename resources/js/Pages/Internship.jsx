@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "@/Components/Shared/Footer";
 import HeaderIntern from "@/Components/HeaderIntern";
 import NavElse from "@/Components/Shared/Else/NavElse";
-import SelectJob from "@/Components/Shared/Job/SelectJob";
+import SelectJobIntern from "@/Components/Shared/Job/SelectJobIntern";
 
 const Internship = () => {
     return (
@@ -20,9 +20,7 @@ const Internship = () => {
                         </p>
                     </div>
                     <div className="pt-8 md:grid grid-cols-2 gap-4">
-                        <SelectJob />
-                        <SelectJob />
-                        <SelectJob />
+                        <SelectJobIntern />
                     </div>
                 </div>
             </div>

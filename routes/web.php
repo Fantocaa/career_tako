@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\email;
 use App\Http\Controllers\LokerController;
 use App\Http\Controllers\MdLokerController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,10 @@ Route::get('/', function () {
 Route::get('/formulir', function () {
     return inertia('FormEmail');
 });
+
+// Route::get('/formulir', function () {
+//     return inertia('Mailform');
+// });
 
 // Route::post('/send-email', [EmailController::class, 'sendEmail']);
 
@@ -81,12 +86,24 @@ Route::get('/table', function () {
     return Inertia::render('TableDashboard');
 });
 
-Route::get('/table/edit', function () {
+Route::get('/table/tambah_baru', function () {
     return Inertia::render('EditLoker');
 });
 
+
+Route::get('/table/edit/{id}', [MdLokerController::class, 'edit_loker']);
+Route::get('/table/hapus/{id}', [MdLokerController::class, 'delete_loker']);
+Route::post('/table/update_loker', [MdLokerController::class, 'update_loker']);
+
+// function () {
+//     dd($id);
+//     return Inertia::render('EditLoker');
+// });
+
+Route::get('/form/view_intern', [MdLokerController::class, 'index_internship']);
+Route::get('/form/view_pro', [MdLokerController::class, 'index_profesional']);
+Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
 Route::resource('form', MdLokerController::class);
-// Route::resource('form', LokerController::class);
 
 // Route Link End
 
@@ -97,7 +114,20 @@ Route::get('/dashboard', function () {
     // })->middleware(['auth', 'verified'])->name('dashboard');
 })->name('dashboard');
 
+Route::get('/dashboard/beranda', function () {
+    return Inertia::render('BerandaDS');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
+})->name('beranda');
 
+Route::get('/dashboard/profil_perusahaan', function () {
+    return Inertia::render('ProfilPerusahaanDS');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
+})->name('profil_perusahaan');
+
+Route::get('/dashboard/lowongan_pekerjaan', function () {
+    return Inertia::render('LokerDS');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
+})->name('lowongan_pekerjaan');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
