@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import Axios from "axios";
 import { Link, router, usePage } from "@inertiajs/react";
 import QuillEditor from "@/Components/Dashboard/QuillEditor";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 const EditLoker = () => {
     // const { quill, quillRef } = useQuill();
@@ -14,10 +16,25 @@ const EditLoker = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm();
+        // setValue,
+        // getValues,
+        // reset,
+        // watch,
+    } = useForm({
+        mode: "onChange", // Trigger validasi saat nilai berubah
+
+        defaultValues: {
+            // Nilai awal jika perlu
+            pekerjaan: "",
+            perusahaan: "",
+            jenis_pekerjaan: "",
+            batas_lamaran: "",
+            isi_konten: "",
+            deskripsi: "",
+        },
+    });
 
     const [nomor, setNomor] = useState(""); // State untuk menyimpan nomor
-
     const [values, setValues] = useState({
         password: "meong",
         pekerjaan: "",
@@ -35,28 +52,6 @@ const EditLoker = () => {
     // State untuk menyimpan nilai-nilai input select
     const [selectValues, setSelectValues] = useState(initialSelectValues);
 
-    // function handleChange(e) {
-    //     const key = e.target.id;
-    //     const value = e.target.value;
-    //     setValues((values) => ({
-    //         ...values,
-    //         [key]: value,
-    //     }));
-    // }
-
-    // function handleChange(e) {
-    //     const key = e.target.id;
-    //     const value = e.target.value;
-
-    //     // Perbarui values dengan data batas_lamaran
-    //     setValues((values) => ({
-    //         ...values,
-    //         [key]:
-    //             key === "batas_lamaran" ? new Date(value).toISOString() : value,
-    //     }));
-    //     console.log(values);
-    // }
-
     const handleChange = (e) => {
         const key = e.target.id;
         const value = e.target.value;
@@ -72,19 +67,11 @@ const EditLoker = () => {
             deskripsi: content,
         }));
 
-        // let formattedValue = value; // Default, gunakan nilai apa adanya
-
-        // if (key === "batas_lamaran") {
-        //     // Jika ini adalah input tanggal "batas_lamaran", konversi format
-        //     const date = new Date(value);
-        //     formattedValue = date.toISOString().split("T")[0]; // Ambil bagian tanggal (yyyy-MM-dd)
-        // }
-
-        // // Perbarui values dengan data yang sudah diformat
-        // setValues((values) => ({
-        //     ...values,
-        //     [key]: formattedValue,
-        // }));
+        // const handleQuillChange = (content) => {
+        //     setValues((prevValues) => ({
+        //         ...prevValues,
+        //         deskripsi: content,
+        //     }));
 
         let formattedValue = value;
 
@@ -132,11 +119,25 @@ const EditLoker = () => {
             // router.push("/table"); // Ganti dengan halaman yang sesuai
             router.get("/table");
         } catch (error) {
-            console.error("Error sending data:", error);
+            // console.error("Error sending data:", error);
+
+            if (error.response) {
+                // Jika respons error dari server
+                console.error("Error sending data:", error.response.data);
+
+                // Tampilkan pesan kesalahan ke pengguna
+                alert(error.response.data.message);
+            } else {
+                // Jika kesalahan lainnya
+                console.error("Error sending data:", error);
+
+                // Tampilkan pesan kesalahan ke pengguna
+                alert("Terjadi kesalahan saat mengirim data.");
+            }
         }
     }
     return (
-        <div className="bg-BgTako py-16">
+        <div className="bg-BgTako py-16 text-DarkTako font-inter">
             <div className="container mx-auto bg-white p-8 rounded-lg">
                 <div className="flex items-center gap-4">
                     <img src="/images/plus.svg" className="scale-100" alt="" />
@@ -156,6 +157,14 @@ const EditLoker = () => {
                         <div className="w-full">
                             <h1 className="pb-2">Pekerjaan</h1>
                             <input
+                                // {...register("pekerjaan", {
+                                //     required: "Pekerjaan harus diisi",
+                                //     minLength: {
+                                //         value: 5,
+                                //         message:
+                                //             "Pekerjaan harus memiliki minimal 5 karakter",
+                                //     },
+                                // })}
                                 {...register("pekerjaan", { required: true })}
                                 className="w-full p-2 border-grey border-opacity-30 rounded"
                                 placeholder="Masukkan Pekerjaan"
@@ -163,11 +172,11 @@ const EditLoker = () => {
                                 value={values.pekerjaan}
                                 onChange={handleChange}
                             />
-                            {errors.nik && (
+                            {/* {errors.pekerjaan && (
                                 <span className="text-RedTako">
-                                    Pekerjaan jangan sampai kosong
+                                    {errors.pekerjaan.message}
                                 </span>
-                            )}
+                            )} */}
                         </div>
                         <div className="w-full">
                             <h1 className="pb-2">Perusahaan</h1>
@@ -179,11 +188,11 @@ const EditLoker = () => {
                                 value={values.perusahaan}
                                 onChange={handleChange}
                             />
-                            {errors.nik && (
+                            {/* {errors.perusahaan && (
                                 <span className="text-RedTako">
                                     Perusahaan jangan sampai kosong
                                 </span>
-                            )}
+                            )} */}
                         </div>
                     </div>
 
@@ -234,15 +243,20 @@ const EditLoker = () => {
                             )}
                         </div>
 
-                        <div className="w-full">
+                        <div className="w-full relative">
+                            {/* <FontAwesomeIcon
+                                icon={faCalendar}
+                                className="absolute top-11 left- -z-0"
+                            /> */}
                             <h1 className="pb-2">Batas Lamaran</h1>
+
                             <input
                                 type="date" // Gunakan input tanggal
                                 // type="text" // Gunakan input tanggal
                                 {...register("batas_lamaran", {
                                     required: true,
                                 })}
-                                className="w-full p-2 border-grey border-opacity-30 rounded"
+                                className="w-full p-2 border-grey border-opacity-30 rounded z-10"
                                 id="batas_lamaran"
                                 value={values.batas_lamaran}
                                 onChange={handleChange}

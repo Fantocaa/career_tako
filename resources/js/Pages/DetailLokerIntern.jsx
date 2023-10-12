@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "@/Components/Shared/Else/NavElse";
 import Footer from "@/Components/Shared/Footer";
 import { Link } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
+import Axios from "axios";
 
 const DetailLoker = () => {
+    const { props } = usePage();
+    const { md_loker } = props;
+
+    function formatDate(dateString) {
+        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        const date = new Date(dateString);
+        return date.toLocaleDateString("id-ID", options);
+    }
+
+    const [values, setValues] = useState({
+        password: "meong",
+        id: md_loker.id,
+        pekerjaan: md_loker.pekerjaan,
+        perusahaan: md_loker.perusahaan,
+        jenis_pekerjaan: md_loker.jenis_pekerjaan,
+        batas_lamaran: md_loker.batas_lamaran, // Inisialisasi properti batas_lamaran
+        isi_konten: md_loker.deskripsi,
+        deskripsi: md_loker.isi_konten,
+    });
+
     return (
         <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
             <Nav />
@@ -11,9 +33,11 @@ const DetailLoker = () => {
                 <div className="bg-white p-4 rounded-lg py-8 md:px-8">
                     <div className="flex items-end">
                         <div className="w-full">
-                            <h1 className="font-bold lg:text-2xl">Marketing</h1>
+                            <h1 className="font-bold lg:text-2xl">
+                                {values.pekerjaan}
+                            </h1>
                             <p className="text-BlueTako pt-1 text-xs lg:text-base ">
-                                PT. Tako Anugerah Korporasi
+                                {values.perusahaan}
                             </p>
                             <div className="flex gap-4 pt-6">
                                 <div className="flex items-center text-xs lg:text-base gap-2 lg:gap-4">
@@ -22,7 +46,7 @@ const DetailLoker = () => {
                                         className="scale-150 lg:ml-2"
                                         alt=""
                                     />
-                                    <p className="">Profesional</p>
+                                    <p className="">{values.jenis_pekerjaan}</p>
                                 </div>
                                 <div className="flex items-center text-xs gap-2 lg:text-base lg:gap-4">
                                     <img
@@ -30,7 +54,10 @@ const DetailLoker = () => {
                                         alt=""
                                         className="scale-150 lg:ml-2"
                                     />
-                                    <p>Batas Lamaran : 15 July 2025</p>
+                                    <p>
+                                        Batas Lamaran :{" "}
+                                        {formatDate(values.batas_lamaran)}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -55,8 +82,9 @@ const DetailLoker = () => {
                         <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px] "></div>
                     </div>
                     {/* Harusnya disini baru isi RichText */}
+                    <div className="pt-6">{values.isi_konten}</div>
                     {/* Yauda dibawah cuman data dummy aja */}
-                    <div>
+                    {/* <div>
                         <div>
                             <h1 className="font-bold pb-2 pt-6">
                                 Deskripsi Pekerjaan
@@ -125,7 +153,7 @@ const DetailLoker = () => {
                                 <li>Time Management</li>
                             </ul>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="lg:hidden">
                         {/* <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px]"></div> */}
                         <div className="flex pt-8 gap-2 ">

@@ -43,12 +43,33 @@
 /* BackToTop.css */
 .back-to-top {
   display: fixed;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s ease-in;
   opacity: 0;
   transform: scale(0);
 }
 
 .back-to-top.visible {
   opacity: 1;
+  transition: opacity 0.3s ease-in;
   transform: scale(1);
 }
+
+/* Di dalam file CSS Anda atau gunakan inline styles */
+.table-container {
+  overflow-x: auto; /* Tambahkan overflow-x untuk scroll horizontal jika diperlukan */
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Tetapkan lebar kolom sesuai dengan konten */
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 10px; /* Sesuaikan angka ini sesuai dengan kebutuhan Anda */
+  border: 1px solid #ddd; /* Atur border sesuai dengan preferensi Anda */
+  text-align: left;
+}
+
+/* Styling tambahan sesuai kebutuhan Anda */

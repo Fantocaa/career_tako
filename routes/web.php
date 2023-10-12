@@ -40,8 +40,15 @@ Route::get('/formulir', function () {
     return inertia('FormEmail');
 });
 
+// Route::post('/upload', 'MdLokerController@uploadFile');
+Route::post('/upload', [MdLokerController::class, 'uploadFile']);
+
 // Route::get('/formulir', function () {
 //     return inertia('Mailform');
+// });
+
+// Route::get('/formulir', function () {
+//     return view('form'); // Mengarahkan ke tampilan form.blade.php
 // });
 
 // Route::post('/send-email', [EmailController::class, 'sendEmail']);
@@ -62,9 +69,10 @@ Route::get('/job/profesional', function () {
     return Inertia::render('Profesional');
 });
 
-Route::get('/job/detail', function () {
-    return Inertia::render('DetailLoker');
-});
+// Route::get('/job/detail/{id}', function () {
+//     return Inertia::render('DetailLoker');
+// });
+
 
 Route::get('/faq', function () {
     return Inertia::render('Faq');
@@ -100,9 +108,22 @@ Route::post('/table/update_loker', [MdLokerController::class, 'update_loker']);
 //     return Inertia::render('EditLoker');
 // });
 
+
+// Route::get('/wilayah/provinsi', [MdLokerController::class, 'wilayah_provinsi']);
+// Route::get('/wilayah/kabupaten', [MdLokerController::class, 'wilayah_kabupaten']);
+// Route::get('/wilayah/kecamatan', [MdLokerController::class, 'wilayah_kecamatan']);
+
+
+Route::get('/job/internship/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
+Route::get('/job/profesional/{id}', [MdLokerController::class, 'show_detail_loker_pro']);
+
 Route::get('/form/view_intern', [MdLokerController::class, 'index_internship']);
 Route::get('/form/view_pro', [MdLokerController::class, 'index_profesional']);
+
 Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
+Route::get('/kabupaten', [MdLokerController::class, 'kabupaten']);
+Route::get('/kecamatan', [MdLokerController::class, 'kecamatan']);
+
 Route::resource('form', MdLokerController::class);
 
 // Route Link End

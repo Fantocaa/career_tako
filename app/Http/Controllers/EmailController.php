@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
 use Illuminate\Mail\Mailable;
+// use PDF;
+// use Mail;
+use Barryvdh\DomPDF\PDF;
+use App\Mail\SendPdfEmail;
 
 
 class EmailController extends Controller
@@ -28,6 +32,31 @@ class EmailController extends Controller
             return response()->json(['message' => 'Terjadi kesalahan saat mengirim email'], 500);
         }
     }
+
+    public function sendEmailWithPdf()
+    {
+        $data['email'] = "server.gitlab.fantoca@gmail.com";
+        $data['title'] = "Email testing uwu";
+        $data['body'] = "Email Testing body";
+
+        $pdf = PDF::loadView('mail', $data);
+    }
+
+    public function uploadPdf(Request $request)
+    {
+        $request->validate([
+            'pdfFile' => 'required|mimes:pdf|max:2048', // PDF, max 2MB
+        ]);
+
+        $pdfFile = $request->file('pdfFile');
+        $pdfFile->store('pdfs'); // Simpan file PDF di direktori 'pdfs' di storage
+
+        // Kirim email dengan file PDF sebagai lampiran
+        // Mail::to('tujuan@email.com')->send(new SendPdfEmail($pdfFile));
+
+        return response()->json(['message' => 'File PDF berhasil diunggah dan dikirim via email.']);
+    }
+
     /**
      * Display a listing of the resource.
      */

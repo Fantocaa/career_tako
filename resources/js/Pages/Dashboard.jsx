@@ -1,13 +1,40 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import Sidebar from "@/Components/Dashboard/Sidebar";
 import SidebarLayout from "@/Components/Dashboard/SidebarLayout";
+import Sidebar from "@/Components/Sidebar";
+import { SidebarItem } from "@/Components/Sidebar";
+import {
+    LifeBuoy,
+    Receipt,
+    Boxes,
+    Package,
+    UserCircle,
+    BarChart3,
+    LayoutDashboard,
+    Settings,
+} from "lucide-react";
 
 export default function Dashboard({ auth }) {
     return (
-        // <Sidebar />
+        <main>
+            <Sidebar>
+                <SidebarItem
+                    icon={<LayoutDashboard size={20} />}
+                    text="Dashboard"
+                />
+                <SidebarItem
+                    icon={<BarChart3 size={20} />}
+                    text="Beranda"
+                    active
+                />
+                <SidebarItem
+                    icon={<BarChart3 size={20} />}
+                    text="Lowongan Pekerjaan"
+                />
+            </Sidebar>
+        </main>
 
-        <SidebarLayout />
+        // <SidebarLayout />
 
         // <AuthenticatedLayout
         //     user={auth.user}

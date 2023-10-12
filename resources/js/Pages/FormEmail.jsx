@@ -7,6 +7,7 @@ import CascadingCity from "@/Components/Form/CascadingCity";
 import SelectProgram from "@/Components/Form/SelectProgram";
 import SelectReligion from "@/Components/Form/SelectReligion";
 import NavElse from "@/Components/Shared/Else/NavElse";
+import axios, { Axios } from "axios";
 
 const FormEmail = () => {
     const {
@@ -27,53 +28,31 @@ const FormEmail = () => {
     // State untuk menyimpan nilai-nilai input select
     const [selectValues, setSelectValues] = useState(initialSelectValues);
 
-    // Mengirim email
-    const sendEmail = (data) => {
-        emailjs
-            .sendForm(
-                "service_fygc2pp",
-                "template_42e2fzw",
-                formRef.current,
-                "YT979FkI0RUOwL9zL"
-            )
-            .then(
-                (result) => {
-                    // console.log(result.text);
-                    // formRef.current.reset();
-
-                    console.log(result.text);
-                    // Reset formulir
-                    // reset(initialSelectValues); // Reset input select
-                    formRef.current.reset();
-                },
-                (error) => {
-                    // console.log(error.text);
-                    // formRef.current.reset();
-
-                    console.log(error.text);
-                    // Reset formulir
-                    // reset(initialSelectValues); // Reset input select
-                    formRef.current.reset();
-                }
-            );
-    };
-
-    // Menangani submit formulir
     const onSubmit = (data, event) => {
         event.preventDefault();
-        // const uploadedFile = event.target.files[0];
-        // Anda dapat menambahkan validasi formulir di sini jika diperlukan
-        // Misalnya, memeriksa apakah data yang diperlukan telah diisi
-        if (data.nama && data.email) {
-            sendEmail(data); // Jika formulir valid, kirim email
-        } else {
-            // Menampilkan pesan kesalahan jika formulir tidak valid
-            console.log("Gagal Ges");
-        }
+
+        const formData = new FormData();
+        formData.append("nama", data.nama);
+        // formData.append("email", data.email);
+        formData.append("fileUpload", data.fileUpload[0]); // Gunakan [0] untuk mendapatkan file pertama
+
+        // Juga, tambahkan data lain ke FormData seperti yang diperlukan
+
+        // Kirim FormData ke server menggunakan axios
+        axios
+            .post("/upload", formData)
+            .then((response) => {
+                // Tangani respons sukses di sini
+                console.log(response.data);
+            })
+            .catch((error) => {
+                // Tangani kesalahan di sini
+                console.error(error);
+            });
     };
 
     return (
-        <section className="flex-wrap items-center font-inter w-full bg-BgTako">
+        <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
             <NavElse />
             <div className="bg-BgTako px-32 py-32 ">
                 <div className="bg-white mx-auto rounded-lg px-4">
@@ -254,6 +233,84 @@ const FormEmail = () => {
                             </h1>
                             <CascadingCity />
 
+                            {/* <div className="flex  gap-4">
+                                <div className="w-full">
+                                    <h1 className="pb-2">
+                                        Provinsi
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register("provinsi", {
+                                            required: true,
+                                        })}
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                        placeholder="Masukkan Provinsi Tempat Lahir Anda"
+                                    />
+                                    {errors.provinsi && (
+                                        <span className="text-RedTako">
+                                            Provinsi jangan sampai kosong
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="w-full">
+                                    <h1 className="pb-2">
+                                        Kabupaten
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register("kabupaten", {
+                                            required: true,
+                                        })}
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                        placeholder="Masukkan Kabupaten Tempat Lahir Anda"
+                                    />
+                                    {errors.kabupaten && (
+                                        <span className="text-RedTako">
+                                            Kabupaten jangan sampai kosong
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="w-full">
+                                    <h1 className="pb-2">
+                                        Kecamatan
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register("kecamatan", {
+                                            required: true,
+                                        })}
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                        placeholder="Masukkan Kecamatan Tempat Lahir Anda"
+                                    />
+                                    {errors.kecamatan && (
+                                        <span className="text-RedTako">
+                                            Kecamatan jangan sampai kosong
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="w-full">
+                                    <h1 className="pb-4">
+                                        Kode pos
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register("kodepos", {
+                                            required: true,
+                                        })}
+                                        type="number"
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                        placeholder="Masukkan Kode Pos Tempat Lahir Anda"
+                                    />
+                                    {errors.kodepos && (
+                                        <span className="text-RedTako">
+                                            Kode Pos jangan sampai kosong
+                                        </span>
+                                    )}
+                                </div>
+                            </div> */}
+
                             {/* <input
                         {...register("tempatlahir", { required: true })}
                         className="w-full p-2 border-grey border-opacity-30 rounded"
@@ -265,21 +322,6 @@ const FormEmail = () => {
                         </span>
                     )} */}
                         </div>
-
-                        {/* Alamat */}
-                        {/* <div className="w-full">
-                    <h1 className="pb-2">Alamat (Sesuai KTP)</h1>
-                    <input
-                        {...register("alamat", { required: true })}
-                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                        placeholder="Masukkan Alamat Anda"
-                    />
-                    {errors.alamat && (
-                        <span className="text-RedTako">
-                            Alamat jangan sampai kosong
-                        </span>
-                    )}
-                </div> */}
 
                         {/* Alamat Tempat Tinggal*/}
                         <div className="w-full">

@@ -4,6 +4,13 @@ import Axios from "axios";
 
 const SelectJobIntern = () => {
     const [formData, setFormData] = useState([]);
+
+    function formatDate(dateString) {
+        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        const date = new Date(dateString);
+        return date.toLocaleDateString("id-ID", options);
+    }
+
     useEffect(() => {
         // Panggil fungsi API di sini saat komponen pertama kali di-mount
         const fetchData = async () => {
@@ -44,11 +51,12 @@ const SelectJobIntern = () => {
                         </div>
                     </div>
                     <div className="text-xs pt-4">
-                        Batas Lamaran : {item.batas_lamaran}
+                        {/* Batas Lamaran : {item.batas_lamaran}     */}
+                        Batas Lamaran : {formatDate(item.batas_lamaran)}
                     </div>
                     <div className="flex pt-4 gap-2">
                         <div className="w-full">
-                            <Link href="/job/detail">
+                            <Link href={`/job/internship/${item.id}`}>
                                 <button className="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full">
                                     Lihat Detail
                                 </button>

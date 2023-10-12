@@ -47,10 +47,10 @@ export default {
         },
     },
 
-    daisyui: {
-        themes: false,
-    },
+    // daisyui: {
+    //     themes: "light",
+    // },
 
-    // plugins: [forms, require("daisyui")],
-    plugins: [forms],
+    plugins: [forms, require("daisyui")],
+    // plugins: [forms],
 };

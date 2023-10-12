@@ -18,6 +18,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import { useNavigate } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+// import { Link } from "@inertiajs/react";
 
 const drawerWidth = 240;
 
@@ -89,6 +92,7 @@ const Drawer = styled(MuiDrawer, {
 export default function SidebarLayout() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
+    const navigate = useNavigate();
 
     // const handleDrawerOpen = () => {
     //     setOpen(true);
@@ -101,25 +105,6 @@ export default function SidebarLayout() {
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            {/* <AppBar position="fixed" open={open}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{
-                            marginRight: 5,
-                            ...(open && { display: "none" }),
-                        }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Mini variant drawer
-                    </Typography>
-                </Toolbar>
-            </AppBar> */}
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                     {/* <IconButton onClick={handleDrawerClose}> */}
@@ -133,45 +118,118 @@ export default function SidebarLayout() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {[
+                    {/* {[
                         "Beranda",
                         "Profil Perusahaan",
                         "Lowongan Kerja",
                         // "Drafts",
-                    ].map((text, index) => (
-                        <ListItem
-                            // key={text}
-                            disablePadding
-                            sx={{ display: "block" }}
+                    ].map((text, index) => ( */}
+                    <ListItem
+                        // key={text}
+                        disablePadding
+                        sx={{ display: "block" }}
+                        onClick={() => {
+                            navigate("/");
+                        }}
+                    >
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? "initial" : "center",
+                                px: 2.5,
+                            }}
                         >
-                            <ListItemButton
+                            <ListItemIcon
                                 sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? "initial" : "center",
-                                    px: 2.5,
+                                    minWidth: 0,
+                                    mr: open ? 3 : "auto",
+                                    justifyContent: "center",
                                 }}
                             >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : "auto",
-                                        justifyContent: "center",
-                                    }}
-                                >
-                                    {/* {index % 2 === 0 ? (
+                                {/* {index % 2 === 0 ? (
                                             <InboxIcon />
                                         ) : (
                                             <MailIcon />
                                         )} */}
-                                    <InboxIcon />
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={text}
-                                    sx={{ opacity: open ? 1 : 0 }}
-                                />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                                <InboxIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={text}
+                                sx={{ opacity: open ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                    {/* ))} */}
+                    <ListItem
+                        // key={text}
+                        disablePadding
+                        sx={{ display: "block" }}
+                        onClick={() => {
+                            navigate("/");
+                        }}
+                    >
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? "initial" : "center",
+                                px: 2.5,
+                            }}
+                        >
+                            <ListItemIcon
+                                sx={{
+                                    minWidth: 0,
+                                    mr: open ? 3 : "auto",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                {/* {index % 2 === 0 ? (
+                                            <InboxIcon />
+                                        ) : (
+                                            <MailIcon />
+                                        )} */}
+                                <InboxIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={text}
+                                sx={{ opacity: open ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem
+                        // key={text}
+                        disablePadding
+                        sx={{ display: "block" }}
+                        onClick={() => {
+                            navigate("/");
+                        }}
+                    >
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? "initial" : "center",
+                                px: 2.5,
+                            }}
+                        >
+                            <ListItemIcon
+                                sx={{
+                                    minWidth: 0,
+                                    mr: open ? 3 : "auto",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                {/* {index % 2 === 0 ? (
+                                            <InboxIcon />
+                                        ) : (
+                                            <MailIcon />
+                                        )} */}
+                                <InboxIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={text}
+                                sx={{ opacity: open ? 1 : 0 }}
+                            />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
             {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
