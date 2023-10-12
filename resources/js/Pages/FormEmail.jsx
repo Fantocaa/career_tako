@@ -7,7 +7,6 @@ import CascadingCity from "@/Components/Form/CascadingCity";
 import SelectProgram from "@/Components/Form/SelectProgram";
 import SelectReligion from "@/Components/Form/SelectReligion";
 import NavElse from "@/Components/Shared/Else/NavElse";
-import axios, { Axios } from "axios";
 
 const FormEmail = () => {
     const {
@@ -28,27 +27,49 @@ const FormEmail = () => {
     // State untuk menyimpan nilai-nilai input select
     const [selectValues, setSelectValues] = useState(initialSelectValues);
 
+    // Mengirim email
+    const sendEmail = (data) => {
+        emailjs
+            .sendForm(
+                "service_fygc2pp",
+                "template_42e2fzw",
+                formRef.current,
+                "YT979FkI0RUOwL9zL"
+            )
+            .then(
+                (result) => {
+                    // console.log(result.text);
+                    // formRef.current.reset();
+
+                    console.log(result.text);
+                    // Reset formulir
+                    // reset(initialSelectValues); // Reset input select
+                    formRef.current.reset();
+                },
+                (error) => {
+                    // console.log(error.text);
+                    // formRef.current.reset();
+
+                    console.log(error.text);
+                    // Reset formulir
+                    // reset(initialSelectValues); // Reset input select
+                    formRef.current.reset();
+                }
+            );
+    };
+
+    // Menangani submit formulir
     const onSubmit = (data, event) => {
         event.preventDefault();
-
-        const formData = new FormData();
-        formData.append("nama", data.nama);
-        // formData.append("email", data.email);
-        formData.append("fileUpload", data.fileUpload[0]); // Gunakan [0] untuk mendapatkan file pertama
-
-        // Juga, tambahkan data lain ke FormData seperti yang diperlukan
-
-        // Kirim FormData ke server menggunakan axios
-        axios
-            .post("/upload", formData)
-            .then((response) => {
-                // Tangani respons sukses di sini
-                console.log(response.data);
-            })
-            .catch((error) => {
-                // Tangani kesalahan di sini
-                console.error(error);
-            });
+        // const uploadedFile = event.target.files[0];
+        // Anda dapat menambahkan validasi formulir di sini jika diperlukan
+        // Misalnya, memeriksa apakah data yang diperlukan telah diisi
+        if (data.nama && data.email) {
+            sendEmail(data); // Jika formulir valid, kirim email
+        } else {
+            // Menampilkan pesan kesalahan jika formulir tidak valid
+            console.log("Gagal Ges");
+        }
     };
 
     return (
@@ -231,9 +252,9 @@ const FormEmail = () => {
                                 Tempat Lahir
                                 <span className="text-RedTako">*</span>
                             </h1>
-                            <CascadingCity />
+                            {/* <CascadingCity /> */}
 
-                            {/* <div className="flex  gap-4">
+                            <div className="flex  gap-4">
                                 <div className="w-full">
                                     <h1 className="pb-2">
                                         Provinsi
@@ -271,7 +292,7 @@ const FormEmail = () => {
                                     )}
                                 </div>
                             </div>
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 pt-2">
                                 <div className="w-full">
                                     <h1 className="pb-2">
                                         Kecamatan
@@ -291,7 +312,7 @@ const FormEmail = () => {
                                     )}
                                 </div>
                                 <div className="w-full">
-                                    <h1 className="pb-4">
+                                    <h1 className="pb-2">
                                         Kode pos
                                         <span className="text-RedTako">*</span>
                                     </h1>
@@ -309,7 +330,7 @@ const FormEmail = () => {
                                         </span>
                                     )}
                                 </div>
-                            </div> */}
+                            </div>
 
                             {/* <input
                         {...register("tempatlahir", { required: true })}
