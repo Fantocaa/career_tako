@@ -95,7 +95,7 @@ const TableDashboard = () => {
                     <Link href={`/table/edit/${row.id}`}>
                         <button>
                             <img
-                                src="images/edit.svg"
+                                src="../images/edit.svg"
                                 alt=""
                                 className="scale-50"
                             />
@@ -109,7 +109,7 @@ const TableDashboard = () => {
                         }
                     >
                         <img
-                            src="images/delete.svg"
+                            src="../images/delete.svg"
                             alt=""
                             className="scale-50"
                         />
@@ -197,8 +197,8 @@ const TableDashboard = () => {
 
     return (
         <Layout pageTitle="Dashboard | Tako Karir">
-            <div className="bg-BgTako py-16 px-4">
-                <div className="bg-white container mx-auto p-8 rounded-lg">
+            <div className="bg-BgTako px-4 h-screen py-8">
+                <div className="bg-white container mx-auto p-8 rounded-lg h-full ">
                     <h1 className="font-bold text-2xl pb-6 text-DarkTako">
                         Tambah Loker
                     </h1>

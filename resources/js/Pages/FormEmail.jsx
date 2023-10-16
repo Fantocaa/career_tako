@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Footer from "@/Components/Shared/Footer";
-import emailjs from "@emailjs/browser";
 import SelectGender from "@/Components/Form/SelectGender";
 import CascadingCity from "@/Components/Form/CascadingCity";
 import SelectProgram from "@/Components/Form/SelectProgram";
 import SelectReligion from "@/Components/Form/SelectReligion";
 import NavElse from "@/Components/Shared/Else/NavElse";
+import { Link, router, usePage } from "@inertiajs/react";
+import Select from "react-select";
+import Axios from "axios";
 
 const FormEmail = () => {
     const {
@@ -17,60 +19,202 @@ const FormEmail = () => {
 
     const formRef = useRef(null);
 
-    // Buat objek dengan nilai-nilai awal untuk input select
-    const initialSelectValues = {
-        gender: "", // Atur nilai default sesuai kebutuhan Anda
-        program: "", // Atur nilai default sesuai kebutuhan Anda
-        agama: "", // Atur nilai default sesuai kebutuhan Anda
+    const { props } = usePage();
+    const { md_loker } = props;
+
+    const [provinsiOptions, setProvinsiOptions] = useState([]);
+    const [kabupatenOptions, setKabupatenOptions] = useState([]);
+    const [kecamatanOptions, setKecamatanOptions] = useState([]);
+
+    const [selectedProvinsi, setSelectedProvinsi] = useState(null);
+
+    const [isProvinsiSelected, setIsProvinsiSelected] = useState(false);
+    const [isKabupatenSelected, setIsKabupatenSelected] = useState(false);
+    const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
+
+    const [values, setValues] = useState({
+        password: "meong",
+        pekerjaan: md_loker.pekerjaan,
+        jenis_pekerjaan: md_loker.jenis_pekerjaan,
+        perusahaan: md_loker.perusahaan,
+        nama: "",
+        jenis_kelamin: "",
+        agama: "",
+        tanggal_lahir: "",
+        emails: "",
+        provinsi: provinsiOptions.label,
+        kabupaten: kabupatenOptions.label,
+        kecamatan: kecamatanOptions.label,
+        kodepos: "",
+        alamat: "",
+        no_telp: "",
+        gaji: "",
+        file: "",
+    });
+
+    const handleChange = (e) => {
+        const key = e.target.id;
+        const value = e.target.value;
+        setValues((values) => ({
+            ...values,
+            [key]: value,
+        }));
     };
 
-    // State untuk menyimpan nilai-nilai input select
-    const [selectValues, setSelectValues] = useState(initialSelectValues);
+    useEffect(() => {
+        // Panggil API untuk mendapatkan daftar provinsi saat komponen dimuat
+        fetch("/provinsi")
+            .then((response) => response.json())
+            .then((data) => {
+                // Memformat data provinsi menjadi format yang diperlukan oleh react-select
+                const formattedOptions = data.map((item) => ({
+                    label: item.nama,
+                    value: item.kode,
+                }));
+                setProvinsiOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error("Error fetching provinsi data:", error);
+            });
+    }, []);
 
-    // Mengirim email
-    const sendEmail = (data) => {
-        emailjs
-            .sendForm(
-                "service_fygc2pp",
-                "template_42e2fzw",
-                formRef.current,
-                "YT979FkI0RUOwL9zL"
-            )
-            .then(
-                (result) => {
-                    // console.log(result.text);
-                    // formRef.current.reset();
+    // Fungsi yang dipanggil saat memilih provinsi
+    const handleProvinsiChange = (selectedOption) => {
+        setIsProvinsiSelected(true); // Setel state menjadi true saat provinsi dipilih
+        setSelectedProvinsi(selectedOption); // Simpan nilai provinsi yang dipilih
+        // Ambil kode provinsi yang dipilih
+        const kodeProvinsi = selectedOption.value;
 
-                    console.log(result.text);
-                    // Reset formulir
-                    // reset(initialSelectValues); // Reset input select
-                    formRef.current.reset();
+        // Panggil API untuk mendapatkan daftar kabupaten/kota berdasarkan kode provinsi
+        fetch(`/kabupaten/${kodeProvinsi}`)
+            .then((response) => response.json())
+            .then((data) => {
+                const formattedOptions = data.map((item) => ({
+                    label: item.nama,
+                    value: item.kode,
+                }));
+                setKabupatenOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error("Error fetching kabupaten/kota data:", error);
+            });
+    };
+
+    // Fungsi yang dipanggil saat memilih kabupaten/kota
+    const handleKabupatenChange = (selectedOption) => {
+        setIsKabupatenSelected(true); // Setel state menjadi true saat provinsi dipilih
+        setIsKecamatanSelected(true); // Setel state menjadi true saat kabupaten dipilih
+
+        // Ambil kode kabupaten/kota yang dipilih
+        const kodeKabupaten = selectedOption.value;
+
+        // Ambil kode provinsi yang dipilih
+        const kodeProvinsi = selectedProvinsi.value;
+
+        // Panggil API untuk mendapatkan daftar kecamatan berdasarkan kode kabupaten/kota dan kode provinsi
+        fetch(`/kecamatan/${kodeProvinsi}/${kodeKabupaten}`)
+            .then((response) => response.json())
+            .then((data) => {
+                const formattedOptions = data.map((item) => ({
+                    label: item.nama,
+                    value: item.kode,
+                }));
+                setKecamatanOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error("Error fetching kecamatan data:", error);
+            });
+    };
+
+    async function onSubmit(e) {
+        e.preventDefault();
+
+        try {
+            // Buat objek FormData
+            const formData = new FormData();
+
+            formData.append("pekerjaan", values.pekerjaan);
+            formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
+            formData.append("perusahaan", values.perusahaan);
+
+            formData.append("nama", values.nama);
+            formData.append("jenis_kelamin", values.jenis_kelamin);
+            formData.append("tanggal_lahir", values.tanggal_lahir);
+            formData.append("agama", values.agama);
+            formData.append("emails", values.emails);
+            formData.append("no_telp", values.no_telp);
+            formData.append("provinsi", values.provinsi);
+            formData.append("kabupaten", values.kabupaten);
+            formData.append("kecamatan", values.kecamatan);
+            formData.append("kodepos", values.kodepos);
+            formData.append("alamat", values.alamat);
+            formData.append("gaji", values.gaji);
+
+            formData.append("file", e.target.fileUpload.files[0]); // Ambil file dari input file
+
+            console.log("Data yang dikirim melalui formData:", formData);
+
+            // Jika Anda ingin melihat nilai spesifik dari formData, misalnya:
+
+            console.log("Jenis Kelamin:", formData.get("jenis_kelamin"));
+            console.log("Agama:", formData.get("agama"));
+
+            console.log("Provinsi:", formData.get("provinsi"));
+            console.log("Kab:", formData.get("kabupaten"));
+            console.log("Kec:", formData.get("kecamatan"));
+
+            // Kirim data ke server
+            const response = await Axios.post("/formulir/submit/", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data", // Pastikan Anda menetapkan tipe konten sebagai multipart/form-data
                 },
-                (error) => {
-                    // console.log(error.text);
-                    // formRef.current.reset();
+            });
 
-                    console.log(error.text);
-                    // Reset formulir
-                    // reset(initialSelectValues); // Reset input select
-                    formRef.current.reset();
-                }
-            );
-    };
+            // const response = await Axios.post("/form");
 
-    // Menangani submit formulir
-    const onSubmit = (data, event) => {
-        event.preventDefault();
-        // const uploadedFile = event.target.files[0];
-        // Anda dapat menambahkan validasi formulir di sini jika diperlukan
-        // Misalnya, memeriksa apakah data yang diperlukan telah diisi
-        if (data.nama && data.email) {
-            sendEmail(data); // Jika formulir valid, kirim email
-        } else {
-            // Menampilkan pesan kesalahan jika formulir tidak valid
-            console.log("Gagal Ges");
+            // Jika permintaan berhasil, perbarui nomor dengan nomor berikutnya
+            // setNomor(response.data.id + 1);
+
+            // Bersihkan formulir
+            setValues({
+                password: "meong",
+                pekerjaan: md_loker.pekerjaan,
+                jenis_pekerjaan: md_loker.jenis_pekerjaan,
+                perusahaan: md_loker.perusahaan,
+                nama: "",
+                jenis_kelamin: "",
+                agama: "",
+                tanggal_lahir: "",
+                emails: "",
+                provinsi: provinsiOptions.label,
+                kabupaten: kabupatenOptions.label,
+                kecamatan: kecamatanOptions.label,
+                kodepos: "",
+                alamat: "",
+                no_telp: "",
+                gaji: "",
+                file: "",
+            });
+
+            // Redirect ke halaman lain jika diperlukan
+            // router.get("/dashboard/lowongan_pekerjaan");
+            // router.get("/finish");
+        } catch (error) {
+            if (error.response) {
+                // Jika respons error dari server
+                console.error("Error sending data:", error.response.data);
+
+                // Tampilkan pesan kesalahan ke pengguna
+                alert(error.response.data.message);
+            } else {
+                // Jika kesalahan lainnya
+                console.error("Error sending data:", error);
+
+                // Tampilkan pesan kesalahan ke pengguna
+                alert("Terjadi kesalahan saat mengirim data.");
+            }
         }
-    };
+    }
 
     return (
         <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
@@ -81,10 +225,78 @@ const FormEmail = () => {
                         Registration Form
                     </h1>
                     <form
-                        onSubmit={handleSubmit(onSubmit)}
+                        onSubmit={onSubmit}
                         ref={formRef}
                         className="items-center space-y-4 w-full px-4 mx-auto pb-8 "
                     >
+                        <div className="flex gap-4 flex-wrap">
+                            {/* Pekerjaan */}
+                            <div className="w-[49%]">
+                                <h1 className="pb-2">
+                                    Pekerjaan
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register("pekerjaan", {
+                                        required: true,
+                                    })}
+                                    className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                    disabled
+                                    value={values.pekerjaan}
+                                    id="pekerjaan"
+                                />
+                                {/* {errors.nama && (
+                                    <span className="text-RedTako">
+                                        Tolong Nama jangan sampai kosong
+                                    </span>
+                                )} */}
+                            </div>
+
+                            {/* Program */}
+                            <div className="w-[49%]">
+                                <h1 className="pb-2">
+                                    Program
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register("jenis_pekerjaan", {
+                                        required: true,
+                                    })}
+                                    className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                    disabled
+                                    value={values.jenis_pekerjaan}
+                                    id="program"
+                                />
+                                {/* {errors.nama && (
+                                    <span className="text-RedTako">
+                                        Tolong Nama jangan sampai kosong
+                                    </span>
+                                )} */}
+                            </div>
+
+                            {/* Perusahaan */}
+                            <div className="w-[49%]">
+                                <h1 className="pb-2">
+                                    Perusahaan
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register("perusahaan", {
+                                        required: true,
+                                    })}
+                                    className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                    disabled
+                                    value={values.perusahaan}
+                                    id="perusahaan"
+                                />
+                                {/* {errors.nama && (
+                                    <span className="text-RedTako">
+                                        Tolong Nama jangan sampai kosong
+                                    </span>
+                                )} */}
+                            </div>
+                        </div>
+
                         {/* Nama */}
                         <div className="w-full">
                             <h1 className="pb-2">
@@ -95,6 +307,9 @@ const FormEmail = () => {
                                 {...register("nama", { required: true })}
                                 className="w-full border-grey border-opacity-30 p-2 rounded"
                                 placeholder="Masukkan Nama"
+                                value={values.nama}
+                                id="nama"
+                                onChange={handleChange}
                             />
                             {errors.nama && (
                                 <span className="text-RedTako">
@@ -103,27 +318,22 @@ const FormEmail = () => {
                             )}
                         </div>
 
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 flex-wrap">
                             {/* Gender */}
-                            <div className="w-1/2">
+                            <div className="w-[49.1%]">
                                 <h1 className="pb-2">
                                     Jenis Kelamin
                                     <span className="text-RedTako">*</span>
                                 </h1>
-                                {/* <SelectGender /> */}
                                 <select
-                                    {...register("gender", { required: true })}
-                                    // value={gender}
-                                    // onChange={handleGenderChange}
-                                    value={selectValues.gender} // Gunakan nilai dari state
-                                    onChange={(e) => {
-                                        setSelectValues({
-                                            ...selectValues,
-                                            gender: e.target.value,
-                                        });
-                                    }}
-                                    className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
+                                    {...register("jenis_kelamin", {
+                                        required: true,
+                                    })}
+                                    value={values.jenis_kelamin} // Gunakan
+                                    className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
                                     placeholder="Pilih Jenis Kelamin Anda"
+                                    id="jenis_kelamin"
+                                    onChange={handleChange}
                                 >
                                     <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
@@ -135,63 +345,18 @@ const FormEmail = () => {
                                     </span>
                                 )}
                             </div>
-
-                            {/* Program */}
-                            <div className="w-1/2">
-                                <h1 className="pb-2">
-                                    Program
-                                    <span className="text-RedTako">*</span>
-                                </h1>
-                                {/* <SelectProgram /> */}
-                                <select
-                                    {...register("program", { required: true })}
-                                    // value={gender}
-                                    // onChange={handleGenderChange}
-                                    value={selectValues.program} // Gunakan nilai dari state
-                                    onChange={(e) => {
-                                        setSelectValues({
-                                            ...selectValues,
-                                            program: e.target.value,
-                                        });
-                                    }}
-                                    className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
-                                    placeholder="Pilih Program Anda"
-                                >
-                                    <option value="Internship">
-                                        Internship
-                                    </option>
-                                    <option value="Profesional">
-                                        Profesional
-                                    </option>
-                                    {/* <option value="Lainnya">Lainnya</option> */}
-                                </select>
-                                {errors.program && (
-                                    <span className="text-RedTako">
-                                        Program harus dipilih
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                        <div className="flex gap-4">
                             {/* Agama */}
-                            <div className="w-full">
+                            <div className="w-[49.1%]">
                                 <h1 className="pb-2">
                                     Agama<span className="text-RedTako">*</span>
                                 </h1>
-                                {/* <SelectReligion /> */}
                                 <select
                                     {...register("agama", { required: true })}
-                                    // value={gender}
-                                    // onChange={handleGenderChange}
-                                    value={selectValues.agama} // Gunakan nilai dari state
-                                    onChange={(e) => {
-                                        setSelectValues({
-                                            ...selectValues,
-                                            agama: e.target.value,
-                                        });
-                                    }}
-                                    className="w-full p-[6px] border-grey border-opacity-30 rounded cursor-pointer"
+                                    className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
                                     placeholder="Pilih Program Anda"
+                                    value={values.agama}
+                                    id="agama"
+                                    onChange={handleChange}
                                 >
                                     <option value="Islam">Islam</option>
                                     <option value="Kristen">Kristen</option>
@@ -210,7 +375,7 @@ const FormEmail = () => {
                             </div>
 
                             {/* Tanggal Lahir */}
-                            <div className="w-full">
+                            <div className="w-[49.1%]">
                                 <h1 className="pb-2">
                                     Tanggal Lahir
                                     <span className="text-RedTako">*</span>
@@ -221,6 +386,9 @@ const FormEmail = () => {
                                     })}
                                     type="date"
                                     className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    value={values.tanggal_lahir}
+                                    id="tanggal_lahir"
+                                    onChange={handleChange}
                                 />
                                 {errors.tanggal_lahir && (
                                     <span className="text-RedTako">
@@ -228,22 +396,47 @@ const FormEmail = () => {
                                     </span>
                                 )}
                             </div>
-                        </div>
-                        {/* Email */}
-                        <div className="w-full">
-                            <h1 className="pb-2">
-                                Email<span className="text-RedTako">*</span>
-                            </h1>
-                            <input
-                                {...register("email", { required: true })}
-                                className="w-full p-2 border-grey border-opacity-30 rounded"
-                                placeholder="Masukkan Email Anda"
-                            />
-                            {errors.email && (
-                                <span className="text-RedTako">
-                                    Email jangan sampai kosong
-                                </span>
-                            )}
+                            {/* Email */}
+                            <div className="w-[49.1%]">
+                                <h1 className="pb-2">
+                                    Email<span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register("emails", { required: true })}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    placeholder="Masukkan Email Anda"
+                                    type="text"
+                                    value={values.emails}
+                                    id="emails"
+                                    onChange={handleChange}
+                                />
+                                {errors.emails && (
+                                    <span className="text-RedTako">
+                                        Email jangan sampai kosong
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* No Telp*/}
+                            <div className="w-[49.1%]">
+                                <h1 className="pb-2">
+                                    No. Telpon
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register("nomor", { required: true })}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    placeholder="Masukkan No. Telpon Anda"
+                                    value={values.no_telp}
+                                    id="no_telp"
+                                    onChange={handleChange}
+                                />
+                                {errors.nomor && (
+                                    <span className="text-RedTako">
+                                        No. Telpon jangan sampai kosong
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
                         {/* Tempat Lahir*/}
@@ -252,96 +445,79 @@ const FormEmail = () => {
                                 Tempat Lahir
                                 <span className="text-RedTako">*</span>
                             </h1>
-                            {/* <CascadingCity /> */}
 
-                            <div className="flex  gap-4">
-                                <div className="w-full">
-                                    <h1 className="pb-2">
-                                        Provinsi
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("provinsi", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Provinsi Tempat Lahir Anda"
-                                    />
-                                    {errors.provinsi && (
-                                        <span className="text-RedTako">
-                                            Provinsi jangan sampai kosong
-                                        </span>
-                                    )}
+                            <>
+                                <div className="block md:flex pb-4">
+                                    <div className="w-full md:w-[50%] pb-4 mr-4">
+                                        <h2 className="pb-2">Provinsi</h2>
+                                        <Select
+                                            options={provinsiOptions}
+                                            onChange={handleProvinsiChange}
+                                            value={values.provinsi}
+                                            id="provinsi"
+                                            placeholder="Pilih Provinsi Anda"
+                                            styles={{
+                                                control: (base) => ({
+                                                    ...base,
+                                                    padding: "2px",
+                                                }),
+                                                // singleValue: (base) => ({
+                                                //     ...base,
+                                                //     color: "blue",
+                                                // }),
+                                                // Tambahkan properti gaya lain sesuai kebutuhan
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="w-full md:w-[50%]">
+                                        <h2 className="pb-2">Kabupaten/Kota</h2>
+                                        <Select
+                                            options={kabupatenOptions}
+                                            onChange={handleKabupatenChange}
+                                            value={values.kabupaten}
+                                            id="kabupaten"
+                                            isDisabled={!isProvinsiSelected}
+                                            placeholder="Pilih Kabupaten/Kota Anda"
+                                            styles={{
+                                                control: (base) => ({
+                                                    ...base,
+                                                    padding: "2px",
+                                                }),
+                                                // singleValue: (base) => ({
+                                                //     ...base,
+                                                //     color: "blue",
+                                                // }),
+                                                // Tambahkan properti gaya lain sesuai kebutuhan
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                                <div className="w-full">
-                                    <h1 className="pb-2">
-                                        Kabupaten
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("kabupaten", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Kabupaten Tempat Lahir Anda"
-                                    />
-                                    {errors.kabupaten && (
-                                        <span className="text-RedTako">
-                                            Kabupaten jangan sampai kosong
-                                        </span>
-                                    )}
+                                <div className="block md:flex">
+                                    <div className="w-full mr-4 pb-4">
+                                        <h2 className="pb-2">Kecamatan</h2>
+                                        <Select
+                                            options={kecamatanOptions}
+                                            value={values.kecamatan}
+                                            id="kecamatan"
+                                            className="w-full"
+                                            isDisabled={!isKabupatenSelected}
+                                        />
+                                    </div>
+                                    <div className="w-full">
+                                        <h2 className="w-full md:w-[50%] pb-2 mr-4">
+                                            Kode Pos
+                                        </h2>
+                                        <input
+                                            type="number"
+                                            className="w-full p-2 py-[6px] border-grey border-opacity-30 rounded"
+                                            value={values.kodepos}
+                                            id="kodepos"
+                                            onChange={handleChange}
+                                            disabled={!isKecamatanSelected}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex gap-4 pt-2">
-                                <div className="w-full">
-                                    <h1 className="pb-2">
-                                        Kecamatan
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("kecamatan", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Kecamatan Tempat Lahir Anda"
-                                    />
-                                    {errors.kecamatan && (
-                                        <span className="text-RedTako">
-                                            Kecamatan jangan sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="w-full">
-                                    <h1 className="pb-2">
-                                        Kode pos
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("kodepos", {
-                                            required: true,
-                                        })}
-                                        type="number"
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Kode Pos Tempat Lahir Anda"
-                                    />
-                                    {errors.kodepos && (
-                                        <span className="text-RedTako">
-                                            Kode Pos jangan sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* <input
-                        {...register("tempatlahir", { required: true })}
-                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                        placeholder="Masukkan Tempat Lahir Anda"
-                    />
-                    {errors.tempatlahir && (
-                        <span className="text-RedTako">
-                            Tempat Lahir jangan sampai kosong
-                        </span>
-                    )} */}
+                            </>
                         </div>
 
                         {/* Alamat Tempat Tinggal*/}
@@ -351,31 +527,16 @@ const FormEmail = () => {
                                 <span className="text-RedTako">*</span>
                             </h1>
                             <input
-                                {...register("alamattt", { required: true })}
+                                {...register("alamat", { required: true })}
                                 className="w-full p-2 border-grey border-opacity-30 rounded"
                                 placeholder="Masukkan Alamat Tempat Tinggal Anda"
+                                value={values.alamat}
+                                id="alamat"
+                                onChange={handleChange}
                             />
                             {errors.alamattt && (
                                 <span className="text-RedTako">
                                     Alamat Tempat Tinggal jangan sampai kosong
-                                </span>
-                            )}
-                        </div>
-
-                        {/* No Telp*/}
-                        <div className="w-full">
-                            <h1 className="pb-2">
-                                No. Telpon
-                                <span className="text-RedTako">*</span>
-                            </h1>
-                            <input
-                                {...register("nomor", { required: true })}
-                                className="w-full p-2 border-grey border-opacity-30 rounded"
-                                placeholder="Masukkan No. Telpon Anda"
-                            />
-                            {errors.nomor && (
-                                <span className="text-RedTako">
-                                    No. Telpon jangan sampai kosong
                                 </span>
                             )}
                         </div>
@@ -389,6 +550,9 @@ const FormEmail = () => {
                                 {...register("gaji", { required: true })}
                                 className="w-full p-2 border-grey border-opacity-30 rounded"
                                 placeholder="Masukkan Ekpektasi gaji anda (Contoh : Rp.5.000.000)"
+                                value={values.gaji}
+                                id="gaji"
+                                onChange={handleChange}
                             />
                             {errors.nomor && (
                                 <span className="text-RedTako">
@@ -405,6 +569,9 @@ const FormEmail = () => {
                                 type="file"
                                 accept=".pdf" // Batasi hanya menerima file PDF
                                 className="w-full border-grey border-opacity-30 rounded"
+                                value={values.file}
+                                id="file"
+                                onChange={handleChange}
                             />
                             <div className="text-xs pt-2">
                                 <p>
@@ -418,7 +585,6 @@ const FormEmail = () => {
                                 </p>
                             </div>
                         </div>
-
                         {/* Submit */}
                         <div className="w-full bg-BlueTako rounded-xl">
                             <input

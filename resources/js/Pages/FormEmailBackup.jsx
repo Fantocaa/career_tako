@@ -7,6 +7,8 @@ import CascadingCity from "@/Components/Form/CascadingCity";
 import SelectProgram from "@/Components/Form/SelectProgram";
 import SelectReligion from "@/Components/Form/SelectReligion";
 import NavElse from "@/Components/Shared/Else/NavElse";
+import { router } from "@inertiajs/react";
+import Axios from "axios";
 
 const FormEmailBackup = () => {
     const {
@@ -18,11 +20,11 @@ const FormEmailBackup = () => {
     const formRef = useRef(null);
 
     // Buat objek dengan nilai-nilai awal untuk input select
-    const initialSelectValues = {
-        gender: "", // Atur nilai default sesuai kebutuhan Anda
-        program: "", // Atur nilai default sesuai kebutuhan Anda
-        agama: "", // Atur nilai default sesuai kebutuhan Anda
-    };
+    // const initialSelectValues = {
+    //     gender: "", // Atur nilai default sesuai kebutuhan Anda
+    //     program: "", // Atur nilai default sesuai kebutuhan Anda
+    //     agama: "", // Atur nilai default sesuai kebutuhan Anda
+    // };
 
     // State untuk menyimpan nilai-nilai input select
     const [selectValues, setSelectValues] = useState(initialSelectValues);
@@ -45,6 +47,8 @@ const FormEmailBackup = () => {
     //                 // Reset formulir
     //                 // reset(initialSelectValues); // Reset input select
     //                 formRef.current.reset();
+    //                 // <Link href="/finish" />;
+    //                 router.get("/finish");
     //             },
     //             (error) => {
     //                 // console.log(error.text);
@@ -58,7 +62,26 @@ const FormEmailBackup = () => {
     //         );
     // };
 
-    // // Menangani submit formulir
+    const [values, setValues] = useState({
+        password: "meong",
+        pekerjaan: values.pekerjaan,
+        jenis_pekerjaan: values.jenis_pekerjaan,
+        perusahaan: values.perusahaan,
+        nama: "",
+        jenis_kelamin: "",
+        agama: "",
+        tanggal_lahir: "",
+        email: "",
+        provinsi: "",
+        kabupaten: "",
+        kecamatan: "",
+        alamat: "",
+        no_telp: "",
+        gaji: "",
+        file: "",
+    });
+
+    // Menangani submit formulir
     // const onSubmit = (data, event) => {
     //     event.preventDefault();
     //     // const uploadedFile = event.target.files[0];
@@ -72,8 +95,62 @@ const FormEmailBackup = () => {
     //     }
     // };
 
+    async function onSubmit(e) {
+        e.preventDefault();
+
+        try {
+            // Kirim data ke server
+            const response = await Axios.post("/form", values);
+            // const response = await Axios.post("/form");
+
+            // Jika permintaan berhasil, perbarui nomor dengan nomor berikutnya
+            setNomor(response.data.id + 1);
+
+            // Bersihkan formulir
+            setValues({
+                password: "meong",
+                pekerjaan: values.pekerjaan,
+                jenis_pekerjaan: values.jenis_pekerjaan,
+                perusahaan: values.perusahaan,
+                nama: "",
+                jenis_kelamin: "",
+                agama: "",
+                tanggal_lahir: "",
+                email: "",
+                provinsi: "",
+                kabupaten: "",
+                kecamatan: "",
+                alamat: "",
+                no_telp: "",
+                gaji: "",
+                file: "",
+                Zz,
+            });
+
+            // Redirect ke halaman lain jika diperlukan
+            // router.push("/table"); // Ganti dengan halaman yang sesuai
+            router.get("/dashboard/lowongan_pekerjaan");
+        } catch (error) {
+            // console.error("Error sending data:", error);
+
+            if (error.response) {
+                // Jika respons error dari server
+                console.error("Error sending data:", error.response.data);
+
+                // Tampilkan pesan kesalahan ke pengguna
+                alert(error.response.data.message);
+            } else {
+                // Jika kesalahan lainnya
+                console.error("Error sending data:", error);
+
+                // Tampilkan pesan kesalahan ke pengguna
+                alert("Terjadi kesalahan saat mengirim data.");
+            }
+        }
+    }
+
     return (
-        <section className="flex-wrap items-center font-inter w-full bg-BgTako">
+        <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
             <NavElse />
             <div className="bg-BgTako px-32 py-32 ">
                 <div className="bg-white mx-auto rounded-lg px-4">
@@ -252,9 +329,9 @@ const FormEmailBackup = () => {
                                 Tempat Lahir
                                 <span className="text-RedTako">*</span>
                             </h1>
-                            {/* <CascadingCity /> */}
+                            <CascadingCity />
 
-                            <div className="flex  gap-4">
+                            {/* <div className="flex  gap-4">
                                 <div className="w-full">
                                     <h1 className="pb-2">
                                         Provinsi
@@ -292,7 +369,7 @@ const FormEmailBackup = () => {
                                     )}
                                 </div>
                             </div>
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 pt-2">
                                 <div className="w-full">
                                     <h1 className="pb-2">
                                         Kecamatan
@@ -312,7 +389,7 @@ const FormEmailBackup = () => {
                                     )}
                                 </div>
                                 <div className="w-full">
-                                    <h1 className="pb-4">
+                                    <h1 className="pb-2">
                                         Kode pos
                                         <span className="text-RedTako">*</span>
                                     </h1>
@@ -330,7 +407,7 @@ const FormEmailBackup = () => {
                                         </span>
                                     )}
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/* <input
                         {...register("tempatlahir", { required: true })}
@@ -418,7 +495,6 @@ const FormEmailBackup = () => {
                                 </p>
                             </div>
                         </div>
-
                         {/* Submit */}
                         <div className="w-full bg-BlueTako rounded-xl">
                             <input

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import Axios from "axios";
 // import { useParams } from "react-router-dom"; // Anda mungkin perlu mengganti ini dengan cara yang sesuai dengan aplikasi Anda
 // import { usePage } from "@inertiajs/react";
-import { router, usePage } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import QuillEditor from "@/Components/Dashboard/QuillEditor";
 
 const EditLokerEdit = () => {
@@ -89,7 +89,7 @@ const EditLokerEdit = () => {
 
             // Redirect ke halaman lain jika diperlukan
             // router.push("/table"); // Ganti dengan halaman yang sesuai
-            router.get("/table");
+            router.get("/dashboard/lowongan_pekerjaan");
         } catch (error) {
             // console.error("Error sending data:", error);
             if (error.response) {
@@ -231,12 +231,21 @@ const EditLokerEdit = () => {
                         )}
                     </div>
 
-                    <div className="pt-16">
+                    <div className="pt-8 flex gap-4">
                         <button
                             type="submit"
-                            className="bg-BlueTako text-white p-4"
+                            className="bg-BlueTako text-white py-2 px-4 rounded-lg"
                         >
                             Simpan
+                        </button>
+
+                        <button
+                            type="submit"
+                            className="bg-RedTako text-white py-2 px-4 rounded-lg"
+                        >
+                            <Link href="/dashboard/lowongan_pekerjaan">
+                                Batal
+                            </Link>
                         </button>
                     </div>
                 </form>

@@ -29,6 +29,7 @@ const SelectJobPro = () => {
         // Hanya perlu dijalankan saat komponen pertama kali di-mount,
         // sehingga dependensi di bawah ini kosong
     }, []);
+
     return (
         <>
             {formData.map((item) => (
@@ -62,7 +63,7 @@ const SelectJobPro = () => {
                             </Link>
                         </div>
                         <div className="w-full">
-                            <Link href="/formulir">
+                            <Link href={`/job/formulir/${item.id}`}>
                                 <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
                                     Lamar
                                 </button>

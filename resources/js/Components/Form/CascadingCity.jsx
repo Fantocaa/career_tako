@@ -1,33 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import { countries, province, cities } from "./List City/ListCity";
+import { Link, router, usePage } from "@inertiajs/react";
 
 const CascadingCity = () => {
-    const [selectedCountry, setSelectedCountry] = useState(null);
-    const [selectedProvince, setSelectedProvince] = useState(null);
-    const [selectedCity, setSelectedCity] = useState(null);
-    const [zipCode, setZipCode] = useState("");
+    const [provinsiOptions, setProvinsiOptions] = useState([]);
+    const [kabupatenOptions, setKabupatenOptions] = useState([]);
+    const [kecamatanOptions, setKecamatanOptions] = useState([]);
 
-    const countryOptions = countries.map((country) => ({
-        label: country.label,
-        value: country.value,
-    }));
+    const [selectedProvinsi, setSelectedProvinsi] = useState(null);
 
-    const provinceOptions = province
-        .filter(
-            (province) => province.country === (selectedCountry?.value || "")
-        )
-        .map((province) => ({
-            label: province.label,
-            value: province.value,
-        }));
+    useEffect(() => {
+        // Panggil API untuk mendapatkan daftar provinsi saat komponen dimuat
+        fetch("/provinsi")
+            .then((response) => response.json())
+            .then((data) => {
+                // Memformat data provinsi menjadi format yang diperlukan oleh react-select
+                const formattedOptions = data.map((item) => ({
+                    label: item.nama,
+                    value: item.kode,
+                }));
+                setProvinsiOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error("Error fetching provinsi data:", error);
+            });
+    }, []);
 
-    const cityOptions = cities
-        .filter((city) => city.province === (selectedProvince?.value || ""))
-        .map((city) => ({
-            label: city.label,
-            value: city.value,
-        }));
+    // Fungsi yang dipanggil saat memilih provinsi
+    const handleProvinsiChange = (selectedOption) => {
+        setSelectedProvinsi(selectedOption); // Simpan nilai provinsi yang dipilih
+        // Ambil kode provinsi yang dipilih
+        const kodeProvinsi = selectedOption.value;
+
+        // Panggil API untuk mendapatkan daftar kabupaten/kota berdasarkan kode provinsi
+        fetch(`/kabupaten/${kodeProvinsi}`)
+            .then((response) => response.json())
+            .then((data) => {
+                const formattedOptions = data.map((item) => ({
+                    label: item.nama,
+                    value: item.kode,
+                }));
+                setKabupatenOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error("Error fetching kabupaten/kota data:", error);
+            });
+    };
+
+    // Fungsi yang dipanggil saat memilih kabupaten/kota
+    const handleKabupatenChange = (selectedOption) => {
+        // Ambil kode kabupaten/kota yang dipilih
+        const kodeKabupaten = selectedOption.value;
+
+        // Ambil kode provinsi yang dipilih
+        const kodeProvinsi = selectedProvinsi.value;
+
+        // Panggil API untuk mendapatkan daftar kecamatan berdasarkan kode kabupaten/kota dan kode provinsi
+        fetch(`/kecamatan/${kodeProvinsi}/${kodeKabupaten}`)
+            .then((response) => response.json())
+            .then((data) => {
+                const formattedOptions = data.map((item) => ({
+                    label: item.nama,
+                    value: item.kode,
+                }));
+                setKecamatanOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error("Error fetching kecamatan data:", error);
+            });
+    };
 
     return (
         <>
@@ -35,37 +76,17 @@ const CascadingCity = () => {
                 <div className="w-full md:w-[50%] pb-4 mr-4">
                     <h2 className="pb-2">Provinsi</h2>
                     <Select
-                        options={countryOptions}
-                        value={selectedCountry}
-                        onChange={(selectedOption) =>
-                            setSelectedCountry(selectedOption)
-                        }
-                        placeholder="Pilih Provinsi"
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                padding: "2px", // Atur padding sesuai kebutuhan Anda
-                            }),
-                        }}
+                        options={provinsiOptions}
+                        onChange={handleProvinsiChange}
+                        value={values.provinsi}
                     />
                 </div>
-
                 <div className="w-full md:w-[50%] mr-4">
                     <h2 className="pb-2">Kabupaten/Kota</h2>
                     <Select
-                        options={provinceOptions}
-                        value={selectedProvince}
-                        onChange={(selectedOption) =>
-                            setSelectedProvince(selectedOption)
-                        }
-                        isDisabled={!selectedCountry}
-                        placeholder="Kabupaten/Kota"
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                padding: "2px", // Atur padding sesuai kebutuhan Anda
-                            }),
-                        }}
+                        options={kabupatenOptions}
+                        onChange={handleKabupatenChange}
+                        value={values.kabupaten}
                     />
                 </div>
             </div>
@@ -73,29 +94,14 @@ const CascadingCity = () => {
                 <div className="w-full mr-4 pb-4">
                     <h2 className="pb-2">Kecamatan</h2>
                     <Select
-                        options={cityOptions}
-                        value={selectedCity}
-                        onChange={(selectedOption) =>
-                            setSelectedCity(selectedOption)
-                        }
-                        isDisabled={!selectedProvince}
-                        placeholder="Pilih Kecamatan"
-                        styles={{
-                            control: (provided) => ({
-                                ...provided,
-                                padding: "2px", // Atur padding sesuai kebutuhan Anda
-                            }),
-                        }}
+                        options={kecamatanOptions}
+                        value={values.kecamatan}
                     />
                 </div>
-
                 <div className="w-full">
                     <h2 className="w-full md:w-[50%] pb-2 mr-4">Kode Pos</h2>
                     <input
                         type="number"
-                        value={zipCode}
-                        onChange={(e) => setZipCode(e.target.value)}
-                        placeholder="Masukkan Kode Pos"
                         className="w-full p-2 border-grey border-opacity-30 rounded"
                     />
                 </div>

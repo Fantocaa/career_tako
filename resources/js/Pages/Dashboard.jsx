@@ -13,24 +13,44 @@ import {
     LayoutDashboard,
     Settings,
 } from "lucide-react";
+import { Link, usePage } from "@inertiajs/react";
 
 export default function Dashboard({ auth }) {
+    const { page } = usePage();
+
     return (
-        <main>
+        <main className="w-1/4 h-full">
             <Sidebar>
-                <SidebarItem
-                    icon={<LayoutDashboard size={20} />}
-                    text="Dashboard"
-                />
-                <SidebarItem
-                    icon={<BarChart3 size={20} />}
-                    text="Beranda"
-                    active
-                />
-                <SidebarItem
-                    icon={<BarChart3 size={20} />}
-                    text="Lowongan Pekerjaan"
-                />
+                {/* {page && ( */}
+                <Link href="/dashboard">
+                    <SidebarItem
+                        icon={<LayoutDashboard size={20} />}
+                        text="Dashboard"
+                        // alert
+                        // active={page.url === "/dashboard"}
+                        // active
+                    />
+                </Link>
+                {/* )} */}
+                {/* {page && ( */}
+                <Link href="/dashboard/beranda">
+                    <SidebarItem
+                        icon={<BarChart3 size={20} />}
+                        text="Beranda"
+                        // active={page.url === "/dashboard/beranda"}
+                        // active
+                    />
+                </Link>
+                {/* )} */}
+                {/* {page && ( */}
+                <Link href="/dashboard/lowongan_pekerjaan">
+                    <SidebarItem
+                        icon={<UserCircle size={20} />}
+                        text="Lowongan"
+                        // active={page.url === "/dashboard/beranda"}
+                    />
+                </Link>
+                {/* )} */}
             </Sidebar>
         </main>
 

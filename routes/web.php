@@ -36,9 +36,9 @@ Route::get('/', function () {
 //     return Inertia::render('Welcome');
 // });
 
-Route::get('/formulir', function () {
-    return inertia('FormEmail');
-});
+// Route::get('/formulir', function () {
+//     return inertia('FormEmail');
+// });
 
 // Route::post('/upload', 'MdLokerController@uploadFile');
 Route::post('/upload', [MdLokerController::class, 'uploadFile']);
@@ -98,6 +98,8 @@ Route::get('/table/tambah_baru', function () {
     return Inertia::render('EditLoker');
 });
 
+Route::post('/formulir/submit/', [MdLokerController::class, 'submit_loker']);
+
 
 Route::get('/table/edit/{id}', [MdLokerController::class, 'edit_loker']);
 Route::get('/table/hapus/{id}', [MdLokerController::class, 'delete_loker']);
@@ -117,12 +119,14 @@ Route::post('/table/update_loker', [MdLokerController::class, 'update_loker']);
 Route::get('/job/internship/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
 Route::get('/job/profesional/{id}', [MdLokerController::class, 'show_detail_loker_pro']);
 
+Route::get('/job/formulir/{id}', [MdLokerController::class, 'show_lamar_loker']);
+
 Route::get('/form/view_intern', [MdLokerController::class, 'index_internship']);
 Route::get('/form/view_pro', [MdLokerController::class, 'index_profesional']);
 
 Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
-Route::get('/kabupaten', [MdLokerController::class, 'kabupaten']);
-Route::get('/kecamatan', [MdLokerController::class, 'kecamatan']);
+Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
+Route::get('/kecamatan/{id1}/{id2}', [MdLokerController::class, 'kecamatan']);
 
 Route::resource('form', MdLokerController::class);
 
@@ -131,7 +135,7 @@ Route::resource('form', MdLokerController::class);
 // Route::resource('form', FormController::class);
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('DashboardPage');
     // })->middleware(['auth', 'verified'])->name('dashboard');
 })->name('dashboard');
 

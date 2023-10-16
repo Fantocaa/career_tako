@@ -82,7 +82,7 @@ const DetailLoker = () => {
                         <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px] "></div>
                     </div>
                     {/* Harusnya disini baru isi RichText */}
-                    <div className="pt-6">{values.isi_konten}</div>
+                    <div className="pt-6">{values.deskripsi}</div>
                     {/* Yauda dibawah cuman data dummy aja */}
                     {/* <div>
                         <div>

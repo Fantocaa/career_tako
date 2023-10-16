@@ -7,11 +7,13 @@ use App\Models\md_loker;
 use App\Http\Requests\Storemd_lokerRequest;
 use App\Http\Requests\Updatemd_lokerRequest;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\Mail;
+// use App\Mail\MailLoker;
 
 class MdLokerController extends Controller
 {
@@ -20,6 +22,7 @@ class MdLokerController extends Controller
      */
     public function index()
     {
+
         $posts = md_loker::get();
 
         //return view
@@ -29,21 +32,20 @@ class MdLokerController extends Controller
 
     public function uploadFile(Request $request)
     {
-        dd($request->all());
-        $uploadedFile = $request->file('fileUpload');
+        // // dd($request->all());
+        // $uploadedFile = $request->file('fileUpload');
 
-        // Validasi file jika diperlukan
-        // Simpan file di direktori yang sesuai
-        $path = $uploadedFile->store('public/cv');
+        // // Validasi file jika diperlukan
+        // // Simpan file di direktori yang sesuai
+        // $path = $uploadedFile->store('public/cv');
 
-        // Ubah path untuk mengakses file publik
-        $publicPath = Storage::url($path);
+        // // Ubah path untuk mengakses file publik
+        // $publicPath = Storage::url($path);
 
-        // Selain menyimpan file, Anda juga dapat memproses data lain di sini jika diperlukan
+        // // Selain menyimpan file, Anda juga dapat memproses data lain di sini jika diperlukan
 
-        return response()->json(['message' => 'File berhasil diunggah.', 'filePath' => $publicPath]);
+        // return response()->json(['message' => 'File berhasil diunggah.', 'filePath' => $publicPath]);
     }
-
 
     public function provinsi()
     {
@@ -59,8 +61,8 @@ class MdLokerController extends Controller
 
     public function kecamatan($id, $filter)
     {
-        $filter1 = $filter + '%';
-        $query = DB::select("SELECT * FROM wilayah WHERE LEFT(kode, 2 )=$id AND CHAR_LENGTH(kode)=8 and kode LIKE $filter1  ORDER BY `wilayah`.`kode` ASC");
+        $filter1 = $filter . '%';
+        $query = DB::select("SELECT * FROM wilayah WHERE LEFT(kode, 2 )=$id AND CHAR_LENGTH(kode)=8 and kode LIKE '$filter1'  ORDER BY `wilayah`.`kode` ASC");
         return response()->json($query);
     }
 
@@ -162,7 +164,6 @@ class MdLokerController extends Controller
         return response()->json(['errors' => $request->validator->errors()]);
     }
 
-
     /**
      * Display the specified resource.
      */
@@ -190,6 +191,17 @@ class MdLokerController extends Controller
         ]);
     }
 
+    public function show_lamar_loker($id)
+    {
+        // $posts = md_loker::get();
+        // return redirect("/formulir/");
+        $md_loker = md_loker::find($id);
+        // dd($md_loker);
+        return Inertia::render('FormEmail', [
+            'md_loker' => $md_loker,
+        ]);
+    }
+
     public function show_detail_loker_intern($id)
     {
         // dd();
@@ -210,6 +222,49 @@ class MdLokerController extends Controller
         return Inertia::render('DetailLokerPro', [
             'md_loker' => $md_loker,
         ]);
+    }
+
+
+    public function submit_loker(Request $request)
+    {
+        $data["email"] = "fantocaa17@gmail.com";
+        $data["title"] = "Meong Uwu";
+        $data["body"] = "Selamat Datang";
+        $data["pekerjaan"] = $request->pekerjaan;
+        $data["jenis_pekerjaan"] = $request->jenis_pekerjaan;
+        $data["perusahaan"] = $request->perusahaan;
+        $data["nama"] = $request->nama;
+        $data["jenis_kelamin"] = $request->jenis_kelamin;
+        $data["agama"] = $request->agama;
+        $data["tanggal_lahir"] = $request->tanggal_lahir;
+        $data["emails"] = $request->emails;
+        $data["no_telp"] = $request->no_telp;
+        $data["provinsi"] = $request->provinsi;
+        $data["kabupaten"] = $request->kabupaten;
+        $data["kecamatan"] = $request->kecamatan;
+        $data["kodepos"] = $request->kodepos;
+        $data["alamat"] = $request->alamat;
+        $data["gaji"] = $request->gaji;
+
+        dd($data);
+
+        $file = $request->file('file'); // Dapatkan objek file dari permintaan
+
+        if ($file) {
+            // Pastikan file ada sebelum melampirkannya
+            Mail::send('Test_mail', $data, function ($message) use ($data, $file) {
+                $message->to($data["email"])
+                    ->subject($data["title"]);
+                $message->attach($file->getRealPath(), [
+                    'as' => 'CV.pdf', // Nama file yang akan digunakan dalam email
+                    'mime' => 'application/pdf', // MIME type file PDF
+                ]);
+            });
+
+            echo "Email berhasil dikirim";
+        } else {
+            echo "File tidak ditemukan dalam permintaan.";
+        }
     }
     /**
      * Update the specified resource in storage.

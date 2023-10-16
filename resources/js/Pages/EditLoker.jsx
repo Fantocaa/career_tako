@@ -117,7 +117,7 @@ const EditLoker = () => {
 
             // Redirect ke halaman lain jika diperlukan
             // router.push("/table"); // Ganti dengan halaman yang sesuai
-            router.get("/table");
+            router.get("/dashboard/lowongan_pekerjaan");
         } catch (error) {
             // console.error("Error sending data:", error);
 
@@ -233,8 +233,8 @@ const EditLoker = () => {
                                 placeholder="Pilih Jenis Pekerjaan" // Anda dapat menyertakan placeholder jika diperlukan
                             >
                                 <option value="">Pilih Jenis Pekerjaan</option>
-                                <option value="internship">Internship</option>
-                                <option value="profesional">Profesional</option>
+                                <option value="Internship">Internship</option>
+                                <option value="Profesional">Profesional</option>
                             </select>
                             {errors.jenis_pekerjaan && (
                                 <span className="text-RedTako">
@@ -317,7 +317,9 @@ const EditLoker = () => {
                             type="submit"
                             className="bg-RedTako text-white py-2 px-4 rounded-lg"
                         >
-                            <Link href="/table">Batal</Link>
+                            <Link href="/dashboard/lowongan_pekerjaan">
+                                Batal
+                            </Link>
                         </button>
                     </div>
                 </form>
