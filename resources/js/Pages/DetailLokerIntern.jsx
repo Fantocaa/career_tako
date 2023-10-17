@@ -82,7 +82,12 @@ const DetailLoker = () => {
                         <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px] "></div>
                     </div>
                     {/* Harusnya disini baru isi RichText */}
-                    <div className="pt-6">{values.deskripsi}</div>
+                    <div
+                        dangerouslySetInnerHTML={{ __html: values.deskripsi }}
+                        className="pt-6"
+                    >
+                        {/* {values.deskripsi} */}
+                    </div>
                     {/* Yauda dibawah cuman data dummy aja */}
                     {/* <div>
                         <div>
@@ -165,7 +170,7 @@ const DetailLoker = () => {
                                 </Link>
                             </div>
                             <div className="w-full">
-                                <Link href="/formulir">
+                                <Link href={`/job/formulir/${item.id}`}>
                                     <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
                                         Lamar
                                     </button>

@@ -82,78 +82,12 @@ const DetailLoker = () => {
                         <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px] "></div>
                     </div>
                     {/* Harusnya disini baru isi RichText */}
-                    <div className="pt-6">{values.deskripsi}</div>
-                    {/* Yauda dibawah cuman data dummy aja */}
-                    {/* <div>
-                        <div>
-                            <h1 className="font-bold pb-2 pt-6">
-                                Deskripsi Pekerjaan
-                            </h1>
-                            <ul className="text-xs flex flex-wrap gap-2 list-decimal list-outside ml-3 lg:text-sm">
-                                <li>
-                                    Mengembangkan rencana merek dan strategi
-                                    pemasaran yang efektif dan inovatif untuk
-                                    membangun merek yang kuat
-                                </li>
-                                <li>
-                                    Menciptakan pesan merek yang akan
-                                    meningkatkan penjualan
-                                </li>
-                                <li>
-                                    Mengembangkan strategi merek untuk
-                                    meningkatkan citra merek
-                                </li>
-                                <li>
-                                    Mengelola agensi dan klien eksternal untuk
-                                    meningkatkan penjualan pasar
-                                </li>
-                                <li>
-                                    Bekerja sama erat dengan tim berbeda di
-                                    perusahaan untuk memastikan konsistensi
-                                    merek
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h1 className="font-bold pb-2 pt-6">Persyaratan</h1>
-                            <ul className="text-xs flex flex-col gap-2 list-decimal list-outside ml-3">
-                                <li>Laki-laki</li>
-                                <li>
-                                    Domisili Surabaya dan sekitarnya (lebih
-                                    disukai)
-                                </li>
-                                <li>Pendidikan minimal S1 semua jurusan</li>
-                                <li>
-                                    Pengalaman minimal 2 tahun di bidang
-                                    pemasaran
-                                </li>
-                                <li>
-                                    Kemampuan komunikasi verbal dan tertulis
-                                    yang sangat baik
-                                </li>
-                                <li>Kemampuan riset dan analisis yang kuat</li>
-                                <li>
-                                    Kemampuan komunikasi verbal dan tertulis
-                                    yang sangat baik
-                                </li>
-                                <li>
-                                    Kemampuan komunikasi verbal dan tertulis
-                                    yang sangat baik
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="pb-8">
-                            <h1 className="font-bold pb-2 pt-6">
-                                Kemampuan yang Dibutuhkan
-                            </h1>
-                            <ul className="text-xs flex flex-col gap-2 list-decimal list-outside ml-3">
-                                <li>Strategi Marketing</li>
-                                <li>Negosiasi</li>
-                                <li>Problem Solving</li>
-                                <li>Time Management</li>
-                            </ul>
-                        </div>
-                    </div> */}
+                    <div
+                        className="pt-6"
+                        dangerouslySetInnerHTML={{ __html: values.deskripsi }}
+                    >
+                        {/* {values.deskripsi} */}
+                    </div>
                     <div className="lg:hidden">
                         {/* <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px]"></div> */}
                         <div className="flex pt-8 gap-2 ">

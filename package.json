@@ -32,6 +32,7 @@
         "@mui/material": "^5.14.11",
         "aos": "^2.3.4",
         "datatables.net-dt": "^1.13.6",
+        "dompurify": "^3.0.6",
         "lucide-react": "^0.284.0",
         "postcss-import": "^15.1.0",
         "postcss-preset-env": "^9.2.0",

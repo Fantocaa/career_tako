@@ -1,10 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Footer from "@/Components/Shared/Footer";
-import SelectGender from "@/Components/Form/SelectGender";
-import CascadingCity from "@/Components/Form/CascadingCity";
-import SelectProgram from "@/Components/Form/SelectProgram";
-import SelectReligion from "@/Components/Form/SelectReligion";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import { Link, router, usePage } from "@inertiajs/react";
 import Select from "react-select";
@@ -32,6 +28,9 @@ const FormEmail = () => {
     const [isKabupatenSelected, setIsKabupatenSelected] = useState(false);
     const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
 
+    const disabledInputClasses =
+        "text-DarkTako text-opacity-50 bg-grey bg-opacity-10";
+
     const [values, setValues] = useState({
         password: "meong",
         pekerjaan: md_loker.pekerjaan,
@@ -42,9 +41,12 @@ const FormEmail = () => {
         agama: "",
         tanggal_lahir: "",
         emails: "",
-        provinsi: provinsiOptions.label,
-        kabupaten: kabupatenOptions.label,
-        kecamatan: kecamatanOptions.label,
+        // provinsi: provinsiOptions.label,
+        // kabupaten: kabupatenOptions.label,
+        // kecamatan: kecamatanOptions.label,
+        provinsi: "",
+        kabupaten: "",
+        kecamatan: "",
         kodepos: "",
         alamat: "",
         no_telp: "",
@@ -103,7 +105,6 @@ const FormEmail = () => {
     // Fungsi yang dipanggil saat memilih kabupaten/kota
     const handleKabupatenChange = (selectedOption) => {
         setIsKabupatenSelected(true); // Setel state menjadi true saat provinsi dipilih
-        setIsKecamatanSelected(true); // Setel state menjadi true saat kabupaten dipilih
 
         // Ambil kode kabupaten/kota yang dipilih
         const kodeKabupaten = selectedOption.value;
@@ -124,6 +125,10 @@ const FormEmail = () => {
             .catch((error) => {
                 console.error("Error fetching kecamatan data:", error);
             });
+    };
+
+    const handleKecamatanChange = (selectedOption) => {
+        setIsKecamatanSelected(true); // Setel state menjadi true saat kecamatan dipilih
     };
 
     async function onSubmit(e) {
@@ -156,9 +161,6 @@ const FormEmail = () => {
 
             // Jika Anda ingin melihat nilai spesifik dari formData, misalnya:
 
-            console.log("Jenis Kelamin:", formData.get("jenis_kelamin"));
-            console.log("Agama:", formData.get("agama"));
-
             console.log("Provinsi:", formData.get("provinsi"));
             console.log("Kab:", formData.get("kabupaten"));
             console.log("Kec:", formData.get("kecamatan"));
@@ -169,32 +171,29 @@ const FormEmail = () => {
                     "Content-Type": "multipart/form-data", // Pastikan Anda menetapkan tipe konten sebagai multipart/form-data
                 },
             });
-
-            // const response = await Axios.post("/form");
-
-            // Jika permintaan berhasil, perbarui nomor dengan nomor berikutnya
-            // setNomor(response.data.id + 1);
+            // Membersihkan formulir jika berhasil
+            reset();
 
             // Bersihkan formulir
-            setValues({
-                password: "meong",
-                pekerjaan: md_loker.pekerjaan,
-                jenis_pekerjaan: md_loker.jenis_pekerjaan,
-                perusahaan: md_loker.perusahaan,
-                nama: "",
-                jenis_kelamin: "",
-                agama: "",
-                tanggal_lahir: "",
-                emails: "",
-                provinsi: provinsiOptions.label,
-                kabupaten: kabupatenOptions.label,
-                kecamatan: kecamatanOptions.label,
-                kodepos: "",
-                alamat: "",
-                no_telp: "",
-                gaji: "",
-                file: "",
-            });
+            // setValues({
+            //     password: "meong",
+            //     pekerjaan: md_loker.pekerjaan,
+            //     jenis_pekerjaan: md_loker.jenis_pekerjaan,
+            //     perusahaan: md_loker.perusahaan,
+            //     nama: "",
+            //     jenis_kelamin: "",
+            //     agama: "",
+            //     tanggal_lahir: "",
+            //     emails: "",
+            //     provinsi: provinsiOptions.label,
+            //     kabupaten: kabupatenOptions.label,
+            //     kecamatan: kecamatanOptions.label,
+            //     kodepos: "",
+            //     alamat: "",
+            //     no_telp: "",
+            //     gaji: "",
+            //     file: "",
+            // });
 
             // Redirect ke halaman lain jika diperlukan
             // router.get("/dashboard/lowongan_pekerjaan");
@@ -219,9 +218,9 @@ const FormEmail = () => {
     return (
         <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
             <NavElse />
-            <div className="bg-BgTako px-32 py-32 ">
-                <div className="bg-white mx-auto rounded-lg px-4">
-                    <h1 className="font-bold text-2xl text-center py-8">
+            <div className="bg-BgTako px-4 md:px-8 lg:px-32 py-32 ">
+                <div className="bg-white mx-auto rounded-lg px-2 md:px-4">
+                    <h1 className="font-bold text-xl md:text-2xl  text-center py-8">
                         Registration Form
                     </h1>
                     <form
@@ -231,7 +230,7 @@ const FormEmail = () => {
                     >
                         <div className="flex gap-4 flex-wrap">
                             {/* Pekerjaan */}
-                            <div className="w-[49%]">
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                 <h1 className="pb-2">
                                     Pekerjaan
                                     <span className="text-RedTako">*</span>
@@ -245,15 +244,10 @@ const FormEmail = () => {
                                     value={values.pekerjaan}
                                     id="pekerjaan"
                                 />
-                                {/* {errors.nama && (
-                                    <span className="text-RedTako">
-                                        Tolong Nama jangan sampai kosong
-                                    </span>
-                                )} */}
                             </div>
 
                             {/* Program */}
-                            <div className="w-[49%]">
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                 <h1 className="pb-2">
                                     Program
                                     <span className="text-RedTako">*</span>
@@ -267,15 +261,10 @@ const FormEmail = () => {
                                     value={values.jenis_pekerjaan}
                                     id="program"
                                 />
-                                {/* {errors.nama && (
-                                    <span className="text-RedTako">
-                                        Tolong Nama jangan sampai kosong
-                                    </span>
-                                )} */}
                             </div>
 
                             {/* Perusahaan */}
-                            <div className="w-[49%]">
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                 <h1 className="pb-2">
                                     Perusahaan
                                     <span className="text-RedTako">*</span>
@@ -289,12 +278,11 @@ const FormEmail = () => {
                                     value={values.perusahaan}
                                     id="perusahaan"
                                 />
-                                {/* {errors.nama && (
-                                    <span className="text-RedTako">
-                                        Tolong Nama jangan sampai kosong
-                                    </span>
-                                )} */}
                             </div>
+                        </div>
+
+                        <div className="py-4 md:py-8">
+                            <div className="border-t w-full border-DarkTako border-opacity-25" />
                         </div>
 
                         {/* Nama */}
@@ -320,7 +308,7 @@ const FormEmail = () => {
 
                         <div className="flex gap-4 flex-wrap">
                             {/* Gender */}
-                            <div className="w-[49.1%]">
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                 <h1 className="pb-2">
                                     Jenis Kelamin
                                     <span className="text-RedTako">*</span>
@@ -335,6 +323,7 @@ const FormEmail = () => {
                                     id="jenis_kelamin"
                                     onChange={handleChange}
                                 >
+                                    <option>Pilih Jenis Kelamin Anda</option>
                                     <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                     <option value="Lainnya">Lainnya</option>
@@ -346,7 +335,7 @@ const FormEmail = () => {
                                 )}
                             </div>
                             {/* Agama */}
-                            <div className="w-[49.1%]">
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                 <h1 className="pb-2">
                                     Agama<span className="text-RedTako">*</span>
                                 </h1>
@@ -358,6 +347,7 @@ const FormEmail = () => {
                                     id="agama"
                                     onChange={handleChange}
                                 >
+                                    <option>Pilih Agama Anda</option>
                                     <option value="Islam">Islam</option>
                                     <option value="Kristen">Kristen</option>
                                     <option value="Hindu">Hindu</option>
@@ -365,7 +355,6 @@ const FormEmail = () => {
                                     <option value="Kong Hu Chu">
                                         Kong Hu Chu
                                     </option>
-                                    {/* <option value="Lainnya">Lainnya</option> */}
                                 </select>
                                 {errors.agama && (
                                     <span className="text-RedTako">
@@ -375,7 +364,7 @@ const FormEmail = () => {
                             </div>
 
                             {/* Tanggal Lahir */}
-                            <div className="w-[49.1%]">
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                 <h1 className="pb-2">
                                     Tanggal Lahir
                                     <span className="text-RedTako">*</span>
@@ -397,7 +386,7 @@ const FormEmail = () => {
                                 )}
                             </div>
                             {/* Email */}
-                            <div className="w-[49.1%]">
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                 <h1 className="pb-2">
                                     Email<span className="text-RedTako">*</span>
                                 </h1>
@@ -418,7 +407,7 @@ const FormEmail = () => {
                             </div>
 
                             {/* No Telp*/}
-                            <div className="w-[49.1%]">
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                 <h1 className="pb-2">
                                     No. Telpon
                                     <span className="text-RedTako">*</span>
@@ -440,7 +429,7 @@ const FormEmail = () => {
                         </div>
 
                         {/* Tempat Lahir*/}
-                        <div className="w-full">
+                        <div className="w-full md:py-8">
                             <h1 className="pb-4">
                                 Tempat Lahir
                                 <span className="text-RedTako">*</span>
@@ -453,7 +442,12 @@ const FormEmail = () => {
                                         <Select
                                             options={provinsiOptions}
                                             onChange={handleProvinsiChange}
-                                            value={values.provinsi}
+                                            // value={values.provinsi}
+                                            value={provinsiOptions.find(
+                                                (option) =>
+                                                    option.label ===
+                                                    values.provinsi
+                                            )}
                                             id="provinsi"
                                             placeholder="Pilih Provinsi Anda"
                                             styles={{
@@ -461,11 +455,6 @@ const FormEmail = () => {
                                                     ...base,
                                                     padding: "2px",
                                                 }),
-                                                // singleValue: (base) => ({
-                                                //     ...base,
-                                                //     color: "blue",
-                                                // }),
-                                                // Tambahkan properti gaya lain sesuai kebutuhan
                                             }}
                                         />
                                     </div>
@@ -474,7 +463,12 @@ const FormEmail = () => {
                                         <Select
                                             options={kabupatenOptions}
                                             onChange={handleKabupatenChange}
-                                            value={values.kabupaten}
+                                            // value={values.kabupaten}
+                                            value={kabupatenOptions.find(
+                                                (option) =>
+                                                    option.label ===
+                                                    values.kabupaten
+                                            )}
                                             id="kabupaten"
                                             isDisabled={!isProvinsiSelected}
                                             placeholder="Pilih Kabupaten/Kota Anda"
@@ -483,11 +477,6 @@ const FormEmail = () => {
                                                     ...base,
                                                     padding: "2px",
                                                 }),
-                                                // singleValue: (base) => ({
-                                                //     ...base,
-                                                //     color: "blue",
-                                                // }),
-                                                // Tambahkan properti gaya lain sesuai kebutuhan
                                             }}
                                         />
                                     </div>
@@ -497,10 +486,17 @@ const FormEmail = () => {
                                         <h2 className="pb-2">Kecamatan</h2>
                                         <Select
                                             options={kecamatanOptions}
-                                            value={values.kecamatan}
+                                            // value={values.kecamatan}
+                                            value={kecamatanOptions.find(
+                                                (option) =>
+                                                    option.label ===
+                                                    values.kecamatan
+                                            )}
+                                            onChange={handleKecamatanChange}
                                             id="kecamatan"
                                             className="w-full"
                                             isDisabled={!isKabupatenSelected}
+                                            placeholder="Pilih Kecamatan Anda"
                                         />
                                     </div>
                                     <div className="w-full">
@@ -509,11 +505,16 @@ const FormEmail = () => {
                                         </h2>
                                         <input
                                             type="number"
-                                            className="w-full p-2 py-[6px] border-grey border-opacity-30 rounded"
+                                            className={`w-full p-2 py-[6px] border-grey border-opacity-30 rounded ${
+                                                !isKecamatanSelected
+                                                    ? disabledInputClasses
+                                                    : ""
+                                            }`}
                                             value={values.kodepos}
                                             id="kodepos"
                                             onChange={handleChange}
                                             disabled={!isKecamatanSelected}
+                                            placeholder="Masukkan Kode Pos Anda"
                                         />
                                     </div>
                                 </div>
@@ -537,6 +538,28 @@ const FormEmail = () => {
                             {errors.alamattt && (
                                 <span className="text-RedTako">
                                     Alamat Tempat Tinggal jangan sampai kosong
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Promosi*/}
+                        <div className="w-full">
+                            <h1 className="pb-2">
+                                Prommosikan Diri Anda
+                                <span className="text-RedTako">*</span>
+                            </h1>
+                            <textarea
+                                {...register("promosi", { required: true })}
+                                className="w-full p-2 border-grey border-opacity-30 rounded"
+                                placeholder="Masukkan Promosi"
+                                value={values.promosi}
+                                id="promosi"
+                                onChange={handleChange}
+                                rows={4}
+                            />
+                            {errors.promositt && (
+                                <span className="text-RedTako">
+                                    promosi Tempat Tinggal jangan sampai kosong
                                 </span>
                             )}
                         </div>

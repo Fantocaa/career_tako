@@ -63,7 +63,7 @@ const SelectJobIntern = () => {
                             </Link>
                         </div>
                         <div className="w-full">
-                            <Link href="/formulir">
+                            <Link href={`/job/formulir/${item.id}`}>
                                 <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
                                     Lamar
                                 </button>

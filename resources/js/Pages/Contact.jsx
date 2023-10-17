@@ -9,7 +9,7 @@ const Contact = () => {
         <Layout pageTitle="Contact | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                 <NavElse />
-                <div className="container flex mx-auto px-4 md:px-8 xl:px-16 pt-24 pb-16 md:py-8 justify-between items-center">
+                <div className="container flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 justify-between items-center">
                     <div className="bg-white rounded-lg p-6 md:flex items-center gap-4">
                         <div className="hidden md:block md:w-1/2 ">
                             <img src="images/contact.svg" alt="" className="" />

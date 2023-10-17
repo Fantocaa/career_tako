@@ -246,11 +246,13 @@ class MdLokerController extends Controller
         $data["alamat"] = $request->alamat;
         $data["gaji"] = $request->gaji;
 
-        dd($data);
+        // dd($data);
 
         $file = $request->file('file'); // Dapatkan objek file dari permintaan
 
-        if ($file) {
+        $maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+        if ($file->getSize() <= $maxSize) {
             // Pastikan file ada sebelum melampirkannya
             Mail::send('Test_mail', $data, function ($message) use ($data, $file) {
                 $message->to($data["email"])
@@ -289,7 +291,6 @@ class MdLokerController extends Controller
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
-
         ]);
 
         if ($request->password == 'meong') {

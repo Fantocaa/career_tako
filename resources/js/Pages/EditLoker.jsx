@@ -7,6 +7,7 @@ import { Link, router, usePage } from "@inertiajs/react";
 import QuillEditor from "@/Components/Dashboard/QuillEditor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import DOMPurify from "dompurify";
 
 const EditLoker = () => {
     // const { quill, quillRef } = useQuill();
@@ -31,8 +32,22 @@ const EditLoker = () => {
             batas_lamaran: "",
             isi_konten: "",
             deskripsi: "",
+            skill: "",
         },
     });
+
+    const [skills, setSkills] = useState([""]); // State untuk menyimpan keterampilan
+    const addNewSkill = () => {
+        if (skills.length < 6) {
+            const newSkills = [...skills, ""];
+            setSkills(newSkills);
+        }
+    };
+    const removeSkill = (index) => {
+        const newSkills = [...skills];
+        newSkills.splice(index, 1);
+        setSkills(newSkills);
+    };
 
     const [nomor, setNomor] = useState(""); // State untuk menyimpan nomor
     const [values, setValues] = useState({
@@ -43,6 +58,7 @@ const EditLoker = () => {
         batas_lamaran: "", // Inisialisasi properti batas_lamaran
         isi_konten: "",
         deskripsi: "",
+        skill: "",
     });
 
     const initialSelectValues = {
@@ -98,9 +114,14 @@ const EditLoker = () => {
         e.preventDefault();
 
         try {
+            // Membersihkan deskripsi dari konten HTML yang tidak diinginkan
+            const cleanedDeskripsi = DOMPurify.sanitize(values.deskripsi);
             // Kirim data ke server
-            const response = await Axios.post("/form", values);
-            // const response = await Axios.post("/form");
+            // const response = await Axios.post("/form", ...values,  );
+            const response = await Axios.post("/form", {
+                ...values,
+                deskripsi: cleanedDeskripsi,
+            });
 
             // Jika permintaan berhasil, perbarui nomor dengan nomor berikutnya
             setNomor(response.data.id + 1);
@@ -113,6 +134,7 @@ const EditLoker = () => {
                 jenis_pekerjaan: "",
                 batas_lamaran: "", // Reset nilai batas_lamaran
                 isi_konten: "",
+                skill: "",
             });
 
             // Redirect ke halaman lain jika diperlukan
@@ -196,23 +218,6 @@ const EditLoker = () => {
                         </div>
                     </div>
 
-                    {/* <div className="w-full">
-                    <h1 className="pb-2">Jenis Pekerjaan</h1>
-                    <input
-                        {...register("jenis_pekerjaan", { required: true })}
-                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                        placeholder="Masukkan NIK Anda"
-                        id="jenis_pekerjaan"
-                        value={values.jenis_pekerjaan}
-                        onChange={handleChange}
-                    />
-                    {errors.nik && (
-                        <span className="text-RedTako">
-                            Jenis Pekerjaan jangan sampai kosong
-                        </span>
-                    )}
-                </div> */}
-
                     <div className="flex gap-8 py-4">
                         <div className="w-full">
                             <h1 className="pb-2">Jenis Pekerjaan</h1>
@@ -268,6 +273,41 @@ const EditLoker = () => {
                             )}
                         </div>
                     </div>
+
+                    {/* <div className="w-full">
+                        <div className="flex justify-between">
+                            <h1 className="pb-2">Skill yang dibutuhkan</h1>
+                            <button onClick={addNewSkill}>Tambah baru</button>
+                        </div>
+                        {skills.map((skill, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-4"
+                            >
+                                <input
+                                    {...register(`skill[${index}]`, {
+                                        required: true,
+                                    })}
+                                    className="w-1/6 p-2 border-grey border-opacity-30 rounded"
+                                    placeholder="Masukkan Skill"
+                                    value={skill}
+                                    onChange={(e) => {
+                                        const newSkills = [...skills];
+                                        newSkills[index] = e.target.value;
+                                        setSkills(newSkills);
+                                    }}
+                                />
+                                <span onClick={() => removeSkill(index)}>
+                                    Hapus
+                                </span>
+                            </div>
+                        ))}
+                        {errors.skill && (
+                            <span className="text-RedTako">
+                                Skill jangan sampai kosong
+                            </span>
+                        )}
+                    </div> */}
 
                     <div className="w-full">
                         <h1 className="pb-2">Deskripsi</h1>
