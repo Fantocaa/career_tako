@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@/Layouts/Layout";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import PerusahaanCard from "@/Components/Loker/PerusahaanCard";
 
 const LokerNew = () => {
+    // Gunakan useState dan useEffect untuk memuat tampilan Blade
+    // Anda dapat menggunakan metode fetch() atau Axios untuk mengambil tampilan Blade dari server.
+    const [bladeView, setBladeView] = useState(null);
+
+    useEffect(() => {
+        // Lakukan permintaan ke server untuk mendapatkan tampilan Blade
+        fetch("/lowongan_kerja") // Ganti dengan rute yang sesuai
+            .then((response) => response.text())
+            .then((data) => setBladeView(data));
+    }, []);
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                 <NavElse />
                 <div className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center bg-BlueTako text-white">
                     <div className="text-center container mx-auto">
-                        <div className="w-full">
+                        <div dangerouslySetInnerHTML={{ __html: bladeView }} />
+                        {/* <div className="w-full">
                             <h1 className="font-semibold text-2xl">
                                 Temukan Lowongan Berdasarkan Perusahaan
                             </h1>
@@ -89,7 +100,7 @@ const LokerNew = () => {
                             <a href="#item4" className="btn btn-xs">
                                 4
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="container w-full flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 justify-between items-center">

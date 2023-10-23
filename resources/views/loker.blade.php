@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav id="navbar">
+    <nav id="example">
         {{-- @include('') --}}
     </nav>
     <div class="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center bg-BlueTako text-white font-inter"
@@ -527,7 +527,8 @@
         </div>
     </div>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    {{-- <script type="module" src="{{ asset('js/app.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <script src="{{ asset('./js/app.js') }}"></script>
     {{-- <script src="/js/app.js"></script> --}}
     <script>
         var vm = new Vue({

@@ -234,6 +234,7 @@ class MdLokerController extends Controller
         $data["kodepos"] = $request->kodepos;
         $data["alamat"] = $request->alamat;
         $data["gaji"] = $request->gaji;
+        $data['promosi'] = $request->promosi;
 
         // dd($data);
 

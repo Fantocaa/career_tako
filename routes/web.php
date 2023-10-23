@@ -49,9 +49,9 @@ Route::get('/job/profesional', function () {
     return Inertia::render('Profesional');
 });
 
-// Route::get('/loker', function () {
-//     return Inertia::render('app');
-// });
+Route::get('/loker', function () {
+    return Inertia::render('LokerNew');
+});
 
 // Route::get('/lowongan_kerja', function () {
 //     return view('loker.loker');

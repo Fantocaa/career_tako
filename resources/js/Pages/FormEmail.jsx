@@ -52,6 +52,7 @@ const FormEmail = () => {
         no_telp: "",
         gaji: "",
         file: "",
+        promosi: "",
     });
 
     const handleChange = (e) => {
@@ -153,7 +154,6 @@ const FormEmail = () => {
             formData.append("pekerjaan", values.pekerjaan);
             formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
             formData.append("perusahaan", values.perusahaan);
-
             formData.append("nama", values.nama);
             formData.append("jenis_kelamin", values.jenis_kelamin);
             formData.append("tanggal_lahir", values.tanggal_lahir);
@@ -166,6 +166,7 @@ const FormEmail = () => {
             formData.append("kodepos", values.kodepos);
             formData.append("alamat", values.alamat);
             formData.append("gaji", values.gaji);
+            formData.append("promosi", values.promosi);
 
             formData.append("file", e.target.fileUpload.files[0]); // Ambil file dari input file
 
@@ -184,32 +185,33 @@ const FormEmail = () => {
                 },
             });
             // Membersihkan formulir jika berhasil
-            reset();
+            // reset();
 
             // Bersihkan formulir
-            // setValues({
-            //     password: "meong",
-            //     pekerjaan: md_loker.pekerjaan,
-            //     jenis_pekerjaan: md_loker.jenis_pekerjaan,
-            //     perusahaan: md_loker.perusahaan,
-            //     nama: "",
-            //     jenis_kelamin: "",
-            //     agama: "",
-            //     tanggal_lahir: "",
-            //     emails: "",
-            //     provinsi: provinsiOptions.label,
-            //     kabupaten: kabupatenOptions.label,
-            //     kecamatan: kecamatanOptions.label,
-            //     kodepos: "",
-            //     alamat: "",
-            //     no_telp: "",
-            //     gaji: "",
-            //     file: "",
-            // });
+            setValues({
+                password: "meong",
+                pekerjaan: md_loker.pekerjaan,
+                jenis_pekerjaan: md_loker.jenis_pekerjaan,
+                perusahaan: md_loker.perusahaan,
+                nama: "",
+                jenis_kelamin: "",
+                agama: "",
+                tanggal_lahir: "",
+                emails: "",
+                provinsi: provinsiOptions.label,
+                kabupaten: kabupatenOptions.label,
+                kecamatan: kecamatanOptions.label,
+                kodepos: "",
+                alamat: "",
+                no_telp: "",
+                gaji: "",
+                file: "",
+                promosi: "",
+            });
 
             // Redirect ke halaman lain jika diperlukan
             // router.get("/dashboard/lowongan_pekerjaan");
-            // router.get("/finish");
+            router.get("/finish");
         } catch (error) {
             if (error.response) {
                 // Jika respons error dari server
