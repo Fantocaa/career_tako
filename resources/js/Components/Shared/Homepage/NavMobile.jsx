@@ -135,7 +135,7 @@ const NavMobile = () => {
                             </Link>
                             <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
-                                href="/job"
+                                href="/lowongan_kerja"
                             >
                                 Lowongan Pekerjaan
                             </Link>

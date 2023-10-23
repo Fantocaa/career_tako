@@ -59,7 +59,7 @@ const Navbar = () => {
                             className={`mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold ${
                                 scrolled ? "text-scrolled" : "text-transparent"
                             }`}
-                            href="/job"
+                            href="/lowongan_kerja"
                         >
                             Lowongan Pekerjaan
                         </Link>

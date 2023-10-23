@@ -84,6 +84,12 @@ const FormEmail = () => {
     const handleProvinsiChange = (selectedOption) => {
         setIsProvinsiSelected(true); // Setel state menjadi true saat provinsi dipilih
         setSelectedProvinsi(selectedOption); // Simpan nilai provinsi yang dipilih
+
+        // console.log(selectedOption.label);
+
+        values.provinsi = selectedOption.label;
+
+        // console.log(values.provinsi);
         // Ambil kode provinsi yang dipilih
         const kodeProvinsi = selectedOption.value;
 
@@ -109,6 +115,8 @@ const FormEmail = () => {
         // Ambil kode kabupaten/kota yang dipilih
         const kodeKabupaten = selectedOption.value;
 
+        values.kabupaten = selectedOption.label;
+
         // Ambil kode provinsi yang dipilih
         const kodeProvinsi = selectedProvinsi.value;
 
@@ -129,6 +137,10 @@ const FormEmail = () => {
 
     const handleKecamatanChange = (selectedOption) => {
         setIsKecamatanSelected(true); // Setel state menjadi true saat kecamatan dipilih
+
+        const kodeKecamatan = selectedOption.value;
+
+        values.kecamatan = selectedOption.label;
     };
 
     async function onSubmit(e) {

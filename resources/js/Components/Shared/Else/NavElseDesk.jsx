@@ -52,12 +52,18 @@ const NavElseDesk = () => {
                         >
                             Profil Perusahaan
                         </Link>
-                        <Link
+                        {/* <Link
                             className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
-                            href="/job"
+                            href="/lowongan_kerja"
                         >
                             Lowongan Pekerjaan
-                        </Link>
+                        </Link> */}
+                        <a
+                            className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
+                            href="/lowongan_kerja"
+                        >
+                            Lowongan Pekerjaan
+                        </a>
                         <Link
                             className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
                             href="/faq"

@@ -48,7 +48,10 @@
         "react-scroll": "^1.8.9",
         "react-select": "^5.7.5",
         "react-slick": "^0.29.0",
-        "styled-components": "^6.0.8"
+        "react-supervisor": "^4.0.1",
+        "styled-components": "^6.0.8",
+        "sweetalert2": "^11.7.32",
+        "ziggy-js": "^1.8.1"
     },
     "peerDependencies": {
         "react": "^17.0.0 || ^18.0.0",

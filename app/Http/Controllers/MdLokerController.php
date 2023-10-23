@@ -30,21 +30,9 @@ class MdLokerController extends Controller
         return response()->json($posts);
     }
 
-    public function uploadFile(Request $request)
+    public function loker()
     {
-        // // dd($request->all());
-        // $uploadedFile = $request->file('fileUpload');
-
-        // // Validasi file jika diperlukan
-        // // Simpan file di direktori yang sesuai
-        // $path = $uploadedFile->store('public/cv');
-
-        // // Ubah path untuk mengakses file publik
-        // $publicPath = Storage::url($path);
-
-        // // Selain menyimpan file, Anda juga dapat memproses data lain di sini jika diperlukan
-
-        // return response()->json(['message' => 'File berhasil diunggah.', 'filePath' => $publicPath]);
+        return view('loker');
     }
 
     public function provinsi()
@@ -78,6 +66,7 @@ class MdLokerController extends Controller
             ->whereNull('deleted_at')
             ->get();
 
+        // dd($posts);
 
         // return response()->json([$posts]);
         return response()->json($posts);
@@ -88,11 +77,12 @@ class MdLokerController extends Controller
         // $posts = DB::table('md_lokers')->where('jenis_pekerjaan', '=', 'profesional')->get();
         // $posts = DB::table('md_lokers')->where('jenis_pekerjaan', '=', 'Profesional')->get();
 
+        // dd('cek');
+
         $posts = DB::table('md_lokers')
             ->where('jenis_pekerjaan', '=', 'Profesional')
             ->whereNull('deleted_at')
             ->get();
-
 
         //return view
         // return response()->json([$posts]);
@@ -101,7 +91,6 @@ class MdLokerController extends Controller
 
     public function md_loker(md_loker $post)
     {
-
         // $post = [];
         $post[] = DB::table('forms')->get();
         // return response()->json([$post]);
@@ -333,21 +322,21 @@ class MdLokerController extends Controller
         //
     }
 
-    public function generatePDF(Request $request)
-    {
-        // Ambil data yang dikirim dari formulir
-        $data = $request->all();
+    // public function generatePDF(Request $request)
+    // {
+    //     // Ambil data yang dikirim dari formulir
+    //     $data = $request->all();
 
-        // Load view 'form' dengan data yang dikirimkan
-        $pdf = PDF::loadView('form', compact('data'));
+    //     // Load view 'form' dengan data yang dikirimkan
+    //     $pdf = PDF::loadView('form', compact('data'));
 
-        // Menghasilkan nama file PDF sesuai dengan timestamp
-        $filename = 'CV_' . time() . '.pdf';
+    //     // Menghasilkan nama file PDF sesuai dengan timestamp
+    //     $filename = 'CV_' . time() . '.pdf';
 
-        // Simpan PDF ke direktori yang diinginkan
-        $pdf->save(public_path('pdf/' . $filename));
+    //     // Simpan PDF ke direktori yang diinginkan
+    //     $pdf->save(public_path('pdf/' . $filename));
 
-        // Kembalikan tautan unduhan ke file PDF yang baru dibuat
-        return response()->download(public_path('pdf/' . $filename));
-    }
+    //     // Kembalikan tautan unduhan ke file PDF yang baru dibuat
+    //     return response()->download(public_path('pdf/' . $filename));
+    // }
 }

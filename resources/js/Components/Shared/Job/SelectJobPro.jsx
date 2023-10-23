@@ -30,6 +30,19 @@ const SelectJobPro = () => {
         // sehingga dependensi di bawah ini kosong
     }, []);
 
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await Axios.get("/form/view_pro");
+    //         if (response.data && Array.isArray(response.data)) {
+    //             setFormData(response.data);
+    //         } else {
+    //             console.error("Invalid response data:", response.data);
+    //         }
+    //     } catch (error) {
+    //         console.error("Error sending data:", error);
+    //     }
+    // };
+
     return (
         <>
             {formData.map((item) => (
