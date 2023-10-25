@@ -35,6 +35,11 @@ class MdLokerController extends Controller
         return view('loker');
     }
 
+    public function search()
+    {
+        return view('search');
+    }
+
     public function provinsi()
     {
         $query = DB::select("SELECT kode,nama FROM wilayah WHERE CHAR_LENGTH(kode)= 2 ORDER BY nama");
@@ -216,6 +221,36 @@ class MdLokerController extends Controller
 
     public function submit_loker(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|string|min:5',
+            'jenis_kelamin' => 'required',
+            'agama' => 'required',
+            'tanggal_lahir' => 'required',
+            'emails' => 'required',
+            'no_telp' => 'required',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
+            'kecamatan' => 'required',
+            'kodepos' => 'required',
+            'alamat' => 'required',
+            'gaji' => 'required',
+            'promosi' => 'required',
+        ], [
+            'nama.required' => 'Nama harus diisi.',
+            'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih.',
+            'agama.required' => 'Agama harus dipilih.',
+            'tanggal_lahir.required' => ' Tanggal Lahir harus diisi.',
+            'emails.required' => 'Email harus diisi.',
+            'no_telp.required' => 'Nomor Telepon harus diisi.',
+            'provinsi.required' => 'Provinsi harus dipilih.',
+            'kabupaten.required' => 'Kabupaten harus dipilih.',
+            'kecamatan.required' => 'Kecamatan harus dipilih.',
+            'kodepos.required' => 'Kode Pos harus dipilih.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'gaji.required' => 'Gaji harus diisi.',
+            'promosi.required' => 'Promosi harus diisi.',
+        ]);
+
         $data["email"] = "fantocaa17@gmail.com";
         $data["title"] = "Meong Uwu";
         $data["body"] = "Selamat Datang";
@@ -257,6 +292,8 @@ class MdLokerController extends Controller
         } else {
             echo "File tidak ditemukan dalam permintaan.";
         }
+
+        return redirect()->route('finish');
     }
     /**
      * Update the specified resource in storage.

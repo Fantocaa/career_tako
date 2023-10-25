@@ -8,6 +8,7 @@ import QuillEditor from "@/Components/Dashboard/QuillEditor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import DOMPurify from "dompurify";
+import Select from "react-select";
 
 const EditLoker = () => {
     // const { quill, quillRef } = useQuill();
@@ -60,6 +61,73 @@ const EditLoker = () => {
         deskripsi: "",
         skill: "",
     });
+
+    const options = [
+        {
+            value: "PT. Berlian Anugerah Transportasi",
+            label: "PT. Berlian Anugerah Transportasi",
+        },
+        {
+            value: "PT. Anugerah Jelajah Indonesia Logistic",
+            label: "PT. Anugerah Jelajah Indonesia Logistic",
+        },
+        {
+            value: "PT. Anugerah Trans Maritim",
+            label: "PT. Anugerah Trans Maritim",
+        },
+        {
+            value: "PT. FAM Indonesia Logistik",
+            label: "PT. FAM Indonesia Logistik",
+        },
+        {
+            value: "PT. PINT Indonesia Logistik",
+            label: "PT. PINT Indonesia Logistik",
+        },
+        {
+            value: "PT. Cahaya Abadi Logistik",
+            label: "PT. Cahaya Abadi Logistik",
+        },
+        {
+            value: "PT. Anugerah Berkat Transportasi",
+            label: "PT. Anugerah Berkat Transportasi",
+        },
+        {
+            value: "PT. Anugerah Global Logistik",
+            label: "PT. Anugerah Global Logistik",
+        },
+        {
+            value: "PT. Anugerah Mandiri International Trans",
+            label: "PT. Anugerah Mandiri International Trans",
+        },
+        {
+            value: "PT. Anugerah Multi Logistik",
+            label: "PT. Anugerah Multi Logistik",
+        },
+        {
+            value: "PT. Perahu Tangguh Logistik",
+            label: "PT. Perahu Tangguh Logistik",
+        },
+        {
+            value: "PT. Armada Berkat Anugerah",
+            label: "PT. Armada Berkat Anugerah",
+        },
+        {
+            value: "PT. Anggrek Gorontalo Internasional Terminal",
+            label: "PT. Anggrek Gorontalo Internasional Terminal",
+        },
+        {
+            value: "PT. Hamparan Anugerah Sejati",
+            label: "PT. Hamparan Anugerah Sejati",
+        },
+        {
+            value: "PT. Anugerah Kartika Agro",
+            label: "PT. Anugerah Kartika Agro",
+        },
+        {
+            value: "PT. Berlimpah Anugerah Sejati",
+            label: "PT. Berlimpah Anugerah Sejati",
+        },
+    ];
 
     const initialSelectValues = {
         jenis_pekerjaan: "", // Atur nilai default sesuai kebutuhan Anda
@@ -192,7 +260,7 @@ const EditLoker = () => {
                                 placeholder="Masukkan Pekerjaan"
                                 id="pekerjaan"
                                 value={values.pekerjaan}
-                                onChange={handleChange}
+                                onChange={(e) => handleChange(e, "pekerjaan")}
                             />
                             {/* {errors.pekerjaan && (
                                 <span className="text-RedTako">
@@ -202,14 +270,28 @@ const EditLoker = () => {
                         </div>
                         <div className="w-full">
                             <h1 className="pb-2">Perusahaan</h1>
-                            <input
+                            <Select
+                                options={options}
+                                placeholder={"Masukkan Perusahaan"}
+                                id={"perusahaan"}
+                                onChange={handleChange}
+                                value={values.perusahaan}
+                                styles={{
+                                    control: (base) => ({
+                                        ...base,
+                                        padding: "2px",
+                                    }),
+                                }}
+                            />
+                            {/* <input
                                 {...register("perusahaan", { required: true })}
                                 className="w-full p-2 border-grey border-opacity-30 rounded"
                                 placeholder="Masukkan Perusahaan"
                                 id="perusahaan"
+
                                 value={values.perusahaan}
                                 onChange={handleChange}
-                            />
+                            /> */}
                             {/* {errors.perusahaan && (
                                 <span className="text-RedTako">
                                     Perusahaan jangan sampai kosong
@@ -255,6 +337,9 @@ const EditLoker = () => {
                             /> */}
                             <h1 className="pb-2">Batas Lamaran</h1>
 
+                            <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none">
+                                <img src="/images/calendar.svg" alt="" />
+                            </div>
                             <input
                                 type="date" // Gunakan input tanggal
                                 // type="text" // Gunakan input tanggal

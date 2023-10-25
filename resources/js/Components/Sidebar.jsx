@@ -9,7 +9,7 @@ export default function Sidebar({ children }) {
 
     return (
         <aside className="h-screen text-DarkTako font-inter">
-            <nav className="h-full flex flex-col bg-white  shadow-sm">
+            <nav className="h-full flex flex-col bg-white shadow-sm">
                 <div className="p-4 pb-2 flex justify-between items-center">
                     {/* <img
                         src="https://img.logoipsum.com/243.svg"

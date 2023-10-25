@@ -59,6 +59,8 @@ Route::get('/loker', function () {
 
 Route::get('/lowongan_kerja', [MdLokerController::class, 'loker']);
 
+Route::get('/search', [MdLokerController::class, 'search']);
+
 // Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Route::get('/faq', function () {
@@ -71,7 +73,8 @@ Route::get('/contact', function () {
 
 Route::get('/finish', function () {
     return Inertia::render('Finish');
-});
+})->name('finish');
+
 // Route::get('/', function () {
 //     return Inertia::render('Welcome');
 // });

@@ -7,13 +7,12 @@
     @vite('resources/css/app.css')
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lowongan Pekerjaan | Tako Karir</title>
-    <script src="{{ asset('js/cdn.jsdelivr.net_npm_vue@2.6.14_dist_vue.js') }}"></script>
+    {{-- <script src="{{ asset('js/cdn.jsdelivr.net_npm_vue@2.6.14_dist_vue.js') }}"></script> --}}
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
 </head>
 
 <body>
-    <nav id="example">
-        {{-- @include('') --}}
-    </nav>
     <div class="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center bg-BlueTako text-white font-inter"
         id="vue">
         <div class="text-center container mx-auto">
@@ -298,7 +297,8 @@
             </div>
             <div class="carousel w-full md:pt-8">
 
-                <div id="loker1" class="pt-8 grid md:grid-cols-2 w-full carousel-item gap-4 ">
+                <div id="vue" class="pt-8 grid md:grid-cols-2 w-full carousel-item gap-4"
+                    v-for="item in slider" :key="item.id">
                     <div class="bg-white p-8 rounded-xl">
                         <h1 class="font-bold">{item.pekerjaan}</h1>
                         <h2 class="text-BlueTako pt-2">{item.perusahaan}</h2>
@@ -322,18 +322,18 @@
                         </div>
                         <div class="flex pt-4 gap-2">
                             <div class="w-full">
-                                <Link href={`/job/profesional/${item.id}`}>
-                                <button class="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full">
-                                    Lihat Detail
-                                </button>
-                                </Link>
+                                <a :href="`/job/profesional/${item.id}`">
+                                    <button class="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full">
+                                        Lihat Detail
+                                    </button>
+                                </a>
                             </div>
                             <div class="w-full">
-                                <Link href={`/job/formulir/${item.id}`}>
-                                <button class="bg-BlueTako text-white py-2 rounded-lg w-full">
-                                    Lamar
-                                </button>
-                                </Link>
+                                <a :href="`/job/formulir/${item.id}`">
+                                    <button class="bg-BlueTako text-white py-2 rounded-lg w-full">
+                                        Lamar
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -528,9 +528,8 @@
     </div>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
-    <script src="{{ asset('./js/app.js') }}"></script>
-    {{-- <script src="/js/app.js"></script> --}}
-    <script>
+
+    {{-- <script>
         var vm = new Vue({
             el: "#vue",
             data: {
@@ -549,6 +548,11 @@
                                 vm.slider.push({
                                     id: dt.id,
                                     pekerjaan: dt.pekerjaan,
+                                    perusahaan: dt.perusahaan,
+                                    deskripsi: dt.deskripsi,
+                                    jenis_pekerjaan: dt.jenis_pekerjaan,
+                                    batas_lamaran: dt.batas_lamaran,
+                                    isi_konten: dt.isi_konten
                                 })
                             })
                         }
@@ -556,9 +560,43 @@
                 },
             }
         })
-    </script>
-</body>
+    </script> --}}
+    <script>
+        const {
+            createApp
+        } = Vue;
 
+        createApp({
+            data() {
+                return {
+                    slider: [],
+                };
+            },
+            mounted() {
+                this.mdloker();
+            },
+            methods: {
+                mdloker() {
+                    $.ajax({
+                        url: '{{ url('/form') }}',
+                        success: (data) => {
+                            this.$data.slider = data.map((dt) => ({
+                                id: dt.id,
+                                pekerjaan: dt.pekerjaan,
+                                perusahaan: dt.perusahaan,
+                                deskripsi: dt.deskripsi,
+                                jenis_pekerjaan: dt.jenis_pekerjaan,
+                                batas_lamaran: dt.batas_lamaran,
+                                isi_konten: dt.isi_konten,
+                            }));
+                        },
+                    });
+                },
+            },
+        }).mount("#vue");
+    </script>
+
+</body>
 {{-- <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> --}}
 

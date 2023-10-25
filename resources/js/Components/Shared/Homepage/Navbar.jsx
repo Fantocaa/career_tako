@@ -27,7 +27,7 @@ const Navbar = () => {
                 scrolled ? "scrolled-bg" : "bg-transparent"
             }`}
         >
-            <div className="container px-4 md:px-8 xl:px-16 mx-auto">
+            <div className="container px-4 md:px-8 xl:px-16 mx-auto w-full z-50 ">
                 <div className="flex justify-between items-center">
                     <div className="w-10 h-10 md:w-16 md:h-16 flex items-center">
                         <Link href="/">
@@ -41,7 +41,7 @@ const Navbar = () => {
                     <div className="md:flex text-BlueTako">
                         <Link
                             className={`mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold ${
-                                scrolled ? "text-scrolled" : "text-transparent"
+                                scrolled ? "text-scrolled" : "text-white"
                             }`}
                             href="/"
                         >
@@ -49,7 +49,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                             className={`mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold ${
-                                scrolled ? "text-scrolled" : "text-transparent"
+                                scrolled ? "text-scrolled" : "text-white"
                             }`}
                             href="/companyprofile"
                         >
@@ -57,7 +57,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                             className={`mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold ${
-                                scrolled ? "text-scrolled" : "text-transparent"
+                                scrolled ? "text-scrolled" : "text-white"
                             }`}
                             href="/job"
                         >
@@ -65,7 +65,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                             className={`mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold ${
-                                scrolled ? "text-scrolled" : "text-transparent"
+                                scrolled ? "text-scrolled" : "text-white"
                             }`}
                             href="/faq"
                         >
@@ -73,7 +73,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                             className={`mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold ${
-                                scrolled ? "text-scrolled" : "text-transparent"
+                                scrolled ? "text-scrolled" : "text-white"
                             }`}
                             href="/contact"
                         >

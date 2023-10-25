@@ -1,6 +1,6 @@
 import Footer from "@/Components/Shared/Footer";
 import CTA from "@/Components/CTA";
-import ContentRecruitment from "@/Components/ContentRecruitment";
+import ContentRecruitment from "@/Components/Shared/Homepage/Section/ContentRecruitment";
 import Nav from "@/Components/Shared/Homepage/Nav";
 import Warn from "@/Components/Warn";
 import GalleryPage from "@/Components/GalleryPage";
@@ -20,7 +20,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 {/* <div className="py-96"></div> */}
                 <Warn />
                 {/* <Gallery /> */}
-                <GalleryPage />
+                {/* <GalleryPage /> */}
                 <FaqCTA />
                 <CTA />
                 <BackToTop />

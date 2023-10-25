@@ -19,10 +19,13 @@
     Tanggal Lahir : {{ $tanggal_lahir }}<br />
     Email : {{ $emails }}<br />
     No. Telpon : {{ $no_telp }}<br />
-    Tempat Lahir : Provinsi : {{ $provinsi }}, Kabupaten : {{ $kabupaten }}, Kecamatan : {{ $kecamatan }},
-    Kode Pos : {{ $kodepos }}
-    <br />
+    Tempat Lahir : <br />
+    Provinsi : {{ $provinsi }}<br />
+    Kabupaten : {{ $kabupaten }}<br />
+    Kecamatan : {{ $kecamatan }}<br />
+    Kode Pos : {{ $kodepos }}<br />
     Alamat Tempat Tinggal : {{ $alamat }}<br />
+    Promosikan diri Anda : {{ $promosi }}<br />
     Gaji : {{ $gaji }}<br />
 
     Selamat Bekerja Gais -Fantoca

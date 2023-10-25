@@ -121,7 +121,7 @@ const EditLokerEdit = () => {
                             <input
                                 {...register("pekerjaan", { required: true })}
                                 className="w-full p-2 border-grey border-opacity-30 rounded"
-                                placeholder="Meong"
+                                placeholder="Masukkan Pekerjaan"
                                 id="pekerjaan"
                                 value={values.pekerjaan}
                                 onChange={handleChange}
@@ -183,8 +183,11 @@ const EditLokerEdit = () => {
                             )}
                         </div>
 
-                        <div className="w-full">
+                        <div className="w-full relative">
                             <h1 className="pb-2">Batas Lamaran</h1>
+                            <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none">
+                                <img src="/images/calendar.svg" alt="" />
+                            </div>
                             <input
                                 type="date" // Gunakan input tanggal
                                 // {...register("batas_lamaran", { required: true })}

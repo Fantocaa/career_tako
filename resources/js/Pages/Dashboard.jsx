@@ -41,52 +41,54 @@ export default function Dashboard({ auth }) {
     // }, []);
 
     return (
-        <main className="w-1/4 h-full">
-            <Sidebar>
-                {/* {page && ( */}
-                {/* <Link href="/dashboard"> */}
-                <Link href={route("admin.dashboard")}>
-                    <SidebarItem
-                        icon={<LayoutDashboard size={20} />}
-                        text="Dashboard"
-                        // alert
-                        // active={page.url === "/dashboard"}
-                        // active
-                    />
-                </Link>
-                {/* )} */}
-                {/* {page && ( */}
-                {/* <Link href="/dashboard/beranda"> */}
-                <Link href={route("admin.beranda")}>
-                    <SidebarItem
-                        icon={<BarChart3 size={20} />}
-                        text="Beranda"
-                        // active={page.url === "/dashboard/beranda"}
-                        // active
-                    />
-                </Link>
-                {/* )} */}
-                {/* {page && ( */}
-                {/* <Link href="/dashboard/lowongan_pekerjaan"> */}
-                <Link href={route("admin.lowongan_pekerjaan")}>
-                    <SidebarItem
-                        icon={<UserCircle size={20} />}
-                        text="Lowongan"
-                        // active={page.url === "/dashboard/beranda"}
-                    />
-                </Link>
-                {/* <Link href={route("admin.logout")}> */}
-                <a href={route("admin.logout")}>
-                    {/* <Link onClick={handleChange}> */}
-                    <SidebarItem
-                        icon={<ArrowLeftCircle size={20} />}
-                        text="Logout"
-                        // active={page.url === "/dashboard/beranda"}
-                    />
-                    {/* </Link> */}
-                </a>
-                {/* )} */}
-            </Sidebar>
-        </main>
+        <div className="w-1/4 fixed">
+            <div className="w-full h-full">
+                <Sidebar>
+                    {/* {page && ( */}
+                    {/* <Link href="/dashboard"> */}
+                    <Link href={route("admin.dashboard")}>
+                        <SidebarItem
+                            icon={<LayoutDashboard size={20} />}
+                            text="Dashboard"
+                            // alert
+                            // active={page.url === "/dashboard"}
+                            // active
+                        />
+                    </Link>
+                    {/* )} */}
+                    {/* {page && ( */}
+                    {/* <Link href="/dashboard/beranda"> */}
+                    <Link href={route("admin.beranda")}>
+                        <SidebarItem
+                            icon={<BarChart3 size={20} />}
+                            text="Beranda"
+                            // active={page.url === "/dashboard/beranda"}
+                            // active
+                        />
+                    </Link>
+                    {/* )} */}
+                    {/* {page && ( */}
+                    {/* <Link href="/dashboard/lowongan_pekerjaan"> */}
+                    <Link href={route("admin.lowongan_pekerjaan")}>
+                        <SidebarItem
+                            icon={<UserCircle size={20} />}
+                            text="Lowongan"
+                            // active={page.url === "/dashboard/beranda"}
+                        />
+                    </Link>
+                    {/* <Link href={route("admin.logout")}> */}
+                    <a href={route("admin.logout")}>
+                        {/* <Link onClick={handleChange}> */}
+                        <SidebarItem
+                            icon={<ArrowLeftCircle size={20} />}
+                            text="Logout"
+                            // active={page.url === "/dashboard/beranda"}
+                        />
+                        {/* </Link> */}
+                    </a>
+                    {/* )} */}
+                </Sidebar>
+            </div>
+        </div>
     );
 }

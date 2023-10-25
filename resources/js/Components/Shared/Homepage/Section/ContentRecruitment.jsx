@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import aos from "aos";
 import ImageSlider from "@/Components/ImageSlider";
 import "aos/dist/aos.css";
-import "../style.css";
+import "../../../css/style.css";
+import Why from "./Why";
 
 const ContentRecruitment = () => {
     useEffect(() => {
@@ -15,6 +16,7 @@ const ContentRecruitment = () => {
     return (
         <div className="max-w-[1440px] mx-auto">
             <ImageSlider />
+            <Why />
             <div className="container mx-auto px-4 py-8 md:px-8 xl:px-16 pt-32">
                 <div className="px-4 bg-white py-8 rounded-md md:px-8 xl:px-16 lg:py-16">
                     <>

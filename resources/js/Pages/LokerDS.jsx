@@ -7,8 +7,10 @@ import TableDashboard from "./TableDashboard";
 const LokerDS = () => {
     return (
         <>
-            <div className="flex">
-                <Dashboard active />
+            <div className="flex h-full">
+                <div className="w-1/4 mr-[72px] xl:mr-20">
+                    <Dashboard active />
+                </div>
                 <div className="w-full ">
                     <TableDashboard />
                 </div>
