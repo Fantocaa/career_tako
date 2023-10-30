@@ -57,7 +57,7 @@ const GalleryPage = () => {
     });
 
     return (
-        <div className="container mx-auto px-4 md:px-8 xl:px-16 py-8">
+        <div className="container mx-auto px-4 md:px-8 xl:px-16 pt-48 pb-16">
             <div className="pb-8">
                 <h1 className="text-4xl font-bold text-center">Gallery</h1>
                 <p className="text-center py-4">

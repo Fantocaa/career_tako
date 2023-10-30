@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\md_loker;
 use App\Http\Requests\Storemd_lokerRequest;
 use App\Http\Requests\Updatemd_lokerRequest;
+use App\Models\skill;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,7 @@ class MdLokerController extends Controller
 
         $posts = md_loker::get();
 
+
         //return view
         // return response()->json([$posts]);
         return response()->json($posts);
@@ -38,6 +40,11 @@ class MdLokerController extends Controller
     public function search()
     {
         return view('search');
+    }
+
+    public function tambah_baru()
+    {
+        return view('form');
     }
 
     public function provinsi()
@@ -113,50 +120,8 @@ class MdLokerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Storemd_lokerRequest $request)
-    {
-        // dd($request->all());
 
-        // Validasi
-        $request->validate([
-            'pekerjaan' => 'required|string|min:5',
-            'perusahaan' => 'required',
-            'jenis_pekerjaan' => 'required',
-            'deskripsi' => 'required',
-            'isi_konten' => 'required',
-            'batas_lamaran' => 'required',
-        ], [
-            'pekerjaan.required' => 'Pekerjaan harus diisi.',
-            'perusahaan.required' => 'Perusahaan harus diisi.',
-            'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
-            'isi_konten.required' => 'Isi Konten harus diisi.',
-            'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
 
-        ]);
-
-        if ($request->password == 'meong') {
-            $form = new md_loker();
-            $form->pekerjaan = $request->pekerjaan;
-            $form->perusahaan = $request->perusahaan;
-            $form->jenis_pekerjaan = $request->jenis_pekerjaan;
-            // req ke deskripsi = string varchar
-            $form->isi_konten = $request->deskripsi;
-            // req ke isi_konten = mediumtext
-            $form->deskripsi = $request->isi_konten;
-            $form->batas_lamaran = $request->batas_lamaran;
-            $form->save();
-            return redirect('/table');
-
-            // Tanggapan JSON sukses
-            return response()->json(['message' => 'Data berhasil disimpan.']);
-        }
-
-        // Tanggapan jika validasi gagal
-        // return redirect()->back()->withErrors(['password' => 'Password tidak valid.']);
-
-        // Tanggapan JSON jika validasi gagal
-        return response()->json(['errors' => $request->validator->errors()]);
-    }
 
     /**
      * Display the specified resource.
@@ -174,15 +139,42 @@ class MdLokerController extends Controller
         // 
     }
 
+    public function view_skill($id)
+    {
+        $skill = db::table('skills')->where('id_kotak_loker', $id)->get()->whereNull('deleted_at');
+
+        return response()->json([$skill]);
+    }
+
     public function edit_loker($id)
     {
         // dd();
-        $md_loker = md_loker::find($id);
-
         // Menggunakan Inertia::render
-        return Inertia::render('EditLokerEdit', [
-            'md_loker' => $md_loker,
-        ]);
+        // return Inertia::render('EditLokerEdit', [
+        //     'md_loker' => $md_loker,
+        // ]);
+
+        $md_loker = db::table('md_lokers')->where('id', $id)->get();
+        $skill = db::table('skills')->where('id_kotak_loker', $md_loker[0]->id)->get();
+
+        return view(
+            'formedit',
+            ['skill' => $skill, 'md_loker' => $md_loker]
+        );
+    }
+
+    public function delete_loker($id)
+    {
+        // dd($id);
+        // $delete = md_loker::find($id);
+
+        $md_loker = db::table('md_lokers')->where('id', $id);
+        $skill = db::table('skills')->where('id_kotak_loker', $id);
+
+        $md_loker->delete();
+        $skill->delete();
+
+        return redirect('/admin/dashboard/lowongan_pekerjaan');
     }
 
     public function show_lamar_loker($id)
@@ -249,6 +241,9 @@ class MdLokerController extends Controller
             'alamat.required' => 'Alamat harus diisi.',
             'gaji.required' => 'Gaji harus diisi.',
             'promosi.required' => 'Promosi harus diisi.',
+            'pendidikan.required' => 'Pendidikan harus diisi.',
+            'instansi.required' => 'Instansi Pendidikan harus diisi.',
+            'ipk.required' => 'IPK/GPA harus diisi.',
         ]);
 
         $data["email"] = "fantocaa17@gmail.com";
@@ -270,6 +265,9 @@ class MdLokerController extends Controller
         $data["alamat"] = $request->alamat;
         $data["gaji"] = $request->gaji;
         $data['promosi'] = $request->promosi;
+        $data['pendidikan'] = $request->pendidikan;
+        $data['instansi'] = $request->instansi;
+        $data['ipk'] = $request->ipk;
 
         // dd($data);
 
@@ -299,10 +297,9 @@ class MdLokerController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update_loker(Updatemd_lokerRequest $request, md_loker $md_loker)
+    public function store(Storemd_lokerRequest $request)
     {
         // dd($request->all());
-        // dd($request);
 
         // Validasi
         $request->validate([
@@ -312,40 +309,119 @@ class MdLokerController extends Controller
             'deskripsi' => 'required',
             'isi_konten' => 'required',
             'batas_lamaran' => 'required',
+            'skill.*' => 'required',
         ], [
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
             'perusahaan.required' => 'Perusahaan harus diisi.',
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
+            'skill.*.required' => 'Skill Harus Diisi'
+
+
         ]);
 
-        if ($request->password == 'meong') {
-            $form =  md_loker::find($request->id);
-            $form->pekerjaan = $request->pekerjaan;
-            $form->perusahaan = $request->perusahaan;
-            $form->jenis_pekerjaan = $request->jenis_pekerjaan;
-            $form->isi_konten = $request->deskripsi;
-            $form->deskripsi = $request->isi_konten;
-            $form->batas_lamaran = $request->batas_lamaran;
-            $form->save();
-            return redirect('/table');
+        $form = new md_loker();
+        $form->pekerjaan = $request->pekerjaan;
+        $form->perusahaan = $request->perusahaan;
+        $form->jenis_pekerjaan = $request->jenis_pekerjaan;
+        // req ke deskripsi = string varchar
+        $form->isi_konten = $request->deskripsi;
+        // req ke isi_konten = mediumtext
+        $form->deskripsi = $request->isi_konten;
+        $form->batas_lamaran = $request->batas_lamaran;
+        $form->save();
 
-            // Tanggapan JSON sukses
-            return response()->json(['message' => 'Data berhasil diperbarui.']);
+        foreach ($request->skill as $skill => $value) {
+            $skill = new skill();
+            $skill->id_kotak_loker = $form->id;
+            $skill->nama_skill = $value;
+            $skill->save();
         }
+
+
+        return redirect('/admin/dashboard/lowongan_pekerjaan');
+
+        // Tanggapan JSON sukses
+        return response()->json(['message' => 'Data berhasil disimpan.']);
+
+
+        // Tanggapan jika validasi gagal
+        // return redirect()->back()->withErrors(['password' => 'Password tidak valid.']);
+
+        // Tanggapan JSON jika validasi gagal
+        return response()->json(['errors' => $request->validator->errors()]);
+    }
+
+    public function update_loker(Updatemd_lokerRequest $request, md_loker $md_loker)
+    {
+        // dd($request->all());
+        // dd($request->pekerjaan);
+
+        // Validasi
+        $request->validate([
+            'pekerjaan' => 'required|string|min:5',
+            'perusahaan' => 'required',
+            'jenis_pekerjaan' => 'required',
+            'deskripsi' => 'required',
+            'isi_konten' => 'required',
+            'batas_lamaran' => 'required',
+            'skill.*' => 'required',
+        ], [
+            'pekerjaan.required' => 'Pekerjaan harus diisi.',
+            'perusahaan.required' => 'Perusahaan harus diisi.',
+            'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
+            'isi_konten.required' => 'Isi Konten harus diisi.',
+            'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
+            'skill.*.required' => 'Skill Harus Diisi'
+        ]);
+
+        $form = md_loker::find($request->id);
+        // dd($form);
+        $form->pekerjaan = $request->pekerjaan;
+        $form->perusahaan = $request->perusahaan;
+        $form->jenis_pekerjaan = $request->jenis_pekerjaan;
+        $form->isi_konten = $request->deskripsi;
+        $form->deskripsi = $request->isi_konten;
+        $form->batas_lamaran = $request->batas_lamaran;
+        $form->save();
+        // $reqeust itu mengambil data dari view
+        // $i itu sama dengan i++
+        foreach ($request->idskill as $i => $value) {
+            // $skill = new skill();
+            if ($value != null) {
+                $skill = skill::find($value);
+                $skill->nama_skill = $request->skill[$i];
+                $skill->save();
+            } else {
+                $skill = new skill();
+                $skill->id_kotak_loker = $request->id;
+                $skill->nama_skill = $request->skill[$i];
+                $skill->save();
+            }
+        }
+
+
+        if ($request->idskilldelete) {
+
+
+            foreach ($request->idskilldelete as $i => $value) {
+                $idskilldelete = skill::find($value);
+                $idskilldelete->delete();
+            }
+        }
+
+        return redirect('/admin/dashboard/lowongan_pekerjaan');
+
+        // Tanggapan JSON sukses
+        return response()->json(['message' => 'Data berhasil diperbarui.']);
+
         // return redirect()->back()->withErrors(['password' => 'Password tidak valid.']);
         // Tanggapan JSON jika validasi gagal
         return response()->json(['errors' => $request->validator->errors()]);
     }
 
-    public function delete_loker($id)
-    {
-        // dd($id);
-        $delete = md_loker::find($id);
-        $delete->delete();
-        return redirect('/table');
-    }
+
 
     public function update(Updatemd_lokerRequest $request, md_loker $md_loker)
     {

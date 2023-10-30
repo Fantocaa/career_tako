@@ -29,7 +29,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('welcome');
 
 // Route link Start
 
@@ -130,15 +130,17 @@ Route::get('/table', function () {
     return Inertia::render('TableDashboard');
 });
 
-Route::get('/table/tambah_baru', function () {
-    return Inertia::render('EditLoker');
-});
+// Route::get('/table/tambah_baru', function () {
+//     return Inertia::render('EditLoker');
+// });
+
+Route::get('/table/tambah_baru', [MdLokerController::class, 'tambah_baru']);
+
+Route::get('/table/viewskill/{id}', [MdLokerController::class, 'view_skill']);
 
 Route::get('/table/edit/{id}', [MdLokerController::class, 'edit_loker']);
 Route::get('/table/hapus/{id}', [MdLokerController::class, 'delete_loker']);
 Route::post('/table/update_loker', [MdLokerController::class, 'update_loker']);
-
-
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'], function () {
     Route::get('/dashboard', function () {

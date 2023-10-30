@@ -54,6 +54,9 @@ const FormEmail = () => {
         gaji: "",
         file: "",
         promosi: "",
+        pendidikan: "",
+        instansi: "",
+        ipk: "",
     });
 
     const handleChange = (e) => {
@@ -168,6 +171,9 @@ const FormEmail = () => {
             formData.append("alamat", values.alamat);
             formData.append("gaji", values.gaji);
             formData.append("promosi", values.promosi);
+            formData.append("pendidikan", values.pendidikan);
+            formData.append("instansi", values.instansi);
+            formData.append("ipk", values.ipk);
 
             formData.append("file", e.target.fileUpload.files[0]); // Ambil file dari input file
 
@@ -204,6 +210,9 @@ const FormEmail = () => {
                 gaji: "",
                 file: "",
                 promosi: "",
+                pendidikan: "",
+                instansi: "",
+                ipk: "",
             });
 
             // Redirect ke halaman lain jika diperlukan
@@ -289,7 +298,7 @@ const FormEmail = () => {
                             </div>
 
                             {/* Nama */}
-                            <div className="w-full">
+                            <div className="w-full pb-4">
                                 <h1 className="pb-2">
                                     Nama Lengkap
                                     <span className="text-RedTako">*</span>
@@ -311,7 +320,7 @@ const FormEmail = () => {
 
                             <div className="flex gap-4 flex-wrap">
                                 {/* Gender */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
                                     <h1 className="pb-2">
                                         Jenis Kelamin
                                         <span className="text-RedTako">*</span>
@@ -344,7 +353,7 @@ const FormEmail = () => {
                                     )}
                                 </div>
                                 {/* Agama */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
                                     <h1 className="pb-2">
                                         Agama
                                         <span className="text-RedTako">*</span>
@@ -381,10 +390,11 @@ const FormEmail = () => {
                                         Tanggal Lahir
                                         <span className="text-RedTako">*</span>
                                     </h1>
-                                    <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none">
+                                    <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none ">
                                         <img
                                             src="/images/calendar.svg"
                                             alt=""
+                                            className=""
                                         />
                                     </div>
                                     <input
@@ -403,8 +413,9 @@ const FormEmail = () => {
                                         </span>
                                     )}
                                 </div>
+
                                 {/* Email */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 md:pt-0">
                                     <h1 className="pb-2">
                                         Email
                                         <span className="text-RedTako">*</span>
@@ -428,7 +439,7 @@ const FormEmail = () => {
                                 </div>
 
                                 {/* No Telp*/}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] py-4">
                                     <h1 className="pb-2">
                                         No. Telpon
                                         <span className="text-RedTako">*</span>
@@ -453,16 +464,13 @@ const FormEmail = () => {
                             </div>
 
                             {/* Tempat Lahir*/}
-                            <div className="w-full md:py-8">
-                                <h1 className="pb-4">
-                                    Tempat Lahir
-                                    <span className="text-RedTako">*</span>
-                                </h1>
-
+                            <div className="w-full">
                                 <>
                                     <div className="block md:flex pb-4">
-                                        <div className="w-full md:w-[50%] pb-4 mr-4">
-                                            <h2 className="pb-2">Provinsi</h2>
+                                        <div className="w-full md:w-[50%] pb-8 md:pb-4 mr-4 ">
+                                            <h2 className="pb-2">
+                                                Provinsi Tempat Lahir
+                                            </h2>
                                             <Select
                                                 options={provinsiOptions}
                                                 onChange={handleProvinsiChange}
@@ -482,9 +490,9 @@ const FormEmail = () => {
                                                 }}
                                             />
                                         </div>
-                                        <div className="w-full md:w-[50%]">
+                                        <div className="w-full md:w-[50%] pb-4 md:pb-0">
                                             <h2 className="pb-2">
-                                                Kabupaten/Kota
+                                                Kabupaten/Kota Tempat Lahir
                                             </h2>
                                             <Select
                                                 options={kabupatenOptions}
@@ -507,9 +515,11 @@ const FormEmail = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div className="block md:flex">
-                                        <div className="w-full mr-4 pb-4">
-                                            <h2 className="pb-2">Kecamatan</h2>
+                                    <div className="block md:flex ">
+                                        <div className="w-full mr-4 pb-8  md:pb-4">
+                                            <h2 className="pb-2">
+                                                Kecamatan Tempat Lahir
+                                            </h2>
                                             <Select
                                                 options={kecamatanOptions}
                                                 // value={values.kecamatan}
@@ -527,16 +537,16 @@ const FormEmail = () => {
                                                 placeholder="Pilih Kecamatan Anda"
                                             />
                                         </div>
-                                        <div className="w-full">
-                                            <h2 className="w-full md:w-[50%] pb-2 mr-4">
-                                                Kode Pos
+                                        <div className="w-full pb-4 md:pb-0">
+                                            <h2 className="w-full lg:w-[50%] pb-2 mr-4">
+                                                Kode Pos Tempat Lahir
                                             </h2>
                                             <input
                                                 type="number"
-                                                className={`w-full p-2 py-[6px] border-grey border-opacity-30 rounded ${
+                                                className={`w-full p-2 py-[6px] border-grey border-opacity-10 rounded ${
                                                     !isKecamatanSelected
                                                         ? disabledInputClasses
-                                                        : ""
+                                                        : "border-opacity-30"
                                                 }`}
                                                 value={values.kodepos}
                                                 id="kodepos"
@@ -550,7 +560,7 @@ const FormEmail = () => {
                             </div>
 
                             {/* Alamat Tempat Tinggal*/}
-                            <div className="w-full">
+                            <div className="w-full pb-4">
                                 <h1 className="pb-2">
                                     Alamat Tempat Tinggal
                                     <span className="text-RedTako">*</span>
@@ -571,8 +581,94 @@ const FormEmail = () => {
                                 )}
                             </div>
 
+                            <div className="flex gap-4 flex-wrap pb-4">
+                                {/* Pendidikan Terakhir */}
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
+                                    <h1 className="pb-2">
+                                        Pendidikan Terakhir
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <select
+                                        {...register("pendidikan", {
+                                            required: true,
+                                        })}
+                                        className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
+                                        placeholder="Pilih Pendidikan Terakhir Anda"
+                                        value={values.pendidikan}
+                                        id="pendidikan"
+                                        onChange={handleChange}
+                                    >
+                                        <option>
+                                            Pilih Pendidikan Terakhir Anda
+                                        </option>
+                                        <option value="SD">SD</option>
+                                        <option value="SMP">SMP</option>
+                                        <option value="SMA/SMK">SMA/SMK</option>
+                                        <option value="D3/D4">D3/D4</option>
+                                        <option value="S1">S1</option>
+                                        <option value="S2">S2</option>
+                                        <option value="S3">S3</option>
+                                    </select>
+                                    {errors.agama && (
+                                        <span className="text-RedTako">
+                                            Pendidikan Terakhir harus dipilih
+                                        </span>
+                                    )}
+                                </div>
+
+                                {/* Intansi Pendidikan */}
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                    <h1 className="pb-2">
+                                        Nama Intansi Pendidikan Terakhir
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register("instansi", {
+                                            required: true,
+                                        })}
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                        placeholder="Masukkan Nama Intansi Pendidikan Terakhir Anda"
+                                        type="text"
+                                        value={values.instansi}
+                                        id="instansi"
+                                        onChange={handleChange}
+                                    />
+                                    {errors.instansi && (
+                                        <span className="text-RedTako">
+                                            Intansi Pendidikan Terakhir jangan
+                                            sampai kosong
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                    <h1 className="pb-2">
+                                        IPK/GPA (Grade Point Average)
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register("ipk", {
+                                            required: true,
+                                        })}
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                        placeholder="Masukkan Nilai IPK/GPA Anda (Contoh : 3.50)"
+                                        type="number"
+                                        step=".01"
+                                        value={values.ipk}
+                                        id="ipk"
+                                        onChange={handleChange}
+                                    />
+                                    {errors.ipk && (
+                                        <span className="text-RedTako">
+                                            Intansi Pendidikan Terakhir jangan
+                                            sampai kosong
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+
                             {/* Promosi*/}
-                            <div className="w-full">
+                            <div className="w-full pb-4">
                                 <h1 className="pb-2">
                                     Prommosikan Diri Anda
                                     <span className="text-RedTako">*</span>
@@ -595,7 +691,7 @@ const FormEmail = () => {
                             </div>
 
                             {/* Gaji*/}
-                            <div className="w-full">
+                            <div className="w-full pb-4">
                                 <h1 className="pb-2">
                                     Gaji<span className="text-RedTako">*</span>
                                 </h1>
@@ -617,15 +713,17 @@ const FormEmail = () => {
                             {/* File PDF*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">Upload CV</h1>
-                                <input
-                                    {...register("fileUpload")} // Gunakan nama yang sesuai
-                                    type="file"
-                                    accept=".pdf" // Batasi hanya menerima file PDF
-                                    className="w-full border-grey border-opacity-30 rounded"
-                                    value={values.file}
-                                    id="file"
-                                    onChange={handleChange}
-                                />
+                                <div className="w-full">
+                                    <input
+                                        {...register("fileUpload")} // Gunakan nama yang sesuai
+                                        type="file"
+                                        accept=".pdf" // Batasi hanya menerima file PDF
+                                        className="w-52 border-grey border-opacity-30 rounded"
+                                        value={values.file}
+                                        id="file"
+                                        onChange={handleChange}
+                                    />
+                                </div>
                                 <div className="text-xs pt-2">
                                     <p>
                                         <span className="text-RedTako">*</span>

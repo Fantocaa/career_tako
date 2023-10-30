@@ -73,3 +73,21 @@
 }
 
 /* Styling tambahan sesuai kebutuhan Anda */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    padding: 16px;
+    border-radius: 4px;
+}

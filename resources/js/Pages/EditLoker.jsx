@@ -37,6 +37,8 @@ const EditLoker = () => {
         },
     });
 
+    const [selectedPerusahaan, setSelectedPerusahaan] = useState(null);
+
     const [skills, setSkills] = useState([""]); // State untuk menyimpan keterampilan
     const addNewSkill = () => {
         if (skills.length < 6) {
@@ -178,6 +180,8 @@ const EditLoker = () => {
         }));
     };
 
+    const perusahaan = selectedPerusahaan ? selectedPerusahaan.value : "";
+
     async function sumit(e) {
         e.preventDefault();
 
@@ -189,6 +193,7 @@ const EditLoker = () => {
             const response = await Axios.post("/form", {
                 ...values,
                 deskripsi: cleanedDeskripsi,
+                perusahaan: perusahaan,
             });
 
             // Jika permintaan berhasil, perbarui nomor dengan nomor berikutnya
@@ -226,6 +231,8 @@ const EditLoker = () => {
             }
         }
     }
+    console.log(values.perusahaan);
+
     return (
         <div className="bg-BgTako py-16 text-DarkTako font-inter">
             <div className="container mx-auto bg-white p-8 rounded-lg">
@@ -274,8 +281,11 @@ const EditLoker = () => {
                                 options={options}
                                 placeholder={"Masukkan Perusahaan"}
                                 id={"perusahaan"}
-                                onChange={handleChange}
                                 value={values.perusahaan}
+                                // onChange={handleChange}
+                                onChange={(selectedOption) =>
+                                    setSelectedPerusahaan(selectedOption)
+                                }
                                 styles={{
                                     control: (base) => ({
                                         ...base,
@@ -362,7 +372,12 @@ const EditLoker = () => {
                     {/* <div className="w-full">
                         <div className="flex justify-between">
                             <h1 className="pb-2">Skill yang dibutuhkan</h1>
-                            <button onClick={addNewSkill}>Tambah baru</button>
+                            <span
+                                onClick={addNewSkill}
+                                className="cursor-pointer"
+                            >
+                                Tambah baru
+                            </span>
                         </div>
                         {skills.map((skill, index) => (
                             <div
@@ -375,7 +390,7 @@ const EditLoker = () => {
                                     })}
                                     className="w-1/6 p-2 border-grey border-opacity-30 rounded"
                                     placeholder="Masukkan Skill"
-                                    value={skill}
+                                    value={values.skill}
                                     onChange={(e) => {
                                         const newSkills = [...skills];
                                         newSkills[index] = e.target.value;
