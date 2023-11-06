@@ -148,12 +148,103 @@ const FormEmail = () => {
         values.kecamatan = selectedOption.label;
     };
 
+    // async function onSubmit(e) {
+    //     e.preventDefault();
+
+    //     try {
+    //         // Buat objek FormData
+    //         const formData = new FormData();
+
+    //         formData.append("pekerjaan", values.pekerjaan);
+    //         formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
+    //         formData.append("perusahaan", values.perusahaan);
+    //         formData.append("nama", values.nama);
+    //         formData.append("jenis_kelamin", values.jenis_kelamin);
+    //         formData.append("tanggal_lahir", values.tanggal_lahir);
+    //         formData.append("agama", values.agama);
+    //         formData.append("emails", values.emails);
+    //         formData.append("no_telp", values.no_telp);
+    //         formData.append("provinsi", values.provinsi);
+    //         formData.append("kabupaten", values.kabupaten);
+    //         formData.append("kecamatan", values.kecamatan);
+    //         formData.append("kodepos", values.kodepos);
+    //         formData.append("alamat", values.alamat);
+    //         formData.append("gaji", values.gaji);
+    //         formData.append("promosi", values.promosi);
+    //         formData.append("pendidikan", values.pendidikan);
+    //         formData.append("instansi", values.instansi);
+    //         formData.append("ipk", values.ipk);
+
+    //         const file = e.target.fileUpload.files[0];
+    //         formData.append("file", file);
+
+    //         console.log("Data yang dikirim melalui formData:", formData);
+
+    //         // Kirim data ke server menggunakan fetch
+    //         const response = await fetch("/formulir/submit/", {
+    //             method: "POST",
+    //             body: formData,
+    //         });
+
+    //         if (response.ok) {
+    //             // Jika respons berhasil (status code 200-299)
+
+    //             // Membersihkan formulir jika berhasil
+    //             // reset();
+
+    //             // Bersihkan formulir
+    //             setValues({
+    //                 password: "meong",
+    //                 pekerjaan: md_loker.pekerjaan,
+    //                 jenis_pekerjaan: md_loker.jenis_pekerjaan,
+    //                 perusahaan: md_loker.perusahaan,
+    //                 nama: "",
+    //                 jenis_kelamin: "",
+    //                 agama: "",
+    //                 tanggal_lahir: "",
+    //                 emails: "",
+    //                 provinsi: provinsiOptions.label,
+    //                 kabupaten: kabupatenOptions.label,
+    //                 kecamatan: kecamatanOptions.label,
+    //                 kodepos: "",
+    //                 alamat: "",
+    //                 no_telp: "",
+    //                 gaji: "",
+    //                 file: "",
+    //                 promosi: "",
+    //                 pendidikan: "",
+    //                 instansi: "",
+    //                 ipk: "",
+    //             });
+
+    //             // Redirect ke halaman lain jika diperlukan
+    //             // router.get("/dashboard/lowongan_pekerjaan");
+    //             // router.get("/finish");
+    //         } else {
+    //             // Jika respons tidak berhasil
+    //             console.error("Error sending data:", response);
+
+    //             // Tampilkan pesan kesalahan ke pengguna
+    //             alert("Terjadi kesalahan saat mengirim data.");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error sending data:", error);
+    //         alert("Terjadi kesalahan saat mengirim data.");
+    //     }
+    // }
+
     async function onSubmit(e) {
         e.preventDefault();
 
         try {
-            // Buat objek FormData
+            const token = document.querySelector(
+                'meta[name="csrf-token"]'
+            ).content; // Mengambil token CSRF dari elemen <meta>
+
             const formData = new FormData();
+            formData.append("_token", token); // Menambahkan token CSRF ke FormData
+
+            // const formData = new FormData();
 
             formData.append("pekerjaan", values.pekerjaan);
             formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
@@ -175,63 +266,59 @@ const FormEmail = () => {
             formData.append("instansi", values.instansi);
             formData.append("ipk", values.ipk);
 
-            formData.append("file", e.target.fileUpload.files[0]); // Ambil file dari input file
+            const file = e.target.fileUpload.files[0];
+            formData.append("file", file);
 
-            console.log("Data yang dikirim melalui formData:", formData);
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/formulir/submit", true);
 
-            // Jika Anda ingin melihat nilai spesifik dari formData, misalnya:
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Berhasil
+                        // Membersihkan formulir jika berhasil
+                        setValues({
+                            // password: "meong",
+                            pekerjaan: md_loker.pekerjaan,
+                            jenis_pekerjaan: md_loker.jenis_pekerjaan,
+                            perusahaan: md_loker.perusahaan,
+                            nama: "",
+                            jenis_kelamin: "",
+                            agama: "",
+                            tanggal_lahir: "",
+                            emails: "",
+                            provinsi: provinsiOptions.label,
+                            kabupaten: kabupatenOptions.label,
+                            kecamatan: kecamatanOptions.label,
+                            kodepos: "",
+                            alamat: "",
+                            no_telp: "",
+                            gaji: "",
+                            file: "",
+                            promosi: "",
+                            pendidikan: "",
+                            instansi: "",
+                            ipk: "",
+                        });
 
-            // Kirim data ke server
-            const response = await Axios.post("/formulir/submit/", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data", // Pastikan Anda menetapkan tipe konten sebagai multipart/form-data
-                },
-            });
-            // Membersihkan formulir jika berhasil
-            // reset();
+                        // console.log("Sukses:", xhr.responseText);
+                        router.get("/finish");
+                    } else {
+                        // Gagal
+                        console.error(
+                            "Error sending data:",
+                            xhr.status,
+                            xhr.statusText
+                        );
+                        alert("Terjadi kesalahan saat mengirim data.");
+                    }
+                }
+            };
 
-            // Bersihkan formulir
-            setValues({
-                password: "meong",
-                pekerjaan: md_loker.pekerjaan,
-                jenis_pekerjaan: md_loker.jenis_pekerjaan,
-                perusahaan: md_loker.perusahaan,
-                nama: "",
-                jenis_kelamin: "",
-                agama: "",
-                tanggal_lahir: "",
-                emails: "",
-                provinsi: provinsiOptions.label,
-                kabupaten: kabupatenOptions.label,
-                kecamatan: kecamatanOptions.label,
-                kodepos: "",
-                alamat: "",
-                no_telp: "",
-                gaji: "",
-                file: "",
-                promosi: "",
-                pendidikan: "",
-                instansi: "",
-                ipk: "",
-            });
-
-            // Redirect ke halaman lain jika diperlukan
-            // router.get("/dashboard/lowongan_pekerjaan");
-            router.get("/finish");
+            xhr.send(formData);
         } catch (error) {
-            if (error.response) {
-                // Jika respons error dari server
-                console.error("Error sending data:", error.response.data);
-
-                // Tampilkan pesan kesalahan ke pengguna
-                alert(error.response.data.message);
-            } else {
-                // Jika kesalahan lainnya
-                console.error("Error sending data:", error);
-
-                // Tampilkan pesan kesalahan ke pengguna
-                alert("Terjadi kesalahan saat mengirim data.");
-            }
+            console.error("Error sending data:", error);
+            alert("Terjadi kesalahan saat mengirim data.");
         }
     }
 

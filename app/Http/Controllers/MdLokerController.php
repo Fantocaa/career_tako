@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\md_loker;
 use App\Http\Requests\Storemd_lokerRequest;
 use App\Http\Requests\Updatemd_lokerRequest;
+use App\Models\perusahaan;
 use App\Models\skill;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use Inertia\Inertia;
 use PhpParser\Node\Stmt\Return_;
 use Illuminate\Support\Facades\Mail;
 // use App\Mail\MailLoker;
+use Illuminate\Http\JsonResponse;
 
 class MdLokerController extends Controller
 {
@@ -23,9 +25,15 @@ class MdLokerController extends Controller
      */
     public function index()
     {
+        // $posts = md_loker::get();
+        // $posts = DB::table('md_lokers')->selectRaw('md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, perusahaans.perusahaan')->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')->whereNull('md_lokers.deleted_at')->get();
 
-        $posts = md_loker::get();
-
+        $posts = DB::table('md_lokers')  // Memulai query dengan tabel 'md_lokers'
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan, skills.nama_skill') // Memilih kolom yang akan diambil dari 'md_lokers' dan 'perusahaans'
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id') // Melakukan operasi JOIN antara 'md_lokers' dan 'perusahaans' berdasarkan kolom 'perusahaan' pada 'md_lokers' dan 'id' pada 'perusahaans'
+            ->leftjoin('skills', 'md_lokers.id', '=', 'skills.id_kotak_loker') // Menggunakan LEFT JOIN untuk mempertahankan semua data 'md_lokers' bahkan jika tidak ada skill yang terkait
+            ->whereNull('md_lokers.deleted_at') // Menambahkan kondisi WHERE untuk memastikan hanya data yang tidak memiliki 'deleted_at' (data yang tidak dihapus) yang diambil
+            ->get(); // Mengambil hasil query dan menyimpannya dalam variabel $posts
 
         //return view
         // return response()->json([$posts]);
@@ -46,6 +54,18 @@ class MdLokerController extends Controller
     {
         return view('form');
     }
+
+    // public function perusahaan_list(Request $request): JsonResponse
+    // {
+    //     $data = [];
+
+    //     if ($request->filled('q')) {
+    //         $data = perusahaan::select("perusahaan", "id")
+    //             ->where('perusahaan', 'LIKE', '%' . $request->get('q') . '%')
+    //             ->get();
+    //     }
+    //     return response()->json($data);
+    // }
 
     public function provinsi()
     {
@@ -213,6 +233,8 @@ class MdLokerController extends Controller
 
     public function submit_loker(Request $request)
     {
+
+        // dd($request);
         $request->validate([
             'nama' => 'required|string|min:5',
             'jenis_kelamin' => 'required',
@@ -245,6 +267,7 @@ class MdLokerController extends Controller
             'instansi.required' => 'Instansi Pendidikan harus diisi.',
             'ipk.required' => 'IPK/GPA harus diisi.',
         ]);
+
 
         $data["email"] = "fantocaa17@gmail.com";
         $data["title"] = "Meong Uwu";
@@ -291,6 +314,7 @@ class MdLokerController extends Controller
             echo "File tidak ditemukan dalam permintaan.";
         }
 
+
         return redirect()->route('finish');
     }
     /**
@@ -317,17 +341,13 @@ class MdLokerController extends Controller
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
             'skill.*.required' => 'Skill Harus Diisi'
-
-
         ]);
 
         $form = new md_loker();
         $form->pekerjaan = $request->pekerjaan;
         $form->perusahaan = $request->perusahaan;
         $form->jenis_pekerjaan = $request->jenis_pekerjaan;
-        // req ke deskripsi = string varchar
         $form->isi_konten = $request->deskripsi;
-        // req ke isi_konten = mediumtext
         $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
         $form->save();
@@ -338,7 +358,6 @@ class MdLokerController extends Controller
             $skill->nama_skill = $value;
             $skill->save();
         }
-
 
         return redirect('/admin/dashboard/lowongan_pekerjaan');
 
@@ -385,7 +404,7 @@ class MdLokerController extends Controller
         $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
         $form->save();
-        // $reqeust itu mengambil data dari view
+
         // $i itu sama dengan i++
         foreach ($request->idskill as $i => $value) {
             // $skill = new skill();
@@ -435,22 +454,4 @@ class MdLokerController extends Controller
     {
         //
     }
-
-    // public function generatePDF(Request $request)
-    // {
-    //     // Ambil data yang dikirim dari formulir
-    //     $data = $request->all();
-
-    //     // Load view 'form' dengan data yang dikirimkan
-    //     $pdf = PDF::loadView('form', compact('data'));
-
-    //     // Menghasilkan nama file PDF sesuai dengan timestamp
-    //     $filename = 'CV_' . time() . '.pdf';
-
-    //     // Simpan PDF ke direktori yang diinginkan
-    //     $pdf->save(public_path('pdf/' . $filename));
-
-    //     // Kembalikan tautan unduhan ke file PDF yang baru dibuat
-    //     return response()->download(public_path('pdf/' . $filename));
-    // }
 }

@@ -86,7 +86,6 @@ const Job = () => {
                         </div>
                     </div>
                 </div>
-
                 <Footer />
             </section>
         </Layout>

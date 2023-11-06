@@ -55,11 +55,11 @@
                         href="{{ route('login_proses') }}"></a>Login</button>
             </div> --}}
 
-            <div class="w-full flex flex-col">
+            {{-- <div class="w-full flex flex-col">
                 <a href="{{ route('register') }}">
                     <button class="w-full py-3 my-2 bg-transparent border-BlueTako border text-BlueTako rounded-xl">
                         Register</button></a>
-            </div>
+            </div> --}}
         </div>
 
 

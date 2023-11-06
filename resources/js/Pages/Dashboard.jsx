@@ -13,6 +13,7 @@ import {
     LayoutDashboard,
     Settings,
     ArrowLeftCircle,
+    Building2,
 } from "lucide-react";
 import { Link, usePage } from "@inertiajs/react";
 import Axios from "axios";
@@ -76,6 +77,13 @@ export default function Dashboard({ auth }) {
                             // active={page.url === "/dashboard/beranda"}
                         />
                     </Link>
+                    <a href={route("admin.perusahaan_dashboard")}>
+                        <SidebarItem
+                            icon={<Building2 size={20} />}
+                            text="Perusahaan"
+                            // active={page.url === "/dashboard/beranda"}
+                        />
+                    </a>
                     {/* <Link href={route("admin.logout")}> */}
                     <a href={route("admin.logout")}>
                         {/* <Link onClick={handleChange}> */}

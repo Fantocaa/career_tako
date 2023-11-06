@@ -10,6 +10,7 @@ use App\Http\Controllers\LokerController;
 use App\Http\Controllers\MdLokerController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PerusahaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-})->name('welcome');
+})->name('WelcomePage');
 
 // Route link Start
 
@@ -75,32 +76,6 @@ Route::get('/finish', function () {
     return Inertia::render('Finish');
 })->name('finish');
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome');
-// });
-
-// Route::get('/formulir', function () {
-//     return inertia('FormEmail');
-// });
-
-// Route::post('/upload', 'MdLokerController@uploadFile');
-// Route::post('/upload', [MdLokerController::class, 'uploadFile']);
-
-// Route::get('/formulir', function () {
-//     return inertia('Mailform');
-// });
-
-// Route::get('/formulir', function () {
-//     return view('form'); // Mengarahkan ke tampilan form.blade.php
-// });
-
-// Route::post('/send-email', [EmailController::class, 'sendEmail']);
-
-
-// Route::get('/table', function () {
-//     return Inertia::render('DataDashboard');
-// });
-
 
 Route::post('/formulir/submit/', [MdLokerController::class, 'submit_loker']);
 
@@ -112,7 +87,6 @@ Route::get('/job/internship/{id}', [MdLokerController::class, 'show_detail_loker
 Route::get('/job/profesional/{id}', [MdLokerController::class, 'show_detail_loker_pro']);
 
 Route::get('/job/formulir/{id}', [MdLokerController::class, 'show_lamar_loker']);
-
 
 Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
 Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
@@ -126,21 +100,8 @@ Route::post('/login_proses', [LoginController::class, 'login_proses'])->name('lo
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/register_proses', [LoginController::class, 'register_proses'])->name('register_proses');
 
-Route::get('/table', function () {
-    return Inertia::render('TableDashboard');
-});
+Route::get('/json_perusahaan', [PerusahaanController::class, 'index'])->name('json_perusahaan');
 
-// Route::get('/table/tambah_baru', function () {
-//     return Inertia::render('EditLoker');
-// });
-
-Route::get('/table/tambah_baru', [MdLokerController::class, 'tambah_baru']);
-
-Route::get('/table/viewskill/{id}', [MdLokerController::class, 'view_skill']);
-
-Route::get('/table/edit/{id}', [MdLokerController::class, 'edit_loker']);
-Route::get('/table/hapus/{id}', [MdLokerController::class, 'delete_loker']);
-Route::post('/table/update_loker', [MdLokerController::class, 'update_loker']);
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'], function () {
     Route::get('/dashboard', function () {
@@ -163,14 +124,41 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'],
         // })->middleware(['auth', 'verified'])->name('dashboard');
     })->name('lowongan_pekerjaan');
 
-    //
+    Route::get('/dashboard/perusahaan_dashboard', function () {
+        return Inertia::render('TablePerusahaan');
+        // })->middleware(['auth', 'verified'])->name('dashboard');
+    })->name('perusahaan_dashboard');
 
-    //
+    Route::get('/table', function () {
+        return Inertia::render('TableDashboard');
+    });
+
+    Route::get('/table/tambah_baru', [MdLokerController::class, 'tambah_baru']);
+    Route::get('/perusahaan_list', [MdLokerController::class, 'perusahaan_list']);
+
+    Route::get('/table/viewskill/{id}', [MdLokerController::class, 'view_skill']);
+
+    Route::get('/table/edit/{id}', [MdLokerController::class, 'edit_loker']);
+    Route::get('/table/hapus/{id}', [MdLokerController::class, 'delete_loker']);
+    Route::post('/table/update_loker', [MdLokerController::class, 'update_loker']);
+
+    Route::get('/perusahaan_db', [PerusahaanController::class, 'perusahaan'])->name('perusahaan_db');
+
+    Route::get('/fetch_perusahaan', [PerusahaanController::class, 'fetchPerusahaan'])->name('fetch_perusahaan');
+
+    // Route::get('/image_link', [PerusahaanController::class, 'image_link'])->name('image_link');
+
+    Route::post('/store', [PerusahaanController::class, 'store'])->name('store_perusahaan');
+    Route::get('/perusahaan/tambah_baru', [PerusahaanController::class, 'tambah_baru_perusahaan']);
+    Route::get('/perusahaan/edit/{id}', [PerusahaanController::class, 'edit_perusahaan'])->name('edit_perusahaan');
+    Route::get('/perusahaan/hapus/{id}', [PerusahaanController::class, 'hapus_perusahaan'])->name('hapus_perusahaan');
+    Route::post('/perusahaan/update_perusahaan', [PerusahaanController::class, 'update'])->name('update_perusahaan');
+
+    Route::resource('perusahaan', PerusahaanController::class);
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     // Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-
 
 // Route::middleware('auth')->group(function () {
     //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

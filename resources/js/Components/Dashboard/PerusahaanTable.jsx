@@ -1,76 +1,95 @@
-import DataTable from "react-data-table-component";
-import { Link } from "@inertiajs/react";
 import React, { useState, useEffect } from "react";
+import DataTable from "react-data-table-component";
+import Layout from "../../Layouts/Layout";
 import Axios from "axios";
-import Layout from "@/Layouts/Layout";
 
-const TableDashboard = () => {
+const PerusahaanTable = () => {
+    const [data, setData] = useState([]); // State untuk data perusahaan
+    const [loading, setLoading] = useState(true);
+
+    // Gunakan useEffect untuk memuat data melalui AJAX saat komponen dimuat
+    useEffect(() => {
+        // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
+        fetch("/json_perusahaan") // Ganti dengan rute yang sesuai
+            .then((response) => response.json())
+            .then((data) => {
+                // const updatedData = data.map((item, index) => ({
+                //     ...item,
+                //     id: index + 1,
+                // }));
+                setData(data);
+                // setData(data);
+                setLoading(false);
+            });
+    }, []); // Gunakan array kosong sebagai dependencies untuk menjalankan useEffect sekali saat komponen dimuat
+
     const handleDelete = (id) => {
-        console.log(id);
-        // Axios.delete(`/form/${id}`)
-        Axios.get(`/admin/table/hapus/` + id)
+        Axios.get(`/admin/perusahaan/hapus/` + id)
             .then((response) => {
                 // Handle jika penghapusan berhasil
-                // Misalnya, Anda bisa memperbarui ulang dataFromAPI untuk merefresh tampilan tabel
-                const updatedData = dataFromAPI.filter(
-                    (item) => item.id !== id
-                );
-                setDataFromAPI(updatedData);
-                // alert("Item berhasil dihapus.");
+                // Hapus item dari data
+                const updatedData = data.filter((item) => item.id !== id);
+                setData(updatedData);
             })
             .catch((error) => {
-                // Handle jika terjadi kesalahan saat menghapus
                 console.error("Error deleting item:", error);
-                // alert("Terjadi kesalahan saat menghapus item.");
             });
     };
 
-    const [values, setValues] = useState({
-        id: "",
-    });
+    //     <style>
+    //         .hBPTft {
+    //     position: relative;
+    //     width: 100%;
+    //     display: block;
+    // }
+    //     </style>
 
     const columns = [
         {
-            name: "Nomor",
-            selector: (row, index) => index + 1, // Use index to generate a sequential number
-            // sortable: true, // Mengaktifkan pengurutan untuk kolom ini
+            name: "No",
+            // selector: "id",
+            selector: (row, index) => index + 1,
+            sortable: true,
         },
         {
-            name: "Pekerjaan",
-            selector: (row) => row.pekerjaan,
-            // sortable: true, // Mengaktifkan pengurutan untuk kolom ini
+            name: "Logo Perusahaan",
+            selector: "image",
         },
         {
-            name: "Perusahaan",
-            selector: (row) => row.perusahaan,
+            name: "Nama Perusahaan",
+            selector: "perusahaan",
+            sortable: true,
+        },
+        // {
+        //     name: "Tentang",
+        //     selector: "tentang",
+        // },
+        {
+            name: "Alamat Perusahaan",
+            selector: "alamat",
         },
         {
-            name: "Jenis Pekerjaan",
-            selector: (row) => row.jenis_pekerjaan,
-        },
-        {
-            name: "Batas Lamaran",
-            selector: (row) => row.batas_lamaran,
+            name: "Link Perusahaan",
+            selector: "link",
         },
 
         {
             name: "Aksi",
             cell: (row) => (
                 <>
-                    <a href={`/admin/table/edit/${row.id}`}>
+                    <a href={`/admin/perusahaan/edit/${row.id}`}>
                         <button>
                             <img
                                 src="../../images/edit.svg"
                                 alt=""
-                                className="scale-50"
+                                className="scale-50  transition-all"
                             />
                         </button>
                     </a>
+
                     <button
-                        className="btn bg-white border-none hover:bg-transparent transition-all"
-                        // onClick={() =>
-                        //     document.getElementById("hapus").showModal(row.id)
-                        // }
+                        className="btn bg-white border-none hover:bg-transparent transition-all "
+                        // onClick={() => handleDelete(row.id)}
                         onClick={(e) =>
                             document
                                 .getElementById(`hapus-` + row.id)
@@ -84,6 +103,7 @@ const TableDashboard = () => {
                             className="scale-50"
                         />
                     </button>
+
                     {/* <dialog id="hapus" className="modal"> */}
                     <dialog
                         id={`hapus-${row.id}`}
@@ -99,7 +119,9 @@ const TableDashboard = () => {
                             <div className="modal-action ">
                                 <form method="dialog" className="flex gap-4">
                                     {/* if there is a button in form, it will close the modal */}
-                                    <a href={`/admin/table/hapus/${row.id}`}>
+                                    <a
+                                        href={`/admin/perusahaan/hapus/${row.id}`}
+                                    >
                                         <button
                                             className="btn btn-error"
                                             onClick={() => handleDelete(row.id)}
@@ -115,46 +137,19 @@ const TableDashboard = () => {
                 </>
             ),
         },
+
+        // Tambahkan kolom lain sesuai kebutuhan
     ];
-
-    const [searchTerm, setSearchTerm] = useState("");
-    const [dataFromAPI, setDataFromAPI] = useState([]);
-
-    const handleSearch = (value) => {
-        setSearchTerm(value);
-    };
-
-    const filteredData = dataFromAPI.filter((item) => {
-        return (
-            item &&
-            item.pekerjaan &&
-            item.pekerjaan.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    });
-
-    const fetchData = () => {
-        Axios.get("/form")
-            .then((response) => {
-                setDataFromAPI(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []); // Kosongkan array dependensi untuk memastikan permintaan hanya dipanggil sekali
 
     return (
         <Layout pageTitle="Dashboard | Tako Karir">
-            <div className="bg-BgTako px-4 h-full py-8">
+            <div className="bg-BgTako px-[19px] h-full py-8">
                 <div className="bg-white container mx-auto p-8 rounded-lg h-full ">
                     <h1 className="font-bold text-2xl pb-6 text-DarkTako">
-                        Tambah Loker
+                        Tambah Perusahaan
                     </h1>
                     <div className="flex justify-between gap-4">
-                        <a href="/admin/table/tambah_baru">
+                        <a href="/admin/perusahaan/tambah_baru">
                             <button className="bg-BlueTako text-white rounded-lg px-4 py-2 ">
                                 + Tambah
                             </button>
@@ -167,18 +162,28 @@ const TableDashboard = () => {
                         />
                     </div>
                     <div className="pb-8"></div>
-
-                    {Array.isArray(filteredData) && filteredData.length > 0 ? (
+                    <div className="w-full block">
                         <DataTable
-                            // title="Tambah Loker"
+                            // title="Data Perusahaan"
                             columns={columns}
-                            data={filteredData}
-                            fixedHeader
+                            data={data}
+                            progressPending={loading}
+                            progressComponent={<div>Loading...</div>}
                             pagination
+                            fixedHeader
+                            allowOverflow
+                            // style={
+
+                            // }
+                            customStyles={{
+                                rows: {
+                                    style: {
+                                        maxWidth: "874px",
+                                    },
+                                },
+                            }}
                         />
-                    ) : (
-                        <p>Tunggu sebentar</p>
-                    )}
+                    </div>
                 </div>
                 {/* Open the modal using document.getElementById('ID').showModal() method */}
             </div>
@@ -186,4 +191,4 @@ const TableDashboard = () => {
     );
 };
 
-export default TableDashboard;
+export default PerusahaanTable;

@@ -49,10 +49,12 @@
         "react-router-dom": "^6.16.0",
         "react-scroll": "^1.8.9",
         "react-select": "^5.7.5",
+        "react-share": "^4.4.1",
         "react-slick": "^0.29.0",
         "react-supervisor": "^4.0.1",
         "styled-components": "^6.0.8",
         "sweetalert2": "^11.7.32",
+        "vanilla-javascript": "^1.1.1",
         "ziggy-js": "^1.8.1"
     },
     "peerDependencies": {

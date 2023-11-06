@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah Baru | Karir Tako</title>
+    <title>Edit Loker | Karir Tako</title>
     @vite('resources/css/app.css')
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -17,90 +17,144 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
+    <style>
+        trix-toolbar [data-trix-button-group= 'file-tools'] {
+            display: none;
+        }
+
+        .select2-container--default .select2-selection--single {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1.5px solid #6B7280;
+            border-radius: 16px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 26px;
+            position: absolute;
+            top: 9px;
+            right: 8px;
+            width: 20px;
+        }
+    </style>
+
 </head>
 
 <body class="bg-white text-DarkTako h-full">
     <div class="py-16 px-16">
         <div class="p-8 container mx-auto bg-white h-full rounded-2xl">
             <h1 class="text-3xl font-bold">
-                Tambah Baru
+                Edit Loker
             </h1>
-            <form id="vue" action="{{ url('/table/update_loker') }}" method="POST" class="w-full">
+            <form id="vue" action="{{ url('/admin/table/update_loker') }}" method="POST" class="w-full">
                 @csrf
                 <input class="" type="text" name="id" id="id" value="{{ $md_loker[0]->id }}"
                     hidden>
                 <div class="flex flex-wrap pt-8 gap-4">
                     <label for="nama" class="w-[49%]">
-                        <h1>Pekerjaan</h1>
+                        <h1 class="mb-2">Pekerjaan</h1>
                         <input type="text" name="pekerjaan" value="{{ $md_loker[0]->pekerjaan }}" required
                             class="rounded-2xl w-full" placeholder="Masukkan Nama Pekerjaan">
                     </label>
-                    <label for="perusahaan" class="w-[49%]">
+                    {{-- <label for="perusahaan" class="w-[49%]">
                         <h1>Perusahaan</h1>
                         <input type="text" name="perusahaan" value="{{ $md_loker[0]->perusahaan }}" required
                             class="rounded-2xl w-full">
-                    </label>
-                    <label for="jenis_pekerjaan" class="w-[49%]">
-                        <h1>Jenis Pekerjaan</h1>
+                    </label> --}}
 
-                        {{-- <input type="text" name="jenis_pekerjaan" required class="rounded-2xl w-full"> --}}
+                    <label for="perusahaan" class="w-[49%]">
+                        <h1 class="mb-2">Perusahaan</h1>
+                        <select class="js-example-basic-single w-full rounded-2xl" name="perusahaan" required
+                            style="width: 100%;" value="{{ $md_loker[0]->perusahaan }}">
+                            <option></option>
+                        </select>
+                    </label>
+
+                    {{-- <label for="jenis_pekerjaan" class="w-[49%]">
+                        <h1>Jenis Pekerjaan</h1>
 
                         <select class="js-example-basic-single full-height w-full h-full" name="jenis_pekerjaan"
                             value="{{ $md_loker[0]->jenis_pekerjaan }}">
                             <option value="Internship">Internship</option>
                             <option value="Profesional">Profesional</option>
                         </select>
+                    </label> --}}
+
+                    <label for="jenis_pekerjaan" class="w-[49%]">
+                        <h1 class="mb-2">Jenis Pekerjaan</h1>
+                        <select class="w-full rounded-2xl" name="jenis_pekerjaan"
+                            value="{{ $md_loker[0]->jenis_pekerjaan }}">
+                            <option class="">Pilih Program</option>
+                            <option value="Internship">Internship</option>
+                            <option value="Profesional">Profesional</option>
+                        </select>
                     </label>
 
                     <label for="batas_lamaran" class="w-[49%] relative">
-                        <h1>Batas Lamaran</h1>
+                        <h1 class="mb-2">Batas Lamaran</h1>
                         <img src="/images/calendar.svg" alt=""
                             class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75">
                         <input type="date" name="batas_lamaran" value="{{ $md_loker[0]->batas_lamaran }}" required
                             class="rounded-2xl w-full">
                     </label>
 
-                    <div class="flex w-full gap-4">
+                    <div class="flex w-full gap-4 flex-wrap">
                         <template v-for="(item, index) in idskilldelete":key="index">
                             <input type="text" name="idskilldelete[]" v-model="item.id" hidden>
                         </template>
                         <template v-for="(item, index) in namaskill" :key="index">
-                            <label for="skill">
-                                <h1>Skill</h1>
-                                <input type="text" name="idskill[]" v-model="item.id" hidden>
-                                <input type="text" name="skill[]" v-model="item.nama" required
-                                    class="rounded-2xl w-full">
-                                <span v-on:Click='hapusKonten(index, item.id)'
-                                    class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">Delete</span>
-                            </label>
+                            <div>
+                                <h1 class="mb-2">Skill</h1>
+                                <label for="skill" class="flex gap-4">
+                                    <input type="text" name="idskill[]" v-model="item.id" hidden>
+                                    <input type="text" name="skill[]" v-model="item.nama" required
+                                        class="rounded-2xl w-full">
+                                    <span v-on:Click='hapusKonten(index, item.id)'
+                                        class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">X
+                                    </span>
+                                </label>
+                            </div>
                         </template>
                         <div class="flex items-end">
                             <span v-on:Click='onClickSkill()'
-                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">Add</span>
+                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">
+                                +</span>
                         </div>
                         <div class="flex items-end">
 
                         </div>
                     </div>
 
-                    <label for="isi_konten" class="w-full">Deskripsi
+                    <label for="isi_konten" class="w-full">
+                        <h1 class="mb-2">Deskripsi</h1>
                         <input type="text" name="isi_konten" value="{{ $md_loker[0]->deskripsi }}" required
                             class="rounded-2xl w-full">
                     </label>
-                    <label for="deskripsi">
-                        <h1>Isi Konten</h1>
-                        <input type="text" name="deskripsi" class="rounded-2xl w-full" id="summernote"
-                            value="{{ $md_loker[0]->isi_konten }}">
+                    <label for="deskripsi" class="w-full">
+                        <h1 class="mb-2">Isi Konten</h1>
+                        {{-- <input type="text" name="deskripsi" class="rounded-2xl w-full" id="summernote"
+                            value="{{ $md_loker[0]->isi_konten }}"> --}}
+                        <input id="deskripsi" type="hidden" name="deskripsi">
+                        <trix-editor input="deskripsi"
+                            class="h-64 hover:cursor-auto">{{ $md_loker[0]->isi_konten }}</trix-editor>
                     </label>
                 </div>
                 <div class="flex gap-4">
-
                     <div class="pt-8">
                         <button type="submit" class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
                     </div>
-                    <div class="pt-8">
+                    <div class="pt-[41px]">
                         <a href="/admin/dashboard/lowongan_pekerjaan">
-                            <button class="bg-RedTako text-white px-4 py-2 rounded-2xl">Batal</button>
+                            <span class="bg-RedTako text-white px-4 py-[9.5px] rounded-2xl">Batal</span>
                         </a>
                     </div>
                 </div>
@@ -108,42 +162,7 @@
         </div>
     </div>
 
-    {{-- <form id="vue" action="{{ url('/form') }}" method="post">
-        @csrf
-        <input class="hidden" type="text" name="idloker" id="idloker" value="{{ $md_loker[0]->id }}">
-        <div class="flex flex-col">
-            <label for="nama">Pekerjaan
-                <input type="text" name="pekerjaan" value="{{ $md_loker[0]->pekerjaan }}" required>
-            </label>
-            <label for="perusahaan">Perusahaan
-                <input type="text" name="perusahaan" value="{{ $md_loker[0]->perusahaan }}" required>
-            </label>
-            <label for="jenis_pekerjaan">Jenis Pekerjaan
-                <input type="text" name="jenis_pekerjaan" value="{{ $md_loker[0]->jenis_pekerjaan }}" required>
-            </label>
-            <span v-on:click="onClickSkill">tambah</span>
-            <template v-for="(item, index) in namaskill" :key="index">
-                <label for="skill">Skill
-                    <input type="text" name="skill[]" v-model="item.nama" required>
-                </label>
-            </template>
-            <label for="batas_lamaran">Batas Lamaran
-                <input type="date" name="batas_lamaran" value="{{ $md_loker[0]->batas_lamaran }}" required>
-            </label>
-            <label for="isi_konten">Deskripsi
-                <input type="text" name="isi_konten" value="{{ $md_loker[0]->deskripsi }}" required>
-            </label>
-            <label for="deskripsi"> Isi Konten
-                <input type="text" name="deskripsi" value="{{ $md_loker[0]->isi_konten }}" required>
-            </label>
 
-            <button type="submit">Kirim</button>
-
-        </div>
-
-    </form>
-
-     --}}
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -151,9 +170,27 @@
     <script>
         $(document).ready(function() {
             $('.js-example-basic-single').select2({
-                placeholder: 'Meong',
-                width: 'resolve',
-                height: 'resolve',
+                placeholder: 'Pilih Perusahaan',
+                ajax: {
+                    url: '/json_perusahaan', // Ganti dengan URL API yang sesuai
+                    dataType: 'json',
+                    // processResults: function(data) {
+                    //     return {
+                    //         results: data.perusahaan
+                    //     };
+                    // }
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    text: item.perusahaan,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
             });
         });
     </script>
@@ -174,7 +211,7 @@
                 viewSkill() {
                     var id = $('#id').val();
                     var self = this;
-                    $.ajax('/table/viewskill/' + id, {
+                    $.ajax('/admin/table/viewskill/' + id, {
                         type: 'GET',
                         success: function(data, status, xhr) {
                             console.log(data);
@@ -205,7 +242,7 @@
         }).mount("#vue");
     </script>
 
-    <script>
+    {{-- <script>
         $('#summernote').summernote({
             placeholder: 'Masukkan Isi Konten',
             tabsize: 8,
@@ -221,7 +258,7 @@
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
         });
-    </script>
+    </script> --}}
 
 </body>
 
