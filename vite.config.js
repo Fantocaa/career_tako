@@ -6,6 +6,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: "resources/js/app.jsx",
+            detectTls: "http://karir.tako.co.id/",
             refresh: true,
         }),
         react(),
