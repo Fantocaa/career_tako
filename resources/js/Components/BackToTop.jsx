@@ -26,7 +26,7 @@ const BackToTop = () => {
 
     return (
         <div
-            className={`fixed back-to-top  bottom-16 right-10 ${
+            className={`fixed back-to-top  bottom-16 right-8 hidden lg:block ${
                 isVisible ? "visible" : "hidden"
             }`}
         >

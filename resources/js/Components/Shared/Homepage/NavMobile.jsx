@@ -127,12 +127,12 @@ const NavMobile = () => {
                             >
                                 Beranda
                             </Link>
-                            <Link
+                            {/* <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/companyprofile"
                             >
                                 Profil Perusahaan
-                            </Link>
+                            </Link> */}
                             <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/job"

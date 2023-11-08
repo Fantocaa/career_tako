@@ -6,7 +6,7 @@ const CTA = () => {
         <div className="container mx-auto px-4 md:px-8 xl:px-16 py-16">
             <div className="bg-BgTako py-4 rounded-lg md:flex justify-between items-center">
                 <div className="lg:w-[40%] text-center lg:text-left">
-                    <h1 className="font-bold text-4xl lg:text-5xl pb-4 leading-[72px]">
+                    <h1 className="font-bold text-4xl lg:text-5xl pb-4 lg:leading-[72px]">
                         Segera Bergabung bersama Kami!
                     </h1>
                     <p className="pb-8">

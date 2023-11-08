@@ -51,20 +51,28 @@ const PerusahaanCard = () => {
     return (
         <>
             {formData.map((item) => (
-                <div
-                    className="bg-white p-6 rounded-xl text-DarkTako cursor-pointer"
-                    key={item.id}
-                >
-                    <img
-                        src={`/storage/images/${item.image}`}
-                        alt=""
-                        className="mx-auto w-32 h-32"
-                    />
-                    <h3 className="font-semibold pt-4">{item.perusahaan}</h3>
-                    <p className="text-DarkTako text-opacity-75 ">
-                        {hitungJumlahLowongan(item.id)} Lowongan Tersedia
-                    </p>
-                </div>
+                <Link href={`loker/perusahaan/${item.id}`}>
+                    <div
+                        className="bg-white p-6 rounded-xl text-DarkTako cursor-pointer h-full"
+                        key={item.id}
+                    >
+                        <img
+                            src={`/storage/images/${item.image}`}
+                            alt="logo perusahaan"
+                            className="mx-auto w-32 h-32"
+                        />
+                        <div className="flex flex-col h-24 justify-between">
+                            <h3 className="font-semibold pt-4 overflow-hidden">
+                                {item.perusahaan}
+                            </h3>
+                            <p className="text-DarkTako text-opacity-75 bottom-0">
+                                {/* {hitungJumlahLowongan(item.id)} Lowongan
+                                Tersedia */}
+                                {hitungJumlahLowongan} Lowongan Tersedia
+                            </p>
+                        </div>
+                    </div>
+                </Link>
             ))}
         </>
     );

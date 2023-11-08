@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ImageSlider from "@/Components/ImageSlider";
 import aos from "aos";
 import "aos/dist/aos.css";
 import "../../../css/style.css";
 import Why from "./Why";
+import ImageSlider from "@/Components/Shared/Homepage/Section/ImageSlider";
 
 const ContentRecruitment = () => {
     useEffect(() => {

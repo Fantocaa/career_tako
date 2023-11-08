@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import Axios from "axios";
 
-const SelectJob = () => {
+const SelectJob = ({ active }) => {
     const [formData, setFormData] = useState([]);
 
     function formatDate(dateString) {
@@ -31,65 +31,75 @@ const SelectJob = () => {
     }, []);
 
     return (
-        <>
-            {formData.map((item) => (
-                <div
-                    className="bg-white p-8 rounded-xl h-full flex flex-col justify-between"
-                    key={item.id}
-                >
-                    <h1 className="font-bold">{item.pekerjaan}</h1>
-                    <h2 className="text-BlueTako pt-2">{item.perusahaan}</h2>
-                    <p className="text-xs pt-4">{item.deskripsi}</p>
-                    <div className="flex items-center justify-between pt-2">
-                        <div className="flex gap-2">
-                            <img src="/images/program.svg" alt="" />
-                            <h1>{item.jenis_pekerjaan}</h1>
-                        </div>
-                        <div className="flex gap-2">
-                            <img src="/images/clock.svg" alt="" />
-                            <h1>{item.batas_lamaran}</h1>
-                        </div>
-                    </div>
-                    <div className=" justify-between">
-                        <div className="flex gap-2 pt-4 flex-wrap">
-                            <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                Marketing strategy
+        <div
+            className={
+                active
+                    ? "flex md:grid grid-cols-2 lg:grid-cols-3 flex-wrap gap-4"
+                    : "hidden"
+            }
+        >
+            <>
+                {formData.map((item) => (
+                    <div
+                        className="bg-white p-8 rounded-xl h-full flex flex-col justify-between"
+                        key={item.id}
+                    >
+                        <h1 className="font-bold">{item.pekerjaan}</h1>
+                        <h2 className="text-BlueTako pt-2">
+                            {item.perusahaan}
+                        </h2>
+                        <p className="text-xs pt-4">{item.deskripsi}</p>
+                        <div className="flex items-center gap-4 pt-2">
+                            <div className="flex gap-2">
+                                <img src="/images/program.svg" alt="" />
+                                <h1>{item.jenis_pekerjaan}</h1>
                             </div>
-                            <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                Negotiation
-                            </div>
-                            <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                Problem Solver
-                            </div>
-                            <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                Time Management
+                            <div className="flex gap-2">
+                                <img src="/images/clock.svg" alt="" />
+                                <h1>{item.batas_lamaran}</h1>
                             </div>
                         </div>
+                        <div className="pt-2">
+                            <div className="flex gap-2 pt-4 flex-wrap">
+                                <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
+                                    Marketing strategy
+                                </div>
+                                <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
+                                    Negotiation
+                                </div>
+                                <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
+                                    Problem Solver
+                                </div>
+                                <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
+                                    Time Management
+                                </div>
+                            </div>
 
-                        {/* <div className="text-xs pt-4">
-                            
-                            Batas Lamaran : {formatDate(item.batas_lamaran)}
-                        </div> */}
-                        <div className="flex pt-4 gap-2">
-                            <div className="w-full">
-                                <Link href={`/job/internship/${item.id}`}>
-                                    <button className="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full">
-                                        Lihat Detail
-                                    </button>
-                                </Link>
-                            </div>
-                            <div className="w-full">
-                                <Link href={`/job/formulir/${item.id}`}>
-                                    <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
-                                        Lamar
-                                    </button>
-                                </Link>
+                            {/* <div className="text-xs pt-4">
+                                Batas Lamaran : {formatDate(item.batas_lamaran)}
+                            </div> */}
+
+                            <div className="flex pt-8 gap-2">
+                                <div className="w-full">
+                                    <Link href={`/job/internship/${item.id}`}>
+                                        <button className="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full">
+                                            Lihat Detail
+                                        </button>
+                                    </Link>
+                                </div>
+                                <div className="w-full">
+                                    <Link href={`/job/formulir/${item.id}`}>
+                                        <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
+                                            Lamar
+                                        </button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            ))}
-        </>
+                ))}
+            </>
+        </div>
     );
 };
 

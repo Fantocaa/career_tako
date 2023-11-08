@@ -19,7 +19,6 @@ class PerusahaanController extends Controller
 
         $posts = perusahaan::get();
 
-
         //return view
         // return response()->json([$posts]);
 

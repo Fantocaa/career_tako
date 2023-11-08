@@ -51,14 +51,14 @@ const PerusahaanTable = () => {
             selector: (row, index) => index + 1,
             sortable: true,
         },
-        {
-            name: "Logo Perusahaan",
-            selector: "image",
-        },
+        // {
+        //     name: "Logo Perusahaan",
+        //     selector: "image",
+        // },
         {
             name: "Nama Perusahaan",
             selector: "perusahaan",
-            sortable: true,
+            // sortable: true,
         },
         // {
         //     name: "Tentang",

@@ -54,13 +54,20 @@ Route::get('/loker', function () {
     return Inertia::render('LokerNew');
 });
 
+Route::get('/loker/perusahaan/{id}', [MdLokerController::class, 'show_detail_perusahaan_loker']);
+
+Route::get('/loker/pekerjaan/{id}', [MdLokerController::class, 'show_detail_pekerjaan']);
+
 // Route::get('/lowongan_kerja', function () {
 //     return view('loker.loker');
 // });
 
 Route::get('/lowongan_kerja', [MdLokerController::class, 'loker']);
 
-Route::get('/search', [MdLokerController::class, 'search']);
+Route::post('/search', [MdLokerController::class, 'search']);
+
+// Nonaktifkan pemeriksaan CSRF sementara
+// Route::post('/search', [MdLokerController::class, 'search'])->withoutMiddleware(['verifyCsrfToken']);
 
 // Route::get('/login', [LoginController::class, 'index'])->name('login');
 

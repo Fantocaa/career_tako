@@ -1,6 +1,22 @@
 import React from "react";
+import { useState } from "react";
+import { usePage } from "@inertiajs/react";
 
 const PerusahaanInfo = () => {
+    const { props } = usePage();
+    const { perusahaan } = props;
+
+    const [values, setValues] = useState({
+        // password: "meong",
+        id: perusahaan.id,
+        perusahaan: perusahaan.perusahaan,
+        tentang: perusahaan.tentang,
+        alamat: perusahaan.alamat,
+        link: perusahaan.link,
+        image: perusahaan.image,
+    });
+    console.log(values);
+
     return (
         <section className="bg-BgTako pt-8 md:pt-32 ">
             <div className="container mx-auto text-DarkTako px-4 md:px-8 xl:px-16">
@@ -8,18 +24,21 @@ const PerusahaanInfo = () => {
                     <div className="md:w-full">
                         <div className="flex items-center gap-8">
                             <div className="p-8 border border-BlueTako border-opacity-25 rounded-xl">
-                                {/* <img src="/images/logo-footer.png" alt=""> */}
-                                <img src="/images/logo-footer.png" alt="" />
+                                <img
+                                    src={`/storage/images/${values.image}`}
+                                    className="w-32 h-32"
+                                />
+                                {/* <img src="/images/logo-footer.png" alt="" /> */}
                             </div>
                             <div>
-                                <h1 className="text-base md:text-2xl font-bold pb-2">
-                                    PT. TAKO ANUGERAH KOPORASI
+                                <h1 className="text-base md:text-2xl font-bold pb-2 uppercase">
+                                    {values.perusahaan}
                                 </h1>
                                 <a
                                     href="www.tako.co.id"
                                     className="text-DarkTako text-opacity-75 underline "
                                 >
-                                    www.tako.co.id
+                                    {values.link}
                                 </a>
                             </div>
                         </div>
@@ -29,13 +48,7 @@ const PerusahaanInfo = () => {
                                     Tentang Perusahaan
                                 </p>
                                 <p className="text-DarkTako text-opacity-75">
-                                    Menjadi koporasi yang kuat & sehat untuk
-                                    menaungi perusahaan-perusahaan yang
-                                    terintegrasi. Perusahaan Koporasi yang
-                                    menaungi 45 Perusahaan yang terintegrasi
-                                    dengan 4 linear bisnis yaitu Logistic,
-                                    Chicken Integration, Distributor, serta Food
-                                    Beverage
+                                    {values.tentang}
                                 </p>
                             </div>
                             <div className="pb-8">
@@ -43,9 +56,7 @@ const PerusahaanInfo = () => {
                                     Alamat Perusahaan
                                 </p>
                                 <p className="text-DarkTako text-opacity-75">
-                                    Jl. Perak Barat No.69, RT.002/RW.12, Perak
-                                    Barat, Kec. Krembangan, Surabaya, Jawa Timur
-                                    60177
+                                    {values.alamat}
                                 </p>
                             </div>
                         </div>
@@ -53,26 +64,13 @@ const PerusahaanInfo = () => {
                             <button className="px-8 py-3 bg-BlueTako text-white rounded-xl btn normal-case border-none hover:bg-BlueTako hover:bg-opacity-90">
                                 Cari Lowongan
                             </button>
-                            <a href="www.tako.co.id">
+                            <a href={values.link}>
                                 <button className="px-8 py-3 bg-BlueTako bg-opacity-5 text-BlueTako rounded-xl btn normal-case border-none hover:bg-BlueTako hover:bg-opacity-10">
                                     Kunjungi Laman
                                 </button>
                             </a>
                         </div>
                     </div>
-                    {/* <div className="w-1/3 flex flex-col gap-4">
-                <img
-                    src="/images/1.jpg"
-                    alt=""
-                    className="h-1/2 object-cover rounded-2xl"
-                />
-
-                <img
-                    src="/images/1.jpg"
-                    alt=""
-                    className="h-1/2 object-cover rounded-2xl"
-                />
-            </div> */}
                 </div>
             </div>
         </section>

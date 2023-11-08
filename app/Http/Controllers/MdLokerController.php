@@ -29,11 +29,17 @@ class MdLokerController extends Controller
         // $posts = DB::table('md_lokers')->selectRaw('md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, perusahaans.perusahaan')->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')->whereNull('md_lokers.deleted_at')->get();
 
         $posts = DB::table('md_lokers')  // Memulai query dengan tabel 'md_lokers'
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan, skills.nama_skill') // Memilih kolom yang akan diambil dari 'md_lokers' dan 'perusahaans'
-            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id') // Melakukan operasi JOIN antara 'md_lokers' dan 'perusahaans' berdasarkan kolom 'perusahaan' pada 'md_lokers' dan 'id' pada 'perusahaans'
-            ->leftjoin('skills', 'md_lokers.id', '=', 'skills.id_kotak_loker') // Menggunakan LEFT JOIN untuk mempertahankan semua data 'md_lokers' bahkan jika tidak ada skill yang terkait
-            ->whereNull('md_lokers.deleted_at') // Menambahkan kondisi WHERE untuk memastikan hanya data yang tidak memiliki 'deleted_at' (data yang tidak dihapus) yang diambil
-            ->get(); // Mengambil hasil query dan menyimpannya dalam variabel $posts
+            // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan, skills.nama_skill')
+
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+
+            // ->leftjoin('skills', 'md_lokers.id', '=', 'skills.id_kotak_loker') 
+
+            ->whereNull('md_lokers.deleted_at')
+
+            ->get();
 
         //return view
         // return response()->json([$posts]);
@@ -45,9 +51,16 @@ class MdLokerController extends Controller
         return view('loker');
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        return view('search');
+        // dd($request);
+        // return view('search');
+        $query = $request->input('query');
+        // Lakukan pencarian berdasarkan $query dan kirim hasilnya
+        $searchResults = MdLokerController::search($query);
+        return response()->json($searchResults);
+
+        // return Inertia::render('LokerNew');
     }
 
     public function tambah_baru()
@@ -141,8 +154,6 @@ class MdLokerController extends Controller
      * Store a newly created resource in storage.
      */
 
-
-
     /**
      * Display the specified resource.
      */
@@ -211,6 +222,17 @@ class MdLokerController extends Controller
     public function show_detail_loker_intern($id)
     {
         // dd();
+
+        $md_loker = DB::table('md_lokers')
+
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+
+            ->whereNull('md_lokers.deleted_at')
+
+            ->get();
+
         $md_loker = md_loker::find($id);
 
         // Menggunakan Inertia::render
@@ -230,6 +252,25 @@ class MdLokerController extends Controller
         ]);
     }
 
+    public function show_detail_perusahaan_loker($id)
+    {
+        $perusahaan = perusahaan::find($id);
+
+        // Menggunakan Inertia::render
+        return Inertia::render('LokerDetailPerusahaan', [
+            'perusahaan' => $perusahaan,
+        ]);
+    }
+
+    // public function show_detail_loker($id)
+    // {
+    //     $perusahaan = perusahaan::find($id);
+
+    //     // Menggunakan Inertia::render
+    //     return Inertia::render('LokerDetailPerusahaan', [
+    //         'perusahaan' => $perusahaan,
+    //     ]);
+    // }
 
     public function submit_loker(Request $request)
     {

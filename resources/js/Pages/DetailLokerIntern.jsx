@@ -33,8 +33,11 @@ const DetailLoker = () => {
     //     const fetchData = async () => {
     //         try {
     //             // Kirim data ke server
-    //             const response = await Axios.get("/form/view_intern");
+    //             const response = await Axios.get("/form");
+
+    //             const count = response.data.length;
     //             // const response = await Axios.post("/form");
+    //             setJobCount(count);
     //             setFormData(response.data);
     //         } catch (error) {
     //             console.error("Error sending data:", error);
@@ -42,9 +45,6 @@ const DetailLoker = () => {
     //     };
 
     //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
-
-    //     // Hanya perlu dijalankan saat komponen pertama kali di-mount,
-    //     // sehingga dependensi di bawah ini kosong
     // }, []);
 
     return (
