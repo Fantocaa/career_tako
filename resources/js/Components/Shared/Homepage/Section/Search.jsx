@@ -164,7 +164,7 @@ const Search = () => {
                                 <select
                                     name=""
                                     id=""
-                                    className="rounded-2xl border-white border-2 text-white text-opacity-30 border-opacity-25 bg-transparent w-full lg:w-48"
+                                    className="rounded-2xl border-white border-2 text-white text-opacity-75 border-opacity-25 bg-transparent w-full lg:w-48"
                                 >
                                     <option value="" className="text-DarkTako">
                                         Semua Program
