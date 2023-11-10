@@ -15,7 +15,7 @@
 "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "true",
-    "APP_URL": "https://akos-portfolio.vercel.app",
+    "APP_URL": "https://career-tako.vercel.app/",
 
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",
@@ -28,3 +28,4 @@
     "LOG_CHANNEL": "stderr",
     "SESSION_DRIVER": "cookie"
 }}
+
