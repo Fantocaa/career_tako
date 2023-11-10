@@ -4,7 +4,7 @@ import SelectJob from "../Shared/Job/SelectJob";
 import SelectJob2 from "../Shared/Job/SelectJob2";
 import Axios from "axios";
 
-const SectionView = () => {
+const SectionLokerView = () => {
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
     const [menu1Active, setMenu1Active] = useState(true);
@@ -64,8 +64,8 @@ const SectionView = () => {
             </>
             <div className="flex justify-between w-full">
                 <div className="flex flex-wrap gap-4 w-full justify-between ">
-                    <div className="flex gap-4">
-                        <div className="relative w-full lg:w-96">
+                    <div className="flex gap-4 flex-wrap md:w-full lg:flex-nowrap">
+                        <div className="relative w-full">
                             <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                                 <svg
                                     width="24"
@@ -103,14 +103,18 @@ const SectionView = () => {
                         <select
                             name=""
                             id=""
-                            className="rounded-2xl border-DarkTako border-opacity-25"
+                            className="rounded-2xl border-DarkTako border-opacity-25 w-full lg:w-64"
                         >
                             <option value="">Semua Program</option>
-                            <option value="Internship">Internship</option>
-                            <option value="Profesional">Profesional</option>
+                            <option value="Internship">
+                                Internship (Magang / Praktik Kerja)
+                            </option>
+                            <option value="Profesional">
+                                Profesional (Fresh Graduate / Berpengalaman)
+                            </option>
                         </select>
 
-                        <div className="">
+                        <div className="w-full">
                             <button className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none w-full lg:w-24 normal-case">
                                 Cari
                             </button>
@@ -202,12 +206,12 @@ const SectionView = () => {
                 </div>
             </div>
 
-            <div className="pt-8">
+            {/* <div className="pt-8">
                 <h1>
                     Menampilkan (190) Pekerjaan yang tersedia dari "PT. TAKO
                     ANUGERAH KOPORASI"
                 </h1>
-            </div>
+            </div> */}
 
             <div className={`pt-8 w-full ${menu1Active ? "" : "hidden"}`}>
                 <SelectJob active={menu1Active} />
@@ -225,4 +229,4 @@ const SectionView = () => {
     );
 };
 
-export default SectionView;
+export default SectionLokerView;

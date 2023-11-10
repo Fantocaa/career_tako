@@ -17,6 +17,7 @@ use PhpParser\Node\Stmt\Return_;
 use Illuminate\Support\Facades\Mail;
 // use App\Mail\MailLoker;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Response;
 
 class MdLokerController extends Controller
 {
@@ -54,13 +55,18 @@ class MdLokerController extends Controller
     public function search(Request $request)
     {
         // dd($request);
-        // return view('search');
-        $query = $request->input('query');
-        // Lakukan pencarian berdasarkan $query dan kirim hasilnya
-        $searchResults = MdLokerController::search($query);
-        return response()->json($searchResults);
 
-        // return Inertia::render('LokerNew');
+        // Menggunakan input 'query' dari request
+        $query = $request->input('query');
+
+        // // Lakukan pencarian berdasarkan $query dan kirim hasilnya
+        // $searchResults = MdLokerController::search($query);
+
+        // // Kembalikan hasil pencarian sebagai respons JSON
+        return response()->json($query);
+
+        return Inertia::render('LokerNew');
+        // return to_route('admin.beranda');
     }
 
     public function tambah_baru()

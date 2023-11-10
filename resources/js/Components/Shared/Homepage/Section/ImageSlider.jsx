@@ -5,7 +5,7 @@ import { Link } from "@inertiajs/react";
 import Search from "./Search";
 
 const ImageSlider = () => {
-    const [bladeView, setBladeView] = useState(null);
+    // const [bladeView, setBladeView] = useState(null);
 
     // useEffect(() => {
     //     // Lakukan permintaan ke server untuk mendapatkan tampilan Blade

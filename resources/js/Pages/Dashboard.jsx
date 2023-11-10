@@ -77,13 +77,13 @@ export default function Dashboard({ auth }) {
                             // active={page.url === "/dashboard/beranda"}
                         />
                     </Link>
-                    <a href={route("admin.perusahaan_dashboard")}>
+                    <Link href={route("admin.perusahaan_dashboard")}>
                         <SidebarItem
                             icon={<Building2 size={20} />}
                             text="Perusahaan"
                             // active={page.url === "/dashboard/beranda"}
                         />
-                    </a>
+                    </Link>
                     {/* <Link href={route("admin.logout")}> */}
                     <a href={route("admin.logout")}>
                         {/* <Link onClick={handleChange}> */}

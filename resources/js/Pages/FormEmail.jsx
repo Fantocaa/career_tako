@@ -392,13 +392,13 @@ const FormEmail = () => {
                                         Tanggal Lahir
                                         <span className="text-RedTako">*</span>
                                     </h1>
-                                    <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none ">
+                                    {/* <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none ">
                                         <img
                                             src="/images/calendar.svg"
                                             alt=""
                                             className=""
                                         />
-                                    </div>
+                                    </div> */}
                                     <input
                                         {...register("tanggal_lahir", {
                                             required: true,

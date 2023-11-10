@@ -1,16 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { router } from "@inertiajs/react";
 
 const Search = () => {
     const [query, setQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
-
-    useEffect(() => {
-        // Panggil fungsi untuk mengambil jumlah pekerjaan saat komponen dimuat
-        fetchJobCount();
-    }, []);
 
     const fetchJobCount = async () => {
         try {
@@ -27,24 +23,10 @@ const Search = () => {
         }
     };
 
-    // const handleSearch = () => {
-    //     const xhr = new XMLHttpRequest();
-    //     xhr.open("POST", `/search?query=${query}`, true);
-    //     // xhr.open("POST", `/search/${query}`, true);
-
-    //     xhr.setRequestHeader("Content-Type", "application/json");
-
-    //     xhr.onreadystatechange = function () {
-    //         if (xhr.readyState === 4 && xhr.status === 200) {
-    //             const response = JSON.parse(xhr.responseText);
-    //             // Proses data hasil pencarian
-    //             setSearchResults(response);
-    //         } else if (xhr.readyState === 4) {
-    //             console.error("Error searching:", xhr.statusText);
-    //         }
-    //     };
-    //     xhr.send();
-    // };
+    useEffect(() => {
+        // Panggil fungsi untuk mengambil jumlah pekerjaan saat komponen dimuat
+        fetchJobCount();
+    }, []);
 
     const getCsrfToken = async () => {
         // Ambil token CSRF dari elemen <meta>
@@ -71,20 +53,26 @@ const Search = () => {
             // setSearchResults(response.data);
 
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", `/search?query=${query}`, true);
+            xhr.open("GET", `api/search?query=${query}`, true);
             // xhr.open("POST", `/search/${query}`, true);
 
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-                    // Proses data hasil pencarian
-                    setSearchResults(response);
-                } else if (xhr.readyState === 4) {
-                    console.error("Error searching:", xhr.statusText);
+                if (xhr.readyState === 4) {
+                    console.log(xhr.responseText); // Log the response text
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        // console.log(response); // Log the parsed response
+                        setSearchResults(response);
+
+                        router.visit("/loker");
+                    } else {
+                        console.error("Error searching:", xhr.statusText);
+                    }
                 }
             };
+
             xhr.send();
 
             // console.log(data);
@@ -92,6 +80,12 @@ const Search = () => {
             console.error("Error searching:", error);
         }
     };
+
+    // useEffect(() => {
+    //     axios.get("api/search").then(({ data }) => {
+    //         console.log();
+    //     });
+    // });
 
     return (
         <div className="absolute z-10 container md:pl-8 lg:pl-16 max-w-full md:w-[70%] lg:w-1/2">
@@ -164,7 +158,7 @@ const Search = () => {
                                 <select
                                     name=""
                                     id=""
-                                    className="rounded-2xl border-white border-2 text-white text-opacity-75 border-opacity-25 bg-transparent w-full lg:w-48"
+                                    className="rounded-2xl border-white border-2 text-white text-opacity-75 border-opacity-25 bg-transparent w-full lg:w-44"
                                 >
                                     <option value="" className="text-DarkTako">
                                         Semua Program
@@ -173,13 +167,14 @@ const Search = () => {
                                         value="Internship"
                                         className="text-DarkTako"
                                     >
-                                        Internship
+                                        Internship (Magang/Praktik Kerja)
                                     </option>
                                     <option
                                         value="Profesional"
                                         className="text-DarkTako"
                                     >
-                                        Profesional
+                                        Profesional (Fresh Graduate /
+                                        Berpengalaman)
                                     </option>
                                 </select>
 
@@ -190,15 +185,14 @@ const Search = () => {
                                     >
                                         Cari
                                     </button>
-                                    {searchResults.map((result, index) => (
+                                    {/* {searchResults.map((result, index) => (
                                         <div key={index}>{result.name}</div>
-                                    ))}
+                                    ))} */}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <div dangerouslySetInnerHTML={{ __html: bladeView }} /> */}
             </div>
         </div>
     );

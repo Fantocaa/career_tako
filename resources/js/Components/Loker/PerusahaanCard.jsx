@@ -59,7 +59,7 @@ const PerusahaanCard = () => {
                         <img
                             src={`/storage/images/${item.image}`}
                             alt="logo perusahaan"
-                            className="mx-auto w-32 h-32"
+                            className="mx-auto w-32 h-32 object-contain"
                         />
                         <div className="flex flex-col h-24 justify-between">
                             <h3 className="font-semibold pt-4 overflow-hidden">

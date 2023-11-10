@@ -4,12 +4,24 @@ import SelectJob from "../Shared/Job/SelectJob";
 import SelectJob2 from "../Shared/Job/SelectJob2";
 import Axios from "axios";
 import PerusahaanInfo from "./PerusahaanInfo";
+import { usePage } from "@inertiajs/react";
 
 const SectionViewPerusahaan = () => {
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
     const [menu1Active, setMenu1Active] = useState(true);
     const [menu2Active, setMenu2Active] = useState(false);
+
+    //untuk lihat nama perusahaan di menampilkan
+    const { props } = usePage();
+    const { perusahaan } = props;
+
+    const [values, setValues] = useState({
+        // password: "meong",
+        id: perusahaan.id,
+        perusahaan: perusahaan.perusahaan,
+    });
+    console.log(values);
 
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -208,8 +220,8 @@ const SectionViewPerusahaan = () => {
 
                 <div className="pt-8">
                     <h1>
-                        Menampilkan (190) Pekerjaan yang tersedia dari "PT. TAKO
-                        ANUGERAH KOPORASI"
+                        Menampilkan (190) Pekerjaan yang tersedia dari "
+                        {values.perusahaan}"
                     </h1>
                 </div>
 

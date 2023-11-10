@@ -3,10 +3,63 @@ import Layout from "@/Layouts/Layout";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import PerusahaanCard from "@/Components/Loker/PerusahaanCard";
-import SectionView from "@/Components/Loker/SectionView";
+import SectionView from "@/Components/Loker/SectionLokerView";
 import PerusahaanInfo from "@/Components/Loker/PerusahaanInfo";
+import axios from "axios";
 
 const LokerNew = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setpostsPerPage] = useState(8);
+    const [formData, setFormData] = useState([]);
+    const [formDataLoker, setFormDataLoker] = useState([]);
+
+    const lastPostIndex = currentPage * postsPerPage;
+    const firstPostIndex = lastPostIndex - postsPerPage;
+
+    const currentPosts = formData.slice(firstPostIndex, lastPostIndex);
+
+    function formatDate(dateString) {
+        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        const date = new Date(dateString);
+        return date.toLocaleDateString("id-ID", options);
+    }
+
+    useEffect(() => {
+        // Panggil fungsi API di sini saat komponen pertama kali di-mount
+        const fetchData = async () => {
+            try {
+                // Kirim data ke server
+                const response = await axios.get("/json_perusahaan");
+                setFormData(response.data);
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        };
+
+        const fetchDataLoker = async () => {
+            try {
+                // Kirim data ke server
+                const response_2 = await axios.get("/form");
+                setFormDataLoker(response_2.data);
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        };
+
+        fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+        fetchDataLoker(); // Panggil fungsi fetchDataLoker saat komponen di-mount
+    }, []);
+
+    // Fungsi untuk menghitung jumlah total lowongan pekerjaan
+    const hitungJumlahLowongan = (perusahaanId) => {
+        // Filter data dari formDataLoker berdasarkan perusahaanId dan hitung jumlahnya
+        const totalLowongan = formDataLoker.filter(
+            (item) => item.perusahaan_id === perusahaanId
+        ).length;
+
+        return totalLowongan;
+    };
+
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
@@ -30,7 +83,8 @@ const LokerNew = () => {
                                 id="item1"
                                 className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
                             >
-                                <PerusahaanCard />
+                                <PerusahaanCard formData={currentPosts} />
+                                {/* <PerusahaanCard /> */}
                             </div>
                             <div
                                 id="item2"

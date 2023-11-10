@@ -44,12 +44,18 @@ export default {
 
             "2xl": "1440px",
             // => @media (min-width: 1536px) { ... }
+
+            "3xl": "1920px",
         },
     },
 
     daisyui: {
         themes: [],
     },
+
+    // daisyui: {
+    //     themes: "light",
+    // },
 
     plugins: [forms, require("daisyui")],
     // plugins: [forms],

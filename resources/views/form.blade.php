@@ -94,10 +94,11 @@
 
                     <label for="batas_lamaran" class="w-[49%] relative">
                         <h1 class="mb-2">Batas Lamaran</h1>
-                        <img src="/images/calendar.svg" alt=""
-                            class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75">
+                        {{-- <img src="/images/calendar.svg" alt=""
+                            class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
                         <input type="date" name="batas_lamaran" required class="rounded-2xl w-full">
                     </label>
+
                     <div class="flex w-full gap-4">
                         <template v-for="(item, index) in skill">
                             <label for="skill">
@@ -108,9 +109,36 @@
                         </template>
                         <div class="flex items-end">
                             <span v-on:Click='onClickSkill()'
-                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">Add</span>
+                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">Tambah
+                                Baru</span>
                         </div>
                     </div>
+
+                    {{-- <div class="flex w-full gap-4 flex-wrap">
+                        <template v-for="(item, index) in idskilldelete":key="index">
+                            <input type="text" name="idskilldelete[]" v-model="item.id" hidden>
+                        </template>
+                        <template v-for="(item, index) in namaskill" :key="index">
+                            <div>
+                                <h1 class="mb-2">Skill</h1>
+                                <label for="skill" class="flex gap-2">
+                                    <input type="text" name="idskill[]" v-model="item.id" hidden>
+                                    <input type="text" name="skill[]" v-model="item.nama" required
+                                        class="rounded-2xl w-full">
+                                    <span v-on:Click='hapusKonten(index, item.id)'
+                                        class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
+                                    </span>
+                                </label>
+                            </div>
+                        </template>
+                        <div class="flex items-end">
+                            <span v-on:Click='onClickSkill()'
+                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">
+                                Add</span>
+                        </div>
+                        <div class="flex items-end">
+                        </div>
+                    </div> --}}
 
                     <label for="isi_konten" class="w-full">Deskripsi
                         <input type="text" name="isi_konten" required class="rounded-2xl w-full"
@@ -210,6 +238,53 @@
             },
         }).mount("#vue");
     </script>
+
+    {{-- <script>
+        Vue.createApp({
+            data() {
+                return {
+                    namaskill: [],
+                    id: [],
+                    idskilldelete: [],
+                };
+            },
+            mounted() {
+                this.viewSkill();
+            },
+            methods: {
+                viewSkill() {
+                    var id = $('#id').val();
+                    var self = this;
+                    $.ajax('/admin/table/viewskill/' + id, {
+                        type: 'GET',
+                        success: function(data, status, xhr) {
+                            console.log(data);
+                            self.namaskill = data[0].map(function(dt) {
+                                return {
+                                    nama: dt.nama_skill,
+                                    id: dt.id
+                                };
+                            });
+                        },
+                    });
+                },
+                onClickSkill() {
+                    if (this.namaskill.length < 6) {
+                        this.namaskill.push({
+                            nama: '',
+                            id: ''
+                        });
+                    }
+                },
+                hapusKonten(index, idLama) {
+                    this.namaskill.splice(index, 1);
+                    this.idskilldelete.push({
+                        id: idLama
+                    });
+                },
+            },
+        }).mount("#vue");
+    </script> --}}
 
 </body>
 

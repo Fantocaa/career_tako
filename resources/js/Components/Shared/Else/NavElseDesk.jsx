@@ -60,7 +60,7 @@ const NavElseDesk = () => {
                         </Link> */}
                         <Link
                             className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
-                            href="/job"
+                            href="/loker"
                         >
                             Lowongan Pekerjaan
                         </Link>

@@ -14,7 +14,7 @@ const ContentRecruitment = () => {
 
     const isMediumScreen = window.innerWidth > 767.9;
     return (
-        <div className="max-w-[1440px] mx-auto">
+        <div className="mx-auto">
             <ImageSlider />
             <Why />
             <div className="container mx-auto px-4 py-8 md:px-8 xl:px-16 pt-32 lg:pt-16">

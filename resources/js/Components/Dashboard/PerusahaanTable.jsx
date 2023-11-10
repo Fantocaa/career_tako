@@ -60,10 +60,10 @@ const PerusahaanTable = () => {
             selector: "perusahaan",
             // sortable: true,
         },
-        // {
-        //     name: "Tentang",
-        //     selector: "tentang",
-        // },
+        {
+            name: "Tentang",
+            selector: "tentang",
+        },
         {
             name: "Alamat Perusahaan",
             selector: "alamat",
@@ -143,7 +143,7 @@ const PerusahaanTable = () => {
 
     return (
         <Layout pageTitle="Dashboard | Tako Karir">
-            <div className="bg-BgTako px-[19px] h-full py-8">
+            <div className="bg-BgTako px-4 ml-[6px] h-full py-8">
                 <div className="bg-white container mx-auto p-8 rounded-lg h-full ">
                     <h1 className="font-bold text-2xl pb-6 text-DarkTako">
                         Tambah Perusahaan

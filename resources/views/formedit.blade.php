@@ -49,12 +49,17 @@
 
 </head>
 
-<body class="bg-white text-DarkTako h-full">
+<body class="bg-BgTako text-DarkTako h-full">
     <div class="py-16 px-16">
         <div class="p-8 container mx-auto bg-white h-full rounded-2xl">
-            <h1 class="text-3xl font-bold">
-                Edit Loker
-            </h1>
+            <div class="flex items-center gap-4">
+                <div>
+                    <img src="/images/plus.svg" alt="">
+                </div>
+                <h1 class="text-3xl font-bold">
+                    Edit Loker
+                </h1>
+            </div>
             <form id="vue" action="{{ url('/admin/table/update_loker') }}" method="POST" class="w-full">
                 @csrf
                 <input class="" type="text" name="id" id="id" value="{{ $md_loker[0]->id }}"
@@ -65,6 +70,7 @@
                         <input type="text" name="pekerjaan" value="{{ $md_loker[0]->pekerjaan }}" required
                             class="rounded-2xl w-full" placeholder="Masukkan Nama Pekerjaan">
                     </label>
+
                     {{-- <label for="perusahaan" class="w-[49%]">
                         <h1>Perusahaan</h1>
                         <input type="text" name="perusahaan" value="{{ $md_loker[0]->perusahaan }}" required
@@ -101,8 +107,8 @@
 
                     <label for="batas_lamaran" class="w-[49%] relative">
                         <h1 class="mb-2">Batas Lamaran</h1>
-                        <img src="/images/calendar.svg" alt=""
-                            class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75">
+                        {{-- <img src="/images/calendar.svg" alt=""
+                            class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
                         <input type="date" name="batas_lamaran" value="{{ $md_loker[0]->batas_lamaran }}" required
                             class="rounded-2xl w-full">
                     </label>
@@ -114,12 +120,12 @@
                         <template v-for="(item, index) in namaskill" :key="index">
                             <div>
                                 <h1 class="mb-2">Skill</h1>
-                                <label for="skill" class="flex gap-4">
+                                <label for="skill" class="flex gap-2">
                                     <input type="text" name="idskill[]" v-model="item.id" hidden>
                                     <input type="text" name="skill[]" v-model="item.nama" required
                                         class="rounded-2xl w-full">
                                     <span v-on:Click='hapusKonten(index, item.id)'
-                                        class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">X
+                                        class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
                                     </span>
                                 </label>
                             </div>
@@ -127,7 +133,7 @@
                         <div class="flex items-end">
                             <span v-on:Click='onClickSkill()'
                                 class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">
-                                +</span>
+                                Add</span>
                         </div>
                         <div class="flex items-end">
 
@@ -139,13 +145,10 @@
                         <input type="text" name="isi_konten" value="{{ $md_loker[0]->deskripsi }}" required
                             class="rounded-2xl w-full">
                     </label>
-                    <label for="deskripsi" class="w-full">
+                    <label for="deskripsi" class="w-full ">
                         <h1 class="mb-2">Isi Konten</h1>
-                        {{-- <input type="text" name="deskripsi" class="rounded-2xl w-full" id="summernote"
-                            value="{{ $md_loker[0]->isi_konten }}"> --}}
-                        <input id="deskripsi" type="hidden" name="deskripsi">
-                        <trix-editor input="deskripsi"
-                            class="h-64 hover:cursor-auto">{{ $md_loker[0]->isi_konten }}</trix-editor>
+                        <input id="deskripsi" type="hidden" name="deskripsi" value="{{ $md_loker[0]->isi_konten }}">
+                        <trix-editor input="deskripsi" class="h-64 hover:cursor-auto meong"></trix-editor>
                     </label>
                 </div>
                 <div class="flex gap-4">
@@ -241,24 +244,6 @@
             },
         }).mount("#vue");
     </script>
-
-    {{-- <script>
-        $('#summernote').summernote({
-            placeholder: 'Masukkan Isi Konten',
-            tabsize: 8,
-            height: 256,
-            width: 1104,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-    </script> --}}
 
 </body>
 
