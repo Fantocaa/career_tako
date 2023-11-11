@@ -1,6 +1,7 @@
 import React from "react";
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState } from "react";
+import { ArrowLeftCircle } from "lucide-react";
 
 const SidebarContext = createContext();
 
@@ -37,7 +38,7 @@ export default function Sidebar({ children }) {
                     <ul className="flex-1 px-3">{children}</ul>
                 </SidebarContext.Provider>
 
-                <div className=" flex p-3">
+                <div className=" flex relative p-3">
                     <img
                         src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
                         alt=""
@@ -54,7 +55,32 @@ export default function Sidebar({ children }) {
                                 rekrutment@gmail.com
                             </span>
                         </div>
-                        <MoreVertical size={20} />
+
+                        <div className="dropdown dropdown-top dropdown-end absolute right-0">
+                            <label
+                                tabIndex={0}
+                                className="btn m-1 border-none hover:bg-BlueTako hover:bg-opacity-10    "
+                            >
+                                <MoreVertical size={20} />
+                            </label>
+                            <ul
+                                tabIndex={0}
+                                className="dropdown-content z-[1] menu p-2 shadow rounded-box w-52 bg-BgTako hover:bg-BlueTako hover:bg-opacity-10"
+                            >
+                                {/* <li>
+                                    <a>Item 1</a>
+                                </li> */}
+                                <li>
+                                    <a
+                                        href={route("admin.logout")}
+                                        className="font-bold"
+                                    >
+                                        <ArrowLeftCircle size={20} />
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </nav>

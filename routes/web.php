@@ -107,6 +107,12 @@ Route::post('/login_proses', [LoginController::class, 'login_proses'])->name('lo
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/register_proses', [LoginController::class, 'register_proses'])->name('register_proses');
 
+Route::get('/forgot', [LoginController::class, 'forgot'])->name('forgot_password');
+Route::post('/forgot_proses', [LoginController::class, 'forgot_proses'])->name('forgot_proses');
+
+
+
+
 // API
 
 Route::get('/json_perusahaan', [PerusahaanController::class, 'index'])->name('json_perusahaan');

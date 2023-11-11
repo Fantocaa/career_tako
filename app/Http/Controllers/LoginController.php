@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class LoginController extends Controller
 {
@@ -81,6 +82,48 @@ class LoginController extends Controller
             [
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:6',
+            ]
+        );
+
+        $data['name'] = $request->name;
+        $data['email'] = $request->email;
+        $data['password'] = Hash::make($request->password);
+
+        User::create($data);
+
+        // dd($request->all());
+
+        $login = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if (Auth::attempt($login)) {
+            // return redirect('/dashboard');
+            // return Inertia::render('DetailLokerPro', [
+            //     'md_loker' => $md_loker,
+            // ]);
+            return redirect('/login');
+            // return redirect(Inertia::render('DashboardPage'));
+        } else {
+            return redirect()->route('login')->with('failed', 'Email atau Password Salah!');
+        }
+    }
+
+    public function forgot()
+    {
+        return view('forgotpass');
+    }
+
+    public function forgot_proses(Request $request)
+    {
+        // dd($request->all());
+
+        $request->validate(
+            [
+                'name' => 'required',
+                'email' => 'required|email|',
                 'password' => 'required|min:6',
             ]
         );

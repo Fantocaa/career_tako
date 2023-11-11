@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\md_loker;
 use App\Http\Requests\Storemd_lokerRequest;
 use App\Http\Requests\Updatemd_lokerRequest;
@@ -54,16 +53,19 @@ class MdLokerController extends Controller
 
     public function search(Request $request)
     {
-        // dd($request);
+        dd($request);
 
         // Menggunakan input 'query' dari request
         $query = $request->input('query');
+        $program = $request->input('program');
+
+        // $form->pekerjaan = $request->pekerjaan;
 
         // // Lakukan pencarian berdasarkan $query dan kirim hasilnya
-        // $searchResults = MdLokerController::search($query);
+        $searchResults = MdLokerController::search($query, $program);
 
         // // Kembalikan hasil pencarian sebagai respons JSON
-        return response()->json($query);
+        return response()->json($searchResults);
 
         return Inertia::render('LokerNew');
         // return to_route('admin.beranda');
@@ -214,32 +216,33 @@ class MdLokerController extends Controller
         return redirect('/admin/dashboard/lowongan_pekerjaan');
     }
 
-    public function show_lamar_loker($id)
-    {
-        // $posts = md_loker::get();
-        // return redirect("/formulir/");
-        $md_loker = md_loker::find($id);
-        // dd($md_loker);
-        return Inertia::render('FormEmail', [
-            'md_loker' => $md_loker,
-        ]);
-    }
+    // public function show_lamar_loker($id)
+    // {
+    //     // $posts = md_loker::get();
+    //     // return redirect("/formulir/");
+    //     $md_loker = md_loker::find($id);
+    //     // dd($md_loker);
+    //     return Inertia::render('FormEmail', [
+    //         'md_loker' => $md_loker,
+    //     ]);
+    // }
 
     public function show_detail_loker_intern($id)
     {
-        // dd();
-
-        $md_loker = DB::table('md_lokers')
-
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
-
-            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
-
-            ->whereNull('md_lokers.deleted_at')
-
-            ->get();
+        // dd($id);
 
         $md_loker = md_loker::find($id);
+
+        // $md_loker = DB::table('md_lokers')
+
+        //     ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+
+        //     ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+
+        //     ->whereNull('md_lokers.deleted_at')
+
+        //     ->get();
+
 
         // Menggunakan Inertia::render
         return Inertia::render('DetailLokerIntern', [
@@ -247,16 +250,16 @@ class MdLokerController extends Controller
         ]);
     }
 
-    public function show_detail_loker_pro($id)
-    {
-        // dd();
-        $md_loker = md_loker::find($id);
+    // public function show_detail_loker_pro($id)
+    // {
+    //     // dd();
+    //     $md_loker = md_loker::find($id);
 
-        // Menggunakan Inertia::render
-        return Inertia::render('DetailLokerPro', [
-            'md_loker' => $md_loker,
-        ]);
-    }
+    //     // Menggunakan Inertia::render
+    //     return Inertia::render('DetailLokerPro', [
+    //         'md_loker' => $md_loker,
+    //     ]);
+    // }
 
     public function show_detail_perusahaan_loker($id)
     {
@@ -315,7 +318,6 @@ class MdLokerController extends Controller
             'ipk.required' => 'IPK/GPA harus diisi.',
         ]);
 
-
         $data["email"] = "fantocaa17@gmail.com";
         $data["title"] = "Meong Uwu";
         $data["body"] = "Selamat Datang";
@@ -360,7 +362,6 @@ class MdLokerController extends Controller
         } else {
             echo "File tidak ditemukan dalam permintaan.";
         }
-
 
         return redirect()->route('finish');
     }
@@ -467,9 +468,7 @@ class MdLokerController extends Controller
             }
         }
 
-
         if ($request->idskilldelete) {
-
 
             foreach ($request->idskilldelete as $i => $value) {
                 $idskilldelete = skill::find($value);
@@ -486,8 +485,6 @@ class MdLokerController extends Controller
         // Tanggapan JSON jika validasi gagal
         return response()->json(['errors' => $request->validator->errors()]);
     }
-
-
 
     public function update(Updatemd_lokerRequest $request, md_loker $md_loker)
     {

@@ -85,15 +85,12 @@ export default function Dashboard({ auth }) {
                         />
                     </Link>
                     {/* <Link href={route("admin.logout")}> */}
-                    <a href={route("admin.logout")}>
-                        {/* <Link onClick={handleChange}> */}
+                    {/* <a href={route("admin.logout")}>
                         <SidebarItem
                             icon={<ArrowLeftCircle size={20} />}
                             text="Logout"
-                            // active={page.url === "/dashboard/beranda"}
                         />
-                        {/* </Link> */}
-                    </a>
+                    </a> */}
                     {/* )} */}
                 </Sidebar>
             </div>

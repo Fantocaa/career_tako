@@ -6,7 +6,7 @@ const DashboardPage = () => {
         <>
             <div className="flex">
                 <Dashboard />
-                <div className="w-full h-full ml-[328px] flex justify-center items-center pt-80">
+                <div className="w-full h-screen ml-[328px] bg-BgTako  flex justify-center items-center">
                     <h1>Selamat Anda Berhasil Login</h1>
                 </div>
             </div>

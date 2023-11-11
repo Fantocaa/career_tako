@@ -5,6 +5,7 @@ import { router } from "@inertiajs/react";
 
 const Search = () => {
     const [query, setQuery] = useState("");
+    const [selectedProgram, setSelectedProgram] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
 
@@ -53,7 +54,11 @@ const Search = () => {
             // setSearchResults(response.data);
 
             const xhr = new XMLHttpRequest();
-            xhr.open("GET", `api/search?query=${query}`, true);
+            xhr.open(
+                "GET",
+                `api/search?query=${query}&program=${selectedProgram}`,
+                true
+            );
             // xhr.open("POST", `/search/${query}`, true);
 
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -66,7 +71,7 @@ const Search = () => {
                         // console.log(response); // Log the parsed response
                         setSearchResults(response);
 
-                        router.visit("/loker");
+                        // router.visit("/loker");
                     } else {
                         console.error("Error searching:", xhr.statusText);
                     }
@@ -96,12 +101,11 @@ const Search = () => {
                 <h1 className="text-white text-2xl lg:text-6xl font-bold pb-2 md:pb-4">
                     Temukan Karier Impianmu dengan Lebih Mudah
                 </h1>
-
                 <p className="text-white">
                     Temukan Posisi yang Sesuai dengan Profesionalismu, Baik
                     Lowongan Pekerjaan atau Ragam Proyek Lainnya
                 </p>
-
+                dw
                 <div className="w-full">
                     <div className="flex w-full py-8 font-inter justify-between text-white items-center">
                         <h1 className="font-semibold text-white text-xl">
@@ -159,6 +163,9 @@ const Search = () => {
                                     name=""
                                     id=""
                                     className="rounded-2xl border-white border-2 text-white text-opacity-75 border-opacity-25 bg-transparent w-full lg:w-44"
+                                    onChange={(e) =>
+                                        setSelectedProgram(e.target.value)
+                                    }
                                 >
                                     <option value="" className="text-DarkTako">
                                         Semua Program
