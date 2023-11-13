@@ -16,8 +16,8 @@ const ImageSlider = () => {
 
     const images = [
         { url: "/images/image-4.png", caption: "Caption 1" },
-        { url: "/images/image-4.png", caption: "Caption 2" },
-        { url: "/images/image-4.png", caption: "Caption 3" },
+        { url: "/images/image-9.png", caption: "Caption 2" },
+        { url: "/images/image-10.png", caption: "Caption 3" },
     ];
 
     const [isSliderActive, setIsSliderActive] = useState(true);
@@ -47,6 +47,7 @@ const ImageSlider = () => {
                     showStatus={false}
                     showIndicators={false}
                     showArrows={false}
+                    stopOnHover={false}
                     onClickItem={() => setIsSliderActive(false)} // Set isSliderActive to false when clicking an item
                     onClickThumb={() => setIsSliderActive(false)} // Set isSliderActive to false when clicking a thumb
                 >

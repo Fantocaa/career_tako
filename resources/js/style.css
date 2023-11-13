@@ -1,30 +1,46 @@
 /* Animasi akan berlaku hanya pada tampilan dengan lebar minimal 768px (tampilan desktop) */
 
-    @keyframes float {
-      0%, 100% {
+@keyframes float {
+    0%,
+    100% {
         transform: translateY(0) scale(1.5);
-      }
-      50% {
-        transform: translateY(-10px) scale(1.4);
-      }
     }
+    50% {
+        transform: translateY(-10px) scale(1.4);
+    }
+}
 
-    @keyframes floatX {
-      0%, 100% {
+@keyframes floatX {
+    0%,
+    100% {
         transform: translateY(0) scale(1.5);
-      }
-      50% {
+    }
+    50% {
         transform: translateY(-10px) scale(1.4);
-      }
     }
-  
-    .animate-float {
-      animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float-m {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
     }
-    .animate-floatX {
-      animation: floatX 3s ease-in-out infinite;
+    50% {
+        transform: translateY(0) scale(0.9);
     }
-  
-  .active {
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+.animate-floatX {
+    animation: floatX 3s ease-in-out infinite;
+}
+
+.animate-float-m {
+    animation: float-m 3s ease-in-out infinite;
+}
+
+.active {
     color: blue;
-  }
+}

@@ -37,7 +37,7 @@ const ContentRecruitment = () => {
                         </p>
                         <div className="lg:flex lg:pt-24 gap-40 justify-center items-center">
                             <img
-                                src="/images/applyimage.svg"
+                                src="/images/applyimage2.svg"
                                 alt="apply"
                                 className={`mx-auto lg:ml-16 py-8 md:py-16 lg:scale-150 ${
                                     isMediumScreen ? "animate-float" : ""

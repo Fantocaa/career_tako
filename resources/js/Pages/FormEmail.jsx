@@ -34,9 +34,9 @@ const FormEmail = () => {
 
     const [values, setValues] = useState({
         password: "meong",
-        pekerjaan: md_loker.pekerjaan,
-        jenis_pekerjaan: md_loker.jenis_pekerjaan,
-        perusahaan: md_loker.perusahaan,
+        pekerjaan: md_loker[0].pekerjaan,
+        jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
+        perusahaan: md_loker[0].perusahaan,
         nama: "",
         jenis_kelamin: "",
         agama: "",
@@ -196,7 +196,7 @@ const FormEmail = () => {
                             // password: "meong",
                             pekerjaan: md_loker.pekerjaan,
                             jenis_pekerjaan: md_loker.jenis_pekerjaan,
-                            perusahaan: md_loker.perusahaan,
+                            perusahaan: md_loker[0].perusahaan,
                             nama: "",
                             jenis_kelamin: "",
                             agama: "",

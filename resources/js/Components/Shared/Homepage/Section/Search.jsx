@@ -2,89 +2,65 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { router } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
+// import { router } from "@inertiajs/react";
+// import usePage from "@inertiajs/react";
 
 const Search = () => {
-    const [query, setQuery] = useState("");
-    const [selectedProgram, setSelectedProgram] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-    const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
+    // const [query, setQuery] = useState("");
+    // const [selectedProgram, setSelectedProgram] = useState("");
+    // const [searchResults, setSearchResults] = useState([]);
+    // const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
 
-    const fetchJobCount = async () => {
-        try {
-            // Lakukan permintaan ke endpoint /form atau sesuaikan dengan endpoint yang sesuai
-            const response = await axios.get("/form");
+    // const fetchJobCount = async () => {
+    //     try {
+    //         // Lakukan permintaan ke endpoint /form atau sesuaikan dengan endpoint yang sesuai
+    //         const response = await axios.get("/form");
 
-            // Dapatkan jumlah ID dari respons
-            const count = response.data.length;
+    //         // Dapatkan jumlah ID dari respons
+    //         const count = response.data.length;
 
-            // Setel jumlah pekerjaan ke state
-            setJobCount(count);
-        } catch (error) {
-            console.error("Error fetching job count:", error);
-        }
-    };
+    //         // Setel jumlah pekerjaan ke state
+    //         setJobCount(count);
+    //     } catch (error) {
+    //         console.error("Error fetching job count:", error);
+    //     }
+    // };
 
-    useEffect(() => {
-        // Panggil fungsi untuk mengambil jumlah pekerjaan saat komponen dimuat
-        fetchJobCount();
-    }, []);
+    // useEffect(() => {
+    //     // Panggil fungsi untuk mengambil jumlah pekerjaan saat komponen dimuat
+    //     fetchJobCount();
+    // }, []);
 
-    const getCsrfToken = async () => {
-        // Ambil token CSRF dari elemen <meta>
-        const csrfToken = document.querySelector(
-            'meta[name="csrf-token"]'
-        ).content;
-        return csrfToken;
-    };
+    // const getCsrfToken = async () => {
+    //     // Ambil token CSRF dari elemen <meta>
+    //     const csrfToken = document.querySelector(
+    //         'meta[name="csrf-token"]'
+    //     ).content;
+    //     return csrfToken;
+    // };
 
-    const handleSearch = async () => {
-        try {
-            // Dapatkan token CSRF
-            const csrfToken = await getCsrfToken();
+    // const handleSearch = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         // Kirim permintaan POST dengan menggunakan Axios
+    //         const response = await axios.post("/api/search", {
+    //             query,
+    //             selectedProgram,
+    //         });
+    //         setSearchResults(response.data);
 
-            // Buat objek konfigurasi untuk mengirim token CSRF
-            const config = {
-                headers: {
-                    "X-CSRF-TOKEN": csrfToken,
-                },
-            };
-
-            // Kirim permintaan POST dengan menggunakan Axios
-            // const response = await axios.post("/search", { query }, config);
-            // setSearchResults(response.data);
-
-            const xhr = new XMLHttpRequest();
-            xhr.open(
-                "GET",
-                `api/search?query=${query}&program=${selectedProgram}`,
-                true
-            );
-            // xhr.open("POST", `/search/${query}`, true);
-
-            xhr.setRequestHeader("Content-Type", "application/json");
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    console.log(xhr.responseText); // Log the response text
-                    if (xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        // console.log(response); // Log the parsed response
-                        setSearchResults(response);
-
-                        // router.visit("/loker");
-                    } else {
-                        console.error("Error searching:", xhr.statusText);
-                    }
-                }
-            };
-
-            xhr.send();
-
-            // console.log(data);
-        } catch (error) {
-            console.error("Error searching:", error);
-        }
-    };
+    //         // router.visit("/loker", {
+    //         //     replace: false, // Ubah menjadi `true` jika Anda ingin mengganti entri di riwayat
+    //         //     data: {
+    //         //         query: query,
+    //         //         selectedProgram: selectedProgram,
+    //         //     },
+    //         // });
+    //     } catch (error) {
+    //         console.error("Error searching:", error);
+    //     }
+    // };
 
     // useEffect(() => {
     //     axios.get("api/search").then(({ data }) => {
@@ -93,6 +69,7 @@ const Search = () => {
     // });
 
     return (
+        // <form onSubmit={}>
         <div className="absolute z-10 container md:pl-8 lg:pl-16 max-w-full md:w-[70%] lg:w-1/2">
             <div className="px-[10px] md:px-0">
                 <p className="text-white pb-2 md:pb-4 lg:text-2xl">
@@ -105,9 +82,25 @@ const Search = () => {
                     Temukan Posisi yang Sesuai dengan Profesionalismu, Baik
                     Lowongan Pekerjaan atau Ragam Proyek Lainnya
                 </p>
-                dw
-                <div className="w-full">
-                    <div className="flex w-full py-8 font-inter justify-between text-white items-center">
+
+                <div className="w-full pt-8">
+                    <Link href="/loker" className="inline-block">
+                        <button className="bg-BlueTako hover:bg-white hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-white flex gap-4 items-center transition-all duration-300 ease-in-out shadow-sm">
+                            <h1 className="text-lg font-semibold">
+                                Daftar Lowongan Kerja
+                            </h1>
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM18.53 12.53L14.24 16.82C14.09 16.97 13.9 17.04 13.71 17.04C13.52 17.04 13.33 16.97 13.18 16.82C12.89 16.53 12.89 16.05 13.18 15.76L16.19 12.75H6C5.59 12.75 5.25 12.41 5.25 12C5.25 11.59 5.59 11.25 6 11.25H16.19L13.18 8.24C12.89 7.95 12.89 7.47 13.18 7.18C13.47 6.89 13.95 6.89 14.24 7.18L18.53 11.47C18.67 11.61 18.75 11.8 18.75 12C18.75 12.2 18.67 12.39 18.53 12.53Z" />
+                            </svg>
+                        </button>
+                    </Link>
+
+                    {/*<div className="flex w-full py-8 font-inter justify-between text-white items-center">
                         <h1 className="font-semibold text-white text-xl">
                             ({jobCount}) Pekerjaan Tersedia
                         </h1>
@@ -160,8 +153,8 @@ const Search = () => {
                                     />
                                 </div>
                                 <select
-                                    name=""
-                                    id=""
+                                    // name=""
+                                    // id=""
                                     className="rounded-2xl border-white border-2 text-white text-opacity-75 border-opacity-25 bg-transparent w-full lg:w-44"
                                     onChange={(e) =>
                                         setSelectedProgram(e.target.value)
@@ -192,16 +185,14 @@ const Search = () => {
                                     >
                                         Cari
                                     </button>
-                                    {/* {searchResults.map((result, index) => (
-                                        <div key={index}>{result.name}</div>
-                                    ))} */}
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
         </div>
+        // </form>
     );
 };
 

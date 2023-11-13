@@ -5,8 +5,27 @@ import NavElse from "@/Components/Shared/Else/NavElse";
 import PerusahaanCard from "@/Components/Loker/PerusahaanCard";
 import SectionViewPerusahaan from "@/Components/Loker/SectionViewPerusahaan";
 import PerusahaanInfo from "@/Components/Loker/PerusahaanInfo";
+import SectionLokerView from "@/Components/Loker/SectionLokerView";
+import { usePage } from "@inertiajs/react";
 
 const LokerDetailPerusahaan = () => {
+    const { props } = usePage();
+    const { perusahaan } = props;
+    const { id } = props;
+
+    // console.log(id);
+
+    const [values, setValues] = useState({
+        // password: "meong",
+        id: perusahaan.id,
+        perusahaan: perusahaan.perusahaan,
+        tentang: perusahaan.tentang,
+        alamat: perusahaan.alamat,
+        link: perusahaan.link,
+        image: perusahaan.image,
+    });
+
+    // console.log(idValues);
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
@@ -44,24 +63,10 @@ const LokerDetailPerusahaan = () => {
                                 className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
                             ></div>
                         </div>
-                        {/* <div className="flex justify-center w-full py-2 gap-2 pt-8">
-                            <a href="#item1" className="btn btn-xs">
-                                1
-                            </a>
-                            <a href="#item2" className="btn btn-xs">
-                                2
-                            </a>
-                            <a href="#item3" className="btn btn-xs">
-                                3
-                            </a>
-                            <a href="#item4" className="btn btn-xs">
-                                4
-                            </a>
-                        </div> */}
                     </div>
                 </div>
                 <PerusahaanInfo />
-                <SectionViewPerusahaan />
+                <SectionLokerView values={values} />
                 <Footer />
             </section>
         </Layout>

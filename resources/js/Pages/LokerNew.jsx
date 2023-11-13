@@ -3,9 +3,11 @@ import Layout from "@/Layouts/Layout";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import PerusahaanCard from "@/Components/Loker/PerusahaanCard";
-import SectionView from "@/Components/Loker/SectionLokerView";
-import PerusahaanInfo from "@/Components/Loker/PerusahaanInfo";
+import SectionLoker from "@/Components/Shared/Job/SelectJob/SectionLoker";
 import axios from "axios";
+import { usePage } from "@inertiajs/react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const LokerNew = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,6 +19,8 @@ const LokerNew = () => {
     const firstPostIndex = lastPostIndex - postsPerPage;
 
     const currentPosts = formData.slice(firstPostIndex, lastPostIndex);
+
+    const { state } = usePage();
 
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -45,10 +49,10 @@ const LokerNew = () => {
                 console.error("Error sending data:", error);
             }
         };
-
+        // console.log(state);
         fetchData(); // Panggil fungsi fetchData saat komponen di-mount
         fetchDataLoker(); // Panggil fungsi fetchDataLoker saat komponen di-mount
-    }, []);
+    }, [state]);
 
     // Fungsi untuk menghitung jumlah total lowongan pekerjaan
     const hitungJumlahLowongan = (perusahaanId) => {
@@ -59,6 +63,30 @@ const LokerNew = () => {
 
         return totalLowongan;
     };
+
+    const responsive = {
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 4,
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2,
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+        },
+    };
+
+    // Menghitung jumlah lowongan untuk setiap perusahaan
+    const perusahaanDenganJumlahLowongan = formData.map((perusahaan) => {
+        const jumlahLowongan = formDataLoker.filter(
+            (loker) => loker.perusahaan_id === perusahaan.id
+        ).length;
+
+        return { ...perusahaan, jumlahLowongan };
+    });
 
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
@@ -79,14 +107,18 @@ const LokerNew = () => {
                             </p>
                         </div>
                         <div className="carousel w-full pt-8">
-                            <div
-                                id="item1"
+                            <Carousel responsive={responsive}>
+                                <PerusahaanCard
+                                    data={perusahaanDenganJumlahLowongan}
+                                />
+                            </Carousel>
+                            {/* <div
+                                // id="item1"
                                 className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
                             >
                                 <PerusahaanCard formData={currentPosts} />
-                                {/* <PerusahaanCard /> */}
-                            </div>
-                            <div
+                            </div> */}
+                            {/* <div
                                 id="item2"
                                 className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
                             ></div>
@@ -97,9 +129,9 @@ const LokerNew = () => {
                             <div
                                 id="item4"
                                 className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            ></div>
+                            ></div> */}
                         </div>
-                        <div className="flex justify-center w-full py-2 gap-2 pt-8">
+                        {/* <div className="flex justify-center w-full py-2 gap-2 pt-8">
                             <a href="#item1" className="btn btn-xs">
                                 1
                             </a>
@@ -112,11 +144,12 @@ const LokerNew = () => {
                             <a href="#item4" className="btn btn-xs">
                                 4
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* <PerusahaanInfo /> */}
-                <SectionView />
+                {/* <SectionView /> */}
+                <SectionLoker />
                 <Footer />
             </section>
         </Layout>

@@ -64,8 +64,6 @@ Route::get('/loker/pekerjaan/{id}', [MdLokerController::class, 'show_detail_peke
 
 Route::get('/lowongan_kerja', [MdLokerController::class, 'loker']);
 
-
-
 // Nonaktifkan pemeriksaan CSRF sementara
 // Route::post('/search', [MdLokerController::class, 'search'])->withoutMiddleware(['verifyCsrfToken']);
 
@@ -110,15 +108,18 @@ Route::post('/register_proses', [LoginController::class, 'register_proses'])->na
 Route::get('/forgot', [LoginController::class, 'forgot'])->name('forgot_password');
 Route::post('/forgot_proses', [LoginController::class, 'forgot_proses'])->name('forgot_proses');
 
-
-
-
 // API
 
 Route::get('/json_perusahaan', [PerusahaanController::class, 'index'])->name('json_perusahaan');
 
-Route::get('/api/search', [MdLokerController::class, 'search']);
+Route::post('/api/search', [MdLokerController::class, 'loker'])->name('search');;
 
+Route::get('/skill', [MdLokerController::class, 'skill']);
+
+Route::get('/api_program/{id}', [MdLokerController::class, 'api_program']);
+Route::get('/api_program_perusahaan/{id}', [MdLokerController::class, 'api_program_perusahaan']);
+
+Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_program_id']);
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'], function () {
     Route::get('/dashboard', function () {
@@ -162,6 +163,8 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'],
     Route::get('/perusahaan_db', [PerusahaanController::class, 'perusahaan'])->name('perusahaan_db');
 
     Route::get('/fetch_perusahaan', [PerusahaanController::class, 'fetchPerusahaan'])->name('fetch_perusahaan');
+
+
 
     // Route::get('/image_link', [PerusahaanController::class, 'image_link'])->name('image_link');
 

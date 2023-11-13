@@ -100,11 +100,14 @@
                     </label>
 
                     <div class="flex w-full gap-4">
-                        <template v-for="(item, index) in skill">
+                        <template v-for="(item, index) in namaskill">
                             <label for="skill">
                                 <h1 class="mb-2">Skill</h1>
                                 <input type="text" name="skill[]" required class="rounded-2xl w-full"
                                     placeholder="Masukkan Nama Skill">
+                                <span v-on:Click='hapusKonten(index, item)'
+                                    class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
+                                </span>
                             </label>
                         </template>
                         <div class="flex items-end">
@@ -220,7 +223,9 @@
         createApp({
             data() {
                 return {
-                    skill: 1,
+                    namaskill: [],
+                    id: [],
+                    idskilldelete: [],
                 };
             },
             mounted() {
@@ -229,11 +234,19 @@
             methods: {
 
                 onClickSkill() {
-                    if (this.skill < 6) {
-                        this.skill += 1;
+                    if (this.namaskill.length < 6) {
+                        this.namaskill.push({
+                            nama: '',
+                            id: ''
+                        });
                     }
-
                     // console.log(this.skill);
+                },
+                hapusKonten(index, idLama) {
+                    this.namaskill.splice(index, 1);
+                    // deleteEvent: function(event) {
+                    //     this.events.splice(this.event);
+                    // }
                 }
             },
         }).mount("#vue");

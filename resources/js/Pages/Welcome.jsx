@@ -1,10 +1,10 @@
 import Footer from "@/Components/Shared/Footer";
-import CTA from "@/Components/CTA";
+import CTA from "@/Components/Shared/Homepage/Section/CTA";
 import ContentRecruitment from "@/Components/Shared/Homepage/Section/ContentRecruitment";
 import Nav from "@/Components/Shared/Homepage/Nav";
 import Warn from "@/Components/Shared/Homepage/Section/Warn";
 import GalleryPage from "@/Components/GalleryPage";
-import FaqCTA from "@/Components/FaqCTA";
+import FaqCTA from "@/Components/Shared/Homepage/Section/FaqCTA";
 import BackToTop from "@/Components/BackToTop";
 import Layout from "@/Layouts/Layout";
 

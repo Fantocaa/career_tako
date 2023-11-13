@@ -46,7 +46,6 @@
             width: 20px;
         }
     </style>
-
 </head>
 
 <body class="bg-BgTako text-DarkTako h-full">
@@ -81,7 +80,10 @@
                         <h1 class="mb-2">Perusahaan</h1>
                         <select class="js-example-basic-single w-full rounded-2xl" name="perusahaan" required
                             style="width: 100%;" value="{{ $md_loker[0]->perusahaan }}">
-                            <option></option>
+                            @foreach ($pt as $pt)
+                                <option value="{{ $pt->id }}" @if ($pt->perusahaan == $md_loker[0]->perusahaan) selected @endif>
+                                    {{ $pt->perusahaan }}</option>
+                            @endforeach
                         </select>
                     </label>
 
@@ -173,27 +175,27 @@
     <script>
         $(document).ready(function() {
             $('.js-example-basic-single').select2({
-                placeholder: 'Pilih Perusahaan',
-                ajax: {
-                    url: '/json_perusahaan', // Ganti dengan URL API yang sesuai
-                    dataType: 'json',
-                    // processResults: function(data) {
-                    //     return {
-                    //         results: data.perusahaan
-                    //     };
-                    // }
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.perusahaan,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
+                // placeholder: 'Pilih Perusahaan',
+                // ajax: {
+                //     url: '/json_perusahaan', // Ganti dengan URL API yang sesuai
+                //     dataType: 'json',
+                //     // processResults: function(data) {
+                //     //     return {
+                //     //         results: data.perusahaan
+                //     //     };
+                //     // }
+                //     processResults: function(data) {
+                //         return {
+                //             results: $.map(data, function(item) {
+                //                 return {
+                //                     text: item.perusahaan,
+                //                     id: item.id
+                //                 }
+                //             })
+                //         };
+                //     },
+                //     cache: true
+                // }
             });
         });
     </script>

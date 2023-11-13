@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "@mui/material";
-import SelectJob from "../Shared/Job/SelectJob";
-import SelectJob2 from "../Shared/Job/SelectJob2";
 import Axios from "axios";
+// import SelectJob from "../SelectJob";
+import SelectJob2 from "../SelectJob2";
+import SelectJobPerusahaan from "./SelectJobPerusahaan";
 
-const SectionLokerView = ({ values }) => {
+const SectionLokerCopy = () => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
     const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk nilai pencarian
     const [formData, setFormData] = useState([]);
@@ -44,9 +45,7 @@ const SectionLokerView = ({ values }) => {
     //     const fetchData = async () => {
     //         try {
     //             // Kirim data ke server
-    //             const response = await Axios.get(
-    //                 `/api_program_perusahaan/${values.id}`
-    //             );
+    //             const response = await Axios.get("/form");
 
     //             const count = response.data.length;
     //             // const response = await Axios.post("/form");
@@ -62,9 +61,7 @@ const SectionLokerView = ({ values }) => {
 
     const fetchData = async () => {
         try {
-            const response = await Axios.get(
-                `/api_program_perusahaan/${values.id}`
-            );
+            const response = await Axios.get("/form");
             const count = response.data.length;
             setJobCount(count);
             setFormData(response.data);
@@ -83,9 +80,7 @@ const SectionLokerView = ({ values }) => {
 
         // Kirim permintaan Ajax berdasarkan nilai yang dipilih
         try {
-            const response = await Axios.get(
-                `/api_program_id/${selectedValue}/${values.id},`
-            );
+            const response = await Axios.get(`/api_program/${selectedValue}`);
             setFormData(response.data);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -121,7 +116,7 @@ const SectionLokerView = ({ values }) => {
         }
     };
 
-    console.log(values);
+    // console.log(values);
     return (
         <section className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container">
             <>
@@ -167,6 +162,7 @@ const SectionLokerView = ({ values }) => {
                                 type="text"
                                 placeholder="Cari Lowongan yang anda inginkan"
                                 className="rounded-xl border-DarkTako border-opacity-25 w-full h-12 block pl-12"
+                                // onInput={}
                                 value={searchTerm}
                                 // onChange={(e) => setSearchTerm(e.target.value)}
                                 onChange={(e) =>
@@ -192,9 +188,12 @@ const SectionLokerView = ({ values }) => {
                         </select>
 
                         <div className="w-full">
-                            {/* <button className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none w-full lg:w-24 normal-case">
+                            <button
+                                className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none w-full lg:w-24 normal-case"
+                                onClick={() => handleSearch(searchTerm)}
+                            >
                                 Cari
-                            </button> */}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -289,34 +288,21 @@ const SectionLokerView = ({ values }) => {
                     ANUGERAH KOPORASI"
                 </h1>
             </div> */}
-            {formData.length === 0 ? (
-                <div className="flex justify-center w-full pt-16">
-                    <p className="text-DarkTako">
-                        Maaf, tidak ada lowongan yang tersedia saat ini.
-                    </p>
-                </div>
-            ) : (
-                <>
-                    <div
-                        className={`pt-8 w-full ${menu1Active ? "" : "hidden"}`}
-                    >
-                        <SelectJob
-                            active={menu1Active}
-                            formData={formData}
-                            values={values}
-                        />
-                    </div>
-                    <div
-                        className={`pt-8 w-full ${menu2Active ? "" : "hidden"}`}
-                    >
-                        <SelectJob2
-                            active={menu2Active}
-                            formData={formData}
-                            values={values}
-                        />
-                    </div>
-                </>
-            )}
+
+            <div className={`pt-8 w-full ${menu1Active ? "" : "hidden"}`}>
+                <SelectJobPerusahaan
+                    active={menu1Active}
+                    formData={formData}
+                    // values={values}
+                />
+            </div>
+            <div className={`pt-8 w-full ${menu2Active ? "" : "hidden"}`}>
+                <SelectJob2
+                    active={menu2Active}
+                    formData={formData}
+                    // values={values}
+                />
+            </div>
 
             <Pagination
                 count={18}
@@ -327,4 +313,4 @@ const SectionLokerView = ({ values }) => {
     );
 };
 
-export default SectionLokerView;
+export default SectionLokerCopy;

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import Axios from "axios";
 
-const SelectJob2 = ({ active }) => {
+const SelectJob2 = ({ active, formData: formDataProp }) => {
     const [formData, setFormData] = useState([]);
+    const [formDataSkill, setFormDataSkill] = useState([]);
 
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -24,6 +25,18 @@ const SelectJob2 = ({ active }) => {
             }
         };
 
+        const fetchDataSkill = async () => {
+            try {
+                // Kirim data ke server
+                const response_3 = await Axios.get("/skill");
+                setFormDataSkill(response_3.data);
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        };
+
+        fetchDataSkill();
+
         fetchData(); // Panggil fungsi fetchData saat komponen di-mount
 
         // Hanya perlu dijalankan saat komponen pertama kali di-mount,
@@ -33,7 +46,7 @@ const SelectJob2 = ({ active }) => {
     return (
         <div className={active ? "flex flex-wrap gap-4 w-full" : "hidden"}>
             <>
-                {formData.map((item) => (
+                {formDataProp.map((item) => (
                     <div
                         className="bg-white p-8 rounded-xl h-full flex justify-between w-full items-center"
                         key={item.id}

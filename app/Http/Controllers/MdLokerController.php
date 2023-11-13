@@ -46,30 +46,101 @@ class MdLokerController extends Controller
         return response()->json($posts);
     }
 
+    public function skill()
+    {
+        $posts = skill::get();
+        return response()->json($posts);
+
+
+        // $skill = md_loker::with('skills')->get();
+        // return response()->json($skill);
+    }
+
+    public function skill_group()
+    {
+    }
+
     public function loker()
     {
         return view('loker');
     }
 
-    public function search(Request $request)
+    public function search()
     {
-        dd($request);
+        // dd($request);
 
         // Menggunakan input 'query' dari request
-        $query = $request->input('query');
-        $program = $request->input('program');
-
-        // $form->pekerjaan = $request->pekerjaan;
-
-        // // Lakukan pencarian berdasarkan $query dan kirim hasilnya
-        $searchResults = MdLokerController::search($query, $program);
-
-        // // Kembalikan hasil pencarian sebagai respons JSON
-        return response()->json($searchResults);
+        // $query = $request->input('query');
+        // $program = $request->input('program');
+        // return Inertia::render('LokerNew', [
+        //     'query' => $query,
+        //     'program' => $program,
+        // ]);
 
         return Inertia::render('LokerNew');
-        // return to_route('admin.beranda');
+        // return view('loker');
     }
+
+    public function api_program_perusahaan($id)
+    {
+
+        $program = DB::table('md_lokers')
+
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+
+            ->where('perusahaans.id', '=', $id)
+
+            ->whereNull('md_lokers.deleted_at')
+
+            ->get();
+
+        return response()->json($program);
+    }
+
+
+    public function api_program($program)
+    {
+
+        if ($program == 'All') {
+            $program = '';
+        }
+        $program = DB::table('md_lokers')
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            ->where('md_lokers.jenis_pekerjaan', 'LIKE', '%' . $program . '%')
+            ->whereNull('md_lokers.deleted_at')
+
+            ->get();
+
+        return response()->json($program);
+    }
+
+
+
+    public function api_program_id($program, $id)
+    {
+        if ($program == 'All') {
+            $program = '';
+        }
+        $program = DB::table('md_lokers')
+
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+
+            ->where('md_lokers.jenis_pekerjaan', 'LIKE', '%' . $program . '%')
+
+            ->where('perusahaans.id', '=', $id)
+
+            ->whereNull('md_lokers.deleted_at')
+
+            ->get();
+
+        return response()->json($program);
+    }
+
 
     public function tambah_baru()
     {
@@ -195,10 +266,11 @@ class MdLokerController extends Controller
 
         $md_loker = db::table('md_lokers')->where('id', $id)->get();
         $skill = db::table('skills')->where('id_kotak_loker', $md_loker[0]->id)->get();
+        $pt = db::table('perusahaans')->whereNull('deleted_at')->get();
 
         return view(
             'formedit',
-            ['skill' => $skill, 'md_loker' => $md_loker]
+            ['skill' => $skill, 'md_loker' => $md_loker, 'pt' => $pt]
         );
     }
 
@@ -216,33 +288,48 @@ class MdLokerController extends Controller
         return redirect('/admin/dashboard/lowongan_pekerjaan');
     }
 
-    // public function show_lamar_loker($id)
-    // {
-    //     // $posts = md_loker::get();
-    //     // return redirect("/formulir/");
-    //     $md_loker = md_loker::find($id);
-    //     // dd($md_loker);
-    //     return Inertia::render('FormEmail', [
-    //         'md_loker' => $md_loker,
-    //     ]);
-    // }
+    public function show_lamar_loker($id)
+    {
+        // $posts = md_loker::get();
+        // return redirect("/formulir/");
+
+        // $md_loker = md_loker::find($id);
+        // dd($md_loker);
+
+        $md_loker = DB::table('md_lokers')
+
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+
+            ->where('md_lokers.id', '=', $id)
+
+            ->whereNull('md_lokers.deleted_at')
+
+            ->get();
+
+        return Inertia::render('FormEmail', [
+            'md_loker' => $md_loker,
+        ]);
+    }
 
     public function show_detail_loker_intern($id)
     {
         // dd($id);
 
-        $md_loker = md_loker::find($id);
+        // $md_loker = md_loker::find($id);
 
-        // $md_loker = DB::table('md_lokers')
+        $md_loker = DB::table('md_lokers')
 
-        //     ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
 
-        //     ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
 
-        //     ->whereNull('md_lokers.deleted_at')
+            ->where('md_lokers.id', '=', $id)
 
-        //     ->get();
+            ->whereNull('md_lokers.deleted_at')
 
+            ->get();
 
         // Menggunakan Inertia::render
         return Inertia::render('DetailLokerIntern', [
@@ -264,10 +351,25 @@ class MdLokerController extends Controller
     public function show_detail_perusahaan_loker($id)
     {
         $perusahaan = perusahaan::find($id);
+        // $md
+        $query = DB::table('md_lokers')
+
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+
+            ->where('md_lokers.perusahaan', '=', $id)
+
+            ->whereNull('md_lokers.deleted_at')
+
+            ->get();
+
+        // ->where('md_lokers.jenis_pekerjaan', 'LIKE', '%' . $program . '%')
 
         // Menggunakan Inertia::render
         return Inertia::render('LokerDetailPerusahaan', [
             'perusahaan' => $perusahaan,
+            'id' => $query
         ]);
     }
 
@@ -319,7 +421,7 @@ class MdLokerController extends Controller
         ]);
 
         $data["email"] = "fantocaa17@gmail.com";
-        $data["title"] = "Meong Uwu";
+        $data["title"] = "Pelamar Baru";
         $data["body"] = "Selamat Datang";
         $data["pekerjaan"] = $request->pekerjaan;
         $data["jenis_pekerjaan"] = $request->jenis_pekerjaan;
@@ -419,6 +521,9 @@ class MdLokerController extends Controller
         // Tanggapan JSON jika validasi gagal
         return response()->json(['errors' => $request->validator->errors()]);
     }
+
+
+
 
     public function update_loker(Updatemd_lokerRequest $request, md_loker $md_loker)
     {

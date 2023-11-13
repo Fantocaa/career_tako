@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import Axios from "axios";
 
-const SelectJob = ({ active, formData: formDataProp, values }) => {
+const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
     const [formData, setFormData] = useState([]);
     const [formDataSkill, setFormDataSkill] = useState([]);
 
@@ -61,7 +61,7 @@ const SelectJob = ({ active, formData: formDataProp, values }) => {
                         <h1 className="font-bold">{item.pekerjaan}</h1>
 
                         {/* {values && (
-                            <h1 className="font-bold">{values.perusahaan}</h1>
+                            <h1 className="font-bold">{item.perusahaan}</h1>
                         )} */}
 
                         <h2 className="text-BlueTako pt-2">
@@ -125,4 +125,4 @@ const SelectJob = ({ active, formData: formDataProp, values }) => {
     );
 };
 
-export default SelectJob;
+export default SelectJobPerusahaan;

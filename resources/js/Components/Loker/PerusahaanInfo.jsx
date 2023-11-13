@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { usePage } from "@inertiajs/react";
+import SelectJob from "../Shared/Job/SelectJob";
 
 const PerusahaanInfo = () => {
     const { props } = usePage();
@@ -15,7 +16,7 @@ const PerusahaanInfo = () => {
         link: perusahaan.link,
         image: perusahaan.image,
     });
-    console.log(values);
+    // console.log(values);
 
     return (
         <section className="bg-BgTako pt-8 md:pt-32 ">
@@ -72,6 +73,10 @@ const PerusahaanInfo = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="pt-8 w-full">
+                {/* Mengirim data perusahaan sebagai prop ke komponen SelectJob */}
+                {/* <SelectJob active={true} formDataProp={values} /> */}
             </div>
         </section>
     );

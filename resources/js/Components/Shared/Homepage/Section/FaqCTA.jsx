@@ -14,7 +14,7 @@ const FaqCTA = () => {
                         kami siap membantu kamu!
                     </p>
                     <Link href="/faq">
-                        <button className="font-bold bg-YellowTako text-DarkTako p-4 rounded-lg cursor-pointer z-10">
+                        <button className="font-bold bg-YellowTako text-DarkTako hover:bg-YellowTako hover:bg-opacity-80 transition-all p-4 rounded-lg cursor-pointer z-10">
                             Lihat FAQ
                         </button>
                     </Link>

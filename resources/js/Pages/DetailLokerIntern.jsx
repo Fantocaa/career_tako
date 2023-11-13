@@ -29,15 +29,15 @@ const DetailLoker = () => {
 
     const [values, setValues] = useState({
         // password: "meong",
-        id: md_loker.id,
-        pekerjaan: md_loker.pekerjaan,
-        perusahaan: md_loker.perusahaan,
-        jenis_pekerjaan: md_loker.jenis_pekerjaan,
-        batas_lamaran: md_loker.batas_lamaran, // Inisialisasi properti batas_lamaran
-        isi_konten: md_loker.deskripsi,
-        deskripsi: md_loker.isi_konten,
+        id: md_loker[0].id,
+        pekerjaan: md_loker[0].pekerjaan,
+        perusahaan: md_loker[0].perusahaan,
+        jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
+        batas_lamaran: md_loker[0].batas_lamaran, // Inisialisasi properti batas_lamaran
+        isi_konten: md_loker[0].deskripsi,
+        deskripsi: md_loker[0].isi_konten,
     });
-    console.log(values);
+    console.log(md_loker);
 
     // useEffect(() => {
     //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
