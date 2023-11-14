@@ -106,26 +106,31 @@ class PerusahaanController extends Controller
             'link' => 'required',
             'tentang' => 'required',
             'alamat' => 'required',
-            'image' => 'required',
+            // 'image' => 'required',
         ], [
             'perusahaan.required' => 'Nama Perusahaan harus diisi.',
             'link.required' => 'Link Perusahaan harus diisi.',
             'tentang.required' => 'About Perusahaan harus diisi.',
             'alamat.required' => 'Alamat Perusahaan harus diisi.',
-            'image.required' => 'Gambar Harus diisi',
+            // 'image.required' => 'Gambar Harus diisi',
         ]);
 
+
+
         $empData = perusahaan::find($request->id);
-        // dd($empData);
-        $empData->perusahaan = $request->perusahaan;
-        $empData->link = $request->link;
-        $empData->tentang = $request->tentang;
-        $empData->alamat = $request->alamat;
+
+        // dd($request);
 
         if ($request->hasFile('image')) {
             $image = time() . '.' . $request->image->extension();
             $request->image->storeAs('public/images/', $image);
             $empData->image = $image; // Setel atribut gambar dengan nama gambar yang baru
+        } else {
+            $empData->perusahaan = $request->perusahaan;
+            $empData->tentang = $request->tentang;
+            $empData->alamat = $request->alamat;
+            $empData->link = $request->link;
+            $empData->save();
         }
 
         if ($request->hasFile('image')) {
@@ -143,8 +148,6 @@ class PerusahaanController extends Controller
             // Setel atribut 'image' dari model dengan nama gambar yang baru
             $empData->image = $image;
         }
-
-        $empData->save();
 
         return redirect('admin/dashboard/perusahaan_dashboard');
     }

@@ -23,7 +23,7 @@ class MdLokerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // $posts = md_loker::get();
         // $posts = DB::table('md_lokers')->selectRaw('md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, perusahaans.perusahaan')->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')->whereNull('md_lokers.deleted_at')->get();
@@ -43,8 +43,25 @@ class MdLokerController extends Controller
 
         //return view
         // return response()->json([$posts]);
+
+
         return response()->json($posts);
     }
+
+    // public function api_form(Request $request)
+    // {
+    //     $limit = $request->input('limit', 2);
+
+    //     $posts = DB::table('md_lokers')
+    //         ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi, md_lokers.isi_konten, perusahaans.perusahaan')
+    //         ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+    //         ->whereNull('md_lokers.deleted_at')
+    //         ->limit($limit) // Menambahkan limit pada query
+    //         ->get();
+
+    //     return response()->json($posts);
+    // }
+
 
     public function skill()
     {

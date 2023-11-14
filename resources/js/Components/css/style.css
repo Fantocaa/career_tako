@@ -91,3 +91,10 @@
     padding: 16px;
     border-radius: 4px;
 }
+
+.slick-slide div {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    border-radius: 12px;
+}

@@ -54,13 +54,6 @@
                         <textarea name="tentang" class="rounded-2xl w-full" placeholder="Masukkan Tentang Perusahaan" style="height: 200px">{{ $perusahaan[0]->tentang }}</textarea>
                     </label>
 
-                    {{-- <label for="image" class="w-full">
-                        <h1 class="mb-2">Logo Perusahaan</h1>
-                        <img src="{{ asset('public/images/' . $perusahaan[0]->image) }}" alt="Logo Perusahaan"
-                            style="max-width: 100px" />
-                        <input type="file" name="image" placeholder="Masukkan Logo Perusahaan">
-                    </label> --}}
-
                     <label for="image" class="w-full">
                         <h1 class="mb-2">Logo Perusahaan</h1>
                         <img id="image-preview" src="{{ asset('storage/images/' . $perusahaan[0]->image) }}"

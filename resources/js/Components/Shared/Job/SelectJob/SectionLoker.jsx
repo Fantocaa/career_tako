@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Pagination } from "@mui/material";
+// import { Pagination } from "@mui/material";
 import Axios from "axios";
 import SelectJobPerusahaan from "./SelectJobPerusahaan";
 import SelectJob2 from "../SelectJob2";
+import ReactPaginate from "react-paginate";
+import CryptoCard from "./CryptoCard";
+import Pagination from "./Pagination/Pagination";
 
-const SectionLoker = () => {
+const SectionLoker = ({ coinsData, formDataLoker }) => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
     const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk nilai pencarian
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
+
+    const [pageCount, setPageCount] = useState(0);
 
     const [originalData, setOriginalData] = useState([]); // Menyimpan data asli
 
@@ -39,31 +44,15 @@ const SectionLoker = () => {
         }
     };
 
-    // useEffect(() => {
-    //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
-    //     const fetchData = async () => {
-    //         try {
-    //             // Kirim data ke server
-    //             const response = await Axios.get("/form");
-
-    //             const count = response.data.length;
-    //             // const response = await Axios.post("/form");
-    //             setJobCount(count);
-    //             setFormData(response.data);
-    //         } catch (error) {
-    //             console.error("Error sending data:", error);
-    //         }
-    //     };
-
-    //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
-    // }, []);
-
     const fetchData = async () => {
         try {
             const response = await Axios.get("/form");
             const count = response.data.length;
             setJobCount(count);
             setFormData(response.data);
+            // const total = response.headers.get("x-total-count");
+            // setPageCount(Math.ceil(total / 2)); // Gunakan Math.ceil untuk membulatkan ke atas
+            // console.log(total);
         } catch (error) {
             console.error("Error sending data:", error);
         }
@@ -115,12 +104,27 @@ const SectionLoker = () => {
         }
     };
 
-    // console.log(values);
+    // const fetchComments = async (currentPage) => {
+    //     const res = await fetch(`/form ${currentPage}`);
+    //     const data = await res.json();
+    //     return data;
+    // };
+
+    const handlePageClick = async (data) => {
+        console.log(data.selected);
+
+        let currentPage = data.selected + 1;
+        const commentFromServer = await fetchComments(currentPage);
+        setFormData(commentFromServer);
+    };
+
+    // console.log(formDataLoker);
+
     return (
         <section className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container">
             <>
                 <div className="flex justify-between items-end pb-8 flex-wrap gap-4 w-full">
-                    <h1 className="text-BlueTako font-bold text-2xl">
+                    <h1 className="text-BlueTako font-bold text-2xl ">
                         ({jobCount}) Pekerjaan yang tersedia
                     </h1>
                 </div>
@@ -285,7 +289,8 @@ const SectionLoker = () => {
                     ANUGERAH KOPORASI"
                 </h1>
             </div> */}
-            {formData.length === 0 ? (
+
+            {formDataLoker.length === 0 ? (
                 <div className="flex justify-center w-full pt-16">
                     <p className="text-DarkTako">
                         Maaf, tidak ada lowongan yang tersedia saat ini.
@@ -298,7 +303,7 @@ const SectionLoker = () => {
                     >
                         <SelectJobPerusahaan
                             active={menu1Active}
-                            formData={formData}
+                            formData={formDataLoker}
                             // values={values}
                         />
                     </div>
@@ -307,18 +312,47 @@ const SectionLoker = () => {
                     >
                         <SelectJob2
                             active={menu2Active}
-                            formData={formData}
+                            formData={formDataLoker}
                             // values={values}
                         />
                     </div>
                 </>
             )}
 
-            <Pagination
-                count={18}
-                shape="rounded"
-                className="flex w-full justify-center py-16"
-            />
+            {/* {coinsData.map((coin, index) => {
+                return (
+                    <CryptoCard
+                        key={index}
+                        image={coin.image}
+                        name={coin.name}
+                        price={coin.current_price}
+                    />
+                );
+            })} */}
+
+            <div className="w-full mx-auto flex justify-center pb-8 pt-16 items-center">
+                <ReactPaginate
+                    previousLabel={"<"}
+                    nextLabel={">"}
+                    breakLabel={"..."}
+                    // pageCount={pageCount}
+                    pageCount={12}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={4}
+                    onPageChange={handlePageClick}
+                    containerClassName="join flex bg-BgTako items-center text-BlueTako"
+                    pageClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
+                    pageLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
+                    previousLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
+                    nextLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
+                    breakClassName="join-item"
+                    breakLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
+                    activeClassName="bg-BlueTako bg-opacity-10 "
+                    initialPage={0}
+                />
+            </div>
+
+            <Pagination />
         </section>
     );
 };

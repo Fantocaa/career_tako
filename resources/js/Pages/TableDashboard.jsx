@@ -89,7 +89,7 @@ const TableDashboard = () => {
                         id={`hapus-${row.id}`}
                         className="hapus-modal modal"
                     >
-                        <div className="modal-box text-white">
+                        <div className="modal-box text-DarkTako bg-white ">
                             <h3 className="font-bold text-lg">
                                 Kamu yakin ingin mengshapus?
                             </h3>
@@ -101,13 +101,15 @@ const TableDashboard = () => {
                                     {/* if there is a button in form, it will close the modal */}
                                     <a href={`/admin/table/hapus/${row.id}`}>
                                         <button
-                                            className="btn btn-error"
+                                            className="btn border-none hover:bg-BlueTako hover:bg-opacity-10"
                                             onClick={() => handleDelete(row.id)}
                                         >
                                             Yakin
                                         </button>
                                     </a>
-                                    <button className="btn">Tidak</button>
+                                    <button className="btn border-none hover:bg-RedTako hover:bg-opacity-10">
+                                        Tidak
+                                    </button>
                                 </form>
                             </div>
                         </div>

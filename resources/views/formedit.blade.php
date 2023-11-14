@@ -135,7 +135,8 @@
                         <div class="flex items-end">
                             <span v-on:Click='onClickSkill()'
                                 class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">
-                                Add</span>
+                                Add
+                                Req Skill +</span>
                         </div>
                         <div class="flex items-end">
 

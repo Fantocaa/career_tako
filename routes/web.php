@@ -121,6 +121,8 @@ Route::get('/api_program_perusahaan/{id}', [MdLokerController::class, 'api_progr
 
 Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_program_id']);
 
+// Route::get('/api_form', [MdLokerController::class, 'api_form']);
+
 Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'], function () {
     Route::get('/dashboard', function () {
         return Inertia::render('DashboardPage');

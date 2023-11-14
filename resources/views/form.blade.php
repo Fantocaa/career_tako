@@ -99,21 +99,23 @@
                         <input type="date" name="batas_lamaran" required class="rounded-2xl w-full">
                     </label>
 
-                    <div class="flex w-full gap-4">
+                    <div class="flex w-full gap-4 flex-wrap">
                         <template v-for="(item, index) in namaskill">
-                            <label for="skill">
+                            <div>
                                 <h1 class="mb-2">Skill</h1>
-                                <input type="text" name="skill[]" required class="rounded-2xl w-full"
-                                    placeholder="Masukkan Nama Skill">
-                                <span v-on:Click='hapusKonten(index, item)'
-                                    class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
-                                </span>
-                            </label>
+                                <label for="skill" class="flex gap-2">
+                                    <input type="text" name="skill[]" required class="rounded-2xl w-full"
+                                        placeholder="Masukkan Nama Skill">
+                                    <span v-on:Click='hapusKonten(index, item)'
+                                        class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
+                                    </span>
+                                </label>
+                            </div>
                         </template>
                         <div class="flex items-end">
                             <span v-on:Click='onClickSkill()'
-                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">Tambah
-                                Baru</span>
+                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">Add
+                                Req Skill +</span>
                         </div>
                     </div>
 

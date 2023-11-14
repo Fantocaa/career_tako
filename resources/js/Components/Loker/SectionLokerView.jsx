@@ -3,6 +3,7 @@ import { Pagination } from "@mui/material";
 import SelectJob from "../Shared/Job/SelectJob";
 import SelectJob2 from "../Shared/Job/SelectJob2";
 import Axios from "axios";
+import { Link } from "@inertiajs/react";
 
 const SectionLokerView = ({ values }) => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
@@ -39,33 +40,13 @@ const SectionLokerView = ({ values }) => {
         }
     };
 
-    // useEffect(() => {
-    //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
-    //     const fetchData = async () => {
-    //         try {
-    //             // Kirim data ke server
-    //             const response = await Axios.get(
-    //                 `/api_program_perusahaan/${values.id}`
-    //             );
-
-    //             const count = response.data.length;
-    //             // const response = await Axios.post("/form");
-    //             setJobCount(count);
-    //             setFormData(response.data);
-    //         } catch (error) {
-    //             console.error("Error sending data:", error);
-    //         }
-    //     };
-
-    //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
-    // }, []);
-
     const fetchData = async () => {
         try {
             const response = await Axios.get(
                 `/api_program_perusahaan/${values.id}`
             );
             const count = response.data.length;
+
             setJobCount(count);
             setFormData(response.data);
         } catch (error) {
@@ -121,13 +102,13 @@ const SectionLokerView = ({ values }) => {
         }
     };
 
-    console.log(values);
     return (
         <section className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container">
             <>
                 <div className="flex justify-between items-end pb-8 flex-wrap gap-4 w-full">
                     <h1 className="text-BlueTako font-bold text-2xl">
-                        ({jobCount}) Pekerjaan yang tersedia
+                        ({jobCount}) Pekerjaan yang tersedia di {""}
+                        {values.perusahaan}
                     </h1>
                 </div>
             </>
@@ -192,9 +173,11 @@ const SectionLokerView = ({ values }) => {
                         </select>
 
                         <div className="w-full">
-                            {/* <button className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none w-full lg:w-24 normal-case">
-                                Cari
-                            </button> */}
+                            <Link href="/loker">
+                                <button className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none w-full lg:w-24 normal-case">
+                                    Reset
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

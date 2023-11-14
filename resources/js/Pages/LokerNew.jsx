@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "@/Layouts/Layout";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
@@ -6,21 +6,18 @@ import PerusahaanCard from "@/Components/Loker/PerusahaanCard";
 import SectionLoker from "@/Components/Shared/Job/SelectJob/SectionLoker";
 import axios from "axios";
 import { usePage } from "@inertiajs/react";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+// import "../Components/css/style.css";
+import Pagination from "@/Components/Shared/Job/SelectJob/Pagination/Pagination";
 
 const LokerNew = () => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setpostsPerPage] = useState(8);
-    const [formData, setFormData] = useState([]);
-    const [formDataLoker, setFormDataLoker] = useState([]);
-
-    const lastPostIndex = currentPage * postsPerPage;
-    const firstPostIndex = lastPostIndex - postsPerPage;
-
-    const currentPosts = formData.slice(firstPostIndex, lastPostIndex);
-
     const { state } = usePage();
+    const [formData, setFormData] = useState([]);
+
+    // const [currentPage, setCurrentPage] = useState(1);
+    const [postPerPage, setPostPerPage] = useState(2);
 
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -28,13 +25,42 @@ const LokerNew = () => {
         return date.toLocaleDateString("id-ID", options);
     }
 
+    const [coinsData, setCoinsData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(4);
+
+    const [formDataLoker, setFormDataLoker] = useState([]); //pake ini
+    const [currentPageLoker, setCurrentPageLoker] = useState(1);
+    const [postsPerPageLoker, setPostsPerPageLoker] = useState(3);
+
+    useEffect(async () => {
+        const response = await axios.get(
+            "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+        );
+
+        setCoinsData(response.data);
+    }, []);
+
+    const lastPostIndex = currentPage * postsPerPage;
+    const firstPostIndex = lastPostIndex - postsPerPage;
+    const currentPosts = coinsData.slice(firstPostIndex, lastPostIndex);
+
+    const lastPostIndexLoker = currentPageLoker * postsPerPageLoker;
+    const firstPostIndexLoker = lastPostIndexLoker - postsPerPageLoker;
+    const currentPostsLoker = formDataLoker.slice(
+        firstPostIndexLoker,
+        lastPostIndexLoker
+    );
+
     useEffect(() => {
         // Panggil fungsi API di sini saat komponen pertama kali di-mount
         const fetchData = async () => {
             try {
                 // Kirim data ke server
                 const response = await axios.get("/json_perusahaan");
-                setFormData(response.data);
+                // setFormData(response.data);
+                const perusahaanChunks = chunkArray(response.data, 5);
+                setFormData(perusahaanChunks);
             } catch (error) {
                 console.error("Error sending data:", error);
             }
@@ -58,41 +84,44 @@ const LokerNew = () => {
     const hitungJumlahLowongan = (perusahaanId) => {
         // Filter data dari formDataLoker berdasarkan perusahaanId dan hitung jumlahnya
         const totalLowongan = formDataLoker.filter(
-            (item) => item.perusahaan_id === perusahaanId
+            (item) => item.id === perusahaanId
         ).length;
 
         return totalLowongan;
     };
 
-    const responsive = {
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 4,
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2,
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1,
-        },
-    };
-
     // Menghitung jumlah lowongan untuk setiap perusahaan
     const perusahaanDenganJumlahLowongan = formData.map((perusahaan) => {
         const jumlahLowongan = formDataLoker.filter(
-            (loker) => loker.perusahaan_id === perusahaan.id
+            (loker) => loker.perusahaan === perusahaan.id
         ).length;
 
         return { ...perusahaan, jumlahLowongan };
     });
 
+    const settings = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        // afterChange: (current) => setSliderIndex(current),
+    };
+
+    function chunkArray(array, chunkSize) {
+        const chunks = [];
+        for (let i = 0; i < array.length; i += chunkSize) {
+            chunks.push(array.slice(i, i + chunkSize));
+        }
+        return chunks;
+    }
+
+    console.log(formData);
+
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                 <NavElse />
-                {/* <div dangerouslySetInnerHTML={{ __html: bladeView }} /> */}
                 <div className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako">
                     <div className="text-center container mx-auto">
                         <div className="w-full">
@@ -106,50 +135,46 @@ const LokerNew = () => {
                                 Perusahaan Impianmu!
                             </p>
                         </div>
-                        <div className="carousel w-full pt-8">
-                            <Carousel responsive={responsive}>
-                                <PerusahaanCard
-                                    data={perusahaanDenganJumlahLowongan}
-                                />
-                            </Carousel>
-                            {/* <div
-                                // id="item1"
-                                className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            >
-                                <PerusahaanCard formData={currentPosts} />
-                            </div> */}
-                            {/* <div
-                                id="item2"
-                                className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            ></div>
-                            <div
-                                id="item3"
-                                className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            ></div>
-                            <div
-                                id="item4"
-                                className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            ></div> */}
+                        <div className="w-full pt-8 ">
+                            {/* <div className=" w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"> */}
+                            {/* <PerusahaanCard /> */}
+                            {formData.map((chunk, index) => (
+                                <Slider {...settings} key={index}>
+                                    {chunk.map((item) => (
+                                        <PerusahaanCard
+                                            key={item.id}
+                                            perusahaan={item}
+                                        />
+                                    ))}
+                                </Slider>
+                            ))}
+
+                            {/* <Slider {...settings}>
+                                {formData.map((chunk, index) => (
+                                    <div key={index}>
+                                        {chunk.map((item) => (
+                                            <PerusahaanCard
+                                                key={item.id}
+                                                perusahaan={item}
+                                            />
+                                        ))}
+                                    </div>
+                                ))}
+                            </Slider> */}
+                            {/* </div> */}
                         </div>
-                        {/* <div className="flex justify-center w-full py-2 gap-2 pt-8">
-                            <a href="#item1" className="btn btn-xs">
-                                1
-                            </a>
-                            <a href="#item2" className="btn btn-xs">
-                                2
-                            </a>
-                            <a href="#item3" className="btn btn-xs">
-                                3
-                            </a>
-                            <a href="#item4" className="btn btn-xs">
-                                4
-                            </a>
-                        </div> */}
                     </div>
                 </div>
-                {/* <PerusahaanInfo /> */}
-                {/* <SectionView /> */}
-                <SectionLoker />
+                <SectionLoker
+                    coinsData={currentPosts}
+                    formDataLoker={currentPostsLoker}
+                />
+                <Pagination
+                    totalPosts={formDataLoker.length}
+                    postsPerPageLoker={postsPerPageLoker}
+                    setCurrentPageLoker={setCurrentPageLoker}
+                    currentPageLoker={currentPageLoker}
+                />
                 <Footer />
             </section>
         </Layout>
