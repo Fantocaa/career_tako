@@ -51,8 +51,8 @@ const SectionLoker = ({ formDataLoker }) => {
             const response = await Axios.get("/form");
             const count = response.data.length;
             setJobCount(count);
-            // setFormData(response.data);
-            setFormDataFromProps(formDataLoker); // Setel state baru
+            setFormData(response.data);
+            // setFormDataFromProps(formDataLoker); // Setel state baru
             // const total = response.headers.get("x-total-count");
             // setPageCount(Math.ceil(total / 2)); // Gunakan Math.ceil untuk membulatkan ke atas
             // console.log(formDataLoker);
@@ -72,8 +72,8 @@ const SectionLoker = ({ formDataLoker }) => {
         // Kirim permintaan Ajax berdasarkan nilai yang dipilih
         try {
             const response = await Axios.get(`/api_program/${selectedValue}`);
-            // setFormData(response.data);
-            setFormDataFromProps(response.formDataLoker);
+            setFormData(response.data);
+            // setFormDataFromProps(response.formDataLoker);
 
             console.log(formDataLoker);
         } catch (error) {
@@ -81,18 +81,18 @@ const SectionLoker = ({ formDataLoker }) => {
         }
     };
 
-    // const handleSearch = (term) => {
-    //     if (term === "") {
-    //         setFormData(originalData);
-    //     } else {
-    //         const filteredData = originalData.filter((item) => {
-    //             return item.pekerjaan
-    //                 .toLowerCase()
-    //                 .includes(term.toLowerCase());
-    //         });
-    //         setFormData(filteredData);
-    //     }
-    // };
+    const handleSearch = (term) => {
+        if (term === "") {
+            setFormData(originalData);
+        } else {
+            const filteredData = originalData.filter((item) => {
+                return item.pekerjaan
+                    .toLowerCase()
+                    .includes(term.toLowerCase());
+            });
+            setFormData(filteredData);
+        }
+    };
 
     const handleSearchChange = (term) => {
         setSearchTerm(term); // Mengatur kembali nilai pencarian agar input dikosongkan
@@ -101,8 +101,8 @@ const SectionLoker = ({ formDataLoker }) => {
             // setFormData(formDataFromProps); // Gunakan state baru
         } else {
             // console.log(originalData);
-            const filteredData = formDataFromProps.filter((item) => {
-                // const filteredData = formData.filter((item) => {
+            // const filteredData = formDataFromProps.filter((item) => {
+            const filteredData = formData.filter((item) => {
                 return item.pekerjaan
                     .toLowerCase()
                     .includes(term.toLowerCase());
@@ -309,7 +309,7 @@ const SectionLoker = ({ formDataLoker }) => {
                     >
                         <SelectJobPerusahaan
                             active={menu1Active}
-                            formData={formDataLoker}
+                            formData={formData}
                             // values={values}
                         />
                     </div>
@@ -318,7 +318,7 @@ const SectionLoker = ({ formDataLoker }) => {
                     >
                         <SelectJob2
                             active={menu2Active}
-                            formData={formDataLoker}
+                            formData={formData}
                             // values={values}
                         />
                     </div>
