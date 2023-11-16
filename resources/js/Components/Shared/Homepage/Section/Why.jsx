@@ -69,32 +69,164 @@ const Why = () => {
                         {/* <ImageModal /> */}
                         <div className="hidden md:grid grid-cols-3 gap-4 z-10  ">
                             <div className="col-span-2 overflow-hidden rounded-xl">
-                                <img
+                                {/* <img
                                     src="/images/image-5.png"
                                     className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                     alt="Tailwind CSS Carousel component"
-                                />
+                                /> */}
+                                <button
+                                    className="w-full rounded-xl"
+                                    onClick={() =>
+                                        document
+                                            .getElementById("my_modal_1")
+                                            .showModal()
+                                    }
+                                >
+                                    <div className="col-span-2 overflow-hidden rounded-xl">
+                                        <img
+                                            src="/images/image-5.png"
+                                            className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
+                                            alt="Tailwind CSS Carousel component"
+                                        />
+                                    </div>
+                                </button>
+                                <dialog id="my_modal_1" className="modal">
+                                    <div className="w-1/2">
+                                        <form
+                                            method="dialog"
+                                            className="w-full"
+                                        >
+                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-64 top-28 bg-white text-DarkTako hover:bg-RedTako hover:text-white border-0 border-none">
+                                                ✕
+                                            </button>
+                                        </form>
+                                        <img
+                                            src="/images/image-5.png"
+                                            className="object-cover w-full"
+                                            alt="Tailwind CSS Carousel component"
+                                        />
+                                    </div>
+                                </dialog>
                             </div>
                             <div className="overflow-hidden rounded-xl">
-                                <img
+                                {/* <img
                                     src="/images/image-6.png"
                                     className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                     alt="Tailwind CSS Carousel component"
-                                />
+                                /> */}
+                                <button
+                                    className="w-full rounded-xl"
+                                    onClick={() =>
+                                        document
+                                            .getElementById("my_modal_2")
+                                            .showModal()
+                                    }
+                                >
+                                    <div className="col-span-2 overflow-hidden rounded-xl">
+                                        <img
+                                            src="/images/image-6.png"
+                                            className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
+                                            alt="Tailwind CSS Carousel component"
+                                        />
+                                    </div>
+                                </button>
+                                <dialog id="my_modal_2" className="modal">
+                                    <div className="w-1/2">
+                                        <form
+                                            method="dialog"
+                                            className="w-full"
+                                        >
+                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-64 top-28 bg-white text-DarkTako hover:bg-RedTako hover:text-white border-0 border-none">
+                                                ✕
+                                            </button>
+                                        </form>
+                                        <img
+                                            src="/images/image-6.png"
+                                            className="object-cover mx-auto w-[440px]"
+                                            alt="Tailwind CSS Carousel component"
+                                        />
+                                    </div>
+                                </dialog>
                             </div>
                             <div className="overflow-hidden rounded-xl">
-                                <img
+                                {/* <img
                                     src="/images/image-8.png"
                                     className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                     alt="Tailwind CSS Carousel component"
-                                />
+                                /> */}
+                                <button
+                                    className="w-full rounded-xl"
+                                    onClick={() =>
+                                        document
+                                            .getElementById("my_modal_3")
+                                            .showModal()
+                                    }
+                                >
+                                    <div className="col-span-2 overflow-hidden rounded-xl">
+                                        <img
+                                            src="/images/image-8.png"
+                                            className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
+                                            alt="Tailwind CSS Carousel component"
+                                        />
+                                    </div>
+                                </button>
+                                <dialog id="my_modal_3" className="modal">
+                                    <div className="w-1/2">
+                                        <form
+                                            method="dialog"
+                                            className="w-full"
+                                        >
+                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-64 top-28 bg-white text-DarkTako hover:bg-RedTako hover:text-white border-0 border-none">
+                                                ✕
+                                            </button>
+                                        </form>
+                                        <img
+                                            src="/images/image-8.png"
+                                            className="object-cover mx-auto w-[440px]"
+                                            alt="Tailwind CSS Carousel component"
+                                        />
+                                    </div>
+                                </dialog>
                             </div>
                             <div className="col-span-2 overflow-hidden rounded-xl">
-                                <img
+                                {/* <img
                                     src="/images/image-7.png"
                                     className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                     alt="Tailwind CSS Carousel component"
-                                />
+                                /> */}
+                                <button
+                                    className="w-full rounded-xl"
+                                    onClick={() =>
+                                        document
+                                            .getElementById("my_modal_4")
+                                            .showModal()
+                                    }
+                                >
+                                    <div className="col-span-2 overflow-hidden rounded-xl">
+                                        <img
+                                            src="/images/image-7.png"
+                                            className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
+                                            alt="Tailwind CSS Carousel component"
+                                        />
+                                    </div>
+                                </button>
+                                <dialog id="my_modal_4" className="modal">
+                                    <div className="w-1/2">
+                                        <form
+                                            method="dialog"
+                                            className="w-full"
+                                        >
+                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-64 top-28 bg-white text-DarkTako hover:bg-RedTako hover:text-white border-0 border-none">
+                                                ✕
+                                            </button>
+                                        </form>
+                                        <img
+                                            src="/images/image-7.png"
+                                            className="object-cover w-full"
+                                            alt="Tailwind CSS Carousel component"
+                                        />
+                                    </div>
+                                </dialog>
                             </div>
                         </div>
                         <div className="carousel rounded-box md:hidden">

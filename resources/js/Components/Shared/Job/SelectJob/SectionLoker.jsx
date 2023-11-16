@@ -7,7 +7,7 @@ import ReactPaginate from "react-paginate";
 import CryptoCard from "./CryptoCard";
 import Pagination from "./Pagination/Pagination";
 
-const SectionLoker = ({ coinsData, formDataLoker }) => {
+const SectionLoker = ({ formDataLoker }) => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
     const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk nilai pencarian
     const [formData, setFormData] = useState([]);
@@ -19,6 +19,8 @@ const SectionLoker = ({ coinsData, formDataLoker }) => {
 
     const [menu1Active, setMenu1Active] = useState(true);
     const [menu2Active, setMenu2Active] = useState(false);
+
+    const [formDataFromProps, setFormDataFromProps] = useState([]);
 
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -49,10 +51,11 @@ const SectionLoker = ({ coinsData, formDataLoker }) => {
             const response = await Axios.get("/form");
             const count = response.data.length;
             setJobCount(count);
-            setFormData(response.data);
+            // setFormData(response.data);
+            setFormDataFromProps(formDataLoker); // Setel state baru
             // const total = response.headers.get("x-total-count");
             // setPageCount(Math.ceil(total / 2)); // Gunakan Math.ceil untuk membulatkan ke atas
-            // console.log(total);
+            // console.log(formDataLoker);
         } catch (error) {
             console.error("Error sending data:", error);
         }
@@ -69,33 +72,37 @@ const SectionLoker = ({ coinsData, formDataLoker }) => {
         // Kirim permintaan Ajax berdasarkan nilai yang dipilih
         try {
             const response = await Axios.get(`/api_program/${selectedValue}`);
-            setFormData(response.data);
+            // setFormData(response.data);
+            setFormDataFromProps(response.formDataLoker);
+
+            console.log(formDataLoker);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
 
-    const handleSearch = (term) => {
-        if (term == "") {
-            fetchData();
-        } else {
-            console.log(originalData);
-            const filteredData = formData.filter((item) => {
-                return item.pekerjaan
-                    .toLowerCase()
-                    .includes(term.toLowerCase());
-            });
-            setFormData(filteredData);
-        }
-    };
+    // const handleSearch = (term) => {
+    //     if (term === "") {
+    //         setFormData(originalData);
+    //     } else {
+    //         const filteredData = originalData.filter((item) => {
+    //             return item.pekerjaan
+    //                 .toLowerCase()
+    //                 .includes(term.toLowerCase());
+    //         });
+    //         setFormData(filteredData);
+    //     }
+    // };
 
     const handleSearchChange = (term) => {
         setSearchTerm(term); // Mengatur kembali nilai pencarian agar input dikosongkan
         if (term == "") {
             fetchData();
+            // setFormData(formDataFromProps); // Gunakan state baru
         } else {
-            console.log(originalData);
-            const filteredData = formData.filter((item) => {
+            // console.log(originalData);
+            const filteredData = formDataFromProps.filter((item) => {
+                // const filteredData = formData.filter((item) => {
                 return item.pekerjaan
                     .toLowerCase()
                     .includes(term.toLowerCase());
@@ -104,21 +111,20 @@ const SectionLoker = ({ coinsData, formDataLoker }) => {
         }
     };
 
-    // const fetchComments = async (currentPage) => {
-    //     const res = await fetch(`/form ${currentPage}`);
-    //     const data = await res.json();
-    //     return data;
-    // };
+    const fetchComments = async (currentPage) => {
+        const res = await fetch(`/form ${currentPage}`);
+        const data = await res.json();
+        return data;
+    };
 
     const handlePageClick = async (data) => {
         console.log(data.selected);
-
         let currentPage = data.selected + 1;
         const commentFromServer = await fetchComments(currentPage);
         setFormData(commentFromServer);
     };
 
-    // console.log(formDataLoker);
+    // console.log(setFormDataFromProps);
 
     return (
         <section className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container">

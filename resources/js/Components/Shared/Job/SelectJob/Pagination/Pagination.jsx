@@ -4,13 +4,13 @@ import React from "react";
 
 const Pagination = ({
     totalPosts,
-    postsPerPage,
-    setCurrentPage,
-    currentPage,
+    postsPerPageLoker,
+    setCurrentPageLoker,
+    currentPageLoker,
 }) => {
     let pages = [];
 
-    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPageLoker); i++) {
         pages.push(i);
     }
 
@@ -20,9 +20,9 @@ const Pagination = ({
                 return (
                     <button
                         key={index}
-                        onClick={() => setCurrentPage(page)}
+                        onClick={() => setCurrentPageLoker(page)}
                         className={
-                            page == currentPage
+                            page == currentPageLoker
                                 ? "active font-black text-[#101010] border-[#101010]"
                                 : "w-10 h-10 font-semibold text-base cursor-pointer transition-all duration-[0.3s] ease-[ease] text-[#eee] mx-2.5 my-0 rounded-md border-[#eee];"
                         }

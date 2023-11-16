@@ -11,12 +11,12 @@ const Warn = () => {
                     <div className="md:w-1/2 pb-8 md:pt-8">
                         {/* <p className="hidden lg:block text-2xl">WARNING!!!</p> */}
                         <div data-aos="fade-up" data-aos-duration="1200">
-                            <h1 className="text-center md:text-left font-bold text-4xl pb-4 lg:pt-4">
+                            <h1 className="text-center md:text-left font-bold text-2xl md:text-4xl pb-4 lg:pt-4">
                                 HATI-HATI PENIPUAN !!!
                             </h1>
                         </div>
                         <div data-aos="fade-up" data-aos-duration="1400">
-                            <p className="text-center md:text-left w-[428px]">
+                            <p className="text-center md:text-left md:w-80 lg:w-[428px]">
                                 Hati-hati terhadap penipuan perekrutan yang
                                 mengatasnamakan
                                 <span className="font-bold">
@@ -46,7 +46,7 @@ const Warn = () => {
                     data-aos="fade-up"
                     data-aos-duration="1000"
                 >
-                    <div className="bg-white rounded-2xl text-DarkTako p-8 md:flex md:flex-wrap md:gap-4 md:justify-between md:absolute shadow-md items-center -translate-y-24">
+                    <div className="bg-white rounded-2xl text-DarkTako p-8 md:flex md:flex-wrap md:gap-4 md:justify-between md:absolute shadow-md items-center -translate-y-4 lg:-translate-y-24">
                         <div className="flex flex-col items-center justify-center text-center md:w-[48%] lg:w-[20%]">
                             <img
                                 src="/images/icon/1.svg"

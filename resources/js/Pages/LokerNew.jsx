@@ -25,25 +25,25 @@ const LokerNew = () => {
         return date.toLocaleDateString("id-ID", options);
     }
 
-    const [coinsData, setCoinsData] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(4);
+    // const [coinsData, setCoinsData] = useState([]);
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const [postsPerPage, setPostsPerPage] = useState(4);
 
     const [formDataLoker, setFormDataLoker] = useState([]); //pake ini
     const [currentPageLoker, setCurrentPageLoker] = useState(1);
     const [postsPerPageLoker, setPostsPerPageLoker] = useState(3);
 
-    useEffect(async () => {
-        const response = await axios.get(
-            "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
-        );
+    // useEffect(async () => {
+    //     const response = await axios.get(
+    //         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+    //     );
 
-        setCoinsData(response.data);
-    }, []);
+    //     setCoinsData(response.data);
+    // }, []);
 
-    const lastPostIndex = currentPage * postsPerPage;
-    const firstPostIndex = lastPostIndex - postsPerPage;
-    const currentPosts = coinsData.slice(firstPostIndex, lastPostIndex);
+    // const lastPostIndex = currentPage * postsPerPage;
+    // const firstPostIndex = lastPostIndex - postsPerPage;
+    // const currentPosts = coinsData.slice(firstPostIndex, lastPostIndex);
 
     const lastPostIndexLoker = currentPageLoker * postsPerPageLoker;
     const firstPostIndexLoker = lastPostIndexLoker - postsPerPageLoker;
@@ -116,7 +116,7 @@ const LokerNew = () => {
         return chunks;
     }
 
-    console.log(formData);
+    // console.log(formDataLoker);
 
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
@@ -166,7 +166,7 @@ const LokerNew = () => {
                     </div>
                 </div>
                 <SectionLoker
-                    coinsData={currentPosts}
+                    // coinsData={currentPosts}
                     formDataLoker={currentPostsLoker}
                 />
                 <Pagination

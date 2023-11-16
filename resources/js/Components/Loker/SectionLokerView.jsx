@@ -174,7 +174,8 @@ const SectionLokerView = ({ values }) => {
 
                         <div className="w-full">
                             <Link href="/loker">
-                                <button className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none w-full lg:w-24 normal-case">
+                                <button className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none normal-case">
+                                    <img src="/images/reset.svg" alt="" />
                                     Reset
                                 </button>
                             </Link>
