@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Pagination } from "@mui/material";
 import SelectJob from "../Shared/Job/SelectJob";
 import SelectJob2 from "../Shared/Job/SelectJob2";
 import Axios from "axios";
 import { Link } from "@inertiajs/react";
 
-const SectionLokerView = ({ values }) => {
+const SectionLokerView = ({ values, perusahaanInfoRef }) => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
     const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk nilai pencarian
     const [formData, setFormData] = useState([]);
@@ -103,7 +103,10 @@ const SectionLokerView = ({ values }) => {
     };
 
     return (
-        <section className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container">
+        <section
+            ref={perusahaanInfoRef}
+            className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container"
+        >
             <>
                 <div className="flex justify-between items-end pb-8 flex-wrap gap-4 w-full">
                     <h1 className="text-BlueTako font-bold text-2xl">

@@ -11,6 +11,7 @@ const BerandaDS = () => {
                 <Dashboard active />
                 <h1>Meong</h1>
             </div>
+            <div className="w-full h-full">{/* <TableDashboard /> */}</div>
             {/* <Box sx={{ display: "flex" }}>
                 <SidebarLayout />
                 <div>BerandaDS</div>;

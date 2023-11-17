@@ -309,7 +309,8 @@ const SectionLoker = ({ formDataLoker }) => {
                     >
                         <SelectJobPerusahaan
                             active={menu1Active}
-                            formData={formData}
+                            formData={formDataLoker}
+                            // formData={formData}
                             // values={values}
                         />
                     </div>
@@ -318,7 +319,8 @@ const SectionLoker = ({ formDataLoker }) => {
                     >
                         <SelectJob2
                             active={menu2Active}
-                            formData={formData}
+                            formData={formDataLoker}
+                            // formData={formData}
                             // values={values}
                         />
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "@/Layouts/Layout";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
@@ -9,21 +9,22 @@ import SectionLokerView from "@/Components/Loker/SectionLokerView";
 import { usePage } from "@inertiajs/react";
 
 const LokerDetailPerusahaan = () => {
-    const { props } = usePage();
-    const { perusahaan } = props;
-    const { id } = props;
+    // const { props } = usePage();
+    // const { perusahaan } = props;
+    // const { id } = props;
+    // const perusahaanInfoRef = useRef();
 
     // console.log(id);
 
-    const [values, setValues] = useState({
-        // password: "meong",
-        id: perusahaan.id,
-        perusahaan: perusahaan.perusahaan,
-        tentang: perusahaan.tentang,
-        alamat: perusahaan.alamat,
-        link: perusahaan.link,
-        image: perusahaan.image,
-    });
+    // const [values, setValues] = useState({
+    //     // password: "meong",
+    //     id: perusahaan.id,
+    //     perusahaan: perusahaan.perusahaan,
+    //     tentang: perusahaan.tentang,
+    //     alamat: perusahaan.alamat,
+    //     link: perusahaan.link,
+    //     image: perusahaan.image,
+    // });
 
     // console.log(idValues);
     return (
@@ -50,23 +51,10 @@ const LokerDetailPerusahaan = () => {
                             >
                                 <PerusahaanCard />
                             </div>
-                            <div
-                                id="item2"
-                                className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            ></div>
-                            <div
-                                id="item3"
-                                className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            ></div>
-                            <div
-                                id="item4"
-                                className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            ></div>
                         </div>
                     </div>
                 </div>
                 <PerusahaanInfo />
-                <SectionLokerView values={values} />
                 <Footer />
             </section>
         </Layout>

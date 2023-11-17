@@ -14,33 +14,13 @@ import {
     Settings,
     ArrowLeftCircle,
     Building2,
+    History,
 } from "lucide-react";
 import { Link, usePage } from "@inertiajs/react";
 import Axios from "axios";
 import { useEffect } from "react";
 
 export default function Dashboard({ auth }) {
-    // const { page } = usePage();
-
-    // const handleChange = useEffect(() => {
-    //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
-    //     const fetchData = async () => {
-    //         try {
-    //             // Kirim data ke server
-    //             const response = await Axios.get("/admin/logout");
-    //             // const response = await Axios.post("/form");
-    //             setFormData(response.data);
-    //         } catch (error) {
-    //             console.error("Error sending data:", error);
-    //         }
-    //     };
-
-    //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
-
-    //     // Hanya perlu dijalankan saat komponen pertama kali di-mount,
-    //     // sehingga dependensi di bawah ini kosong
-    // }, []);
-
     return (
         <div className="w-1/4 fixed">
             <div className="w-full h-full">
@@ -59,14 +39,14 @@ export default function Dashboard({ auth }) {
                     {/* )} */}
                     {/* {page && ( */}
                     {/* <Link href="/dashboard/beranda"> */}
-                    <Link href={route("admin.beranda")}>
+                    {/* <Link href={route("admin.beranda")}>
                         <SidebarItem
                             icon={<BarChart3 size={20} />}
                             text="Beranda"
                             // active={page.url === "/dashboard/beranda"}
                             // active
                         />
-                    </Link>
+                    </Link> */}
                     {/* )} */}
                     {/* {page && ( */}
                     {/* <Link href="/dashboard/lowongan_pekerjaan"> */}
@@ -81,6 +61,13 @@ export default function Dashboard({ auth }) {
                         <SidebarItem
                             icon={<Building2 size={20} />}
                             text="Perusahaan"
+                            // active={page.url === "/dashboard/beranda"}
+                        />
+                    </Link>
+                    <Link href={route("admin.history")}>
+                        <SidebarItem
+                            icon={<History size={20} />}
+                            text="Riwayat"
                             // active={page.url === "/dashboard/beranda"}
                         />
                     </Link>

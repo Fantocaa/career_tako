@@ -72,20 +72,35 @@ const Search = () => {
         // <form onSubmit={}>
         <div className="absolute z-10 container md:pl-8 lg:pl-16 max-w-full md:w-[70%] lg:w-1/2">
             <div className="px-[10px] md:px-0">
-                <p className="text-white pb-2 md:pb-4 lg:text-2xl">
+                <p
+                    className="text-white pb-2 md:pb-4 lg:text-2xl"
+                    data-aos="fade-up"
+                    data-aos-duration="1000"
+                >
                     Selamat Datang di Karir Tako
                 </p>
-                <h1 className="text-white text-2xl lg:text-6xl font-bold pb-2 md:pb-4">
+                <h1
+                    className="text-white text-2xl lg:text-6xl font-bold pb-2 md:pb-4"
+                    data-aos="fade-up"
+                    data-aos-duration="1000"
+                >
                     Temukan Karier Impianmu dengan Lebih Mudah
                 </h1>
-                <p className="text-white">
+                <p
+                    className="text-white"
+                    data-aos="fade-up"
+                    data-aos-duration="1000"
+                >
                     Temukan Posisi yang Sesuai dengan Profesionalismu, Baik
                     Lowongan Pekerjaan atau Ragam Proyek Lainnya
                 </p>
-
                 <div className="w-full pt-8">
                     <Link href="/loker" className="inline-block">
-                        <button className="bg-BlueTako hover:bg-white hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-white flex gap-4 items-center transition-all duration-300 ease-in-out shadow-sm">
+                        <button
+                            className="bg-BlueTako hover:bg-white hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-white flex gap-4 items-center transition-all duration-300 ease-in-out shadow-sm"
+                            data-aos="fade-up"
+                            data-aos-duration="1000"
+                        >
                             <h1 className="text-lg font-semibold">
                                 Daftar Lowongan Kerja
                             </h1>

@@ -11,8 +11,8 @@
 
 <body class="bg-white text-DarkTako w-full min-h-screen flex items-start font-inter">
 
-    <div class="relative w-[75%] h-full flex flex-col">
-        <img src="/images/login.jpg" alt="" srcset="" class="object-left object-cover min-h-screen">
+    <div class="relative w-[75%] h-screen flex flex-col">
+        <img src="/images/login.png" alt="" srcset="" class="object-left object-cover min-h-screen">
     </div>
     <div class="w-1/2 p-10 min-h-screen flex flex-col justify-around">
         <div class="flex justify-center text-2xl"><a href="{{ route('login') }}">

@@ -1,7 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { usePage } from "@inertiajs/react";
 import SelectJob from "../Shared/Job/SelectJob";
+import SectionLokerView from "./SectionLokerView";
 
 const PerusahaanInfo = () => {
     const { props } = usePage();
@@ -17,6 +17,8 @@ const PerusahaanInfo = () => {
         image: perusahaan.image,
     });
     // console.log(values);
+
+    const perusahaanInfoRef = useRef();
 
     return (
         <section className="bg-BgTako pt-8 md:pt-32 ">
@@ -62,7 +64,15 @@ const PerusahaanInfo = () => {
                             </div>
                         </div>
                         <div className="flex gap-4">
-                            <button className="px-8 py-3 bg-BlueTako text-white rounded-xl btn normal-case border-none hover:bg-BlueTako hover:bg-opacity-90">
+                            <button
+                                className="px-8 py-3 bg-BlueTako text-white rounded-xl btn normal-case border-none hover:bg-BlueTako hover:bg-opacity-90"
+                                onClick={() => {
+                                    // Scroll ke elemen yang di-referensi saat tombol diklik
+                                    perusahaanInfoRef.current.scrollIntoView({
+                                        behavior: "smooth",
+                                    });
+                                }}
+                            >
                                 Cari Lowongan
                             </button>
                             <a href={values.link}>
@@ -78,6 +88,10 @@ const PerusahaanInfo = () => {
                 {/* Mengirim data perusahaan sebagai prop ke komponen SelectJob */}
                 {/* <SelectJob active={true} formDataProp={values} /> */}
             </div>
+            <SectionLokerView
+                values={values}
+                perusahaanInfoRef={perusahaanInfoRef}
+            />
         </section>
     );
 };

@@ -6,26 +6,42 @@ const CTA = () => {
         <div className="container mx-auto px-4 md:px-8 xl:px-16 py-16">
             <div className="bg-BgTako py-4 rounded-lg md:flex justify-between items-center">
                 <div className="lg:w-[40%] text-center lg:text-left">
-                    <h1 className="font-bold text-4xl lg:text-5xl pb-4 lg:leading-[56px]">
+                    <h1
+                        className="font-bold text-4xl lg:text-5xl pb-4 lg:leading-[56px]"
+                        data-aos="fade-up"
+                        data-aos-duration="1000"
+                    >
                         Segera Bergabung bersama Kami!
                     </h1>
-                    <p className="pb-8">
+                    <p
+                        className="pb-8"
+                        data-aos="fade-up"
+                        data-aos-duration="1000"
+                    >
                         Temukan peluang tak terbatas dan berkontribusi dalam
                         perjalanan menuju sukses bersama kami. Mari bergabung
                         dan ciptakan masa depan yang cerah.
                     </p>
                     <Link href="/job">
-                        <button className="bg-YellowTako  text-DarkTako p-4 font-bold rounded-lg w-full md:w-auto md:text-center">
+                        <button
+                            className="bg-YellowTako  text-DarkTako p-4 font-bold rounded-lg w-full md:w-auto md:text-center"
+                            data-aos="fade-up"
+                            data-aos-duration="1000"
+                        >
                             Daftar Lowongan Kerja
                         </button>
                     </Link>
                 </div>
-                <div className="flex">
+                <div
+                    className="flex"
+                    data-aos="fade-up"
+                    data-aos-duration="1000"
+                >
                     <img
                         src="images/Business.svg"
                         alt=""
-                        srcset=""
-                        className="hidden lg:block scale-125 float-right"
+                        // srcset=""
+                        className="hidden lg:block scale-125 animate-float-md"
                     />
                 </div>
             </div>

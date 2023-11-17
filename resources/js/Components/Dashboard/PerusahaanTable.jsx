@@ -6,6 +6,11 @@ import Axios from "axios";
 const PerusahaanTable = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const handleSearch = (value) => {
+        setSearchTerm(value);
+    };
 
     // Gunakan useEffect untuk memuat data melalui AJAX saat komponen dimuat
     useEffect(() => {
@@ -13,12 +18,7 @@ const PerusahaanTable = () => {
         fetch("/json_perusahaan") // Ganti dengan rute yang sesuai
             .then((response) => response.json())
             .then((data) => {
-                // const updatedData = data.map((item, index) => ({
-                //     ...item,
-                //     id: index + 1,
-                // }));
                 setData(data);
-                // setData(data);
                 setLoading(false);
             });
     }, []); // Gunakan array kosong sebagai dependencies untuk menjalankan useEffect sekali saat komponen dimuat
@@ -143,6 +143,14 @@ const PerusahaanTable = () => {
         // Tambahkan kolom lain sesuai kebutuhan
     ];
 
+    const filteredData = data.filter((item) => {
+        return (
+            item &&
+            item.perusahaan &&
+            item.perusahaan.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
+
     return (
         <Layout pageTitle="Dashboard | Tako Karir">
             <div className="bg-BgTako px-4 ml-[6px] h-full py-8">
@@ -156,19 +164,27 @@ const PerusahaanTable = () => {
                                 + Tambah
                             </button>
                         </a>
-                        <input
-                            type="text"
-                            className="px-8 rounded-lg h-10 text-xs "
-                            placeholder="Cari aku disini"
-                            onChange={(e) => handleSearch(e.target.value)}
-                        />
+                        <div className="relative">
+                            <img
+                                src="/images/logo/search.svg"
+                                alt="search"
+                                className="absolute left-2 bottom-2 scale-90    "
+                            />
+                            <input
+                                type="text"
+                                className="pl-10 rounded-lg h-10 text-xs"
+                                placeholder="Cari Loker"
+                                onChange={(e) => handleSearch(e.target.value)}
+                            />
+                        </div>
                     </div>
                     <div className="pb-8"></div>
                     <div className="w-full block">
                         <DataTable
                             // title="Data Perusahaan"
                             columns={columns}
-                            data={data}
+                            // data={data}
+                            data={filteredData}
                             progressPending={loading}
                             progressComponent={<div>Loading...</div>}
                             pagination

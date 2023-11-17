@@ -30,6 +30,16 @@
     }
 }
 
+@keyframes float-md {
+    0%,
+    100% {
+        transform: translateY(0) scale(1.2);
+    }
+    50% {
+        transform: translateY(0) scale(1.1);
+    }
+}
+
 .animate-float {
     animation: float 3s ease-in-out infinite;
 }
@@ -39,6 +49,10 @@
 
 .animate-float-m {
     animation: float-m 3s ease-in-out infinite;
+}
+
+.animate-float-md {
+    animation: float-md 3s ease-in-out infinite;
 }
 
 .active {

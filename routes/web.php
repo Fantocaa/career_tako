@@ -149,6 +149,11 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'],
         // })->middleware(['auth', 'verified'])->name('dashboard');
     })->name('perusahaan_dashboard');
 
+    Route::get('/dashboard/history', function () {
+        return Inertia::render('TableHistory');
+        // })->middleware(['auth', 'verified'])->name('dashboard');
+    })->name('history');
+
     Route::get('/table', function () {
         return Inertia::render('TableDashboard');
     });

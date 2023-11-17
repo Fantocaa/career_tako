@@ -11,8 +11,8 @@
 
 <body class="bg-white text-DarkTako w-full min-h-screen flex items-start font-inter">
 
-    <div class="relative w-[75%] h-full flex flex-col">
-        <img src="/images/login.jpg" alt="" srcset="" class="object-left object-cover min-h-screen">
+    <div class="relative w-[75%] h-screen flex flex-col">
+        <img src="/images/login.png" alt="" srcset="" class="object-left object-cover min-h-screen">
     </div>
     <div class="w-1/2 p-10 min-h-screen flex flex-col justify-around">
         <div class="flex justify-center text-2xl"><a href="{{ route('login') }}">
@@ -23,7 +23,7 @@
         <div class="w-full flex flex-col">
             <div class="flex flex-col mb-5">
                 <h3 class="text-xl font-semibold mb-2">Login</h3>
-                <p class="text-sm mb-2">Welcome Back!, Please enter your details.</p>
+                <p class="text-sm mb-2">Selamat Datang!, Harap masukkan data anda</p>
             </div>
 
             <form action="{{ route('login_proses') }}" method="POST">
@@ -49,7 +49,8 @@
                 </div>
 
                 <div class="w-full flex pt-4 flex-col">
-                    <button class="py-3 my-2 bg-DarkTako text-white rounded-xl">Login</button>
+                    <button
+                        class="py-3 my-2 bg-DarkTako text-white rounded-xl hover:bg-opacity-90 transition-opacity">Login</button>
                 </div>
             </form>
             {{-- <div class="w-full flex pt-4 flex-col">
@@ -66,10 +67,14 @@
 
 
         <div class="w-full flex items-center justify-center">
-            <p class="text-sm font-normal">Enjoy!
-                {{-- <span
+            <a href="/">
+                <p class="text-sm font-normal">Kembali ke <span class="underline text-BlueTako font-semibold">Halaman
+                        Utama</span>
+                    {{-- <span
                     class="font-semibold underline underline-offset-2 cursor-pointer text-BlueTako">Sign Up</span> --}}
-            </p>
+                </p>
+            </a>
+
         </div>
     </div>
 

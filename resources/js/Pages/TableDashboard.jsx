@@ -161,12 +161,19 @@ const TableDashboard = () => {
                                 + Tambah
                             </button>
                         </a>
-                        <input
-                            type="text"
-                            className="px-8 rounded-lg h-10 text-xs "
-                            placeholder="Cari aku disini"
-                            onChange={(e) => handleSearch(e.target.value)}
-                        />
+                        <div className="relative">
+                            <img
+                                src="/images/logo/search.svg"
+                                alt="search"
+                                className="absolute left-2 bottom-2 scale-90    "
+                            />
+                            <input
+                                type="text"
+                                className="pl-10 rounded-lg h-10 text-xs"
+                                placeholder="Cari Loker"
+                                onChange={(e) => handleSearch(e.target.value)}
+                            />
+                        </div>
                     </div>
                     <div className="pb-8"></div>
 

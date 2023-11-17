@@ -6,15 +6,27 @@ const FaqCTA = () => {
         <section className="bg-BlueTako font-inter text-white">
             <div className="relative">
                 <div className="container mx-auto px-4 md:px-8 py-32 text-center relative z-10">
-                    <h1 className="font-bold text-4xl pb-4">
+                    <h1
+                        className="font-bold text-4xl pb-4"
+                        data-aos="zoom-in-up"
+                        data-aos-duration="800"
+                    >
                         Masih punya pertanyaan?
                     </h1>
-                    <p className="pb-4">
+                    <p
+                        className="pb-4"
+                        data-aos="zoom-in-up"
+                        data-aos-duration="800"
+                    >
                         Kamu masih bingung atau punya pertanyaan lebih lanjut,
                         kami siap membantu kamu!
                     </p>
                     <Link href="/faq">
-                        <button className="font-bold bg-YellowTako text-DarkTako hover:bg-YellowTako hover:bg-opacity-80 transition-all p-4 rounded-lg cursor-pointer z-10">
+                        <button
+                            className="font-bold bg-YellowTako text-DarkTako hover:bg-YellowTako hover:bg-opacity-80 transition-all p-4 rounded-lg cursor-pointer z-10"
+                            data-aos="zoom-in-up"
+                            data-aos-duration="800"
+                        >
                             Lihat FAQ
                         </button>
                     </Link>

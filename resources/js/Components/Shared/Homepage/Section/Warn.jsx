@@ -46,7 +46,7 @@ const Warn = () => {
                     data-aos="fade-up"
                     data-aos-duration="1000"
                 >
-                    <div className="bg-white rounded-2xl text-DarkTako p-8 md:flex md:flex-wrap md:gap-4 md:justify-between md:absolute shadow-md items-center -translate-y-4 lg:-translate-y-24">
+                    <div className="bg-white rounded-2xl text-DarkTako p-8 md:flex md:flex-wrap md:gap-4 md:justify-between md:absolute shadow-md items-center -translate-y-4 lg:-translate-y-20">
                         <div className="flex flex-col items-center justify-center text-center md:w-[48%] lg:w-[20%]">
                             <img
                                 src="/images/icon/1.svg"
