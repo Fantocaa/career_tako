@@ -6,12 +6,6 @@ const PerusahaanCard = ({ perusahaan }) => {
     const [formData, setFormData] = useState([]);
     const [formDataLoker, setFormDataLoker] = useState([]);
 
-    function formatDate(dateString) {
-        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-        const date = new Date(dateString);
-        return date.toLocaleDateString("id-ID", options);
-    }
-
     useEffect(() => {
         // Panggil fungsi API di sini saat komponen pertama kali di-mount
         const fetchData = async () => {

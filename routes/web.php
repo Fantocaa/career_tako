@@ -121,6 +121,8 @@ Route::get('/api_program_perusahaan/{id}', [MdLokerController::class, 'api_progr
 
 Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_program_id']);
 
+Route::get('/api/perusahaan/', [MdLokerController::class, 'api_perusahaan']);
+
 // Route::get('/api_form', [MdLokerController::class, 'api_form']);
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'], function () {
@@ -170,8 +172,6 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'],
     Route::get('/perusahaan_db', [PerusahaanController::class, 'perusahaan'])->name('perusahaan_db');
 
     Route::get('/fetch_perusahaan', [PerusahaanController::class, 'fetchPerusahaan'])->name('fetch_perusahaan');
-
-
 
     // Route::get('/image_link', [PerusahaanController::class, 'image_link'])->name('image_link');
 

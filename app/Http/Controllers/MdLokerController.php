@@ -608,6 +608,10 @@ class MdLokerController extends Controller
         return response()->json(['errors' => $request->validator->errors()]);
     }
 
+    public function api_perusahaan()
+    {
+    }
+
     public function update(Updatemd_lokerRequest $request, md_loker $md_loker)
     {
         //

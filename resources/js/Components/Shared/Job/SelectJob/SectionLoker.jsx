@@ -102,7 +102,7 @@ const SectionLoker = ({ formDataLoker }) => {
         } else {
             // console.log(originalData);
             // const filteredData = formDataFromProps.filter((item) => {
-            const filteredData = formData.filter((item) => {
+            const filteredData = formDataLoker.filter((item) => {
                 return item.pekerjaan
                     .toLowerCase()
                     .includes(term.toLowerCase());
@@ -309,8 +309,8 @@ const SectionLoker = ({ formDataLoker }) => {
                     >
                         <SelectJobPerusahaan
                             active={menu1Active}
-                            formData={formDataLoker}
-                            // formData={formData}
+                            // formData={formDataLoker}
+                            formData={formData}
                             // values={values}
                         />
                     </div>
@@ -319,8 +319,8 @@ const SectionLoker = ({ formDataLoker }) => {
                     >
                         <SelectJob2
                             active={menu2Active}
-                            formData={formDataLoker}
-                            // formData={formData}
+                            // formData={formDataLoker}
+                            formData={formData}
                             // values={values}
                         />
                     </div>
