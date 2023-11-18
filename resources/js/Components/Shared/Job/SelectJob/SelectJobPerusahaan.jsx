@@ -55,7 +55,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
             <>
                 {formDataProp.map((item) => (
                     <div
-                        className="bg-white p-8 rounded-xl h-full flex flex-col justify-between"
+                        className="bg-white p-8 rounded-xl h-full flex flex-col justify-between w-full  shadow-md"
                         key={item.id}
                     >
                         <h1 className="font-bold">{item.pekerjaan}</h1>

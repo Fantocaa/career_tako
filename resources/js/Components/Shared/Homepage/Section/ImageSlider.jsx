@@ -36,9 +36,8 @@ const ImageSlider = () => {
 
     return (
         <>
-            <div className=" relative flex items-center font-inter ">
+            <div className=" relative flex items-center font-inter h-full">
                 {/* <Link href="/job"> */}
-
                 <Search />
                 <Carousel
                     autoPlay

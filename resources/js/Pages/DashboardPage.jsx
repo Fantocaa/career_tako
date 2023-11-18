@@ -14,15 +14,32 @@ const DashboardPage = () => {
                     <h1 className="pb-8 text-base">
                         Apa yang ingin kamu lakukan?
                     </h1>
-                    <div className="grid grid-cols-2 gap-4 text-center">
+                    <div className="grid grid-cols-2 gap-4 text-center px-12">
                         <Link href={route("admin.lowongan_pekerjaan")}>
-                            <div className="bg-white px-24 py-16 rounded-2xl">
-                                Tambah Lowongan Pekerjaan
+                            <div className="bg-white rounded-2xl relative w-64 ">
+                                <img
+                                    src="/images/backend/1.jpg"
+                                    alt=""
+                                    className="rounded-2xl"
+                                />
+
+                                <div className="absolute inset-0 bg-BlueTako opacity-50 rounded-2xl" />
+
+                                <h1 className="absolute inset-28">
+                                    Tambah Lowongan Pekerjaan
+                                </h1>
                             </div>
                         </Link>
                         <Link href={route("admin.perusahaan_dashboard")}>
-                            <div className="bg-white px-24 py-16 rounded-2xl">
-                                Tambah Daftar Perusahaan
+                            <div className="bg-white rounded-2xl">
+                                <img
+                                    src="/images/backend/2.jpg"
+                                    alt=""
+                                    className="rounded-2xl"
+                                />
+                                <h1 className="absolute inset-28">
+                                    Tambah Daftar Perusahaan
+                                </h1>
                             </div>
                         </Link>
                         <Link href={route("admin.history")}>

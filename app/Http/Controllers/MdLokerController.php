@@ -482,6 +482,8 @@ class MdLokerController extends Controller
             echo "File tidak ditemukan dalam permintaan.";
         }
 
+        // return response()->json([$request]);
+
         return redirect()->route('finish');
     }
     /**
@@ -538,8 +540,6 @@ class MdLokerController extends Controller
         // Tanggapan JSON jika validasi gagal
         return response()->json(['errors' => $request->validator->errors()]);
     }
-
-
 
 
     public function update_loker(Updatemd_lokerRequest $request, md_loker $md_loker)

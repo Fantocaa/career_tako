@@ -34,8 +34,9 @@ const Contact = () => {
                                     className=""
                                 />
                             </div>
-                            <div className="rounded-lg lg:flex gap-8">
-                                <div className="flex items-center gap-2 pb-2 lg:pb-0 lg:pt-2 border-b border-opacity-10 lg:border-none border-DarkTako">
+
+                            <div className="rounded-lg lg:flex gap-2 lg:gap-8 py-4 lg:py-4 bg-BlueTako bg-opacity-10 flex flex-col lg:flex-row items-start justify-center pl-4">
+                                <div className="flex items-center lg:pb-0   gap-2">
                                     <img
                                         src="images/location2.svg"
                                         alt=""
@@ -43,7 +44,7 @@ const Contact = () => {
                                     />
                                     <h1>Surabaya, Jawa Timur</h1>
                                 </div>
-                                <div className="flex items-center gap-2 pt-2">
+                                <div className="flex items-center gap-2">
                                     <img
                                         src="images/mail.svg"
                                         alt=""

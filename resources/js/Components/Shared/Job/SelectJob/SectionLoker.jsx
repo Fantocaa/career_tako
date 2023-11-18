@@ -338,7 +338,7 @@ const SectionLoker = ({ formDataLoker }) => {
                 );
             })} */}
 
-            <div className="w-full mx-auto flex justify-center pb-8 pt-16 items-center">
+            {/* <div className="w-full mx-auto flex justify-center pb-8 pt-16 items-center">
                 <ReactPaginate
                     previousLabel={"<"}
                     nextLabel={">"}
@@ -351,14 +351,14 @@ const SectionLoker = ({ formDataLoker }) => {
                     containerClassName="join flex bg-BgTako items-center text-BlueTako"
                     pageClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     pageLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
-                    previousLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
+                    previousLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0" 
                     nextLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     breakClassName="join-item"
                     breakLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     activeClassName="bg-BlueTako bg-opacity-10 "
                     initialPage={0}
                 />
-            </div>
+            </div> */}
 
             <Pagination />
         </section>

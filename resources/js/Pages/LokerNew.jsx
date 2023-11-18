@@ -122,7 +122,7 @@ const LokerNew = () => {
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                 <NavElse />
-                <div className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako">
+                <div className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako w-full">
                     <div className="text-center container mx-auto">
                         <div className="w-full">
                             <h1 className="font-semibold text-2xl lg:text-4xl">
@@ -136,8 +136,6 @@ const LokerNew = () => {
                             </p>
                         </div>
                         <div className="w-full pt-8 ">
-                            {/* <div className=" w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"> */}
-                            {/* <PerusahaanCard /> */}
                             {formData.map((chunk, index) => (
                                 <Slider {...settings} key={index}>
                                     {chunk.map((item) => (
@@ -148,20 +146,6 @@ const LokerNew = () => {
                                     ))}
                                 </Slider>
                             ))}
-
-                            {/* <Slider {...settings}>
-                                {formData.map((chunk, index) => (
-                                    <div key={index}>
-                                        {chunk.map((item) => (
-                                            <PerusahaanCard
-                                                key={item.id}
-                                                perusahaan={item}
-                                            />
-                                        ))}
-                                    </div>
-                                ))}
-                            </Slider> */}
-                            {/* </div> */}
                         </div>
                     </div>
                 </div>

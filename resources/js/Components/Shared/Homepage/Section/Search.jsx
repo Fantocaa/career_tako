@@ -70,24 +70,24 @@ const Search = () => {
 
     return (
         // <form onSubmit={}>
-        <div className="absolute z-10 container md:pl-8 lg:pl-16 max-w-full md:w-[70%] lg:w-1/2">
-            <div className="px-[10px] md:px-0">
+        <div className="absolute z-10 container md:pl-8 lg:pl-16 max-w-full md:w-[70%] lg:w-1/2 -translate-y-12 md:-translate-y-0">
+            <div className="px-4 md:px-0">
                 <p
-                    className="text-white pb-2 md:pb-4 lg:text-2xl"
+                    className="text-white pb-2 md:pb-4 text-xl lg:text-2xl"
                     data-aos="fade-up"
                     data-aos-duration="1000"
                 >
                     Selamat Datang di Karir Tako
                 </p>
                 <h1
-                    className="text-white text-2xl lg:text-6xl font-bold pb-2 md:pb-4"
+                    className="text-white text-4xl lg:text-6xl font-bold pb-2 md:pb-4"
                     data-aos="fade-up"
                     data-aos-duration="1000"
                 >
                     Temukan Karier Impianmu dengan Lebih Mudah
                 </h1>
                 <p
-                    className="text-white"
+                    className="text-white text-xl"
                     data-aos="fade-up"
                     data-aos-duration="1000"
                 >
