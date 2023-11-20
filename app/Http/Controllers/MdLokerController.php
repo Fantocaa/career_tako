@@ -608,8 +608,52 @@ class MdLokerController extends Controller
         return response()->json(['errors' => $request->validator->errors()]);
     }
 
-    public function api_perusahaan()
+    public function api_perusahaan(Request $request, $req)
     {
+        $data = [];
+        $query = DB::table('md_lokers')
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi, md_lokers.isi_konten, perusahaans.perusahaan')
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            ->whereNull('md_lokers.deleted_at');
+
+        // Check if the search parameter exists in the request
+        if ($request->has('search') && $request->input('selection') == 'All') {
+            // dd(1);
+            $searchTerm = $request->input('search');
+            // dd($searchTerm);
+            $query->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
+        } else if ($request->input('search') == null && $request->input('selection') != 'All') {
+            // dd(2);
+            $selection = $request->input('selection');
+            $query->where('md_lokers.jenis_pekerjaan', '=', '' . $selection);
+            // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
+        } else if ($request->input('search') && $request->input('selection') != 'All') {
+            // dd(3);
+            $searchTerm = $request->input('search');
+            $selection = $request->input('selection');
+            if (isset($searchTerm)) {
+                if (strlen($searchTerm) == 1) {
+                    $searchTerm = '';
+                } else {
+                    $query->where('md_lokers.jenis_pekerjaan', '=', $selection)->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
+                    // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
+                }
+            }
+        }
+        // dd($query->toSql());
+        $data['pagi'] = $query;
+
+        $data['beritaTerbaru'] = DB::table('md_lokers')->whereNull('deleted_at')->latest()->limit(3)->get();
+
+        if ($req == 0) {
+            $currentPage = 1;
+        } else {
+            $currentPage = $req;
+        }
+
+        $paginate = $data['pagi']->orderBy('md_lokers.created_at', 'desc')->paginate(3, ['*'], 'page', $currentPage);
+
+        return response()->json($paginate);
     }
 
     public function update(Updatemd_lokerRequest $request, md_loker $md_loker)

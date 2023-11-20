@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick-theme.css";
 // import "../Components/css/style.css";
 import Pagination from "@/Components/Shared/Job/SelectJob/Pagination/Pagination";
 import { Link } from "@inertiajs/react";
+import "../Components/css/style.css";
 
 const LokerNew = () => {
     const { state } = usePage();
@@ -117,37 +118,32 @@ const LokerNew = () => {
                             </p>
                         </div>
                         <div className="w-full pt-8">
-                            <Slider {...settings}>
+                            <Slider {...settings} className="slick-slider">
                                 {formData.map((item) => (
-                                    <div className="">
-                                        {/* <PerusahaanCard /> */}
-
-                                        <Link
-                                            href={`/loker/perusahaan/${item.id}`}
+                                    <Link href={`/loker/perusahaan/${item.id}`}>
+                                        <div
+                                            className="bg-white p-6 rounded-xl text-DarkTako cursor-pointer h-full flex flex-col"
+                                            key={item.id}
                                         >
-                                            <div
-                                                className="bg-white p-6 rounded-xl text-DarkTako cursor-pointer h-full flex flex-col"
-                                                key={item.id}
-                                            >
-                                                <img
-                                                    src={`/storage/images/${item.image}`}
-                                                    alt="logo perusahaan"
-                                                    className="mx-auto w-32 h-32 object-contain"
-                                                />
-                                                <div className="flex flex-col h-24 justify-between">
-                                                    <h3 className="font-semibold pt-4 overflow-hidden">
-                                                        {item.perusahaan}
-                                                    </h3>
-                                                    <p className="text-DarkTako text-opacity-75 bottom-0">
-                                                        {hitungJumlahLowongan(
+                                            <img
+                                                src={`/storage/images/${item.image}`}
+                                                alt="logo perusahaan"
+                                                className="mx-auto w-32 h-32 object-contain"
+                                            />
+                                            <div className="flex flex-col h-24 justify-between">
+                                                <h3 className="font-semibold pt-4 overflow-hidden">
+                                                    {item.perusahaan}
+                                                </h3>
+                                                <p className="text-DarkTako text-opacity-75 bottom-0">
+                                                    {/* {hitungJumlahLowongan(
                                                             item.id
-                                                        )}{" "}
-                                                        Lowongan Tersedia
-                                                    </p>
-                                                </div>
+                                                        )}{" "} */}
+                                                    {item.jumlah_data_sama}{" "}
+                                                    Lowongan Tersedia
+                                                </p>
                                             </div>
-                                        </Link>
-                                    </div>
+                                        </div>
+                                    </Link>
                                 ))}
                             </Slider>
                         </div>
@@ -157,12 +153,12 @@ const LokerNew = () => {
                     // coinsData={currentPosts}
                     formDataLoker={currentPostsLoker}
                 />
-                <Pagination
+                {/* <Pagination
                     totalPosts={formDataLoker.length}
                     postsPerPageLoker={postsPerPageLoker}
                     setCurrentPageLoker={setCurrentPageLoker}
                     currentPageLoker={currentPageLoker}
-                />
+                /> */}
                 <Footer />
             </section>
         </Layout>

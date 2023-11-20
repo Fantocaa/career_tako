@@ -7,20 +7,22 @@ import ReactPaginate from "react-paginate";
 import CryptoCard from "./CryptoCard";
 import Pagination from "./Pagination/Pagination";
 
-const SectionLoker = ({ formDataLoker }) => {
+const SectionLoker = ({}) => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
     const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk nilai pencarian
+
+    const [currentPage, setCurrentPage] = useState(1);
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
 
     const [pageCount, setPageCount] = useState(0);
 
-    const [originalData, setOriginalData] = useState([]); // Menyimpan data asli
+    const [globalPage, setglobalPage] = useState(0);
 
     const [menu1Active, setMenu1Active] = useState(true);
     const [menu2Active, setMenu2Active] = useState(false);
 
-    const [formDataFromProps, setFormDataFromProps] = useState([]);
+    // const [filteredData, setFilteredData] = useState([]);
 
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -46,85 +48,82 @@ const SectionLoker = ({ formDataLoker }) => {
         }
     };
 
-    const fetchData = async () => {
+    const fetchData = async (page) => {
         try {
-            const response = await Axios.get("/form");
-            const count = response.data.length;
+            const response = await Axios.get(`/api/perusahaan/${page}`, {
+                params: { search: searchTerm, selection: selectedOption },
+            });
+            const count = response.data.total;
             setJobCount(count);
-            setFormData(response.data);
-            // setFormDataFromProps(formDataLoker); // Setel state baru
-            // const total = response.headers.get("x-total-count");
-            // setPageCount(Math.ceil(total / 2)); // Gunakan Math.ceil untuk membulatkan ke atas
-            // console.log(formDataLoker);
+            setFormData(response.data.data);
+            setPageCount(response.data.last_page);
+            setCurrentPage(page);
         } catch (error) {
             console.error("Error sending data:", error);
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     fetchData(currentPage);
+    // }, [currentPage]);
 
     const handleSelectChange = async (event) => {
         const selectedValue = event.target.value;
         setSelectedOption(selectedValue);
-
-        // Kirim permintaan Ajax berdasarkan nilai yang dipilih
-        try {
-            const response = await Axios.get(`/api_program/${selectedValue}`);
-            setFormData(response.data);
-            // setFormDataFromProps(response.formDataLoker);
-
-            console.log(formDataLoker);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+        fetchData(globalPage);
     };
 
-    const handleSearch = (term) => {
-        if (term === "") {
-            setFormData(originalData);
-        } else {
-            const filteredData = originalData.filter((item) => {
-                return item.pekerjaan
-                    .toLowerCase()
-                    .includes(term.toLowerCase());
-            });
-            setFormData(filteredData);
-        }
-    };
+    // const handleSearch = (term) => {
+    //     setSearchTerm(term);
+    //     if (term === "") {
+    //         setFilteredData([]);
+    //         setCurrentPage(globalPage); // Update currentPage to globalPage
+    //         fetchData(globalPage); // Fetch data for the globalPage
+    //     } else {
+    //         setCurrentPage(1); // Reset currentPage to 1 when searching
+    //         fetchData(1); // Fetch data for the first page
+    //     }
+    // };
 
     const handleSearchChange = (term) => {
-        setSearchTerm(term); // Mengatur kembali nilai pencarian agar input dikosongkan
-        if (term == "") {
-            fetchData();
-            // setFormData(formDataFromProps); // Gunakan state baru
-        } else {
-            // console.log(originalData);
-            // const filteredData = formDataFromProps.filter((item) => {
-            const filteredData = formDataLoker.filter((item) => {
-                return item.pekerjaan
-                    .toLowerCase()
-                    .includes(term.toLowerCase());
-            });
-            setFormData(filteredData);
-        }
+        setSearchTerm(term);
+        // if (term === "") {
+        //     setFilteredData([]);
+        //     setCurrentPage(globalPage);
+        //     fetchData(currentPage);
+        // } else {
+        //     fetchData(1);
+        // }
     };
 
-    const fetchComments = async (currentPage) => {
-        const res = await fetch(`/form ${currentPage}`);
-        const data = await res.json();
-        return data;
+    const handleReset = () => {
+        // setglobalPage(1);
+        setSearchTerm("");
+        // if (searchTerm === "") {
+        //     setFilteredData([]);
+        //     setCurrentPage(globalPage);
+        //     fetchData(globalPage);
+        // } else {
+        // Remove the else block and always fetch data for the current page
+        // setCurrentPage(1);
+        fetchData(globalPage);
+        // }
     };
+
+    useEffect(() => {
+        console.log("ini useeffect" + globalPage);
+        // setglobalPage(1);
+        fetchData(globalPage); // Fetch data for the first page when searchTerm changes
+    }, [searchTerm, selectedOption]);
 
     const handlePageClick = async (data) => {
         console.log(data.selected);
         let currentPage = data.selected + 1;
-        const commentFromServer = await fetchComments(currentPage);
-        setFormData(commentFromServer);
+        fetchData(currentPage);
+        setglobalPage(currentPage);
+        // const commentFromServer = await fetchComments(currentPage);
+        // setFormData(commentFromServer);
     };
-
-    // console.log(setFormDataFromProps);
 
     return (
         <section className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container">
@@ -179,6 +178,14 @@ const SectionLoker = ({ formDataLoker }) => {
                                 }
                                 id="search"
                             />
+                            <button
+                                className={`absolute inset-y-0 right-4 ${
+                                    searchTerm ? "" : "hidden"
+                                }`}
+                                onClick={() => handleReset()}
+                            >
+                                X
+                            </button>
                         </div>
                         <select
                             className="rounded-2xl border-DarkTako border-opacity-25 w-full lg:w-64"
@@ -197,6 +204,7 @@ const SectionLoker = ({ formDataLoker }) => {
                         <div className="w-full">
                             {/* <button
                                 className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none w-full lg:w-24 normal-case"
+                                // onClick={handleSearch(searchTerm)}
                                 onClick={() => handleSearch(searchTerm)}
                             >
                                 Cari
@@ -296,7 +304,7 @@ const SectionLoker = ({ formDataLoker }) => {
                 </h1>
             </div> */}
 
-            {formDataLoker.length === 0 ? (
+            {formData.length === 0 ? (
                 <div className="flex justify-center w-full pt-16">
                     <p className="text-DarkTako">
                         Maaf, tidak ada lowongan yang tersedia saat ini.
@@ -338,27 +346,27 @@ const SectionLoker = ({ formDataLoker }) => {
                 );
             })} */}
 
-            {/* <div className="w-full mx-auto flex justify-center pb-8 pt-16 items-center">
+            <div className="w-full mx-auto flex justify-center pb-8 pt-16 items-center">
                 <ReactPaginate
                     previousLabel={"<"}
                     nextLabel={">"}
                     breakLabel={"..."}
-                    // pageCount={pageCount}
-                    pageCount={12}
+                    pageCount={pageCount}
+                    // pageCount={12}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={4}
                     onPageChange={handlePageClick}
                     containerClassName="join flex bg-BgTako items-center text-BlueTako"
                     pageClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     pageLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
-                    previousLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0" 
+                    previousLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     nextLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     breakClassName="join-item"
                     breakLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     activeClassName="bg-BlueTako bg-opacity-10 "
                     initialPage={0}
                 />
-            </div> */}
+            </div>
 
             <Pagination />
         </section>

@@ -75,7 +75,7 @@ const PerusahaanInfo = () => {
                             >
                                 Cari Lowongan
                             </button>
-                            <a href={values.link}>
+                            <a href={values.link} target="_blank">
                                 <button className="px-8 py-3 bg-BlueTako bg-opacity-5 text-BlueTako rounded-xl btn normal-case border-none hover:bg-BlueTako hover:bg-opacity-10">
                                     Kunjungi Laman
                                 </button>

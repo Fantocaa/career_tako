@@ -92,7 +92,7 @@
     border-radius: 4px;
 }
 
-.slick-slide div {
+.slick-slider div {
     display: flex;
     justify-content: center;
     gap: 16px;

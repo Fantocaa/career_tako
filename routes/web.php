@@ -121,7 +121,7 @@ Route::get('/api_program_perusahaan/{id}', [MdLokerController::class, 'api_progr
 
 Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_program_id']);
 
-Route::get('/api/perusahaan/', [MdLokerController::class, 'api_perusahaan']);
+Route::get('/api/perusahaan/{id}', [MdLokerController::class, 'api_perusahaan']);
 
 // Route::get('/api_form', [MdLokerController::class, 'api_form']);
 
