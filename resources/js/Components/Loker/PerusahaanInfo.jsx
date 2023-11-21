@@ -84,10 +84,7 @@ const PerusahaanInfo = () => {
                     </div>
                 </div>
             </div>
-            <div className="pt-8 w-full">
-                {/* Mengirim data perusahaan sebagai prop ke komponen SelectJob */}
-                {/* <SelectJob active={true} formDataProp={values} /> */}
-            </div>
+            <div className="pt-8 w-full"></div>
             <SectionLokerView
                 values={values}
                 perusahaanInfoRef={perusahaanInfoRef}

@@ -6,27 +6,57 @@ import PerusahaanCard from "@/Components/Loker/PerusahaanCard";
 import SectionViewPerusahaan from "@/Components/Loker/SectionViewPerusahaan";
 import PerusahaanInfo from "@/Components/Loker/PerusahaanInfo";
 import SectionLokerView from "@/Components/Loker/SectionLokerView";
+import axios from "axios";
 import { usePage } from "@inertiajs/react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Link } from "@inertiajs/react";
+import "../Components/css/style.css";
 
 const LokerDetailPerusahaan = () => {
-    // const { props } = usePage();
-    // const { perusahaan } = props;
-    // const { id } = props;
-    // const perusahaanInfoRef = useRef();
+    const { state } = usePage();
+    const [formData, setFormData] = useState([]);
+    const [formDataLoker, setFormDataLoker] = useState([]); //pake ini
 
-    // console.log(id);
+    useEffect(() => {
+        // Panggil fungsi API di sini saat komponen pertama kali di-mount
+        const fetchData = async () => {
+            try {
+                // Kirim data ke server
+                const response = await axios.get("/json_perusahaan");
+                setFormData(response.data);
+                // const perusahaanChunks = chunkArray(response.data, 5);
+                // setFormData(perusahaanChunks);
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        };
 
-    // const [values, setValues] = useState({
-    //     // password: "meong",
-    //     id: perusahaan.id,
-    //     perusahaan: perusahaan.perusahaan,
-    //     tentang: perusahaan.tentang,
-    //     alamat: perusahaan.alamat,
-    //     link: perusahaan.link,
-    //     image: perusahaan.image,
-    // });
+        const fetchDataLoker = async () => {
+            try {
+                // Kirim data ke server
+                const response_2 = await axios.get("/form");
+                setFormDataLoker(response_2.data);
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        };
+        // console.log(state);
+        fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+        fetchDataLoker(); // Panggil fungsi fetchDataLoker saat komponen di-mount
+    }, [state]);
 
-    // console.log(idValues);
+    const settings = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        initialSlide: 0,
+        // afterChange: (current) => setSliderIndex(current),
+    };
+
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
@@ -44,13 +74,35 @@ const LokerDetailPerusahaan = () => {
                                 Perusahaan Impianmu!
                             </p>
                         </div>
-                        <div className="carousel w-full pt-8">
-                            <div
-                                id="item1"
-                                className="carousel-item w-full grid md:grid-cols-2 lg:grid-cols-4 gap-4"
-                            >
-                                <PerusahaanCard />
-                            </div>
+                        <div className="w-full pt-8">
+                            <Slider {...settings} className="slick-slider">
+                                {formData.map((item) => (
+                                    <Link href={`/loker/perusahaan/${item.id}`}>
+                                        <div
+                                            className="bg-white p-6 rounded-xl text-DarkTako cursor-pointer h-full flex flex-col"
+                                            key={item.id}
+                                        >
+                                            <img
+                                                src={`/storage/images/${item.image}`}
+                                                alt="logo perusahaan"
+                                                className="mx-auto w-32 h-32 object-contain"
+                                            />
+                                            <div className="flex flex-col h-24 justify-between">
+                                                <h3 className="font-semibold pt-4 overflow-hidden">
+                                                    {item.perusahaan}
+                                                </h3>
+                                                <p className="text-DarkTako text-opacity-75 bottom-0">
+                                                    {/* {hitungJumlahLowongan(
+                                                            item.id
+                                                        )}{" "} */}
+                                                    {item.jumlah_data_sama}{" "}
+                                                    Lowongan Tersedia
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </Slider>
                         </div>
                     </div>
                 </div>

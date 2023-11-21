@@ -1,22 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
-// import { Pagination } from "@mui/material";
-import Axios from "axios";
+import { Pagination } from "@mui/material";
 import SelectJob from "../Shared/Job/SelectJob";
 import SelectJob2 from "../Shared/Job/SelectJob2";
+import Axios from "axios";
 import { Link } from "@inertiajs/react";
-import ReactPaginate from "react-paginate";
 
-const SectionLokerView = ({ values, perusahaanInfoRef }) => {
+const SectionLokerViewCopy = ({ values, perusahaanInfoRef }) => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
     const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk nilai pencarian
-    const [perusahaan, setPerusahaan] = useState(values.id);
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
 
-    // const [originalData, setOriginalData] = useState([]); // Menyimpan data asli
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageCount, setPageCount] = useState(0);
-    const [globalPage, setglobalPage] = useState(0);
+    const [originalData, setOriginalData] = useState([]); // Menyimpan data asli
 
     const [menu1Active, setMenu1Active] = useState(true);
     const [menu2Active, setMenu2Active] = useState(false);
@@ -45,117 +40,66 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
         }
     };
 
-    const fetchData = async (page) => {
+    const fetchData = async () => {
         try {
-            const response = await Axios.get(`/api/perusahaan_select/${page}`, {
-                params: {
-                    search: searchTerm,
-                    selection: selectedOption,
-                    perusahaan: perusahaan,
-                },
-            });
+            const response = await Axios.get(
+                `/api_program_perusahaan/${values.id}`
+            );
+            const count = response.data.length;
 
-            const count = response.data.total;
             setJobCount(count);
-            setFormData(response.data.data);
-            setPageCount(response.data.last_page);
-            setCurrentPage(page);
+            setFormData(response.data);
         } catch (error) {
             console.error("Error sending data:", error);
         }
     };
 
-    // const fetchData = async () => {
-    //     try {
-    //         const response = await Axios.get(
-    //             `/api_program_perusahaan/${values.id}`
-    //         );
-    //         const count = response.data.length;
-
-    //         setJobCount(count);
-    //         setFormData(response.data);
-    //     } catch (error) {
-    //         console.error("Error sending data:", error);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
-
-    // const handleSelectChange = async (event) => {
-    //     const selectedValue = event.target.value;
-    //     setSelectedOption(selectedValue);
-
-    //     // Kirim permintaan Ajax berdasarkan nilai yang dipilih
-    //     try {
-    //         const response = await Axios.get(
-    //             `/api_program_id/${selectedValue}/${values.id},`
-    //         );
-    //         setFormData(response.data);
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //     }
-    // };
-
-    // const handleSearch = (term) => {
-    //     if (term == "") {
-    //         fetchData();
-    //     } else {
-    //         console.log(originalData);
-    //         const filteredData = formData.filter((item) => {
-    //             return item.pekerjaan
-    //                 .toLowerCase()
-    //                 .includes(term.toLowerCase());
-    //         });
-    //         setFormData(filteredData);
-    //     }
-    // };
-
-    // const handleSearchChange = (term) => {
-    //     setSearchTerm(term); // Mengatur kembali nilai pencarian agar input dikosongkan
-    //     if (term == "") {
-    //         fetchData();
-    //     } else {
-    //         console.log(originalData);
-    //         const filteredData = formData.filter((item) => {
-    //             return item.pekerjaan
-    //                 .toLowerCase()
-    //                 .includes(term.toLowerCase());
-    //         });
-    //         setFormData(filteredData);
-    //     }
-    // };
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handleSelectChange = async (event) => {
         const selectedValue = event.target.value;
         setSelectedOption(selectedValue);
-        fetchData(globalPage);
+
+        // Kirim permintaan Ajax berdasarkan nilai yang dipilih
+        try {
+            const response = await Axios.get(
+                `/api_program_id/${selectedValue}/${values.id},`
+            );
+            setFormData(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    const handleSearch = (term) => {
+        if (term == "") {
+            fetchData();
+        } else {
+            console.log(originalData);
+            const filteredData = formData.filter((item) => {
+                return item.pekerjaan
+                    .toLowerCase()
+                    .includes(term.toLowerCase());
+            });
+            setFormData(filteredData);
+        }
     };
 
     const handleSearchChange = (term) => {
-        setSearchTerm(term);
-    };
-
-    const handleReset = () => {
-        setSearchTerm("");
-        fetchData(globalPage);
-        // }
-    };
-
-    useEffect(() => {
-        // console.log("ini useeffect" + globalPage);
-        // setglobalPage(1);
-        fetchData(globalPage); // Fetch data for the first page when searchTerm changes
-    }, [searchTerm, selectedOption]);
-
-    const handlePageClick = async (data) => {
-        // console.log(data.selected);
-        let currentPage = data.selected + 1;
-        fetchData(currentPage);
-        setglobalPage(currentPage);
-        // const commentFromServer = await fetchComments(currentPage);
-        // setFormData(commentFromServer);
+        setSearchTerm(term); // Mengatur kembali nilai pencarian agar input dikosongkan
+        if (term == "") {
+            fetchData();
+        } else {
+            console.log(originalData);
+            const filteredData = formData.filter((item) => {
+                return item.pekerjaan
+                    .toLowerCase()
+                    .includes(term.toLowerCase());
+            });
+            setFormData(filteredData);
+        }
     };
 
     return (
@@ -206,7 +150,7 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
                             <input
                                 type="text"
                                 placeholder="Cari Lowongan yang anda inginkan"
-                                className="rounded-2xl border-DarkTako border-opacity-25 w-full h-12 block pl-12"
+                                className="rounded-xl border-DarkTako border-opacity-25 w-full h-12 block pl-12"
                                 value={searchTerm}
                                 // onChange={(e) => setSearchTerm(e.target.value)}
                                 onChange={(e) =>
@@ -232,12 +176,12 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
                         </select>
 
                         <div className="w-full">
-                            {/* <Link href="/loker">
+                            <Link href="/loker">
                                 <button className="btn bg-BlueTako hover:bg-BlueTako hover:bg-opacity-90 text-white border-none normal-case">
                                     <img src="/images/reset.svg" alt="" />
                                     Reset
                                 </button>
-                            </Link> */}
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -295,6 +239,8 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
                         onClick={handleMenu2Click}
                         disabled={menu2Active}
                     >
+                        {/* <img src="/images/logo/menu2.svg" alt="" className="" /> */}
+
                         <svg
                             width="24"
                             height="24"
@@ -324,6 +270,12 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
                 </div>
             </div>
 
+            {/* <div className="pt-8">
+                <h1>
+                    Menampilkan (190) Pekerjaan yang tersedia dari "PT. TAKO
+                    ANUGERAH KOPORASI"
+                </h1>
+            </div> */}
             {formData.length === 0 ? (
                 <div className="flex justify-center w-full pt-16">
                     <p className="text-DarkTako">
@@ -352,29 +304,14 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
                     </div>
                 </>
             )}
-            <div className="w-full mx-auto flex justify-center pb-8 pt-16 items-center">
-                <ReactPaginate
-                    previousLabel={"<"}
-                    nextLabel={">"}
-                    breakLabel={"..."}
-                    pageCount={pageCount}
-                    // pageCount={12}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={4}
-                    onPageChange={handlePageClick}
-                    containerClassName="join flex bg-BgTako items-center text-BlueTako"
-                    pageClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
-                    pageLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
-                    previousLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
-                    nextLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
-                    breakClassName="join-item"
-                    breakLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
-                    activeClassName="bg-BlueTako bg-opacity-10 "
-                    initialPage={0}
-                />
-            </div>
+
+            <Pagination
+                count={18}
+                shape="rounded"
+                className="flex w-full justify-center py-16"
+            />
         </section>
     );
 };
 
-export default SectionLokerView;
+export default SectionLokerViewCopy;

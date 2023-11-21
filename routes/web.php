@@ -110,7 +110,9 @@ Route::post('/forgot_proses', [LoginController::class, 'forgot_proses'])->name('
 
 // API
 
-Route::get('/json_perusahaan', [PerusahaanController::class, 'index'])->name('json_perusahaan');
+Route::get('/json_perusahaan', [PerusahaanController::class, 'index'])->name('json_perusahaan_1');
+
+Route::get('/json_perusahaan_table', [PerusahaanController::class, 'json_perusahaan_table'])->name('json_perusahaan_table');
 
 Route::post('/api/search', [MdLokerController::class, 'loker'])->name('search');;
 
@@ -123,7 +125,9 @@ Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_progra
 
 Route::get('/api/perusahaan/{id}', [MdLokerController::class, 'api_perusahaan']);
 
-// Route::get('/api_form', [MdLokerController::class, 'api_form']);
+Route::get('/api/perusahaan_select/{id}', [MdLokerController::class, 'api_perusahaan_selected']);
+Route::get('/api_form', [MdLokerController::class, 'api_form']);
+Route::get('/time_expired', [MdLokerController::class, 'time_expired']);
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'], function () {
     Route::get('/dashboard', function () {

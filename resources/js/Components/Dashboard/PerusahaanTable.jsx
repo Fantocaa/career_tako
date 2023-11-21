@@ -15,7 +15,7 @@ const PerusahaanTable = () => {
     // Gunakan useEffect untuk memuat data melalui AJAX saat komponen dimuat
     useEffect(() => {
         // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
-        fetch("/json_perusahaan") // Ganti dengan rute yang sesuai
+        fetch("/json_perusahaan_table") // Ganti dengan rute yang sesuai
             .then((response) => response.json())
             .then((data) => {
                 setData(data);
@@ -48,8 +48,10 @@ const PerusahaanTable = () => {
         {
             name: "No",
             // selector: "id",
-            selector: (row, index) => index + 1,
+            selector: (row) => row.id,
+            // selector: (row, index) => index + 1,
             sortable: true,
+            sortactive: true,
         },
         // {
         //     name: "Logo Perusahaan",
@@ -57,20 +59,24 @@ const PerusahaanTable = () => {
         // },
         {
             name: "Nama Perusahaan",
-            selector: "perusahaan",
+            // selector: "perusahaan",
+            selector: (row) => row.perusahaan,
             // sortable: true,
         },
         {
             name: "Tentang",
-            selector: "tentang",
+            // selector: "tentang",
+            selector: (row) => row.tentang,
         },
         {
             name: "Alamat Perusahaan",
-            selector: "alamat",
+            // selector: "alamat",
+            selector: (row) => row.alamat,
         },
         {
             name: "Link Perusahaan",
-            selector: "link",
+            // selector: "link",
+            selector: (row) => row.link,
         },
 
         {
@@ -88,7 +94,7 @@ const PerusahaanTable = () => {
                     </a>
 
                     <button
-                        className="btn bg-white border-none hover:bg-transparent transition-all "
+                        className="btn  border-none hover:bg-transparent transition-all "
                         // onClick={() => handleDelete(row.id)}
                         onClick={(e) =>
                             document
@@ -190,6 +196,7 @@ const PerusahaanTable = () => {
                             pagination
                             fixedHeader
                             allowOverflow
+                            highlightOnHover
                             // style={
 
                             // }
@@ -197,9 +204,11 @@ const PerusahaanTable = () => {
                                 rows: {
                                     style: {
                                         maxWidth: "874px",
+                                        margin: "",
                                     },
                                 },
                             }}
+                            noDataComponent={<div>No data available</div>} // Prop kustom untuk menyembunyikan pesan warning
                         />
                     </div>
                 </div>

@@ -2,35 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import Layout from "@/Layouts/Layout";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
-import PerusahaanCard from "@/Components/Loker/PerusahaanCard";
 import SectionLoker from "@/Components/Shared/Job/SelectJob/SectionLoker";
 import axios from "axios";
 import { usePage } from "@inertiajs/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import "../Components/css/style.css";
-import Pagination from "@/Components/Shared/Job/SelectJob/Pagination/Pagination";
 import { Link } from "@inertiajs/react";
 import "../Components/css/style.css";
+import { useMediaQuery } from "react-responsive";
 
 const LokerNew = () => {
     const { state } = usePage();
     const [formData, setFormData] = useState([]);
-
-    // const [currentPage, setCurrentPage] = useState(1);
-    const [postPerPage, setPostPerPage] = useState(2);
-
-    const [formDataLoker, setFormDataLoker] = useState([]); //pake ini
-    const [currentPageLoker, setCurrentPageLoker] = useState(1);
-    const [postsPerPageLoker, setPostsPerPageLoker] = useState(3);
-
-    const lastPostIndexLoker = currentPageLoker * postsPerPageLoker;
-    const firstPostIndexLoker = lastPostIndexLoker - postsPerPageLoker;
-    const currentPostsLoker = formDataLoker.slice(
-        firstPostIndexLoker,
-        lastPostIndexLoker
-    );
 
     useEffect(() => {
         // Panggil fungsi API di sini saat komponen pertama kali di-mount
@@ -46,38 +30,32 @@ const LokerNew = () => {
             }
         };
 
-        const fetchDataLoker = async () => {
-            try {
-                // Kirim data ke server
-                const response_2 = await axios.get("/form");
-                setFormDataLoker(response_2.data);
-            } catch (error) {
-                console.error("Error sending data:", error);
-            }
-        };
-        // console.log(state);
         fetchData(); // Panggil fungsi fetchData saat komponen di-mount
-        fetchDataLoker(); // Panggil fungsi fetchDataLoker saat komponen di-mount
     }, [state]);
 
-    // Fungsi untuk menghitung jumlah total lowongan pekerjaan
-    const hitungJumlahLowongan = (perusahaanId) => {
-        // Filter data dari formDataLoker berdasarkan perusahaanId dan hitung jumlahnya
-        const totalLowongan = formDataLoker.filter(
-            (item) => item.id === perusahaanId
-        ).length;
-
-        return totalLowongan;
+    const settingsMobile = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        initialSlide: 0,
+        // dots: false,
+        arrows: false,
+        // afterChange: (current) => setSliderIndex(current),
     };
 
-    // Menghitung jumlah lowongan untuk setiap perusahaan
-    const perusahaanDenganJumlahLowongan = formData.map((perusahaan) => {
-        const jumlahLowongan = formDataLoker.filter(
-            (loker) => loker.perusahaan === perusahaan.id
-        ).length;
-
-        return { ...perusahaan, jumlahLowongan };
-    });
+    const settingsMedium = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 0,
+        // dots: false,
+        arrows: false,
+        // afterChange: (current) => setSliderIndex(current),
+    };
 
     const settings = {
         dots: true,
@@ -89,16 +67,14 @@ const LokerNew = () => {
         // afterChange: (current) => setSliderIndex(current),
     };
 
-    function chunkArray(array, chunkSize) {
-        const chunks = [];
-        for (let i = 0; i < array.length; i += chunkSize) {
-            chunks.push(array.slice(i, i + chunkSize));
-        }
-        return chunks;
-    }
+    const isMobile = useMediaQuery({ maxWidth: 767.9 }); // Ubah batas lebar sesuai kebutuhan
+    const isMedium = useMediaQuery({ maxWidth: 1023.9 });
 
-    // console.log(formDataLoker);
-    // console.log(formData);
+    const sliderSettingsMedium = isMobile ? settingsMobile : settingsMedium;
+
+    const sliderSettings = isMedium ? settingsMedium : settings;
+
+    const sliderActive = isMedium ? sliderSettingsMedium : sliderSettings;
 
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
@@ -118,7 +94,7 @@ const LokerNew = () => {
                             </p>
                         </div>
                         <div className="w-full pt-8">
-                            <Slider {...settings} className="slick-slider">
+                            <Slider {...sliderActive} className="slick-slider">
                                 {formData.map((item) => (
                                     <Link href={`/loker/perusahaan/${item.id}`}>
                                         <div
@@ -135,9 +111,6 @@ const LokerNew = () => {
                                                     {item.perusahaan}
                                                 </h3>
                                                 <p className="text-DarkTako text-opacity-75 bottom-0">
-                                                    {/* {hitungJumlahLowongan(
-                                                            item.id
-                                                        )}{" "} */}
                                                     {item.jumlah_data_sama}{" "}
                                                     Lowongan Tersedia
                                                 </p>
@@ -149,16 +122,7 @@ const LokerNew = () => {
                         </div>
                     </div>
                 </div>
-                <SectionLoker
-                    // coinsData={currentPosts}
-                    formDataLoker={currentPostsLoker}
-                />
-                {/* <Pagination
-                    totalPosts={formDataLoker.length}
-                    postsPerPageLoker={postsPerPageLoker}
-                    setCurrentPageLoker={setCurrentPageLoker}
-                    currentPageLoker={currentPageLoker}
-                /> */}
+                <SectionLoker />
                 <Footer />
             </section>
         </Layout>

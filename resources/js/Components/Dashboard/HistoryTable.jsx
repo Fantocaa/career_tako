@@ -10,7 +10,7 @@ const HistoryTable = () => {
     // Gunakan useEffect untuk memuat data melalui AJAX saat komponen dimuat
     useEffect(() => {
         // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
-        fetch("/form") // Ganti dengan rute yang sesuai
+        fetch("/api_form") // Ganti dengan rute yang sesuai
             .then((response) => response.json())
             .then((data) => {
                 // const updatedData = data.map((item, index) => ({
@@ -70,11 +70,82 @@ const HistoryTable = () => {
         },
         {
             name: "Status",
-            selector: "link",
+            selector: "deleted_at",
+            cell: (row) => (
+                <>
+                    <div
+                        className={`px-2 py-2 rounded-full ${
+                            row.deleted_at ? "bg-RedTako" : " bg-GreenTako"
+                        }`}
+                    >
+                        {/* {row.deleted_at} */}
+                    </div>
+
+                    {/* <a href={`/admin/perusahaan/edit/${row.id}`}>
+                        <button>
+                            <img
+                                src="../../images/edit.svg"
+                                alt=""
+                                className="scale-50  transition-all"
+                            />
+                        </button>
+                    </a> */}
+
+                    {/* <button
+                        className="btn bg-white border-none hover:bg-transparent transition-all "
+                        // onClick={() => handleDelete(row.id)}
+                        onClick={(e) =>
+                            document
+                                .getElementById(`hapus-` + row.id)
+                                .showModal()
+                        } // Menambahkan id unik dengan item.id
+                        data-id={row.id}
+                    >
+                        <img
+                            src="../../images/delete.svg"
+                            alt=""
+                            className="scale-50"
+                        />
+                    </button> */}
+
+                    {/* <dialog
+                        id={`hapus-${row.id}`}
+                        className="hapus-modal modal"
+                    >
+                        <div className="modal-box text-DarkTako bg-white">
+                            <h3 className="font-bold text-lg">
+                                Kamu yakin ingin mengshapus?
+                            </h3>
+                            <p className="py-4">
+                                Press ESC key or click the button below to close
+                            </p>
+                            <div className="modal-action ">
+                                <form method="dialog" className="flex gap-4">
+                                    <a
+                                        href={`/admin/perusahaan/hapus/${row.id}`}
+                                    >
+                                        <button
+                                            className="btn border-none hover:bg-BlueTako hover:bg-opacity-10"
+                                            onClick={() => handleDelete(row.id)}
+                                        >
+                                            Yakin
+                                        </button>
+                                    </a>
+                                    <button className="btn border-none hover:bg-RedTako hover:bg-opacity-10">
+                                        Tidak
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </dialog> */}
+                </>
+            ),
         },
 
         // Tambahkan kolom lain sesuai kebutuhan
     ];
+
+    console.log(data);
 
     return (
         <Layout pageTitle="Dashboard | Tako Karir">

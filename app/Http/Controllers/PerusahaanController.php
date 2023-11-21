@@ -16,7 +16,6 @@ class PerusahaanController extends Controller
      */
     public function index()
     {
-
         // $posts = perusahaan::get();
         $posts = DB::select("SELECT DISTINCT perusahaans.id, perusahaans.perusahaan,perusahaans.image, COUNT(md_lokers.perusahaan) AS jumlah_data_sama
         FROM perusahaans
@@ -30,10 +29,16 @@ class PerusahaanController extends Controller
         return response()->json($posts);
     }
 
+    public function json_perusahaan_table()
+    {
+        $posts = perusahaan::get();
+
+        return response()->json($posts);
+    }
+
+
     public function perusahaan()
     {
-
-
         return view('perusahaan');
     }
 

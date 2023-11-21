@@ -98,3 +98,7 @@
     gap: 16px;
     border-radius: 12px;
 }
+
+.slick-dots div {
+    background-color: #ffffff;
+}

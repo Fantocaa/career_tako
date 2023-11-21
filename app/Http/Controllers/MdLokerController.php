@@ -16,6 +16,7 @@ use PhpParser\Node\Stmt\Return_;
 use Illuminate\Support\Facades\Mail;
 // use App\Mail\MailLoker;
 use Illuminate\Http\JsonResponse;
+// use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Response;
 
 class MdLokerController extends Controller
@@ -25,13 +26,11 @@ class MdLokerController extends Controller
      */
     public function index(Request $request)
     {
-        // $posts = md_loker::get();
-        // $posts = DB::table('md_lokers')->selectRaw('md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, perusahaans.perusahaan')->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')->whereNull('md_lokers.deleted_at')->get();
 
         $posts = DB::table('md_lokers')  // Memulai query dengan tabel 'md_lokers'
             // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan, skills.nama_skill')
 
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, md_lokers.deleted_at, perusahaans.perusahaan')
 
             ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
 
@@ -41,26 +40,19 @@ class MdLokerController extends Controller
 
             ->get();
 
-        //return view
-        // return response()->json([$posts]);
-
-
         return response()->json($posts);
     }
 
-    // public function api_form(Request $request)
-    // {
-    //     $limit = $request->input('limit', 2);
+    public function api_form()
+    {
+        $posts = DB::table('md_lokers')
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, md_lokers.deleted_at, perusahaans.perusahaan')
 
-    //     $posts = DB::table('md_lokers')
-    //         ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi, md_lokers.isi_konten, perusahaans.perusahaan')
-    //         ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
-    //         ->whereNull('md_lokers.deleted_at')
-    //         ->limit($limit) // Menambahkan limit pada query
-    //         ->get();
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
 
-    //     return response()->json($posts);
-    // }
+            ->get();
+        return response()->json($posts);
+    }
 
 
     public function skill()
@@ -85,14 +77,6 @@ class MdLokerController extends Controller
     public function search()
     {
         // dd($request);
-
-        // Menggunakan input 'query' dari request
-        // $query = $request->input('query');
-        // $program = $request->input('program');
-        // return Inertia::render('LokerNew', [
-        //     'query' => $query,
-        //     'program' => $program,
-        // ]);
 
         return Inertia::render('LokerNew');
         // return view('loker');
@@ -617,25 +601,38 @@ class MdLokerController extends Controller
             ->whereNull('md_lokers.deleted_at');
 
         // Check if the search parameter exists in the request
+
+        //jika search ada isi dan select itu all
         if ($request->has('search') && $request->input('selection') == 'All') {
-            // dd(1);
+
             $searchTerm = $request->input('search');
-            // dd($searchTerm);
             $query->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
-        } else if ($request->input('search') == null && $request->input('selection') != 'All') {
-            // dd(2);
+        }
+
+        // jika search gak ada & select bukan all
+        else if ($request->input('search') == null && $request->input('selection') != 'All') {
+
             $selection = $request->input('selection');
             $query->where('md_lokers.jenis_pekerjaan', '=', '' . $selection);
             // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
-        } else if ($request->input('search') && $request->input('selection') != 'All') {
-            // dd(3);
+        }
+
+        // jika search ada & select bukan all
+        else if ($request->input('search') && $request->input('selection') != 'All') {
+
             $searchTerm = $request->input('search');
             $selection = $request->input('selection');
+            // $perusahaan = $request->input('perusahaan');
+
             if (isset($searchTerm)) {
                 if (strlen($searchTerm) == 1) {
                     $searchTerm = '';
                 } else {
-                    $query->where('md_lokers.jenis_pekerjaan', '=', $selection)->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
+                    $query
+                        ->where('md_lokers.jenis_pekerjaan', '=', $selection)
+                        ->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
+                    // ->where('md_lokers.perusahaan', '=', $perusahaan);
+
                     // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
                 }
             }
@@ -654,6 +651,80 @@ class MdLokerController extends Controller
         $paginate = $data['pagi']->orderBy('md_lokers.created_at', 'desc')->paginate(3, ['*'], 'page', $currentPage);
 
         return response()->json($paginate);
+    }
+
+    public function api_perusahaan_selected(Request $request, $req)
+    {
+        $data = [];
+        $query = DB::table('md_lokers')
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi, md_lokers.isi_konten, perusahaans.perusahaan')
+            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            ->where('md_lokers.perusahaan', '=', $request->input('perusahaan'))
+            ->whereNull('md_lokers.deleted_at');
+
+        //jika search ada isi dan select itu all
+        if ($request->has('search') && $request->input('selection') == 'All') {
+            $searchTerm = $request->input('search');
+            $query->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
+        }
+
+        // jika search gak ada & select bukan all
+        else if ($request->input('search') == null && $request->input('selection') != 'All') {
+            $selection = $request->input('selection');
+            $query->where('md_lokers.jenis_pekerjaan', '=', '' . $selection);
+            // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
+        }
+
+        // jika search ada & select bukan all
+        else if ($request->input('search') && $request->input('selection') != 'All') {
+
+            $searchTerm = $request->input('search');
+            $selection = $request->input('selection');
+            $perusahaan = $request->input('perusahaan');
+
+            if (isset($searchTerm)) {
+                if (strlen($searchTerm) == 1) {
+                    $searchTerm = '';
+                } else {
+                    $query
+                        ->where('md_lokers.jenis_pekerjaan', '=', $selection)
+                        // ->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%')
+                        ->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%')
+                        ->where('md_lokers.perusahaan', '=', $perusahaan);
+
+                    // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
+                }
+            }
+        }
+        // dd($query->toSql());
+        $data['pagi'] = $query;
+
+        $data['beritaTerbaru'] = DB::table('md_lokers')->whereNull('deleted_at')->latest()->limit(3)->get();
+
+        if ($req == 0) {
+            $currentPage = 1;
+        } else {
+            $currentPage = $req;
+        }
+
+        $paginate = $data['pagi']->orderBy('md_lokers.created_at', 'desc')->paginate(3, ['*'], 'page', $currentPage);
+
+        return response()->json($paginate);
+    }
+
+    public function time_expired()
+    {
+        $time = Date('Y-m-d');
+        $query = DB::table('md_lokers')
+            ->where('batas_lamaran', '<', $time)->get();
+
+        foreach ($query as $key => $value) {
+            if ($value->id) {
+                $delete = md_loker::find($value->id);
+                $delete->delete();
+            }
+        }
+        return response()->json('meong');
     }
 
     public function update(Updatemd_lokerRequest $request, md_loker $md_loker)

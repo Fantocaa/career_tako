@@ -4,19 +4,16 @@ import Axios from "axios";
 import SelectJobPerusahaan from "./SelectJobPerusahaan";
 import SelectJob2 from "../SelectJob2";
 import ReactPaginate from "react-paginate";
-import CryptoCard from "./CryptoCard";
-import Pagination from "./Pagination/Pagination";
 
-const SectionLoker = ({}) => {
+const SectionLoker = () => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
     const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk nilai pencarian
 
-    const [currentPage, setCurrentPage] = useState(1);
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
 
+    const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
-
     const [globalPage, setglobalPage] = useState(0);
 
     const [menu1Active, setMenu1Active] = useState(true);
@@ -111,13 +108,13 @@ const SectionLoker = ({}) => {
     };
 
     useEffect(() => {
-        console.log("ini useeffect" + globalPage);
+        // console.log("ini useeffect" + globalPage);
         // setglobalPage(1);
         fetchData(globalPage); // Fetch data for the first page when searchTerm changes
     }, [searchTerm, selectedOption]);
 
     const handlePageClick = async (data) => {
-        console.log(data.selected);
+        // console.log(data.selected);
         let currentPage = data.selected + 1;
         fetchData(currentPage);
         setglobalPage(currentPage);
@@ -297,13 +294,6 @@ const SectionLoker = ({}) => {
                 </div>
             </div>
 
-            {/* <div className="pt-8">
-                <h1>
-                    Menampilkan (190) Pekerjaan yang tersedia dari "PT. TAKO
-                    ANUGERAH KOPORASI"
-                </h1>
-            </div> */}
-
             {formData.length === 0 ? (
                 <div className="flex justify-center w-full pt-16">
                     <p className="text-DarkTako">
@@ -335,17 +325,6 @@ const SectionLoker = ({}) => {
                 </>
             )}
 
-            {/* {coinsData.map((coin, index) => {
-                return (
-                    <CryptoCard
-                        key={index}
-                        image={coin.image}
-                        name={coin.name}
-                        price={coin.current_price}
-                    />
-                );
-            })} */}
-
             <div className="w-full mx-auto flex justify-center pb-8 pt-16 items-center">
                 <ReactPaginate
                     previousLabel={"<"}
@@ -367,8 +346,6 @@ const SectionLoker = ({}) => {
                     initialPage={0}
                 />
             </div>
-
-            <Pagination />
         </section>
     );
 };
