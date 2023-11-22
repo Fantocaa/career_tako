@@ -9,6 +9,9 @@
 </head>
 
 <body>
+    {{ $title }} <br />
+    Web Karir Tako {{ $pekerjaan }} - {{ $nama }}
+
     {{ $body }} <br />
     Pekerjaan : {{ $pekerjaan }}<br />
     Program : {{ $jenis_pekerjaan }}<br />

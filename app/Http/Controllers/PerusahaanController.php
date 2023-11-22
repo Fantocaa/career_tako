@@ -14,7 +14,7 @@ class PerusahaanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function json_perusahaan()
     {
         // $posts = perusahaan::get();
         $posts = DB::select("SELECT DISTINCT perusahaans.id, perusahaans.perusahaan,perusahaans.image, COUNT(md_lokers.perusahaan) AS jumlah_data_sama
@@ -25,14 +25,14 @@ class PerusahaanController extends Controller
         //return view
         // return response()->json([$posts]);
 
-        // return perusahaan::all();    
+        // return perusahaan::all();   
+
         return response()->json($posts);
     }
 
     public function json_perusahaan_table()
     {
         $posts = perusahaan::get();
-
         return response()->json($posts);
     }
 

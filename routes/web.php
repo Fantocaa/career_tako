@@ -110,7 +110,7 @@ Route::post('/forgot_proses', [LoginController::class, 'forgot_proses'])->name('
 
 // API
 
-Route::get('/json_perusahaan', [PerusahaanController::class, 'index'])->name('json_perusahaan_1');
+Route::get('/json_perusahaan', [PerusahaanController::class, 'json_perusahaan'])->name('json_perusahaan');
 
 Route::get('/json_perusahaan_table', [PerusahaanController::class, 'json_perusahaan_table'])->name('json_perusahaan_table');
 
@@ -188,13 +188,4 @@ Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'],
     Route::resource('perusahaan', PerusahaanController::class);
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-    // Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-
-// Route::middleware('auth')->group(function () {
-    //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // });
-
-// require __DIR__ . '/auth.php';
