@@ -23,7 +23,7 @@ const Why = () => {
     }, []);
 
     return (
-        <div className="pt-16 md:pt-16 container mx-auto px-4 md:px-8 lg:px-16">
+        <div className="pt-16 md:pt-16 container mx-auto px-4 md:px-8 xl:px-16">
             <div
                 className="bg-BlueTako py-16 lg:py-8 flex text-white flex-wrap relative rounded-2xl"
                 data-aos="fade-in"
@@ -51,6 +51,50 @@ const Why = () => {
                         <h1 className="font-bold text-3xl">
                             Mengapa harus memilih Tako?
                         </h1>
+                        <div className="carousel md:hidden pt-8 h-80">
+                            <div className="carousel-item w-full">
+                                <img
+                                    src="/images/image-1.jpg"
+                                    className="w-full object-cover"
+                                    alt="Tailwind CSS Carousel component"
+                                />
+                            </div>
+                            <div className="carousel-item w-full">
+                                <img
+                                    src="/images/image-2.jpg"
+                                    className="w-full"
+                                    alt="Tailwind CSS Carousel component"
+                                />
+                            </div>
+                            <div className="carousel-item w-full">
+                                <img
+                                    src="/images/image-3.jpg"
+                                    className="w-full"
+                                    alt="Tailwind CSS Carousel component"
+                                />
+                            </div>
+                            <div className="carousel-item w-full">
+                                <img
+                                    src="/images/image-4.png"
+                                    className="w-full"
+                                    alt="Tailwind CSS Carousel component"
+                                />
+                            </div>
+                            <div className="carousel-item w-full">
+                                <img
+                                    src="/images/image-5.png"
+                                    className="w-full"
+                                    alt="Tailwind CSS Carousel component"
+                                />
+                            </div>
+                            <div className="carousel-item w-full">
+                                <img
+                                    src="/images/image-6.png"
+                                    className="w-full"
+                                    alt="Tailwind CSS Carousel component"
+                                />
+                            </div>
+                        </div>
                         <p className="py-8">
                             Kami di Tako Group sangat mendukung pengembangan
                             talenta muda, namun kami juga membuka peluang bagi
@@ -59,13 +103,13 @@ const Why = () => {
                             perjalanan karier yang penuh potensi!
                         </p>
 
-                        <Link>
+                        {/* <Link>
                             <span className="underline">
                                 Lihat Selengkapnya
                             </span>
-                        </Link>
+                        </Link> */}
                     </div>
-                    <div className="w-full flex mx-auto justify-center px-4 md:px-8 pt-8 lg:w-1/2">
+                    <div className="w-full flex mx-auto justify-center px-4 md:px-8 md:pt-8 lg:w-1/2">
                         {/* <ImageModal /> */}
                         <div className="hidden md:grid grid-cols-3 gap-4 z-10  ">
                             <div className="col-span-2 overflow-hidden rounded-xl">
@@ -91,7 +135,8 @@ const Why = () => {
                                     </div>
                                 </button>
                                 <dialog id="my_modal_1" className="modal">
-                                    <div className="w-1/2">
+                                    <div>
+                                        {/* <div className="w-1/2"> */}
                                         <form
                                             method="dialog"
                                             className="w-full"
@@ -131,7 +176,8 @@ const Why = () => {
                                     </div>
                                 </button>
                                 <dialog id="my_modal_2" className="modal">
-                                    <div className="w-1/2">
+                                    <div>
+                                        {/* <div className="w-1/2"> */}
                                         <form
                                             method="dialog"
                                             className="w-full"
@@ -171,7 +217,8 @@ const Why = () => {
                                     </div>
                                 </button>
                                 <dialog id="my_modal_3" className="modal">
-                                    <div className="w-1/2">
+                                    <div>
+                                        {/* <div className="w-1/2"> */}
                                         <form
                                             method="dialog"
                                             className="w-full"
@@ -211,7 +258,8 @@ const Why = () => {
                                     </div>
                                 </button>
                                 <dialog id="my_modal_4" className="modal">
-                                    <div className="w-1/2">
+                                    <div>
+                                        {/* <div className="w-1/2"> */}
                                         <form
                                             method="dialog"
                                             className="w-full"
@@ -227,50 +275,6 @@ const Why = () => {
                                         />
                                     </div>
                                 </dialog>
-                            </div>
-                        </div>
-                        <div className="carousel rounded-box md:hidden">
-                            <div className="carousel-item w-full">
-                                <img
-                                    src="/images/image-1.jpg"
-                                    className="w-full "
-                                    alt="Tailwind CSS Carousel component"
-                                />
-                            </div>
-                            <div className="carousel-item w-full">
-                                <img
-                                    src="/images/image-2.jpg"
-                                    className="w-full"
-                                    alt="Tailwind CSS Carousel component"
-                                />
-                            </div>
-                            <div className="carousel-item w-full">
-                                <img
-                                    src="/images/image-3.jpg"
-                                    className="w-full"
-                                    alt="Tailwind CSS Carousel component"
-                                />
-                            </div>
-                            <div className="carousel-item w-full">
-                                <img
-                                    src="/images/image-4.jpg"
-                                    className="w-full"
-                                    alt="Tailwind CSS Carousel component"
-                                />
-                            </div>
-                            <div className="carousel-item w-full">
-                                <img
-                                    src="/images/image-5.jpg"
-                                    className="w-full"
-                                    alt="Tailwind CSS Carousel component"
-                                />
-                            </div>
-                            <div className="carousel-item w-full">
-                                <img
-                                    src="/images/image-6.jpg"
-                                    className="w-full"
-                                    alt="Tailwind CSS Carousel component"
-                                />
                             </div>
                         </div>
                     </div>

@@ -40,7 +40,6 @@ const LokerNew = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         initialSlide: 0,
-        // dots: false,
         arrows: false,
         // afterChange: (current) => setSliderIndex(current),
     };
@@ -52,7 +51,6 @@ const LokerNew = () => {
         slidesToShow: 2,
         slidesToScroll: 2,
         initialSlide: 0,
-        // dots: false,
         arrows: false,
         // afterChange: (current) => setSliderIndex(current),
     };
@@ -67,13 +65,11 @@ const LokerNew = () => {
         // afterChange: (current) => setSliderIndex(current),
     };
 
-    const isMobile = useMediaQuery({ maxWidth: 767.9 }); // Ubah batas lebar sesuai kebutuhan
+    const isMobile = useMediaQuery({ maxWidth: 767.9 });
     const isMedium = useMediaQuery({ maxWidth: 1023.9 });
 
     const sliderSettingsMedium = isMobile ? settingsMobile : settingsMedium;
-
     const sliderSettings = isMedium ? settingsMedium : settings;
-
     const sliderActive = isMedium ? sliderSettingsMedium : sliderSettings;
 
     return (
@@ -107,7 +103,7 @@ const LokerNew = () => {
                                                 className="mx-auto w-32 h-32 object-contain"
                                             />
                                             <div className="flex flex-col h-24 justify-between">
-                                                <h3 className="font-semibold pt-4 overflow-hidden">
+                                                <h3 className="font-semibold pt-4">
                                                     {item.perusahaan}
                                                 </h3>
                                                 <p className="text-DarkTako text-opacity-75 bottom-0">

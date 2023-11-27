@@ -34,21 +34,21 @@ Route::get('/', function () {
 
 // Route link Start
 
-Route::get('/companyprofile', function () {
-    return Inertia::render('CompanyProfile');
-});
+// Route::get('/companyprofile', function () {
+//     return Inertia::render('CompanyProfile');
+// });
 
-Route::get('/job', function () {
-    return Inertia::render('Job');
-});
+// Route::get('/job', function () {
+//     return Inertia::render('Job');
+// });
 
-Route::get('/job/internship', function () {
-    return Inertia::render('Internship');
-});
+// Route::get('/job/internship', function () {
+//     return Inertia::render('Internship');
+// });
 
-Route::get('/job/profesional', function () {
-    return Inertia::render('Profesional');
-});
+// Route::get('/job/profesional', function () {
+//     return Inertia::render('Profesional');
+// });
 
 Route::get('/loker', function () {
     return Inertia::render('LokerNew');

@@ -12,7 +12,7 @@ const SectionLoker = () => {
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
 
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const [globalPage, setglobalPage] = useState(0);
 
@@ -67,7 +67,8 @@ const SectionLoker = () => {
     const handleSelectChange = async (event) => {
         const selectedValue = event.target.value;
         setSelectedOption(selectedValue);
-        fetchData(globalPage);
+        setCurrentPage(0);
+        // fetchData(1); // Fetch data for the first page with the new program option
     };
 
     // const handleSearch = (term) => {
@@ -91,36 +92,42 @@ const SectionLoker = () => {
         // } else {
         //     fetchData(1);
         // }
+        // setCurrentPage(2);
     };
 
-    const handleReset = () => {
-        // setglobalPage(1);
-        setSearchTerm("");
-        // if (searchTerm === "") {
-        //     setFilteredData([]);
-        //     setCurrentPage(globalPage);
-        //     fetchData(globalPage);
-        // } else {
-        // Remove the else block and always fetch data for the current page
-        // setCurrentPage(1);
-        fetchData(globalPage);
-        // }
-    };
+    // const handleReset = () => {
+    //     // setglobalPage(1);
+    //     setSearchTerm("");
+    //     // if (searchTerm === "") {
+    //     //     setFilteredData([]);
+    //     //     setCurrentPage(globalPage);
+    //     //     fetchData(globalPage);
+    //     // } else {
+    //     // Remove the else block and always fetch data for the current page
+    //     // setCurrentPage(1);
+    //     fetchData(globalPage);
+    //     // }
+    // };
 
     useEffect(() => {
         // console.log("ini useeffect" + globalPage);
         // setglobalPage(1);
-        fetchData(globalPage); // Fetch data for the first page when searchTerm changes
+        fetchData(0); // Fetch data for the first page when searchTerm changes
+        setCurrentPage(0);
+        return () => {};
     }, [searchTerm, selectedOption]);
 
     const handlePageClick = async (data) => {
-        // console.log(data.selected);
+        console.log(data.selected);
         let currentPage = data.selected + 1;
+        // setCurrentPage(data.selected + 1);
         fetchData(currentPage);
         setglobalPage(currentPage);
         // const commentFromServer = await fetchComments(currentPage);
         // setFormData(commentFromServer);
     };
+
+    console.log(currentPage);
 
     return (
         <section className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container">
@@ -335,6 +342,8 @@ const SectionLoker = () => {
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={4}
                     onPageChange={handlePageClick}
+                    // initialPage={0}
+                    forcePage={currentPage}
                     containerClassName="join flex bg-BgTako items-center text-BlueTako"
                     pageClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     pageLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
@@ -343,7 +352,6 @@ const SectionLoker = () => {
                     breakClassName="join-item"
                     breakLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     activeClassName="bg-BlueTako bg-opacity-10 "
-                    initialPage={0}
                 />
             </div>
         </section>

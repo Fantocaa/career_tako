@@ -31,10 +31,10 @@ const NavElseMobile = () => {
         <div className="fixed w-full font-inter bg-white shadow-sm z-50">
             <nav className="container py-2 px-4 md:px-8 xl:px-16 mx-auto">
                 <div className="flex justify-between items-center">
-                    <div className="w-10 h-10 md:w-16 md:h-16">
+                    <div className="w-16 h-10 md:w-16 md:h-16">
                         <Link href="/">
                             <img
-                                src="/images/logo-footer.png"
+                                src="/images/tako_new.webp"
                                 alt="Tako Logo"
                                 className="scale-75"
                             />

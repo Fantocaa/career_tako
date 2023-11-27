@@ -130,7 +130,7 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
     const handleSelectChange = async (event) => {
         const selectedValue = event.target.value;
         setSelectedOption(selectedValue);
-        fetchData(globalPage);
+        // fetchData(globalPage);
     };
 
     const handleSearchChange = (term) => {

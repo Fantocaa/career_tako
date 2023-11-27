@@ -7,7 +7,7 @@ const FaqCTA = () => {
             <div className="relative">
                 <div className="container mx-auto px-4 md:px-8 py-32 text-center relative z-10">
                     <h1
-                        className="font-bold text-4xl pb-4"
+                        className="font-bold text-2xl md:text-4xl pb-4"
                         data-aos="zoom-in-up"
                         data-aos-duration="800"
                     >

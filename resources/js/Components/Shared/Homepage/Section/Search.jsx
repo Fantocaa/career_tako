@@ -70,10 +70,10 @@ const Search = () => {
 
     return (
         // <form onSubmit={}>
-        <div className="absolute z-10 container md:pl-8 lg:pl-16 max-w-full md:w-[70%] lg:w-1/2 -translate-y-12 md:-translate-y-0">
-            <div className="px-4 md:px-0">
+        <div className="absolute z-10 container md:pl-8 lg:pl-16 xl:pl-[72px] max-w-full md:w-[70%] lg:w-1/2 -translate-y-12 md:-translate-y-0">
+            <div className="px-4 md:px-0 text-center md:text-left">
                 <p
-                    className="text-white pb-2 md:pb-4 text-xl lg:text-2xl"
+                    className="text-white pb-2 md:pb-4 text-xl lg:text-2xl pt-8 md:pt-0"
                     data-aos="fade-up"
                     data-aos-duration="1000"
                 >

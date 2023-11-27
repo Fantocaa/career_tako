@@ -42,7 +42,7 @@ const Warn = () => {
                     </div>
                 </div>
                 <div
-                    className="flex justify-center relative"
+                    className="flex justify-center relative pt-8"
                     data-aos="fade-up"
                     data-aos-duration="1000"
                 >

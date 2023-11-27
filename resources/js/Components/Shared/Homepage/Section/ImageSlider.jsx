@@ -20,24 +20,23 @@ const ImageSlider = () => {
         { url: "/images/image-10.png", caption: "Caption 3" },
     ];
 
-    const [isSliderActive, setIsSliderActive] = useState(true);
+    // const [isSliderActive, setIsSliderActive] = useState(true);
 
-    const [tooltipText, setTooltipText] = useState(""); // State untuk teks tooltip
-    const [isTooltipVisible, setTooltipVisible] = useState(false);
+    // const [tooltipText, setTooltipText] = useState(""); // State untuk teks tooltip
+    // const [isTooltipVisible, setTooltipVisible] = useState(false);
 
-    const handleMouseEnter = (text) => {
-        setTooltipText(text); // Mengatur teks tooltip sesuai dengan opsi program
-        setTooltipVisible(true); // Menampilkan tooltip saat kursor masuk
-    };
+    // const handleMouseEnter = (text) => {
+    //     setTooltipText(text); // Mengatur teks tooltip sesuai dengan opsi program
+    //     setTooltipVisible(true); // Menampilkan tooltip saat kursor masuk
+    // };
 
-    const handleMouseLeave = () => {
-        setTooltipVisible(false); // Menyembunyikan tooltip saat kursor meninggalkan
-    };
+    // const handleMouseLeave = () => {
+    //     setTooltipVisible(false); // Menyembunyikan tooltip saat kursor meninggalkan
+    // };
 
     return (
         <>
             <div className=" relative flex items-center font-inter h-full">
-                {/* <Link href="/job"> */}
                 <Search />
                 <Carousel
                     autoPlay
@@ -47,20 +46,25 @@ const ImageSlider = () => {
                     showIndicators={false}
                     showArrows={false}
                     stopOnHover={false}
+                    // centerMode={true}
+                    // emulateTouch={false}
+                    swipeable={false}
                     onClickItem={() => setIsSliderActive(false)} // Set isSliderActive to false when clicking an item
                     onClickThumb={() => setIsSliderActive(false)} // Set isSliderActive to false when clicking a thumb
                 >
                     {images.map((image, index) => (
-                        <div key={index} className="bg-left bg-cover">
+                        <div
+                            key={index}
+                            className="bg-left bg-cover pointer-events-none h-[800px] lg:h-screen"
+                        >
                             <img
                                 src={image.url}
                                 alt={`Image ${index}`}
-                                className="md:mx-auto h-[640px] lg:h-screen object-cover bg-cover md:bg-center"
+                                className="md:mx-auto h-[800px] lg:h-screen object-cover bg-cover md:bg-center"
                             />
                         </div>
                     ))}
                 </Carousel>
-                {/* </Link> */}
             </div>
         </>
     );

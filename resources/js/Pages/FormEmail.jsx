@@ -6,6 +6,7 @@ import { Link, router, usePage } from "@inertiajs/react";
 import Select from "react-select";
 import Axios from "axios";
 import Layout from "@/Layouts/Layout";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const FormEmail = () => {
     const {
@@ -147,6 +148,8 @@ const FormEmail = () => {
 
         values.kecamatan = selectedOption.label;
     };
+
+    const onChangeCaptcha = () => {};
 
     async function onSubmit(e) {
         e.preventDefault();
@@ -719,7 +722,7 @@ const FormEmail = () => {
                                     <input
                                         {...register("fileUpload")} // Gunakan nama yang sesuai
                                         type="file"
-                                        accept=".pdf" // Batasi hanya menerima file PDF
+                                        // accept=".pdf" // Batasi hanya menerima file PDF
                                         className="w-52 border-grey border-opacity-30 rounded"
                                         value={values.file}
                                         id="file"
@@ -738,7 +741,14 @@ const FormEmail = () => {
                                         Pengajuan Internship
                                     </p>
                                 </div>
+                                <div className="pt-8">
+                                    <ReCAPTCHA
+                                        sitekey="6LfoNxgpAAAAAGhZrxtSO_73hk2nPjPofQkAsmnd"
+                                        onChange={onChangeCaptcha}
+                                    />
+                                </div>
                             </div>
+
                             {/* Submit */}
                             <div className="w-full bg-BlueTako rounded-xl">
                                 <input

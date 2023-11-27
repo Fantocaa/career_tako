@@ -35,13 +35,28 @@ const NavMobile = () => {
         >
             <nav className="container py-2 px-4 md:px-8 xl:px-16 mx-auto">
                 <div className="flex justify-between items-center">
-                    <div className="w-10 h-10 md:w-16 md:h-16">
-                        <Link href="/">
+                    <div className="w-24 md:w-16 md:h-16 -translate-x-3">
+                        {/* <Link href="/">
                             <img
-                                src="/images/logo-footer.png"
-                                alt="Tako Logo"
+                                src="/images/tako_new.webp"
+                                alt="Tako Logo white"
                                 className="scale-75"
                             />
+                        </Link> */}
+                        <Link href="/">
+                            {scrolled ? (
+                                <img
+                                    src="/images/tako_new.webp"
+                                    alt="Tako Logo"
+                                    className="scale-75"
+                                />
+                            ) : (
+                                <img
+                                    src="/images/tako_white.webp"
+                                    alt="Tako Logo"
+                                    className="scale-75"
+                                />
+                            )}
                         </Link>
                     </div>
 
@@ -86,7 +101,7 @@ const NavMobile = () => {
                 {isMobileMenuOpen && (
                     <div className="relative z-50 top-0">
                         <div
-                            className={`md:hidden flex mt-6 absolute bg-BlueTako bg-opacity-90 flex-col text-white p-4 rounded-2xl right-0 ${
+                            className={`md:hidden flex mt-12 mr-[21px] absolute bg-BlueTako bg-opacity-90 flex-col text-white p-4 scale-125 rounded-2xl right-0 ${
                                 isMobileMenuOpen ? "open" : "closed"
                             }`}
                         >

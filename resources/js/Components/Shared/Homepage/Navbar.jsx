@@ -29,15 +29,23 @@ const Navbar = () => {
         >
             <div className="container px-4 md:px-8 xl:px-16 mx-auto w-full z-50 ">
                 <div className="flex justify-between items-center">
-                    <div className="w-10 h-10 md:w-16 md:h-16 flex items-center">
-                        <Link href="/">
-                            <img
-                                src="/images/logo-footer.png"
-                                alt="Tako Logo"
-                                className="flex scale-75 items-center"
-                            />
-                        </Link>
-                    </div>
+                    <Link href="/">
+                        {scrolled ? (
+                            <div className="w-10 h-10 md:w-24 md:h-16 flex items-center">
+                                <img
+                                    src="/images/tako_new.webp"
+                                    alt="Tako Logo"
+                                />
+                            </div>
+                        ) : (
+                            <div className="w-10 h-10 md:w-24 md:h-16 flex items-center">
+                                <img
+                                    src="/images/tako_white.webp"
+                                    alt="Tako Logo"
+                                />
+                            </div>
+                        )}
+                    </Link>
                     <div className="md:flex text-BlueTako">
                         <Link
                             className={`mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold ${

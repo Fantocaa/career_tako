@@ -17,7 +17,7 @@ const ContentRecruitment = () => {
         <div className="mx-auto">
             <ImageSlider />
             <Why />
-            <div className="container mx-auto px-4 py-8 md:px-8 xl:px-16 pt-32 lg:pt-16">
+            <div className="container mx-auto px-4 py-8 md:px-8 xl:px-16 pt-16 lg:pt-16">
                 <div className="px-4 bg-white py-8 rounded-md md:px-8 xl:px-16 lg:py-16">
                     <>
                         <h1

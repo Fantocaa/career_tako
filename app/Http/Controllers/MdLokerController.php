@@ -374,54 +374,45 @@ class MdLokerController extends Controller
         ]);
     }
 
-    // public function show_detail_loker($id)
-    // {
-    //     $perusahaan = perusahaan::find($id);
-
-    //     // Menggunakan Inertia::render
-    //     return Inertia::render('LokerDetailPerusahaan', [
-    //         'perusahaan' => $perusahaan,
-    //     ]);
-    // }
-
     public function submit_loker(Request $request)
     {
 
         // dd($request);
         $request->validate([
             'nama' => 'required|string|min:5',
-            'jenis_kelamin' => 'required',
-            'agama' => 'required',
-            'tanggal_lahir' => 'required',
-            'emails' => 'required',
-            'no_telp' => 'required',
-            'provinsi' => 'required',
-            'kabupaten' => 'required',
-            'kecamatan' => 'required',
-            'kodepos' => 'required',
-            'alamat' => 'required',
-            'gaji' => 'required',
-            'promosi' => 'required',
+            // 'jenis_kelamin' => 'required',
+            // 'agama' => 'required',
+            // 'tanggal_lahir' => 'required',
+            // 'emails' => 'required',
+            // 'no_telp' => 'required',
+            // 'provinsi' => 'required',
+            // 'kabupaten' => 'required',
+            // 'kecamatan' => 'required',
+            // 'kodepos' => 'required',
+            // 'alamat' => 'required',
+            // 'gaji' => 'required',
+            // 'promosi' => 'required',
         ], [
             'nama.required' => 'Nama harus diisi.',
-            'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih.',
-            'agama.required' => 'Agama harus dipilih.',
-            'tanggal_lahir.required' => ' Tanggal Lahir harus diisi.',
-            'emails.required' => 'Email harus diisi.',
-            'no_telp.required' => 'Nomor Telepon harus diisi.',
-            'provinsi.required' => 'Provinsi harus dipilih.',
-            'kabupaten.required' => 'Kabupaten harus dipilih.',
-            'kecamatan.required' => 'Kecamatan harus dipilih.',
-            'kodepos.required' => 'Kode Pos harus dipilih.',
-            'alamat.required' => 'Alamat harus diisi.',
-            'gaji.required' => 'Gaji harus diisi.',
-            'promosi.required' => 'Promosi harus diisi.',
-            'pendidikan.required' => 'Pendidikan harus diisi.',
-            'instansi.required' => 'Instansi Pendidikan harus diisi.',
-            'ipk.required' => 'IPK/GPA harus diisi.',
+            // 'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih.',
+            // 'agama.required' => 'Agama harus dipilih.',
+            // 'tanggal_lahir.required' => ' Tanggal Lahir harus diisi.',
+            // 'emails.required' => 'Email harus diisi.',
+            // 'no_telp.required' => 'Nomor Telepon harus diisi.',
+            // 'provinsi.required' => 'Provinsi harus dipilih.',
+            // 'kabupaten.required' => 'Kabupaten harus dipilih.',
+            // 'kecamatan.required' => 'Kecamatan harus dipilih.',
+            // 'kodepos.required' => 'Kode Pos harus dipilih.',
+            // 'alamat.required' => 'Alamat harus diisi.',
+            // 'gaji.required' => 'Gaji harus diisi.',
+            // 'promosi.required' => 'Promosi harus diisi.',
+            // 'pendidikan.required' => 'Pendidikan harus diisi.',
+            // 'instansi.required' => 'Instansi Pendidikan harus diisi.',
+            // 'ipk.required' => 'IPK/GPA harus diisi.',
         ]);
 
-        $data["email"] = "fantocaa17@gmail.com";
+        // $data["email"] = "fantocaa17@gmail.com";
+        $data["email"] = "recruitment@tako.co.id";
         $data["title"] = "Pelamar Baru";
         $data["body"] = "Selamat Datang";
         $data["pekerjaan"] = $request->pekerjaan;
@@ -449,6 +440,8 @@ class MdLokerController extends Controller
         $file = $request->file('file'); // Dapatkan objek file dari permintaan
 
         $maxSize = 2 * 1024 * 1024; // 2MB in bytes
+        // $maxSize = 2048;
+
 
         if ($file->getSize() <= $maxSize) {
             // Pastikan file ada sebelum melampirkannya
@@ -460,6 +453,7 @@ class MdLokerController extends Controller
                     'mime' => 'application/pdf', // MIME type file PDF
                 ]);
             });
+            // dd($file->getSize());
 
             echo "Email berhasil dikirim";
         } else {
@@ -714,18 +708,25 @@ class MdLokerController extends Controller
 
     public function time_expired()
     {
-        $time = Date('Y-m-d');
+        $time = date('Y-m-d');
         $query = DB::table('md_lokers')
-            ->where('batas_lamaran', '<', $time)->get();
+            ->where('batas_lamaran', '<', $time)
+            ->get();
 
         foreach ($query as $key => $value) {
-            if ($value->id) {
+            if (!empty($value->id)) {
                 $delete = md_loker::find($value->id);
-                $delete->delete();
+
+                // Check if the record is found before attempting to delete
+                if ($delete) {
+                    $delete->delete();
+                }
             }
         }
+
         return response()->json('meong');
     }
+
 
     public function update(Updatemd_lokerRequest $request, md_loker $md_loker)
     {

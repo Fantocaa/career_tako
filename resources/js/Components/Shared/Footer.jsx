@@ -24,21 +24,27 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="flex gap-4 pt-6">
-                        <Link href="https://www.instagram.com/tako.koporasi/">
+                        <a
+                            href="https://www.instagram.com/tako.koporasi/"
+                            target="__blank"
+                        >
                             <img src="/images/ig.svg" alt="" />
-                        </Link>
-                        <Link href="">
+                        </a>
+                        {/* <Link href="">
                             <img src="/images/fb.svg" alt="" />
-                        </Link>
-                        <Link href="">
+                        </Link> */}
+                        {/* <Link href="">
                             <img src="/images/yt.svg" alt="" />
-                        </Link>
-                        <Link href="">
+                        </Link> */}
+                        {/* <Link href="">
                             <img src="/images/x.svg" alt="" />
-                        </Link>
-                        <Link href="">
+                        </Link> */}
+                        <a
+                            href="https://www.linkedin.com/company/tako-anugerah-koporasi-pt/"
+                            target="_blank"
+                        >
                             <img src="/images/linkedin.svg" alt="" />
-                        </Link>
+                        </a>
                     </div>
                 </div>
 
