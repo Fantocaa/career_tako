@@ -12,7 +12,7 @@ const SectionLoker = () => {
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
 
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
     const [globalPage, setglobalPage] = useState(0);
 
@@ -54,7 +54,7 @@ const SectionLoker = () => {
             setJobCount(count);
             setFormData(response.data.data);
             setPageCount(response.data.last_page);
-            setCurrentPage(page);
+            setCurrentPage(1);
         } catch (error) {
             console.error("Error sending data:", error);
         }
@@ -71,60 +71,49 @@ const SectionLoker = () => {
         // fetchData(1); // Fetch data for the first page with the new program option
     };
 
-    // const handleSearch = (term) => {
-    //     setSearchTerm(term);
-    //     if (term === "") {
-    //         setFilteredData([]);
-    //         setCurrentPage(globalPage); // Update currentPage to globalPage
-    //         fetchData(globalPage); // Fetch data for the globalPage
-    //     } else {
-    //         setCurrentPage(1); // Reset currentPage to 1 when searching
-    //         fetchData(1); // Fetch data for the first page
-    //     }
-    // };
-
     const handleSearchChange = (term) => {
         setSearchTerm(term);
-        // if (term === "") {
-        //     setFilteredData([]);
-        //     setCurrentPage(globalPage);
-        //     fetchData(currentPage);
-        // } else {
-        //     fetchData(1);
-        // }
-        // setCurrentPage(2);
     };
-
-    // const handleReset = () => {
-    //     // setglobalPage(1);
-    //     setSearchTerm("");
-    //     // if (searchTerm === "") {
-    //     //     setFilteredData([]);
-    //     //     setCurrentPage(globalPage);
-    //     //     fetchData(globalPage);
-    //     // } else {
-    //     // Remove the else block and always fetch data for the current page
-    //     // setCurrentPage(1);
-    //     fetchData(globalPage);
-    //     // }
-    // };
 
     useEffect(() => {
         // console.log("ini useeffect" + globalPage);
         // setglobalPage(1);
         fetchData(0); // Fetch data for the first page when searchTerm changes
-        setCurrentPage(0);
-        return () => {};
+        setCurrentPage(1);
     }, [searchTerm, selectedOption]);
 
+    // const handlePageClick = async (data) => {
+    //     // console.log(data.selected);
+    //     let currentPage = data.selected + 1;
+    //     setCurrentPage(currentPage);
+    //     fetchData(currentPage);
+    //     setglobalPage(currentPage);
+    // };
+
     const handlePageClick = async (data) => {
-        console.log(data.selected);
-        let currentPage = data.selected + 1;
-        // setCurrentPage(data.selected + 1);
-        fetchData(currentPage);
-        setglobalPage(currentPage);
-        // const commentFromServer = await fetchComments(currentPage);
-        // setFormData(commentFromServer);
+        let nextPage = data.selected + 1; // Increment page number
+
+        try {
+            const response = await Axios.get(`/api/perusahaan/${nextPage}`, {
+                params: { search: searchTerm, selection: selectedOption },
+            });
+
+            // Your success logic here
+
+            const count = response.data.total;
+            setJobCount(count);
+            setFormData(response.data.data);
+            setPageCount(response.data.last_page);
+
+            setCurrentPage(nextPage); // Update currentPage if the request is successful
+        } catch (error) {
+            console.error("Error fetching data:", error);
+
+            // Your error handling logic here
+
+            // If the request fails, revert to the previous page
+            nextPage = currentPage;
+        }
     };
 
     console.log(currentPage);
@@ -343,7 +332,7 @@ const SectionLoker = () => {
                     pageRangeDisplayed={4}
                     onPageChange={handlePageClick}
                     // initialPage={0}
-                    forcePage={currentPage}
+                    forcePage={currentPage - 1}
                     containerClassName="join flex bg-BgTako items-center text-BlueTako"
                     pageClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"
                     pageLinkClassName="join-item btn btn-square hover:bg-BlueTako hover:bg-opacity-10 border-0"

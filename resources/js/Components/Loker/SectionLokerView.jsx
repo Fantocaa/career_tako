@@ -65,68 +65,6 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
         }
     };
 
-    // const fetchData = async () => {
-    //     try {
-    //         const response = await Axios.get(
-    //             `/api_program_perusahaan/${values.id}`
-    //         );
-    //         const count = response.data.length;
-
-    //         setJobCount(count);
-    //         setFormData(response.data);
-    //     } catch (error) {
-    //         console.error("Error sending data:", error);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
-
-    // const handleSelectChange = async (event) => {
-    //     const selectedValue = event.target.value;
-    //     setSelectedOption(selectedValue);
-
-    //     // Kirim permintaan Ajax berdasarkan nilai yang dipilih
-    //     try {
-    //         const response = await Axios.get(
-    //             `/api_program_id/${selectedValue}/${values.id},`
-    //         );
-    //         setFormData(response.data);
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //     }
-    // };
-
-    // const handleSearch = (term) => {
-    //     if (term == "") {
-    //         fetchData();
-    //     } else {
-    //         console.log(originalData);
-    //         const filteredData = formData.filter((item) => {
-    //             return item.pekerjaan
-    //                 .toLowerCase()
-    //                 .includes(term.toLowerCase());
-    //         });
-    //         setFormData(filteredData);
-    //     }
-    // };
-
-    // const handleSearchChange = (term) => {
-    //     setSearchTerm(term); // Mengatur kembali nilai pencarian agar input dikosongkan
-    //     if (term == "") {
-    //         fetchData();
-    //     } else {
-    //         console.log(originalData);
-    //         const filteredData = formData.filter((item) => {
-    //             return item.pekerjaan
-    //                 .toLowerCase()
-    //                 .includes(term.toLowerCase());
-    //         });
-    //         setFormData(filteredData);
-    //     }
-    // };
-
     const handleSelectChange = async (event) => {
         const selectedValue = event.target.value;
         setSelectedOption(selectedValue);

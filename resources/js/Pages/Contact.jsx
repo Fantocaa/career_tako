@@ -1,10 +1,37 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import Nav from "@/Components/Shared/Homepage/Nav";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import Layout from "@/Layouts/Layout";
 
 const Contact = () => {
+    const [data, setData] = useState([]); // State untuk data perusahaan
+    const [isPageLoaded, setIsPageLoaded] = useState(false);
+
+    useEffect(() => {
+        // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/time_expired"); // Ganti dengan rute yang sesuai
+                const result = await response.json();
+                setData(result);
+                // setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                // setLoading(false);
+            } finally {
+                setIsPageLoaded(true);
+            }
+        };
+
+        fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+    }, []); // Dependensi kosong agar hanya dipanggil sekali
+
+    // Render halaman setelah data diambil dan halaman ter-load
+    if (!isPageLoaded) {
+        return null; // Atau tampilkan loader/loading indicator
+    }
     return (
         <Layout pageTitle="Contact | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">

@@ -14,28 +14,44 @@ class PerusahaanController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function json_perusahaan()
+    // {
+    //     // $posts = perusahaan::get();
+    //     $posts = DB::select("SELECT DISTINCT 
+    //         perusahaans.id, 
+    //         perusahaans.perusahaan,
+    //         perusahaans.image, 
+    //         COUNT(md_lokers.perusahaan) AS jumlah_data_sama
+    //     FROM perusahaans
+    //     LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan
+    //     WHERE md_lokers.deleted_at IS NULL
+    //     GROUP BY perusahaans.id, perusahaans.perusahaan;");
+
+    //     return response()->json($posts);
+    // }
+
     public function json_perusahaan()
     {
-        // $posts = perusahaan::get();
-        $posts = DB::select("SELECT DISTINCT perusahaans.id, perusahaans.perusahaan,perusahaans.image, COUNT(md_lokers.perusahaan) AS jumlah_data_sama
-        FROM perusahaans
-        LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan
-        GROUP BY perusahaans.id, perusahaans.perusahaan;");
-
-        //return view
-        // return response()->json([$posts]);
-
-        // return perusahaan::all();   
+        $posts = DB::select("SELECT
+        perusahaans.id,
+        perusahaans.perusahaan,
+        perusahaans.image,
+        COALESCE(SUM(CASE WHEN md_lokers.deleted_at IS NULL THEN 1 ELSE 0 END), 0) AS jumlah_data_sama
+    FROM perusahaans
+    LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan
+    GROUP BY perusahaans.id, perusahaans.perusahaan;
+    ");
 
         return response()->json($posts);
     }
+
+
 
     public function json_perusahaan_table()
     {
         $posts = perusahaan::get();
         return response()->json($posts);
     }
-
 
     public function perusahaan()
     {
@@ -179,11 +195,6 @@ class PerusahaanController extends Controller
 
         return redirect('admin/dashboard/perusahaan_dashboard');
     }
-
-    // public function image_link()
-    // {
-    //     return perusahaan::all();
-    // }
 
     /**
      * Display the specified resource.

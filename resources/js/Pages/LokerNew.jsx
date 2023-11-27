@@ -15,6 +15,8 @@ import { useMediaQuery } from "react-responsive";
 const LokerNew = () => {
     const { state } = usePage();
     const [formData, setFormData] = useState([]);
+    const [data, setData] = useState([]); // State untuk data perusahaan
+    const [isPageLoaded, setIsPageLoaded] = useState(false);
 
     useEffect(() => {
         // Panggil fungsi API di sini saat komponen pertama kali di-mount
@@ -30,7 +32,22 @@ const LokerNew = () => {
             }
         };
 
+        const fetchDataTime = async () => {
+            try {
+                const response = await fetch("/time_expired"); // Ganti dengan rute yang sesuai
+                const result = await response.json();
+                setData(result);
+                // setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                // setLoading(false);
+            } finally {
+                setIsPageLoaded(true);
+            }
+        };
+
         fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+        fetchDataTime(); // Panggil fungsi fetchData saat komponen di-mount
     }, [state]);
 
     const settingsMobile = {
@@ -71,6 +88,10 @@ const LokerNew = () => {
     const sliderSettingsMedium = isMobile ? settingsMobile : settingsMedium;
     const sliderSettings = isMedium ? settingsMedium : settings;
     const sliderActive = isMedium ? sliderSettingsMedium : sliderSettings;
+
+    if (!isPageLoaded) {
+        return null; // Atau tampilkan loader/loading indicator
+    }
 
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">

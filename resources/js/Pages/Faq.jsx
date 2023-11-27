@@ -11,8 +11,36 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styled from "styled-components";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import Layout from "@/Layouts/Layout";
+import { useEffect, useState } from "react";
 
 const Faq = () => {
+    const [data, setData] = useState([]); // State untuk data perusahaan
+    const [isPageLoaded, setIsPageLoaded] = useState(false);
+
+    useEffect(() => {
+        // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/time_expired"); // Ganti dengan rute yang sesuai
+                const result = await response.json();
+                setData(result);
+                // setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                // setLoading(false);
+            } finally {
+                setIsPageLoaded(true);
+            }
+        };
+
+        fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+    }, []); // Dependensi kosong agar hanya dipanggil sekali
+
+    // Render halaman setelah data diambil dan halaman ter-load
+    if (!isPageLoaded) {
+        return null; // Atau tampilkan loader/loading indicator
+    }
+
     const AccordionContainer = styled.div`
         width: 100%;
         /* ... */

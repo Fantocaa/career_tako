@@ -379,7 +379,8 @@ class MdLokerController extends Controller
 
         // dd($request);
         $request->validate([
-            'nama' => 'required|string|min:5',
+            // 'nama' => 'required|string|min:5',
+            'nama' => 'required',
             // 'jenis_kelamin' => 'required',
             // 'agama' => 'required',
             // 'tanggal_lahir' => 'required',
@@ -413,8 +414,8 @@ class MdLokerController extends Controller
 
         // $data["email"] = "fantocaa17@gmail.com";
         $data["email"] = "recruitment@tako.co.id";
-        $data["title"] = "Pelamar Baru";
-        $data["body"] = "Selamat Datang";
+        $data["title"] = "[Web Karir Tako] ";
+        $data["body"] = "Ada yang baru saja melamar Pekerjaan : ";
         $data["pekerjaan"] = $request->pekerjaan;
         $data["jenis_pekerjaan"] = $request->jenis_pekerjaan;
         $data["perusahaan"] = $request->perusahaan;
@@ -447,7 +448,10 @@ class MdLokerController extends Controller
             // Pastikan file ada sebelum melampirkannya
             Mail::send('Test_mail', $data, function ($message) use ($data, $file) {
                 $message->to($data["email"])
-                    ->subject($data["title"]);
+
+                    // ->subject($data["title"]);
+                    ->subject($data["title"] . ' ' . $data["pekerjaan"] . ' - ' . $data["nama"]); // Menggabungkan title dan pekerjaan dalam subjek
+
                 $message->attach($file->getRealPath(), [
                     'as' => 'CV.pdf', // Nama file yang akan digunakan dalam email
                     'mime' => 'application/pdf', // MIME type file PDF

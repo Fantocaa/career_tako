@@ -9,10 +9,7 @@
 </head>
 
 <body>
-    {{ $title }} <br />
-    Web Karir Tako {{ $pekerjaan }} - {{ $nama }}
-
-    {{ $body }} <br />
+    {{ $body }} {{ $pekerjaan }}<br /> <br />
     Pekerjaan : {{ $pekerjaan }}<br />
     Program : {{ $jenis_pekerjaan }}<br />
     Perusahaan : {{ $perusahaan }}<br />
@@ -39,7 +36,7 @@
     <a href="www.facebook.com">
         <button>Refuse</button>
     </a> --}}
-
+    <br />
     Selamat Bekerja Gais -Fantoca
 </body>
 

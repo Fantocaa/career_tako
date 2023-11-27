@@ -722,7 +722,7 @@ const FormEmail = () => {
                                     <input
                                         {...register("fileUpload")} // Gunakan nama yang sesuai
                                         type="file"
-                                        // accept=".pdf" // Batasi hanya menerima file PDF
+                                        accept=".pdf" // Batasi hanya menerima file PDF
                                         className="w-52 border-grey border-opacity-30 rounded"
                                         value={values.file}
                                         id="file"
