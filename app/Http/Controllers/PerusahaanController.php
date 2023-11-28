@@ -17,15 +17,17 @@ class PerusahaanController extends Controller
 
     public function perusahaan_json_meong()
     {
+        // $posts = DB::select("SELECT perusahaans.id,perusahaans.perusahaan,perusahaans.image, COALESCE(SUM(CASE WHEN md_lokers.deleted_at IS NULL THEN 1 ELSE 0 END), 0) AS jumlah_data_sama FROM perusahaans LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan GROUP BY perusahaans.id, perusahaans.perusahaan;");
+
         $posts = DB::select("SELECT
-        perusahaans.id,
-        perusahaans.perusahaan,
-        perusahaans.image,
-        COALESCE(SUM(CASE WHEN md_lokers.deleted_at IS NULL THEN 1 ELSE 0 END), 0) AS jumlah_data_sama
-    FROM perusahaans
-    LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan
-    GROUP BY perusahaans.id, perusahaans.perusahaan;
-    ");
+            perusahaans.id,
+            perusahaans.perusahaan,
+            perusahaans.image,
+            COALESCE(SUM(CASE WHEN md_lokers.deleted_at IS NULL THEN 1 ELSE 0 END), 0) AS jumlah_data_sama
+        FROM perusahaans
+        LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan
+        GROUP BY perusahaans.id, perusahaans.perusahaan, perusahaans.image;
+        ");
 
         return response()->json($posts);
     }
