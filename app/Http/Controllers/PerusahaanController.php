@@ -104,7 +104,7 @@ class PerusahaanController extends Controller
         }
     }
 
-    public function update(UpdateperusahaanRequest $request, perusahaan $perusahaan)
+    public function update(UpdateperusahaanRequest $request)
     {
 
         // dd($request);
@@ -114,16 +114,14 @@ class PerusahaanController extends Controller
             'link' => 'required',
             'tentang' => 'required',
             'alamat' => 'required',
-            // 'image' => 'required',
+            'image' => 'required',
         ], [
             'perusahaan.required' => 'Nama Perusahaan harus diisi.',
             'link.required' => 'Link Perusahaan harus diisi.',
             'tentang.required' => 'About Perusahaan harus diisi.',
             'alamat.required' => 'Alamat Perusahaan harus diisi.',
-            // 'image.required' => 'Gambar Harus diisi',
+            'image.required' => 'Gambar Harus diisi',
         ]);
-
-
 
         $empData = perusahaan::find($request->id);
 
@@ -132,30 +130,49 @@ class PerusahaanController extends Controller
         if ($request->hasFile('image')) {
             $image = time() . '.' . $request->image->extension();
             $request->image->storeAs('public/images/', $image);
-            $empData->image = $image; // Setel atribut gambar dengan nama gambar yang baru
-        } else {
-            $empData->perusahaan = $request->perusahaan;
-            $empData->tentang = $request->tentang;
-            $empData->alamat = $request->alamat;
-            $empData->link = $request->link;
-            $empData->save();
-        }
+            // $empData->image = $image; // Setel atribut gambar dengan nama gambar yang baru
 
-        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            $oldImage = $empData->image;
+            if ($oldImage) {
+                Storage::delete('public/images/' . $oldImage);
+            }
 
-            // $hapus = 'public/images/' . $request->id . '/' . $image->image;
-            // Storage::delete($hapus);
-            $hapus = 'public/images/' . $request->id . '/' . $image;
-            Storage::delete($hapus);
-
-            $image = time() . '.' . $request->image->extension();
-
-            // Simpan gambar baru ke penyimpanan
-            $request->image->storeAs('public/images/', $image);
-
-            // Setel atribut 'image' dari model dengan nama gambar yang baru
+            // Set atribut 'image' dari model dengan nama gambar yang baru
             $empData->image = $image;
         }
+        // else {
+        //     $empData->perusahaan = $request->perusahaan;
+        //     $empData->tentang = $request->tentang;
+        //     $empData->alamat = $request->alamat;
+        //     $empData->link = $request->link;
+        //     $empData->save();
+        // }
+
+        // if ($request->hasFile('image')) {
+
+        //     // $hapus = 'public/images/' . $request->id . '/' . $image->image;
+        //     // Storage::delete($hapus);
+        //     $hapus = 'public/images/' . $request->id . '/' . $image;
+        //     Storage::delete($hapus);
+
+        //     $image = time() . '.' . $request->image->extension();
+
+        //     // Simpan gambar baru ke penyimpanan
+        //     $request->image->storeAs('public/images/', $image);
+
+        //     // Setel atribut 'image' dari model dengan nama gambar yang baru
+        //     $empData->image = $image;
+        // }
+
+        // Setel atribut lain dari model dengan nilai yang baru
+        $empData->perusahaan = $request->perusahaan;
+        $empData->tentang = $request->tentang;
+        $empData->alamat = $request->alamat;
+        $empData->link = $request->link;
+
+        // Simpan data ke database
+        $empData->save();
 
         return redirect('admin/dashboard/perusahaan_dashboard');
     }

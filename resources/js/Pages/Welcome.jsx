@@ -33,9 +33,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     }, []); // Dependensi kosong agar hanya dipanggil sekali
 
     // Render halaman setelah data diambil dan halaman ter-load
-    if (!isPageLoaded) {
-        return null; // Atau tampilkan loader/loading indicator
-    }
     return (
         <Layout pageTitle="Beranda | Tako Karir">
             {/* <Head>

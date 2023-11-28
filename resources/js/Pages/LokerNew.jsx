@@ -11,6 +11,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "@inertiajs/react";
 import "../Components/css/style.css";
 import { useMediaQuery } from "react-responsive";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const LokerNew = () => {
     const { state } = usePage();
@@ -87,59 +89,62 @@ const LokerNew = () => {
     const sliderSettings = isMedium ? settingsMedium : settings;
     const sliderActive = isMedium ? sliderSettingsMedium : sliderSettings;
 
-    if (!isPageLoaded) {
-        return null; // Atau tampilkan loader/loading indicator
-    }
-
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
-            <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
-                <NavElse />
-                <div className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako w-full">
-                    <div className="text-center container mx-auto">
-                        <div className="w-full">
-                            <h1 className="font-semibold text-2xl lg:text-4xl">
-                                Temukan Lowongan Berdasarkan Perusahaan
-                            </h1>
-                            <p className="pt-4">
-                                Lebih mudah daripada mencari satu per satu,
-                                Jelajahi Peluang Karir yang Tepat untukmu,
-                                Temukan Lowongan Kerja yang Sesuai dengan
-                                Perusahaan Impianmu!
-                            </p>
-                        </div>
-                        <div className="w-full pt-8">
-                            <Slider {...sliderActive} className="slick-slider">
-                                {formData.map((item) => (
-                                    <Link href={`/loker/perusahaan/${item.id}`}>
-                                        <div
-                                            className="bg-white p-6 rounded-xl text-DarkTako cursor-pointer h-full flex flex-col"
-                                            key={item.id}
+            <SkeletonTheme baseColor="#202020" highlightColor="#444444">
+                <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
+                    <NavElse />
+                    <div className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako w-full">
+                        <div className="text-center container mx-auto">
+                            <div className="w-full">
+                                <h1 className="font-semibold text-2xl lg:text-4xl">
+                                    Temukan Lowongan Berdasarkan Perusahaan
+                                </h1>
+                                <p className="pt-4">
+                                    Lebih mudah daripada mencari satu per satu,
+                                    Jelajahi Peluang Karir yang Tepat untukmu,
+                                    Temukan Lowongan Kerja yang Sesuai dengan
+                                    Perusahaan Impianmu!
+                                </p>
+                            </div>
+                            <div className="w-full pt-8">
+                                <Slider
+                                    {...sliderActive}
+                                    className="slick-slider"
+                                >
+                                    {formData.map((item) => (
+                                        <Link
+                                            href={`/loker/perusahaan/${item.id}`}
                                         >
-                                            <img
-                                                src={`/storage/images/${item.image}`}
-                                                alt="logo perusahaan"
-                                                className="mx-auto w-32 h-32 object-contain"
-                                            />
-                                            <div className="flex flex-col h-24 justify-between">
-                                                <h3 className="font-semibold pt-4">
-                                                    {item.perusahaan}
-                                                </h3>
-                                                <p className="text-DarkTako text-opacity-75 bottom-0">
-                                                    {item.jumlah_data_sama}{" "}
-                                                    Lowongan Tersedia
-                                                </p>
+                                            <div
+                                                className="bg-white p-6 rounded-xl text-DarkTako cursor-pointer h-full flex flex-col"
+                                                key={item.id}
+                                            >
+                                                <img
+                                                    src={`/storage/images/${item.image}`}
+                                                    alt="logo perusahaan"
+                                                    className="mx-auto w-32 h-32 object-contain"
+                                                />
+                                                <div className="flex flex-col h-24 justify-between">
+                                                    <h3 className="font-semibold pt-4">
+                                                        {item.perusahaan}
+                                                    </h3>
+                                                    <p className="text-DarkTako text-opacity-75 bottom-0">
+                                                        {item.jumlah_data_sama}{" "}
+                                                        Lowongan Tersedia
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </Slider>
+                                        </Link>
+                                    ))}
+                                </Slider>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <SectionLoker />
-                <Footer />
-            </section>
+                    <SectionLoker />
+                    <Footer />
+                </section>
+            </SkeletonTheme>
         </Layout>
     );
 };

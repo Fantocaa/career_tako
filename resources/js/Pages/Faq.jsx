@@ -36,11 +36,6 @@ const Faq = () => {
         fetchData(); // Panggil fungsi fetchData saat komponen di-mount
     }, []); // Dependensi kosong agar hanya dipanggil sekali
 
-    // Render halaman setelah data diambil dan halaman ter-load
-    if (!isPageLoaded) {
-        return null; // Atau tampilkan loader/loading indicator
-    }
-
     const AccordionContainer = styled.div`
         width: 100%;
         /* ... */
