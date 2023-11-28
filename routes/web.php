@@ -110,7 +110,7 @@ Route::post('/forgot_proses', [LoginController::class, 'forgot_proses'])->name('
 
 // API
 
-Route::get('/json_perusahaan', [PerusahaanController::class, 'json_perusahaan'])->name('json_perusahaan');
+Route::get('/perusahaan_json_meong', [PerusahaanController::class, 'perusahaan_json_meong'])->name('perusahaan_json_meong');
 
 Route::get('/json_perusahaan_table', [PerusahaanController::class, 'json_perusahaan_table'])->name('json_perusahaan_table');
 

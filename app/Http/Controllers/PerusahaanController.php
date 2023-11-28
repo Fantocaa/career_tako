@@ -30,7 +30,7 @@ class PerusahaanController extends Controller
     //     return response()->json($posts);
     // }
 
-    public function json_perusahaan()
+    public function perusahaan_json_meong()
     {
         $posts = DB::select("SELECT
         perusahaans.id,
@@ -44,8 +44,6 @@ class PerusahaanController extends Controller
 
         return response()->json($posts);
     }
-
-
 
     public function json_perusahaan_table()
     {

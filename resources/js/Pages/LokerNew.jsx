@@ -23,7 +23,7 @@ const LokerNew = () => {
         const fetchData = async () => {
             try {
                 // Kirim data ke server
-                const response = await axios.get("/json_perusahaan");
+                const response = await axios.get("/perusahaan_json_meong");
                 setFormData(response.data);
                 // const perusahaanChunks = chunkArray(response.data, 5);
                 // setFormData(perusahaanChunks);
