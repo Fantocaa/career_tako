@@ -14,21 +14,6 @@ class PerusahaanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function json_perusahaan()
-    // {
-    //     // $posts = perusahaan::get();
-    //     $posts = DB::select("SELECT DISTINCT 
-    //         perusahaans.id, 
-    //         perusahaans.perusahaan,
-    //         perusahaans.image, 
-    //         COUNT(md_lokers.perusahaan) AS jumlah_data_sama
-    //     FROM perusahaans
-    //     LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan
-    //     WHERE md_lokers.deleted_at IS NULL
-    //     GROUP BY perusahaans.id, perusahaans.perusahaan;");
-
-    //     return response()->json($posts);
-    // }
 
     public function perusahaan_json_meong()
     {
