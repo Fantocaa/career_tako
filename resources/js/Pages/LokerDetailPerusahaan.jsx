@@ -2,10 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Layout from "@/Layouts/Layout";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
-import PerusahaanCard from "@/Components/Loker/PerusahaanCard";
-import SectionViewPerusahaan from "@/Components/Loker/SectionViewPerusahaan";
 import PerusahaanInfo from "@/Components/Loker/PerusahaanInfo";
-import SectionLokerView from "@/Components/Loker/SectionLokerView";
 import axios from "axios";
 import { usePage } from "@inertiajs/react";
 import Slider from "react-slick";
@@ -92,9 +89,6 @@ const LokerDetailPerusahaan = () => {
                                                     {item.perusahaan}
                                                 </h3>
                                                 <p className="text-DarkTako text-opacity-75 bottom-0">
-                                                    {/* {hitungJumlahLowongan(
-                                                            item.id
-                                                        )}{" "} */}
                                                     {item.jumlah_data_sama}{" "}
                                                     Lowongan Tersedia
                                                 </p>

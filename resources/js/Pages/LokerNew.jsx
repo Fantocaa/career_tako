@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Layout from "@/Layouts/Layout";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
-import SectionLoker from "@/Components/Shared/Job/SelectJob/SectionLoker";
+import SectionLoker from "@/Components/Loker/SectionLoker";
 import axios from "axios";
 import { usePage } from "@inertiajs/react";
 import Slider from "react-slick";
@@ -23,10 +23,8 @@ const LokerNew = () => {
         const fetchData = async () => {
             try {
                 // Kirim data ke server
-                const response = await axios.get("/perusahaan_json_meong");
+                const response = await axios.get("/json_perusahaan");
                 setFormData(response.data);
-                // const perusahaanChunks = chunkArray(response.data, 5);
-                // setFormData(perusahaanChunks);
             } catch (error) {
                 console.error("Error sending data:", error);
             }
