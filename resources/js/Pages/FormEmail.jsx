@@ -230,7 +230,7 @@ const FormEmail = () => {
             setTimeout(() => {
                 // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
                 setIsLoading(false);
-            }, 120000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
+            }, 2000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         } catch (error) {
             console.error("Error sending data:", error);
             alert("Terjadi kesalahan saat mengirim data.");
