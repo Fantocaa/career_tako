@@ -43,9 +43,6 @@ const FormEmail = () => {
         agama: "",
         tanggal_lahir: "",
         emails: "",
-        // provinsi: provinsiOptions.label,
-        // kabupaten: kabupatenOptions.label,
-        // kecamatan: kecamatanOptions.label,
         provinsi: "",
         kabupaten: "",
         kecamatan: "",
@@ -91,11 +88,7 @@ const FormEmail = () => {
         setIsProvinsiSelected(true); // Setel state menjadi true saat provinsi dipilih
         setSelectedProvinsi(selectedOption); // Simpan nilai provinsi yang dipilih
 
-        // console.log(selectedOption.label);
-
         values.provinsi = selectedOption.label;
-
-        // console.log(values.provinsi);
         // Ambil kode provinsi yang dipilih
         const kodeProvinsi = selectedOption.value;
 
@@ -150,9 +143,11 @@ const FormEmail = () => {
     };
 
     const onChangeCaptcha = () => {};
+    const [isLoading, setIsLoading] = useState(false);
 
     async function onSubmit(e) {
         e.preventDefault();
+        setIsLoading(true);
 
         try {
             const token = document.querySelector(
@@ -161,8 +156,6 @@ const FormEmail = () => {
 
             const formData = new FormData();
             formData.append("_token", token); // Menambahkan token CSRF ke FormData
-
-            // const formData = new FormData();
 
             formData.append("pekerjaan", values.pekerjaan);
             formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
@@ -234,6 +227,10 @@ const FormEmail = () => {
             };
 
             xhr.send(formData);
+            setTimeout(() => {
+                // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
+                setIsLoading(false);
+            }, 120000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         } catch (error) {
             console.error("Error sending data:", error);
             alert("Terjadi kesalahan saat mengirim data.");
@@ -252,7 +249,10 @@ const FormEmail = () => {
                         <form
                             onSubmit={onSubmit}
                             ref={formRef}
-                            className="items-center space-y-4 w-full px-4 mx-auto pb-8 "
+                            className="items-center space-y-4 w-full px-4 mx-auto pb-8"
+                            action="/submit_loker"
+                            method="post"
+                            enctype="multipart/form-data"
                         >
                             <div className="flex gap-4 flex-wrap">
                                 {/* Pekerjaan */}
@@ -297,18 +297,16 @@ const FormEmail = () => {
                                     />
                                 </div>
                             </div>
-
                             <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
                             </div>
-
                             {/* Nama */}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">
                                     Nama Lengkap
                                     <span className="text-RedTako">*</span>
                                 </h1>
-                                <input
+                                {/* <input
                                     {...register("nama", { required: true })}
                                     className="w-full border-grey border-opacity-30 p-2 rounded"
                                     placeholder="Masukkan Nama"
@@ -320,9 +318,29 @@ const FormEmail = () => {
                                     <span className="text-RedTako">
                                         Tolong Nama jangan sampai kosong
                                     </span>
+                                )} */}
+                                <input
+                                    {...register("nama", { required: true })}
+                                    className="w-full border-grey border-opacity-30 p-2 rounded"
+                                    placeholder="Masukkan Nama"
+                                    value={values.nama}
+                                    id="nama"
+                                    onChange={handleChange}
+                                    aria-invalid={
+                                        errors.nama ? "true" : "false"
+                                    }
+                                />
+                                {/* {errors.nama && (
+                                    <span className="text-RedTako">
+                                        Tolong Nama jangan sampai kosong
+                                    </span>
+                                )} */}
+                                {errors.nama?.type === "required" && (
+                                    <p role="alert">
+                                        Tolong Nama jangan sampai kosong
+                                    </p>
                                 )}
                             </div>
-
                             <div className="flex gap-4 flex-wrap">
                                 {/* Gender */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
@@ -467,7 +485,6 @@ const FormEmail = () => {
                                     )}
                                 </div>
                             </div>
-
                             {/* Tempat Lahir*/}
                             <div className="w-full">
                                 <>
@@ -563,7 +580,6 @@ const FormEmail = () => {
                                     </div>
                                 </>
                             </div>
-
                             {/* Alamat Tempat Tinggal*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">
@@ -585,7 +601,6 @@ const FormEmail = () => {
                                     </span>
                                 )}
                             </div>
-
                             <div className="flex gap-4 flex-wrap pb-4">
                                 {/* Pendidikan Terakhir */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
@@ -671,7 +686,6 @@ const FormEmail = () => {
                                     )}
                                 </div>
                             </div>
-
                             {/* Promosi*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">
@@ -694,7 +708,6 @@ const FormEmail = () => {
                                     </span>
                                 )}
                             </div>
-
                             {/* Gaji*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">
@@ -714,7 +727,6 @@ const FormEmail = () => {
                                     </span>
                                 )}
                             </div>
-
                             {/* File PDF*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">Upload CV</h1>
@@ -748,14 +760,27 @@ const FormEmail = () => {
                                     />
                                 </div>
                             </div>
-
                             {/* Submit */}
-                            <div className="w-full bg-BlueTako rounded-xl">
-                                <input
+                            <div className="w-full bg-BlueTako rounded-xl text-white text-center p-2 hover:bg-BlueTako hover:bg-opacity-90 transition-all">
+                                {/* <input
                                     type="submit"
                                     className="w-full p-2 cursor-pointer text-white"
                                     value="Kirim"
                                 />
+                                <span class="loading loading-spinner">
+                                    Loading
+                                </span> */}
+                                {isLoading ? (
+                                    <span className=" loading loading-spinner">
+                                        Loading
+                                    </span>
+                                ) : (
+                                    <input
+                                        type="submit"
+                                        className="w-full cursor-pointer text-white"
+                                        value="Kirim"
+                                    />
+                                )}
                             </div>
                         </form>
                     </div>

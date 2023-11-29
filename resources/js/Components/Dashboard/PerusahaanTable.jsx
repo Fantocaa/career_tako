@@ -46,12 +46,13 @@ const PerusahaanTable = () => {
 
     const columns = [
         {
-            name: "No",
+            name: "Nomor",
             // selector: "id",
-            selector: (row) => row.id,
+            // selector: (row) => row.id,
+            selector: (row, index) => index + 1,
             // selector: (row, index) => index + 1,
-            sortable: true,
-            sortactive: true,
+            // sortable: true,
+            // sortactive: true,
         },
         // {
         //     name: "Logo Perusahaan",
