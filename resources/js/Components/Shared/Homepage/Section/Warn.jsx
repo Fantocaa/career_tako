@@ -6,7 +6,7 @@ import Aos from "aos";
 const Warn = () => {
     return (
         <section className=" bg-RedTako font-inter text-white py-16">
-            <div className="container mx-auto px-4 md:px-8 xl:px-16">
+            <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32">
                 <div className="flex gap-4 items-center">
                     <div className="md:w-1/2 pb-8 md:pt-8">
                         {/* <p className="hidden lg:block text-2xl">WARNING!!!</p> */}
@@ -31,7 +31,7 @@ const Warn = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="hidden md:block md:w-1/2">
+                    <div className="hidden md:block md:w-1/2 2xl:translate-x-20">
                         <div data-aos="fade-up" data-aos-duration="1000">
                             <img
                                 src="/images/icon/5.svg"

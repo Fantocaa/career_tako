@@ -771,7 +771,7 @@ const FormEmail = () => {
                                     Loading
                                 </span> */}
                                 {isLoading ? (
-                                    <span className=" loading loading-spinner">
+                                    <span className=" loading loading-spinner bg-BlueTako bg-opacity-90">
                                         Loading
                                     </span>
                                 ) : (

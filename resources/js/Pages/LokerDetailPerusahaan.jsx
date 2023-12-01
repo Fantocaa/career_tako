@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "@inertiajs/react";
 import "../Components/css/style.css";
+import { useMediaQuery } from "react-responsive";
 
 const LokerDetailPerusahaan = () => {
     const { state } = usePage();
@@ -44,7 +45,39 @@ const LokerDetailPerusahaan = () => {
         fetchDataLoker(); // Panggil fungsi fetchDataLoker saat komponen di-mount
     }, [state]);
 
+    const settingsMobile = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        initialSlide: 0,
+        arrows: false,
+        // afterChange: (current) => setSliderIndex(current),
+    };
+
+    const settingsMedium = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 0,
+        arrows: false,
+        // afterChange: (current) => setSliderIndex(current),
+    };
+
     const settings = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        initialSlide: 0,
+        // afterChange: (current) => setSliderIndex(current),
+    };
+
+    const settings1280 = {
         dots: true,
         infinite: true, // Set to false to limit the number of slides
         speed: 500,
@@ -54,11 +87,42 @@ const LokerDetailPerusahaan = () => {
         // afterChange: (current) => setSliderIndex(current),
     };
 
+    const settings1920 = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        initialSlide: 0,
+    };
+
+    const isMobile = useMediaQuery({ maxWidth: 767.9 });
+    const isMedium = useMediaQuery({ maxWidth: 1023.9 });
+    const isLarge = useMediaQuery({ maxWidth: 1279.9 });
+    const isXL = useMediaQuery({ maxWidth: 1919.9 });
+    const isDekstop = useMediaQuery({ minWidth: 1920 });
+
+    let sliderActive;
+
+    if (isMobile) {
+        sliderActive = settingsMobile;
+    } else if (isMedium) {
+        sliderActive = settingsMedium;
+    } else if (isLarge) {
+        sliderActive = settings;
+    } else if (isXL) {
+        // Default settings if none of the above conditions are met
+        sliderActive = settings1280;
+    } else if (isDekstop) {
+        // Default settings if none of the above conditions are met
+        sliderActive = settings1920;
+    }
+
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                 <NavElse />
-                <div className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako">
+                <div className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako w-full md:pb-20">
                     <div className="text-center container mx-auto">
                         <div className="w-full">
                             <h1 className="font-semibold text-2xl lg:text-4xl">
@@ -72,9 +136,12 @@ const LokerDetailPerusahaan = () => {
                             </p>
                         </div>
                         <div className="w-full pt-8">
-                            <Slider {...settings} className="slick-slider">
+                            <Slider {...sliderActive} className="slick-slider">
                                 {formData.map((item) => (
-                                    <Link href={`/loker/perusahaan/${item.id}`}>
+                                    <Link
+                                        key={item.id}
+                                        href={`/loker/perusahaan/${item.id}`}
+                                    >
                                         <div
                                             className="bg-white p-6 rounded-xl text-DarkTako cursor-pointer h-full flex flex-col"
                                             key={item.id}
@@ -85,7 +152,7 @@ const LokerDetailPerusahaan = () => {
                                                 className="mx-auto w-32 h-32 object-contain"
                                             />
                                             <div className="flex flex-col h-24 justify-between">
-                                                <h3 className="font-semibold pt-4 overflow-hidden">
+                                                <h3 className="font-semibold pt-4">
                                                     {item.perusahaan}
                                                 </h3>
                                                 <p className="text-DarkTako text-opacity-75 bottom-0">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Pagination } from "@mui/material";
-import SelectJob from "../Shared/Job/SelectJob";
-import SelectJob2 from "../Shared/Job/SelectJob2";
+import SelectJob from "../Shared/Job/SelectJob/SelectJob";
+import SelectJob2 from "../Shared/Job/SelectJob/SelectJob2";
 import Axios from "axios";
 import { Link } from "@inertiajs/react";
 

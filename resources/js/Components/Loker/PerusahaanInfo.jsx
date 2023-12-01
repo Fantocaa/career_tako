@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { usePage } from "@inertiajs/react";
-import SelectJob from "../Shared/Job/SelectJob";
+import SelectJob from "../Shared/Job/SelectJob/SelectJob";
 import SectionLokerView from "./SectionLokerView";
 
 const PerusahaanInfo = () => {
@@ -22,11 +22,11 @@ const PerusahaanInfo = () => {
 
     return (
         <section className="bg-BgTako pt-8 md:pt-32 ">
-            <div className="container mx-auto text-DarkTako px-4 md:px-8 xl:px-16">
+            <div className="container mx-auto text-DarkTako px-4 md:px-8 xl:px-16 2xl:px-32">
                 <div className="p-4 md:p-8 bg-white rounded-xl flex gap-4">
                     <div className="md:w-full">
-                        <div className="flex items-center gap-8">
-                            <div className="p-8 border border-BlueTako border-opacity-25 rounded-xl">
+                        <div className="flex items-center gap-4 md:gap-8">
+                            <div className="py-2 px-6 md:p-8 border border-BlueTako border-opacity-25 rounded-xl">
                                 <img
                                     src={`/storage/images/${values.image}`}
                                     className="w-32 h-32"
@@ -38,7 +38,8 @@ const PerusahaanInfo = () => {
                                     {values.perusahaan}
                                 </h1>
                                 <a
-                                    href="www.tako.co.id"
+                                    // href="www.tako.co.id"
+                                    href={values.link}
                                     className="text-DarkTako text-opacity-75 underline "
                                 >
                                     {values.link}

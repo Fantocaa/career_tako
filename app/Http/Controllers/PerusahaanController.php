@@ -23,9 +23,11 @@ class PerusahaanController extends Controller
             //     perusahaans.id,
             //     perusahaans.perusahaan,
             //     perusahaans.image,
+            //     perusahaans.deleted_at,
             //     COALESCE(SUM(CASE WHEN md_lokers.deleted_at IS NULL THEN 1 ELSE 0 END), 0) AS jumlah_data_sama
             // FROM perusahaans
             // LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan
+            // WHERE perusahaans.deleted_at IS NULL
             // GROUP BY perusahaans.id, perusahaans.perusahaan, perusahaans.image;
             // "
 
@@ -33,11 +35,14 @@ class PerusahaanController extends Controller
             perusahaans.id,
             perusahaans.perusahaan,
             perusahaans.image,
-            SUM(CASE WHEN md_lokers.deleted_at IS NULL THEN 1 ELSE 0 END) AS jumlah_data_sama
+            perusahaans.deleted_at,
+            COUNT(DISTINCT md_lokers.id) AS jumlah_data_sama
         FROM perusahaans
-        LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan
+        LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan AND md_lokers.deleted_at IS NULL
+        WHERE perusahaans.deleted_at IS NULL
         GROUP BY perusahaans.id, perusahaans.perusahaan, perusahaans.image;
         "
+
         );
         return response()->json($posts);
     }

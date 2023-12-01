@@ -39,6 +39,9 @@ class LoginController extends Controller
         // dd($request->all());
 
         if (Auth::attempt($data)) {
+            // Menyimpan informasi pengguna ke sesi atau variabel lain
+            $user = Auth::user();
+            session(['user' => $user]);
             // return redirect('/dashboard');   
             // return Inertia::render('DashboardPage');
             // return Inertia::location($url);

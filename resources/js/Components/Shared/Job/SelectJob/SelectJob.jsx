@@ -48,14 +48,14 @@ const SelectJob = ({ active, formData: formDataProp, values }) => {
         <div
             className={
                 active
-                    ? "flex md:grid grid-cols-2 lg:grid-cols-3 flex-wrap gap-4"
+                    ? "flex md:grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 flex-wrap gap-4 2xl:gap-8"
                     : "hidden"
             }
         >
             <>
                 {formDataProp.map((item) => (
                     <div
-                        className="bg-white p-8 rounded-xl h-full flex flex-col justify-between"
+                        className="w-full bg-white p-8 rounded-xl h-full flex flex-col justify-between shadow-md"
                         key={item.id}
                     >
                         <h1 className="font-bold">{item.pekerjaan}</h1>

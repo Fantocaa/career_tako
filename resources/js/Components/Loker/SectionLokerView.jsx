@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 // import { Pagination } from "@mui/material";
 import Axios from "axios";
-import SelectJob from "../Shared/Job/SelectJob";
-import SelectJob2 from "../Shared/Job/SelectJob2";
+import SelectJob from "../Shared/Job/SelectJob/SelectJob";
+import SelectJob2 from "../Shared/Job/SelectJob/SelectJob2";
 import { Link } from "@inertiajs/react";
 import ReactPaginate from "react-paginate";
 
@@ -99,7 +99,7 @@ const SectionLokerView = ({ values, perusahaanInfoRef }) => {
     return (
         <section
             ref={perusahaanInfoRef}
-            className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container"
+            className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container"
         >
             <>
                 <div className="flex justify-between items-end pb-8 flex-wrap gap-4 w-full">

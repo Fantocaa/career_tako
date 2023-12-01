@@ -23,7 +23,7 @@ const Why = () => {
     }, []);
 
     return (
-        <div className="pt-16 md:pt-16 container mx-auto px-4 md:px-8 xl:px-16">
+        <div className="pt-16 md:pt-16 container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32">
             <div
                 className="bg-BlueTako py-16 lg:py-8 flex text-white flex-wrap relative rounded-2xl"
                 data-aos="fade-in"
@@ -109,7 +109,7 @@ const Why = () => {
                             </span>
                         </Link> */}
                     </div>
-                    <div className="w-full flex mx-auto justify-center px-4 md:px-8 md:pt-8 lg:w-1/2">
+                    <div className="w-full flex mx-auto justify-center px-4 md:px-8 md:pt-8 lg:w-1/2 2xl:translate-x-20">
                         {/* <ImageModal /> */}
                         <div className="hidden md:grid grid-cols-3 gap-4 z-10  ">
                             <div className="col-span-2 overflow-hidden rounded-xl">

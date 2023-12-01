@@ -76,25 +76,59 @@ const LokerNew = () => {
         dots: true,
         infinite: true, // Set to false to limit the number of slides
         speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        initialSlide: 0,
+        // afterChange: (current) => setSliderIndex(current),
+    };
+
+    const settings1280 = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
         slidesToShow: 4,
         slidesToScroll: 4,
         initialSlide: 0,
         // afterChange: (current) => setSliderIndex(current),
     };
 
+    const settings1920 = {
+        dots: true,
+        infinite: true, // Set to false to limit the number of slides
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        initialSlide: 0,
+    };
+
     const isMobile = useMediaQuery({ maxWidth: 767.9 });
     const isMedium = useMediaQuery({ maxWidth: 1023.9 });
+    const isLarge = useMediaQuery({ maxWidth: 1279.9 });
+    const isXL = useMediaQuery({ maxWidth: 1919.9 });
+    const isDekstop = useMediaQuery({ minWidth: 1920 });
 
-    const sliderSettingsMedium = isMobile ? settingsMobile : settingsMedium;
-    const sliderSettings = isMedium ? settingsMedium : settings;
-    const sliderActive = isMedium ? sliderSettingsMedium : sliderSettings;
+    let sliderActive;
+
+    if (isMobile) {
+        sliderActive = settingsMobile;
+    } else if (isMedium) {
+        sliderActive = settingsMedium;
+    } else if (isLarge) {
+        sliderActive = settings;
+    } else if (isXL) {
+        // Default settings if none of the above conditions are met
+        sliderActive = settings1280;
+    } else if (isDekstop) {
+        // Default settings if none of the above conditions are met
+        sliderActive = settings1920;
+    }
 
     return (
         <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
             <SkeletonTheme baseColor="#202020" highlightColor="#444444">
                 <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                     <NavElse />
-                    <div className="flex mx-auto px-4 md:px-8 xl:px-16 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako w-full">
+                    <div className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako w-full md:pb-20">
                         <div className="text-center container mx-auto">
                             <div className="w-full">
                                 <h1 className="font-semibold text-2xl lg:text-4xl">
@@ -114,6 +148,7 @@ const LokerNew = () => {
                                 >
                                     {formData.map((item) => (
                                         <Link
+                                            key={item.id}
                                             href={`/loker/perusahaan/${item.id}`}
                                         >
                                             <div

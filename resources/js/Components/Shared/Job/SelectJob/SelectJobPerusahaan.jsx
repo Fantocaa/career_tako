@@ -48,7 +48,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
         <div
             className={
                 active
-                    ? "flex md:grid grid-cols-2 lg:grid-cols-3 flex-wrap gap-4"
+                    ? "flex md:grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 flex-wrap gap-4 2xl:gap-8"
                     : "hidden"
             }
         >

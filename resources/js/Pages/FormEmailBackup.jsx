@@ -6,6 +6,7 @@ import { Link, router, usePage } from "@inertiajs/react";
 import Select from "react-select";
 import Axios from "axios";
 import Layout from "@/Layouts/Layout";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const FormEmailBackup = () => {
     const {
@@ -34,17 +35,14 @@ const FormEmailBackup = () => {
 
     const [values, setValues] = useState({
         password: "meong",
-        pekerjaan: md_loker.pekerjaan,
-        jenis_pekerjaan: md_loker.jenis_pekerjaan,
-        perusahaan: md_loker.perusahaan,
+        pekerjaan: md_loker[0].pekerjaan,
+        jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
+        perusahaan: md_loker[0].perusahaan,
         nama: "",
         jenis_kelamin: "",
         agama: "",
         tanggal_lahir: "",
         emails: "",
-        // provinsi: provinsiOptions.label,
-        // kabupaten: kabupatenOptions.label,
-        // kecamatan: kecamatanOptions.label,
         provinsi: "",
         kabupaten: "",
         kecamatan: "",
@@ -90,11 +88,7 @@ const FormEmailBackup = () => {
         setIsProvinsiSelected(true); // Setel state menjadi true saat provinsi dipilih
         setSelectedProvinsi(selectedOption); // Simpan nilai provinsi yang dipilih
 
-        // console.log(selectedOption.label);
-
         values.provinsi = selectedOption.label;
-
-        // console.log(values.provinsi);
         // Ambil kode provinsi yang dipilih
         const kodeProvinsi = selectedOption.value;
 
@@ -148,12 +142,20 @@ const FormEmailBackup = () => {
         values.kecamatan = selectedOption.label;
     };
 
+    const onChangeCaptcha = () => {};
+    const [isLoading, setIsLoading] = useState(false);
+
     async function onSubmit(e) {
         e.preventDefault();
+        setIsLoading(true);
 
         try {
-            // Buat objek FormData
+            const token = document.querySelector(
+                'meta[name="csrf-token"]'
+            ).content; // Mengambil token CSRF dari elemen <meta>
+
             const formData = new FormData();
+            formData.append("_token", token); // Menambahkan token CSRF ke FormData
 
             formData.append("pekerjaan", values.pekerjaan);
             formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
@@ -175,65 +177,63 @@ const FormEmailBackup = () => {
             formData.append("instansi", values.instansi);
             formData.append("ipk", values.ipk);
 
-            formData.append("file", e.target.fileUpload.files[0]); // Ambil file dari input file
+            const file = e.target.fileUpload.files[0];
+            formData.append("file", file);
 
-            console.log("Data yang dikirim melalui formData:", formData);
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/formulir/submit", true);
 
-            // Jika Anda ingin melihat nilai spesifik dari formData, misalnya:
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Berhasil
+                        // Membersihkan formulir jika berhasil
+                        setValues({
+                            // password: "meong",
+                            pekerjaan: md_loker.pekerjaan,
+                            jenis_pekerjaan: md_loker.jenis_pekerjaan,
+                            perusahaan: md_loker[0].perusahaan,
+                            nama: "",
+                            jenis_kelamin: "",
+                            agama: "",
+                            tanggal_lahir: "",
+                            emails: "",
+                            provinsi: provinsiOptions.label,
+                            kabupaten: kabupatenOptions.label,
+                            kecamatan: kecamatanOptions.label,
+                            kodepos: "",
+                            alamat: "",
+                            no_telp: "",
+                            gaji: "",
+                            file: "",
+                            promosi: "",
+                            pendidikan: "",
+                            instansi: "",
+                            ipk: "",
+                        });
 
-            // Kirim data ke server
-            const response = await Axios.post("/formulir/submit/", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
+                        // console.log("Sukses:", xhr.responseText);
+                        router.get("/finish");
+                    } else {
+                        // Gagal
+                        console.error(
+                            "Error sending data:",
+                            xhr.status,
+                            xhr.statusText
+                        );
+                        alert("Terjadi kesalahan saat mengirim data.");
+                    }
+                }
+            };
 
-                    // Pastikan Anda menetapkan tipe konten sebagai multipart/form-data
-                },
-            });
-            // Membersihkan formulir jika berhasil
-            // reset();
-
-            // Bersihkan formulir
-            setValues({
-                password: "meong",
-                pekerjaan: md_loker.pekerjaan,
-                jenis_pekerjaan: md_loker.jenis_pekerjaan,
-                perusahaan: md_loker.perusahaan,
-                nama: "",
-                jenis_kelamin: "",
-                agama: "",
-                tanggal_lahir: "",
-                emails: "",
-                provinsi: provinsiOptions.label,
-                kabupaten: kabupatenOptions.label,
-                kecamatan: kecamatanOptions.label,
-                kodepos: "",
-                alamat: "",
-                no_telp: "",
-                gaji: "",
-                file: "",
-                promosi: "",
-                pendidikan: "",
-                instansi: "",
-                ipk: "",
-            });
-
-            // Redirect ke halaman lain jika diperlukan
-            // router.get("/dashboard/lowongan_pekerjaan");
-            router.get("/finish");
+            xhr.send(formData);
+            setTimeout(() => {
+                // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
+                setIsLoading(false);
+            }, 2000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         } catch (error) {
-            if (error.response) {
-                // Jika respons error dari server
-                console.error("Error sending data:", error.response.data);
-
-                // Tampilkan pesan kesalahan ke pengguna
-                alert(error.response.data.message);
-            } else {
-                // Jika kesalahan lainnya
-                console.error("Error sending data:", error);
-
-                // Tampilkan pesan kesalahan ke pengguna
-                alert("Terjadi kesalahan saat mengirim data.");
-            }
+            console.error("Error sending data:", error);
+            alert("Terjadi kesalahan saat mengirim data.");
         }
     }
 
@@ -249,7 +249,10 @@ const FormEmailBackup = () => {
                         <form
                             onSubmit={onSubmit}
                             ref={formRef}
-                            className="items-center space-y-4 w-full px-4 mx-auto pb-8 "
+                            className="items-center space-y-4 w-full px-4 mx-auto pb-8"
+                            action="/submit_loker"
+                            method="post"
+                            enctype="multipart/form-data"
                         >
                             <div className="flex gap-4 flex-wrap">
                                 {/* Pekerjaan */}
@@ -294,18 +297,16 @@ const FormEmailBackup = () => {
                                     />
                                 </div>
                             </div>
-
                             <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
                             </div>
-
                             {/* Nama */}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">
                                     Nama Lengkap
                                     <span className="text-RedTako">*</span>
                                 </h1>
-                                <input
+                                {/* <input
                                     {...register("nama", { required: true })}
                                     className="w-full border-grey border-opacity-30 p-2 rounded"
                                     placeholder="Masukkan Nama"
@@ -317,9 +318,29 @@ const FormEmailBackup = () => {
                                     <span className="text-RedTako">
                                         Tolong Nama jangan sampai kosong
                                     </span>
+                                )} */}
+                                <input
+                                    {...register("nama", { required: true })}
+                                    className="w-full border-grey border-opacity-30 p-2 rounded"
+                                    placeholder="Masukkan Nama"
+                                    value={values.nama}
+                                    id="nama"
+                                    onChange={handleChange}
+                                    aria-invalid={
+                                        errors.nama ? "true" : "false"
+                                    }
+                                />
+                                {/* {errors.nama && (
+                                    <span className="text-RedTako">
+                                        Tolong Nama jangan sampai kosong
+                                    </span>
+                                )} */}
+                                {errors.nama?.type === "required" && (
+                                    <p role="alert">
+                                        Tolong Nama jangan sampai kosong
+                                    </p>
                                 )}
                             </div>
-
                             <div className="flex gap-4 flex-wrap">
                                 {/* Gender */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
@@ -392,13 +413,13 @@ const FormEmailBackup = () => {
                                         Tanggal Lahir
                                         <span className="text-RedTako">*</span>
                                     </h1>
-                                    <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none ">
+                                    {/* <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none ">
                                         <img
                                             src="/images/calendar.svg"
                                             alt=""
                                             className=""
                                         />
-                                    </div>
+                                    </div> */}
                                     <input
                                         {...register("tanggal_lahir", {
                                             required: true,
@@ -464,7 +485,6 @@ const FormEmailBackup = () => {
                                     )}
                                 </div>
                             </div>
-
                             {/* Tempat Lahir*/}
                             <div className="w-full">
                                 <>
@@ -560,7 +580,6 @@ const FormEmailBackup = () => {
                                     </div>
                                 </>
                             </div>
-
                             {/* Alamat Tempat Tinggal*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">
@@ -582,7 +601,6 @@ const FormEmailBackup = () => {
                                     </span>
                                 )}
                             </div>
-
                             <div className="flex gap-4 flex-wrap pb-4">
                                 {/* Pendidikan Terakhir */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
@@ -668,7 +686,6 @@ const FormEmailBackup = () => {
                                     )}
                                 </div>
                             </div>
-
                             {/* Promosi*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">
@@ -691,7 +708,6 @@ const FormEmailBackup = () => {
                                     </span>
                                 )}
                             </div>
-
                             {/* Gaji*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">
@@ -711,7 +727,6 @@ const FormEmailBackup = () => {
                                     </span>
                                 )}
                             </div>
-
                             {/* File PDF*/}
                             <div className="w-full pb-4">
                                 <h1 className="pb-2">Upload CV</h1>
@@ -738,14 +753,34 @@ const FormEmailBackup = () => {
                                         Pengajuan Internship
                                     </p>
                                 </div>
+                                <div className="pt-8">
+                                    <ReCAPTCHA
+                                        sitekey="6LfoNxgpAAAAAGhZrxtSO_73hk2nPjPofQkAsmnd"
+                                        onChange={onChangeCaptcha}
+                                    />
+                                </div>
                             </div>
                             {/* Submit */}
-                            <div className="w-full bg-BlueTako rounded-xl">
-                                <input
+                            <div className="w-full bg-BlueTako rounded-xl text-white text-center p-2 hover:bg-BlueTako hover:bg-opacity-90 transition-all">
+                                {/* <input
                                     type="submit"
                                     className="w-full p-2 cursor-pointer text-white"
                                     value="Kirim"
                                 />
+                                <span class="loading loading-spinner">
+                                    Loading
+                                </span> */}
+                                {isLoading ? (
+                                    <span className=" loading loading-spinner bg-BlueTako bg-opacity-90">
+                                        Loading
+                                    </span>
+                                ) : (
+                                    <input
+                                        type="submit"
+                                        className="w-full cursor-pointer text-white"
+                                        value="Kirim"
+                                    />
+                                )}
                             </div>
                         </form>
                     </div>
