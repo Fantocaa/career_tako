@@ -31,6 +31,18 @@ class PerusahaanController extends Controller
             // GROUP BY perusahaans.id, perusahaans.perusahaan, perusahaans.image;
             // "
 
+            //     "SELECT
+            //     perusahaans.id,
+            //     perusahaans.perusahaan,
+            //     perusahaans.image,
+            //     perusahaans.deleted_at,
+            //     COUNT(DISTINCT md_lokers.id) AS jumlah_data_sama
+            // FROM perusahaans
+            // LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan AND md_lokers.deleted_at IS NULL
+            // WHERE perusahaans.deleted_at IS NULL
+            // GROUP BY perusahaans.id, perusahaans.perusahaan, perusahaans.image;
+            // "
+
             "SELECT
             perusahaans.id,
             perusahaans.perusahaan,
@@ -40,7 +52,7 @@ class PerusahaanController extends Controller
         FROM perusahaans
         LEFT JOIN md_lokers ON perusahaans.id = md_lokers.perusahaan AND md_lokers.deleted_at IS NULL
         WHERE perusahaans.deleted_at IS NULL
-        GROUP BY perusahaans.id, perusahaans.perusahaan, perusahaans.image;
+        GROUP BY perusahaans.id, perusahaans.perusahaan, perusahaans.image, perusahaans.deleted_at;
         "
 
         );

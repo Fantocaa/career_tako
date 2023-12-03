@@ -377,7 +377,7 @@ class MdLokerController extends Controller
     public function submit_loker(Request $request)
     {
 
-        // dd($request);
+        // dd($request->all());
         $request->validate([
             // 'nama' => 'required|string|min:5',
             'nama' => 'required',
