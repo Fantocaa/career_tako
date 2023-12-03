@@ -24,6 +24,7 @@ jobs:
         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
         with:
           username: nuxer
+          password: takO777
           server: karir.tako.co.id
           port: 22112 # default is 22
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
