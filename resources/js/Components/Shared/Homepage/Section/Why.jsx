@@ -109,7 +109,7 @@ const Why = () => {
                             </span>
                         </Link> */}
                     </div>
-                    <div className="w-full flex mx-auto justify-center px-4 md:px-8 md:pt-8 lg:w-1/2 2xl:translate-x-20">
+                    <div className="w-full flex mx-auto justify-center px-4 md:px-8 md:pt-8 lg:w-1/2 3xl:translate-x-20">
                         {/* <ImageModal /> */}
                         <div className="hidden md:grid grid-cols-3 gap-4 z-10  ">
                             <div className="col-span-2 overflow-hidden rounded-xl">
