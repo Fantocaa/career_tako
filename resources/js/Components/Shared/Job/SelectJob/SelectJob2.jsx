@@ -90,14 +90,16 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                         </div>
                         <div className="flex flex-col pt-4 gap-4 w-36">
                             <div className="w-full">
-                                <Link href={`/job/internship/${item.id}`}>
+                                <Link href={`/loker/pekerjaan/${item.id}`}>
                                     <button className="bg-BlueTako text-BlueTako bg-opacity-10 py-2 rounded-lg w-full">
                                         Lihat Detail
                                     </button>
                                 </Link>
                             </div>
                             <div className="w-full">
-                                <Link href={`/job/formulir/${item.id}`}>
+                                <Link
+                                    href={`/loker/pekerjaan/formulir/${item.id}`}
+                                >
                                     <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
                                         Lamar
                                     </button>

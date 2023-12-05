@@ -56,7 +56,7 @@ Route::get('/loker', function () {
 
 Route::get('/loker/perusahaan/{id}', [MdLokerController::class, 'show_detail_perusahaan_loker']);
 
-Route::get('/loker/pekerjaan/{id}', [MdLokerController::class, 'show_detail_pekerjaan']);
+Route::get('/loker/pekerjaan/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
 
 // Route::get('/lowongan_kerja', function () {
 //     return view('loker.loker');
@@ -88,10 +88,11 @@ Route::get('/form/view_pro', [MdLokerController::class, 'index_profesional']);
 Route::get('/form/view_intern', [MdLokerController::class, 'index_internship']);
 Route::resource('form', MdLokerController::class);
 
-Route::get('/job/internship/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
-Route::get('/job/profesional/{id}', [MdLokerController::class, 'show_detail_loker_pro']);
+// Route::get('/job/internship/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
 
-Route::get('/job/formulir/{id}', [MdLokerController::class, 'show_lamar_loker']);
+// Route::get('/job/profesional/{id}', [MdLokerController::class, 'show_detail_loker_pro']);
+
+Route::get('/loker/pekerjaan/formulir/{id}', [MdLokerController::class, 'show_lamar_loker']);
 
 Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
 Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
