@@ -6,7 +6,6 @@ import { router, usePage } from "@inertiajs/react";
 import Axios from "axios";
 import { shareOnMobile } from "react-mobile-share";
 import Layout from "@/Layouts/Layout";
-
 import {
     EmailShareButton,
     FacebookShareButton,
@@ -37,26 +36,12 @@ const DetailLoker = () => {
         isi_konten: md_loker[0].deskripsi,
         deskripsi: md_loker[0].isi_konten,
     });
-    console.log(md_loker);
+    // console.log(md_loker);
 
-    // useEffect(() => {
-    //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
-    //     const fetchData = async () => {
-    //         try {
-    //             // Kirim data ke server
-    //             const response = await Axios.get("/form");
+    const urlLink = window.location.href;
+    const urlLinkDekstop = "karir.tako.co.id" + window.location.pathname;
 
-    //             const count = response.data.length;
-    //             // const response = await Axios.post("/form");
-    //             setJobCount(count);
-    //             setFormData(response.data);
-    //         } catch (error) {
-    //             console.error("Error sending data:", error);
-    //         }
-    //     };
-
-    //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
-    // }, []);
+    console.log(urlLinkDekstop);
 
     return (
         <>
@@ -143,7 +128,12 @@ const DetailLoker = () => {
                                                     Bagikan
                                                 </h3>
                                                 <p className="py-8 flex gap-8">
-                                                    <FacebookShareButton url="www.facebook.com">
+                                                    <FacebookShareButton
+                                                        // url={urlLink}
+                                                        url={urlLinkDekstop}
+                                                        quote="Meong uwu"
+                                                        hashtag=""
+                                                    >
                                                         <div className="flex flex-col items-center gap-2">
                                                             <FacebookIcon
                                                                 size={48}
@@ -152,7 +142,11 @@ const DetailLoker = () => {
                                                             <h1>Facebook</h1>
                                                         </div>
                                                     </FacebookShareButton>
-                                                    <WhatsappShareButton url="www.whatsapp.com">
+                                                    <WhatsappShareButton
+                                                        url={urlLinkDekstop}
+                                                        quote="Meong uwu"
+                                                        hashtag=""
+                                                    >
                                                         <div className="flex flex-col items-center gap-2">
                                                             <WhatsappIcon
                                                                 size={48}
@@ -201,9 +195,12 @@ const DetailLoker = () => {
                                             className="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full"
                                             onClick={() =>
                                                 shareOnMobile({
-                                                    text: "Hey checkout our package react-mobile-share",
-                                                    url: "https://www.npmjs.com/package/react-mobile-share",
-                                                    title: "React-Mobile-Share",
+                                                    text: "Come Join Us",
+                                                    // url: "https://www.npmjs.com/package/react-mobile-share",
+                                                    url: urlLink,
+                                                    title:
+                                                        values.pekerjaan +
+                                                        " - karir.tako.co.id",
                                                     // images: [imgBase64],
                                                 })
                                             }

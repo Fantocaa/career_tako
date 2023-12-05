@@ -151,7 +151,8 @@
                     <label for="deskripsi" class="w-full ">
                         <h1 class="mb-2">Isi Konten</h1>
                         <input id="deskripsi" type="hidden" name="deskripsi" value="{{ $md_loker[0]->isi_konten }}">
-                        <trix-editor input="deskripsi" class="h-64 hover:cursor-auto meong"></trix-editor>
+                        <trix-editor input="deskripsi"
+                            class="h-64 overflow-scroll hover:cursor-auto meong"></trix-editor>
                     </label>
                 </div>
                 <div class="flex gap-4">

@@ -631,7 +631,6 @@ class MdLokerController extends Controller
                         ->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
                     // ->where('md_lokers.perusahaan', '=', $perusahaan);
 
-                    // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
                 }
             }
         }

@@ -158,7 +158,7 @@
                     <label for="deskripsi" class="w-full">
                         <h1 class="mb-2">Isi Konten</h1>
                         <input id="deskripsi" type="hidden" name="deskripsi">
-                        <trix-editor input="deskripsi" class="h-64 hover:cursor-auto"></trix-editor>
+                        <trix-editor input="deskripsi" class="h-64 overflow-scroll hover:cursor-auto"></trix-editor>
                     </label>
                 </div>
 
