@@ -70,7 +70,7 @@ class DefaultProviders
         foreach ($replacements as $from => $to) {
             $key = $current->search($from);
 
-            $current = is_int($key) ? $current->replace([$key => $to]) : $current;
+            $current = $key ? $current->replace([$key => $to]) : $current;
         }
 
         return new static($current->values()->toArray());

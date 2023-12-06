@@ -54,42 +54,6 @@ class PostgresBuilder extends Builder
     }
 
     /**
-     * Get all of the table names for the database.
-     *
-     * @deprecated Will be removed in a future Laravel version.
-     *
-     * @return array
-     */
-    public function getAllTables()
-    {
-        return $this->connection->select(
-            $this->grammar->compileGetAllTables(
-                $this->parseSearchPath(
-                    $this->connection->getConfig('search_path') ?: $this->connection->getConfig('schema')
-                )
-            )
-        );
-    }
-
-    /**
-     * Get all of the view names for the database.
-     *
-     * @deprecated Will be removed in a future Laravel version.
-     *
-     * @return array
-     */
-    public function getAllViews()
-    {
-        return $this->connection->select(
-            $this->grammar->compileGetAllViews(
-                $this->parseSearchPath(
-                    $this->connection->getConfig('search_path') ?: $this->connection->getConfig('schema')
-                )
-            )
-        );
-    }
-
-    /**
      * Drop all tables from the database.
      *
      * @return void
@@ -102,14 +66,11 @@ class PostgresBuilder extends Builder
             $this->connection->getConfig('dont_drop') ?? ['spatial_ref_sys']
         );
 
-        $schemas = $this->grammar->escapeNames($this->getSchemas());
+        foreach ($this->getAllTables() as $row) {
+            $row = (array) $row;
 
-        foreach ($this->getTables() as $table) {
-            $qualifiedName = $table['schema'].'.'.$table['name'];
-
-            if (empty(array_intersect($this->grammar->escapeNames([$table['name'], $qualifiedName]), $excludedTables))
-                && in_array($this->grammar->escapeNames([$table['schema']])[0], $schemas)) {
-                $tables[] = $qualifiedName;
+            if (empty(array_intersect($this->grammar->escapeNames($row), $excludedTables))) {
+                $tables[] = $row['qualifiedname'] ?? reset($row);
             }
         }
 
@@ -131,12 +92,10 @@ class PostgresBuilder extends Builder
     {
         $views = [];
 
-        $schemas = $this->grammar->escapeNames($this->getSchemas());
+        foreach ($this->getAllViews() as $row) {
+            $row = (array) $row;
 
-        foreach ($this->getViews() as $view) {
-            if (in_array($this->grammar->escapeNames([$view['schema']])[0], $schemas)) {
-                $views[] = $view['schema'].'.'.$view['name'];
-            }
+            $views[] = $row['qualifiedname'] ?? reset($row);
         }
 
         if (empty($views)) {
@@ -145,18 +104,6 @@ class PostgresBuilder extends Builder
 
         $this->connection->statement(
             $this->grammar->compileDropAllViews($views)
-        );
-    }
-
-    /**
-     * Get all of the type names for the database.
-     *
-     * @return array
-     */
-    public function getAllTypes()
-    {
-        return $this->connection->select(
-            $this->grammar->compileGetAllTypes()
         );
     }
 
@@ -185,34 +132,66 @@ class PostgresBuilder extends Builder
     }
 
     /**
-     * Get the columns for a given table.
+     * Get all of the table names for the database.
+     *
+     * @return array
+     */
+    public function getAllTables()
+    {
+        return $this->connection->select(
+            $this->grammar->compileGetAllTables(
+                $this->parseSearchPath(
+                    $this->connection->getConfig('search_path') ?: $this->connection->getConfig('schema')
+                )
+            )
+        );
+    }
+
+    /**
+     * Get all of the view names for the database.
+     *
+     * @return array
+     */
+    public function getAllViews()
+    {
+        return $this->connection->select(
+            $this->grammar->compileGetAllViews(
+                $this->parseSearchPath(
+                    $this->connection->getConfig('search_path') ?: $this->connection->getConfig('schema')
+                )
+            )
+        );
+    }
+
+    /**
+     * Get all of the type names for the database.
+     *
+     * @return array
+     */
+    public function getAllTypes()
+    {
+        return $this->connection->select(
+            $this->grammar->compileGetAllTypes()
+        );
+    }
+
+    /**
+     * Get the column listing for a given table.
      *
      * @param  string  $table
      * @return array
      */
-    public function getColumns($table)
+    public function getColumnListing($table)
     {
         [$database, $schema, $table] = $this->parseSchemaAndTable($table);
 
         $table = $this->connection->getTablePrefix().$table;
 
         $results = $this->connection->selectFromWriteConnection(
-            $this->grammar->compileColumns($database, $schema, $table)
+            $this->grammar->compileColumnListing(), [$database, $schema, $table]
         );
 
-        return $this->connection->getPostProcessor()->processColumns($results);
-    }
-
-    /**
-     * Get the schemas for the connection.
-     *
-     * @return array
-     */
-    protected function getSchemas()
-    {
-        return $this->parseSearchPath(
-            $this->connection->getConfig('search_path') ?: $this->connection->getConfig('schema') ?: 'public'
-        );
+        return $this->connection->getPostProcessor()->processColumnListing($results);
     }
 
     /**
@@ -223,6 +202,10 @@ class PostgresBuilder extends Builder
      */
     protected function parseSchemaAndTable($reference)
     {
+        $searchPath = $this->parseSearchPath(
+            $this->connection->getConfig('search_path') ?: $this->connection->getConfig('schema') ?: 'public'
+        );
+
         $parts = explode('.', $reference);
 
         $database = $this->connection->getConfig('database');
@@ -238,7 +221,7 @@ class PostgresBuilder extends Builder
         // We will use the default schema unless the schema has been specified in the
         // query. If the schema has been specified in the query then we can use it
         // instead of a default schema configured in the connection search path.
-        $schema = $this->getSchemas()[0];
+        $schema = $searchPath[0];
 
         if (count($parts) === 2) {
             $schema = $parts[0];

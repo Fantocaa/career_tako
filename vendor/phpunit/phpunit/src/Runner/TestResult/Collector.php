@@ -60,11 +60,6 @@ final class Collector
     private bool $currentTestSuiteForTestClassFailed = false;
 
     /**
-     * @psalm-var non-negative-int
-     */
-    private int $numberOfIssuesIgnoredByBaseline = 0;
-
-    /**
      * @psalm-var list<BeforeFirstTestMethodErrored|Errored>
      */
     private array $testErroredEvents = [];
@@ -214,7 +209,6 @@ final class Collector
             array_values($this->phpDeprecations),
             array_values($this->phpNotices),
             array_values($this->phpWarnings),
-            $this->numberOfIssuesIgnoredByBaseline,
         );
     }
 
@@ -348,16 +342,6 @@ final class Collector
 
     public function testTriggeredDeprecation(DeprecationTriggered $event): void
     {
-        if ($event->ignoredByTest()) {
-            return;
-        }
-
-        if ($event->ignoredByBaseline()) {
-            $this->numberOfIssuesIgnoredByBaseline++;
-
-            return;
-        }
-
         if (!$this->source->ignoreSuppressionOfDeprecations() && $event->wasSuppressed()) {
             return;
         }
@@ -384,16 +368,6 @@ final class Collector
 
     public function testTriggeredPhpDeprecation(PhpDeprecationTriggered $event): void
     {
-        if ($event->ignoredByTest()) {
-            return;
-        }
-
-        if ($event->ignoredByBaseline()) {
-            $this->numberOfIssuesIgnoredByBaseline++;
-
-            return;
-        }
-
         if (!$this->source->ignoreSuppressionOfPhpDeprecations() && $event->wasSuppressed()) {
             return;
         }
@@ -451,12 +425,6 @@ final class Collector
 
     public function testTriggeredNotice(NoticeTriggered $event): void
     {
-        if ($event->ignoredByBaseline()) {
-            $this->numberOfIssuesIgnoredByBaseline++;
-
-            return;
-        }
-
         if (!$this->source->ignoreSuppressionOfNotices() && $event->wasSuppressed()) {
             return;
         }
@@ -483,12 +451,6 @@ final class Collector
 
     public function testTriggeredPhpNotice(PhpNoticeTriggered $event): void
     {
-        if ($event->ignoredByBaseline()) {
-            $this->numberOfIssuesIgnoredByBaseline++;
-
-            return;
-        }
-
         if (!$this->source->ignoreSuppressionOfPhpNotices() && $event->wasSuppressed()) {
             return;
         }
@@ -515,12 +477,6 @@ final class Collector
 
     public function testTriggeredWarning(WarningTriggered $event): void
     {
-        if ($event->ignoredByBaseline()) {
-            $this->numberOfIssuesIgnoredByBaseline++;
-
-            return;
-        }
-
         if (!$this->source->ignoreSuppressionOfWarnings() && $event->wasSuppressed()) {
             return;
         }
@@ -547,12 +503,6 @@ final class Collector
 
     public function testTriggeredPhpWarning(PhpWarningTriggered $event): void
     {
-        if ($event->ignoredByBaseline()) {
-            $this->numberOfIssuesIgnoredByBaseline++;
-
-            return;
-        }
-
         if (!$this->source->ignoreSuppressionOfPhpWarnings() && $event->wasSuppressed()) {
             return;
         }

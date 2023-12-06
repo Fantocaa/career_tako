@@ -128,20 +128,6 @@ final class ExecutableLinesFindingVisitor extends NodeVisitorAbstract
             $node instanceof Node\Stmt\ClassMethod ||
             $node instanceof Node\Expr\Closure ||
             $node instanceof Node\Stmt\Trait_) {
-            if ($node instanceof Node\Stmt\Function_ || $node instanceof Node\Stmt\ClassMethod) {
-                $unsets = [];
-
-                foreach ($node->getParams() as $param) {
-                    foreach (range($param->getStartLine(), $param->getEndLine()) as $line) {
-                        $unsets[$line] = true;
-                    }
-                }
-
-                unset($unsets[$node->getEndLine()]);
-
-                $this->unsets += $unsets;
-            }
-
             $isConcreteClassLike = $node instanceof Node\Stmt\Enum_ || $node instanceof Node\Stmt\Class_ || $node instanceof Node\Stmt\Trait_;
 
             if (null !== $node->stmts) {
@@ -175,7 +161,7 @@ final class ExecutableLinesFindingVisitor extends NodeVisitorAbstract
                 );
 
             if ($hasEmptyBody) {
-                if ($node->getEndLine() === $node->getStartLine() && isset($this->executableLinesGroupedByBranch[$node->getStartLine()])) {
+                if ($node->getEndLine() === $node->getStartLine()) {
                     return;
                 }
 

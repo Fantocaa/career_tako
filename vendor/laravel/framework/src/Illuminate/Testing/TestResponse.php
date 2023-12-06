@@ -15,7 +15,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 use Illuminate\Support\ViewErrorBag;
@@ -33,7 +32,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class TestResponse implements ArrayAccess
 {
-    use Concerns\AssertsStatusCodes, Conditionable, Tappable, Macroable {
+    use Concerns\AssertsStatusCodes, Tappable, Macroable {
         __call as macroCall;
     }
 
@@ -498,8 +497,7 @@ class TestResponse implements ArrayAccess
                     $cookie->isSecure(),
                     $cookie->isHttpOnly(),
                     $cookie->isRaw(),
-                    $cookie->getSameSite(),
-                    $cookie->isPartitioned()
+                    $cookie->getSameSite()
                 );
             }
         }
@@ -1664,7 +1662,7 @@ class TestResponse implements ArrayAccess
     protected function appendErrorsToException($errors, $exception, $json = false)
     {
         $errors = $json
-            ? json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            ? json_encode($errors, JSON_PRETTY_PRINT)
             : implode(PHP_EOL, Arr::flatten($errors));
 
         // JSON error messages may already contain the errors, so we shouldn't duplicate them...

@@ -21,7 +21,6 @@ use Symfony\Component\VarDumper\Cloner\Data;
  */
 class HtmlDumper extends CliDumper
 {
-    /** @var callable|resource|string|null */
     public static $defaultOutput = 'php://output';
 
     protected static $themes = [

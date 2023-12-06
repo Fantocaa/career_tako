@@ -29,7 +29,6 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
  */
 class StreamOutput extends Output
 {
-    /** @var resource */
     private $stream;
 
     /**
