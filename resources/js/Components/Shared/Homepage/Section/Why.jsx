@@ -52,7 +52,7 @@ const Why = () => {
                             Mengapa harus memilih Tako?
                         </h1>
                         <div className="carousel md:hidden pt-8 h-80">
-                            <div className="carousel-item w-full">
+                            {/* <div className="carousel-item w-full">
                                 <img
                                     src="/images/image-1.jpg"
                                     className="w-full object-cover"
@@ -79,18 +79,18 @@ const Why = () => {
                                     className="w-full"
                                     alt="Tailwind CSS Carousel component"
                                 />
-                            </div>
+                            </div> */}
                             <div className="carousel-item w-full">
                                 <img
                                     src="/images/image-5.png"
-                                    className="w-full"
+                                    className="w-full object-cover"
                                     alt="Tailwind CSS Carousel component"
                                 />
                             </div>
                             <div className="carousel-item w-full">
                                 <img
                                     src="/images/image-6.png"
-                                    className="w-full"
+                                    className="w-full object-cover"
                                     alt="Tailwind CSS Carousel component"
                                 />
                             </div>

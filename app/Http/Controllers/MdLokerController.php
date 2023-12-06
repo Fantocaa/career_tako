@@ -291,11 +291,6 @@ class MdLokerController extends Controller
 
     public function show_lamar_loker($id)
     {
-        // $posts = md_loker::get();
-        // return redirect("/formulir/");
-
-        // $md_loker = md_loker::find($id);
-        // dd($md_loker);
 
         $md_loker = DB::table('md_lokers')
 
@@ -312,6 +307,9 @@ class MdLokerController extends Controller
         return Inertia::render('FormEmail', [
             'md_loker' => $md_loker,
         ]);
+        // return Inertia::render('Form', [
+        //     'md_loker' => $md_loker,
+        // ]);
     }
 
     public function show_detail_loker_intern($id)
@@ -442,6 +440,7 @@ class MdLokerController extends Controller
 
         $maxSize = 2 * 1024 * 1024; // 2MB in bytes
         // $maxSize = 2048;
+        // dd($maxSize);
 
 
         if ($file->getSize() <= $maxSize) {

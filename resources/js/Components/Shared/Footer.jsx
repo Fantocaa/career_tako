@@ -27,8 +27,10 @@ const Footer = () => {
                         <a
                             href="https://www.instagram.com/tako.koporasi/"
                             target="__blank"
+                            alt="instagram"
+                            aria-label="Instagram"
                         >
-                            <img src="/images/ig.svg" alt="" />
+                            <img src="/images/ig.svg" alt="instagram" />
                         </a>
                         {/* <Link href="">
                             <img src="/images/fb.svg" alt="" />
@@ -42,8 +44,10 @@ const Footer = () => {
                         <a
                             href="https://www.linkedin.com/company/tako-anugerah-koporasi-pt/"
                             target="_blank"
+                            alt="linkedin"
+                            aria-label="Linkedin"
                         >
-                            <img src="/images/linkedin.svg" alt="" />
+                            <img src="/images/linkedin.svg" alt="linkedin" />
                         </a>
                     </div>
                 </div>

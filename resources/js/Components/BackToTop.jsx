@@ -30,11 +30,11 @@ const BackToTop = () => {
                 isVisible ? "visible" : "hidden"
             }`}
         >
-            <button onClick={scrollToTop} className=" ">
+            <button onClick={scrollToTop}>
                 <div>
                     <img
                         src="/images/arrow-circle-up.svg"
-                        alt=""
+                        alt="BackToTop"
                         className="scale-[2.0]"
                     />
                 </div>

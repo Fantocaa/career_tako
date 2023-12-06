@@ -57,9 +57,31 @@ const FormEmail = () => {
         ipk: "",
     });
 
+    // const handleChange = (e) => {
+    //     const key = e.target.id;
+    //     const value = e.target.value;
+    //     setValues((values) => ({
+    //         ...values,
+    //         [key]: value,
+    //     }));
+    // };
+
     const handleChange = (e) => {
         const key = e.target.id;
         const value = e.target.value;
+
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+            if (file.size > maxSize) {
+                alert("File with a maximum size of 2MB is allowed");
+                e.target.value = null;
+                // You can set an error state or display an alert here if needed
+                return; // Exit the function to prevent further execution
+            }
+        }
+
         setValues((values) => ({
             ...values,
             [key]: value,
@@ -150,7 +172,7 @@ const FormEmail = () => {
     async function onSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
-        console.log(capca);
+        // console.log(capca);
         if (capca != "") {
             try {
                 const token = document.querySelector(
@@ -256,9 +278,9 @@ const FormEmail = () => {
                             onSubmit={onSubmit}
                             ref={formRef}
                             className="items-center space-y-4 w-full px-4 mx-auto pb-8"
-                            action="/submit_loker"
+                            // action="/submit_loker"
                             method="post"
-                            enctype="multipart/form-data"
+                            encType="multipart/form-data"
                         >
                             <div className="flex gap-4 flex-wrap">
                                 {/* Pekerjaan */}

@@ -15,9 +15,9 @@ const ImageSlider = () => {
     // }, []);
 
     const images = [
-        { url: "/images/image-4.png", caption: "Caption 1" },
-        { url: "/images/image-9.png", caption: "Caption 2" },
-        { url: "/images/image-10.png", caption: "Caption 3" },
+        { url: "/images/banner-1.webp", caption: "Caption 1" },
+        { url: "/images/banner-2.webp", caption: "Caption 2" },
+        { url: "/images/banner-3.webp", caption: "Caption 3" },
     ];
 
     // const [isSliderActive, setIsSliderActive] = useState(true);

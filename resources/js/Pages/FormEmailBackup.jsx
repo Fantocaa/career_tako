@@ -30,6 +30,8 @@ const FormEmailBackup = () => {
     const [isKabupatenSelected, setIsKabupatenSelected] = useState(false);
     const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
 
+    const [fileSizeError, setFileSizeError] = useState("");
+
     const disabledInputClasses =
         "text-DarkTako text-opacity-50 bg-grey bg-opacity-10";
 
@@ -60,6 +62,7 @@ const FormEmailBackup = () => {
     const handleChange = (e) => {
         const key = e.target.id;
         const value = e.target.value;
+
         setValues((values) => ({
             ...values,
             [key]: value,
@@ -141,99 +144,106 @@ const FormEmailBackup = () => {
 
         values.kecamatan = selectedOption.label;
     };
-
-    const onChangeCaptcha = () => {};
+    var capca = "";
+    const onChangeCaptcha = (value) => {
+        capca = value;
+    };
     const [isLoading, setIsLoading] = useState(false);
 
     async function onSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
 
-        try {
-            const token = document.querySelector(
-                'meta[name="csrf-token"]'
-            ).content; // Mengambil token CSRF dari elemen <meta>
+        // console.log(capca);
+        if (capca != "") {
+            try {
+                const token = document.querySelector(
+                    'meta[name="csrf-token"]'
+                ).content; // Mengambil token CSRF dari elemen <meta>
 
-            const formData = new FormData();
-            formData.append("_token", token); // Menambahkan token CSRF ke FormData
+                const formData = new FormData();
+                formData.append("_token", token); // Menambahkan token CSRF ke FormData
 
-            formData.append("pekerjaan", values.pekerjaan);
-            formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
-            formData.append("perusahaan", values.perusahaan);
-            formData.append("nama", values.nama);
-            formData.append("jenis_kelamin", values.jenis_kelamin);
-            formData.append("tanggal_lahir", values.tanggal_lahir);
-            formData.append("agama", values.agama);
-            formData.append("emails", values.emails);
-            formData.append("no_telp", values.no_telp);
-            formData.append("provinsi", values.provinsi);
-            formData.append("kabupaten", values.kabupaten);
-            formData.append("kecamatan", values.kecamatan);
-            formData.append("kodepos", values.kodepos);
-            formData.append("alamat", values.alamat);
-            formData.append("gaji", values.gaji);
-            formData.append("promosi", values.promosi);
-            formData.append("pendidikan", values.pendidikan);
-            formData.append("instansi", values.instansi);
-            formData.append("ipk", values.ipk);
+                formData.append("pekerjaan", values.pekerjaan);
+                formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
+                formData.append("perusahaan", values.perusahaan);
+                formData.append("nama", values.nama);
+                formData.append("jenis_kelamin", values.jenis_kelamin);
+                formData.append("tanggal_lahir", values.tanggal_lahir);
+                formData.append("agama", values.agama);
+                formData.append("emails", values.emails);
+                formData.append("no_telp", values.no_telp);
+                formData.append("provinsi", values.provinsi);
+                formData.append("kabupaten", values.kabupaten);
+                formData.append("kecamatan", values.kecamatan);
+                formData.append("kodepos", values.kodepos);
+                formData.append("alamat", values.alamat);
+                formData.append("gaji", values.gaji);
+                formData.append("promosi", values.promosi);
+                formData.append("pendidikan", values.pendidikan);
+                formData.append("instansi", values.instansi);
+                formData.append("ipk", values.ipk);
 
-            const file = e.target.fileUpload.files[0];
-            formData.append("file", file);
+                const file = e.target.fileUpload.files[0];
+                formData.append("file", file);
 
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "/formulir/submit", true);
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "/formulir/submit", true);
 
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        // Berhasil
-                        // Membersihkan formulir jika berhasil
-                        setValues({
-                            // password: "meong",
-                            pekerjaan: md_loker.pekerjaan,
-                            jenis_pekerjaan: md_loker.jenis_pekerjaan,
-                            perusahaan: md_loker[0].perusahaan,
-                            nama: "",
-                            jenis_kelamin: "",
-                            agama: "",
-                            tanggal_lahir: "",
-                            emails: "",
-                            provinsi: provinsiOptions.label,
-                            kabupaten: kabupatenOptions.label,
-                            kecamatan: kecamatanOptions.label,
-                            kodepos: "",
-                            alamat: "",
-                            no_telp: "",
-                            gaji: "",
-                            file: "",
-                            promosi: "",
-                            pendidikan: "",
-                            instansi: "",
-                            ipk: "",
-                        });
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            // Berhasil
+                            // Membersihkan formulir jika berhasil
+                            setValues({
+                                // password: "meong",
+                                pekerjaan: md_loker.pekerjaan,
+                                jenis_pekerjaan: md_loker.jenis_pekerjaan,
+                                perusahaan: md_loker[0].perusahaan,
+                                nama: "",
+                                jenis_kelamin: "",
+                                agama: "",
+                                tanggal_lahir: "",
+                                emails: "",
+                                provinsi: provinsiOptions.label,
+                                kabupaten: kabupatenOptions.label,
+                                kecamatan: kecamatanOptions.label,
+                                kodepos: "",
+                                alamat: "",
+                                no_telp: "",
+                                gaji: "",
+                                file: "",
+                                promosi: "",
+                                pendidikan: "",
+                                instansi: "",
+                                ipk: "",
+                            });
 
-                        // console.log("Sukses:", xhr.responseText);
-                        router.get("/finish");
-                    } else {
-                        // Gagal
-                        console.error(
-                            "Error sending data:",
-                            xhr.status,
-                            xhr.statusText
-                        );
-                        alert("Terjadi kesalahan saat mengirim data.");
+                            // console.log("Sukses:", xhr.responseText);
+                            router.get("/finish");
+                        } else {
+                            // Gagal
+                            console.error(
+                                "Error sending data:",
+                                xhr.status,
+                                xhr.statusText
+                            );
+                            alert("Terjadi kesalahan saat mengirim data.");
+                        }
                     }
-                }
-            };
+                };
 
-            xhr.send(formData);
+                xhr.send(formData);
+            } catch (error) {
+                console.error("Error sending data:", error);
+                alert("Terjadi kesalahan saat mengirim data.");
+            }
+        } else {
             setTimeout(() => {
                 // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
+                alert("Terjadi kesalahan saat mengirim data.");
                 setIsLoading(false);
-            }, 2000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
-        } catch (error) {
-            console.error("Error sending data:", error);
-            alert("Terjadi kesalahan saat mengirim data.");
+            }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         }
     }
 
@@ -250,9 +260,9 @@ const FormEmailBackup = () => {
                             onSubmit={onSubmit}
                             ref={formRef}
                             className="items-center space-y-4 w-full px-4 mx-auto pb-8"
-                            action="/submit_loker"
+                            // action="/submit_loker"
                             method="post"
-                            enctype="multipart/form-data"
+                            encType="multipart/form-data"
                         >
                             <div className="flex gap-4 flex-wrap">
                                 {/* Pekerjaan */}
@@ -762,16 +772,8 @@ const FormEmailBackup = () => {
                             </div>
                             {/* Submit */}
                             <div className="w-full bg-BlueTako rounded-xl text-white text-center p-2 hover:bg-BlueTako hover:bg-opacity-90 transition-all">
-                                {/* <input
-                                    type="submit"
-                                    className="w-full p-2 cursor-pointer text-white"
-                                    value="Kirim"
-                                />
-                                <span class="loading loading-spinner">
-                                    Loading
-                                </span> */}
                                 {isLoading ? (
-                                    <span className=" loading loading-spinner bg-BlueTako bg-opacity-90">
+                                    <span className="loading loading-spinner">
                                         Loading
                                     </span>
                                 ) : (
