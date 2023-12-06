@@ -29,9 +29,10 @@ const Contact = () => {
     }, []); // Dependensi kosong agar hanya dipanggil sekali
 
     // Render halaman setelah data diambil dan halaman ter-load
-    if (!isPageLoaded) {
-        return null; // Atau tampilkan loader/loading indicator
-    }
+    // if (!isPageLoaded) {
+    //     return null; // Atau tampilkan loader/loading indicator
+    // }
+
     return (
         <Layout pageTitle="Contact | Tako Karir">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
