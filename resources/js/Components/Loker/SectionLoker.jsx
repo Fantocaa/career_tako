@@ -124,7 +124,7 @@ const SectionLoker = () => {
 
     return (
         <SkeletonTheme baseColor="#202020" highlightColor="#444444">
-            <section className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container">
+            <section className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16  pb-16 md:py-8 flex-wrap items-center text-DarkTako container">
                 <>
                     <div className="flex justify-between items-end pb-8 flex-wrap gap-4 w-full">
                         <h1 className="text-BlueTako font-bold text-2xl ">

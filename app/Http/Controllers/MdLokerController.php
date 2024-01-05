@@ -26,13 +26,12 @@ class MdLokerController extends Controller
      */
     public function index(Request $request)
     {
-
         $posts = DB::table('md_lokers')  // Memulai query dengan tabel 'md_lokers'
             // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan, skills.nama_skill')
 
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, md_lokers.deleted_at, perusahaans.perusahaan')
+            // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, md_lokers.deleted_at, perusahaans.perusahaan')
 
-            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
 
             // ->leftjoin('skills', 'md_lokers.id', '=', 'skills.id_kotak_loker') 
 
@@ -46,9 +45,9 @@ class MdLokerController extends Controller
     public function api_form()
     {
         $posts = DB::table('md_lokers')
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, md_lokers.deleted_at, perusahaans.perusahaan')
+            // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, md_lokers.deleted_at, perusahaans.perusahaan')
 
-            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
 
             ->get();
         return response()->json($posts);
@@ -65,9 +64,6 @@ class MdLokerController extends Controller
         // return response()->json($skill);
     }
 
-    public function skill_group()
-    {
-    }
 
     public function loker()
     {
@@ -294,9 +290,9 @@ class MdLokerController extends Controller
 
         $md_loker = DB::table('md_lokers')
 
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+            // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
 
-            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
 
             ->where('md_lokers.id', '=', $id)
 
@@ -416,7 +412,7 @@ class MdLokerController extends Controller
         $data["body"] = "Ada yang baru saja melamar Pekerjaan : ";
         $data["pekerjaan"] = $request->pekerjaan;
         $data["jenis_pekerjaan"] = $request->jenis_pekerjaan;
-        $data["perusahaan"] = $request->perusahaan;
+        // $data["perusahaan"] = $request->perusahaan;
         $data["nama"] = $request->nama;
         $data["jenis_kelamin"] = $request->jenis_kelamin;
         $data["agama"] = $request->agama;
@@ -465,7 +461,8 @@ class MdLokerController extends Controller
 
         // return response()->json([$request]);
 
-        return redirect()->route('finish');
+        // return redirect()->route('finish');
+        return Inertia::render('Finish');
     }
     /**
      * Update the specified resource in storage.
@@ -478,7 +475,7 @@ class MdLokerController extends Controller
         // Validasi
         $request->validate([
             'pekerjaan' => 'required|string|min:5',
-            'perusahaan' => 'required',
+            // 'perusahaan' => 'required',
             'jenis_pekerjaan' => 'required',
             'deskripsi' => 'required',
             'isi_konten' => 'required',
@@ -486,7 +483,7 @@ class MdLokerController extends Controller
             'skill.*' => 'required',
         ], [
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
-            'perusahaan.required' => 'Perusahaan harus diisi.',
+            // 'perusahaan.required' => 'Perusahaan harus diisi.',
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
@@ -495,7 +492,7 @@ class MdLokerController extends Controller
 
         $form = new md_loker();
         $form->pekerjaan = $request->pekerjaan;
-        $form->perusahaan = $request->perusahaan;
+        // $form->perusahaan = $request->perusahaan;
         $form->jenis_pekerjaan = $request->jenis_pekerjaan;
         $form->isi_konten = $request->deskripsi;
         $form->deskripsi = $request->isi_konten;
@@ -531,7 +528,7 @@ class MdLokerController extends Controller
         // Validasi
         $request->validate([
             'pekerjaan' => 'required|string|min:5',
-            'perusahaan' => 'required',
+            // 'perusahaan' => 'required',
             'jenis_pekerjaan' => 'required',
             'deskripsi' => 'required',
             'isi_konten' => 'required',
@@ -539,7 +536,7 @@ class MdLokerController extends Controller
             'skill.*' => 'required',
         ], [
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
-            'perusahaan.required' => 'Perusahaan harus diisi.',
+            // 'perusahaan.required' => 'Perusahaan harus diisi.',
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
@@ -549,7 +546,7 @@ class MdLokerController extends Controller
         $form = md_loker::find($request->id);
         // dd($form);
         $form->pekerjaan = $request->pekerjaan;
-        $form->perusahaan = $request->perusahaan;
+        // $form->perusahaan = $request->perusahaan;
         $form->jenis_pekerjaan = $request->jenis_pekerjaan;
         $form->isi_konten = $request->deskripsi;
         $form->deskripsi = $request->isi_konten;
@@ -593,8 +590,8 @@ class MdLokerController extends Controller
     {
         $data = [];
         $query = DB::table('md_lokers')
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi, md_lokers.isi_konten, perusahaans.perusahaan')
-            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi, md_lokers.isi_konten, perusahaans.perusahaan')
+            // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
             ->whereNull('md_lokers.deleted_at');
 
         // Check if the search parameter exists in the request
@@ -636,7 +633,7 @@ class MdLokerController extends Controller
         // dd($query->toSql());
         $data['pagi'] = $query;
 
-        $data['beritaTerbaru'] = DB::table('md_lokers')->whereNull('deleted_at')->latest()->limit(3)->get();
+        $data['beritaTerbaru'] = DB::table('md_lokers')->whereNull('deleted_at')->latest()->limit(12)->get();
 
         if ($req == 0) {
             $currentPage = 1;
@@ -644,7 +641,7 @@ class MdLokerController extends Controller
             $currentPage = $req;
         }
 
-        $paginate = $data['pagi']->orderBy('md_lokers.created_at', 'desc')->paginate(3, ['*'], 'page', $currentPage);
+        $paginate = $data['pagi']->orderBy('md_lokers.created_at', 'desc')->paginate(12, ['*'], 'page', $currentPage);
 
         return response()->json($paginate);
     }
@@ -695,7 +692,7 @@ class MdLokerController extends Controller
         // dd($query->toSql());
         $data['pagi'] = $query;
 
-        $data['beritaTerbaru'] = DB::table('md_lokers')->whereNull('deleted_at')->latest()->limit(3)->get();
+        $data['beritaTerbaru'] = DB::table('md_lokers')->whereNull('deleted_at')->latest()->limit(12)->get();
 
         if ($req == 0) {
             $currentPage = 1;
@@ -703,7 +700,7 @@ class MdLokerController extends Controller
             $currentPage = $req;
         }
 
-        $paginate = $data['pagi']->orderBy('md_lokers.created_at', 'desc')->paginate(3, ['*'], 'page', $currentPage);
+        $paginate = $data['pagi']->orderBy('md_lokers.created_at', 'desc')->paginate(12, ['*'], 'page', $currentPage);
 
         return response()->json($paginate);
     }

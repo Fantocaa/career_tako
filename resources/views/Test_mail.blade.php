@@ -12,7 +12,7 @@
     {{ $body }} {{ $pekerjaan }}<br /> <br />
     Pekerjaan : {{ $pekerjaan }}<br />
     Program : {{ $jenis_pekerjaan }}<br />
-    Perusahaan : {{ $perusahaan }}<br />
+    {{-- Perusahaan : {{ $perusahaan }}<br /> --}}
     Nama : {{ $nama }}<br />
     Jenis Kelamin : {{ $jenis_kelamin }}<br />
     Agama : {{ $agama }}<br />

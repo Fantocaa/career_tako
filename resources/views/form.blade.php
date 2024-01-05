@@ -75,13 +75,13 @@
                             placeholder="Masukkan Nama Perusahaan">
                     </label> --}}
 
-                    <label for="perusahaan" class="w-[49%]">
+                    {{-- <label for="perusahaan" class="w-[49%]">
                         <h1 class="mb-2">Perusahaan</h1>
                         <select class="js-example-basic-single w-full rounded-2xl" name="perusahaan" required
                             style="width: 100%;">
                             <option value=""></option>
                         </select>
-                    </label>
+                    </label> --}}
 
                     <label for="jenis_pekerjaan" class="w-[49%]">
                         <h1 class="mb-2">Jenis Pekerjaan</h1>

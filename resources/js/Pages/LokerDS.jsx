@@ -9,7 +9,7 @@ const LokerDS = () => {
         <>
             <div className="flex h-full">
                 {/* sidebar */}
-                <div className="w-1/4 mr-[72px] xl:mr-20">
+                <div className="w-1/4 mr-[72px] xl:mr-20 2xl:mr-0 2xl:flex items-center justify-center">
                     <Dashboard active />
                 </div>
 

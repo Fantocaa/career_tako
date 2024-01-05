@@ -40,10 +40,10 @@ const TableDashboard = () => {
             selector: (row) => row.pekerjaan,
             // sortable: true, // Mengaktifkan pengurutan untuk kolom ini
         },
-        {
-            name: "Perusahaan",
-            selector: (row) => row.perusahaan,
-        },
+        // {
+        //     name: "Perusahaan",
+        //     selector: (row) => row.perusahaan,
+        // },
         {
             name: "Jenis Pekerjaan",
             selector: (row) => row.jenis_pekerjaan,

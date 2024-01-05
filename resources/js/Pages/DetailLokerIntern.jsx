@@ -48,11 +48,11 @@ const DetailLoker = () => {
             {/* {formData.map((item) => ( */}
             <Layout pageTitle="Detail Loker | Tako Karir">
                 <section
-                    className="bg-BgTako font-inter text-DarkTako md:pt-16"
+                    className="bg-BgTako font-inter text-DarkTako md:pt-16 min-h-screen flex flex-col"
                     // key={item.id}
                 >
                     <Nav />
-                    <div className="container flex-wrap mx-auto px-4 md:px-8 xl:px-16 py-16 pt-28 md:pt-16 justify-between">
+                    <div className="container flex-wrap mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 py-16 pt-28 md:pt-16 justify-between">
                         <div className="bg-white p-4 rounded-lg py-8 md:px-8">
                             <div className="flex items-end">
                                 <div className="w-full">
@@ -60,11 +60,11 @@ const DetailLoker = () => {
                                         {values.pekerjaan}
                                         {/* {item.pekerjaan} */}
                                     </h1>
-                                    <p className="text-BlueTako pt-1 text-xs lg:text-base ">
+                                    {/* <p className="text-BlueTako pt-8 text-xs lg:text-base ">
                                         {values.perusahaan}
-                                        {/* {item.perusahaan} */}
-                                    </p>
-                                    <div className="flex gap-4 pt-6">
+                                    </p> */}
+                                    {/* {item.perusahaan} */}
+                                    <div className="flex gap-4 pt-8">
                                         <div className="flex items-center text-xs lg:text-base gap-2 lg:gap-4">
                                             <img
                                                 src="/images/program.svg"

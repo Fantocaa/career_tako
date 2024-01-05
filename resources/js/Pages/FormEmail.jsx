@@ -34,10 +34,10 @@ const FormEmail = () => {
         "text-DarkTako text-opacity-50 bg-grey bg-opacity-10";
 
     const [values, setValues] = useState({
-        password: "meong",
+        // password: "meong",
         pekerjaan: md_loker[0].pekerjaan,
         jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
-        perusahaan: md_loker[0].perusahaan,
+        // perusahaan: md_loker[0].perusahaan,
         nama: "",
         jenis_kelamin: "",
         agama: "",
@@ -184,7 +184,7 @@ const FormEmail = () => {
 
                 formData.append("pekerjaan", values.pekerjaan);
                 formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
-                formData.append("perusahaan", values.perusahaan);
+                // formData.append("perusahaan", values.perusahaan);
                 formData.append("nama", values.nama);
                 formData.append("jenis_kelamin", values.jenis_kelamin);
                 formData.append("tanggal_lahir", values.tanggal_lahir);
@@ -217,7 +217,7 @@ const FormEmail = () => {
                                 // password: "meong",
                                 pekerjaan: md_loker.pekerjaan,
                                 jenis_pekerjaan: md_loker.jenis_pekerjaan,
-                                perusahaan: md_loker[0].perusahaan,
+                                // perusahaan: md_loker[0].perusahaan,
                                 nama: "",
                                 jenis_kelamin: "",
                                 agama: "",
@@ -269,7 +269,7 @@ const FormEmail = () => {
         <Layout pageTitle="Formulir | Tako Karir">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
                 <NavElse />
-                <div className="bg-BgTako px-4 md:px-8 lg:px-32 py-32 ">
+                <div className="bg-BgTako py-32 container px-4 md:px-8 lg:px-32 mx-auto">
                     <div className="bg-white mx-auto rounded-lg px-2 md:px-4">
                         <h1 className="font-bold text-xl md:text-2xl  text-center py-8">
                             Registration Form
@@ -312,7 +312,7 @@ const FormEmail = () => {
                                 </div>
 
                                 {/* Perusahaan */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                {/* <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                     <h1 className="pb-2">Perusahaan</h1>
                                     <input
                                         {...register("perusahaan", {
@@ -323,7 +323,7 @@ const FormEmail = () => {
                                         value={values.perusahaan}
                                         id="perusahaan"
                                     />
-                                </div>
+                                </div> */}
                             </div>
                             <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />

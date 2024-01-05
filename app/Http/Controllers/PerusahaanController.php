@@ -170,29 +170,6 @@ class PerusahaanController extends Controller
             // Set atribut 'image' dari model dengan nama gambar yang baru
             $empData->image = $image;
         }
-        // else {
-        //     $empData->perusahaan = $request->perusahaan;
-        //     $empData->tentang = $request->tentang;
-        //     $empData->alamat = $request->alamat;
-        //     $empData->link = $request->link;
-        //     $empData->save();
-        // }
-
-        // if ($request->hasFile('image')) {
-
-        //     // $hapus = 'public/images/' . $request->id . '/' . $image->image;
-        //     // Storage::delete($hapus);
-        //     $hapus = 'public/images/' . $request->id . '/' . $image;
-        //     Storage::delete($hapus);
-
-        //     $image = time() . '.' . $request->image->extension();
-
-        //     // Simpan gambar baru ke penyimpanan
-        //     $request->image->storeAs('public/images/', $image);
-
-        //     // Setel atribut 'image' dari model dengan nama gambar yang baru
-        //     $empData->image = $image;
-        // }
 
         // Setel atribut lain dari model dengan nilai yang baru
         $empData->perusahaan = $request->perusahaan;

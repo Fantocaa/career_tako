@@ -22,7 +22,7 @@ import { useEffect } from "react";
 
 export default function Dashboard({ auth }) {
     return (
-        <div className="w-1/4 fixed">
+        <div className="w-1/4 2xl:w-1/6 fixed ">
             <div className="w-full h-full">
                 <Sidebar>
                     {/* {page && ( */}
@@ -57,13 +57,13 @@ export default function Dashboard({ auth }) {
                             // active={page.url === "/dashboard/beranda"}
                         />
                     </Link>
-                    <Link href={route("admin.perusahaan_dashboard")}>
+                    {/* <Link href={route("admin.perusahaan_dashboard")}>
                         <SidebarItem
                             icon={<Building2 size={20} />}
                             text="Perusahaan"
                             // active={page.url === "/dashboard/beranda"}
                         />
-                    </Link>
+                    </Link> */}
                     <Link href={route("admin.history")}>
                         <SidebarItem
                             icon={<History size={20} />}

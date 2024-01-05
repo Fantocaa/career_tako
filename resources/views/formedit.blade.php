@@ -76,7 +76,7 @@
                             class="rounded-2xl w-full">
                     </label> --}}
 
-                    <label for="perusahaan" class="w-[49%]">
+                    {{-- <label for="perusahaan" class="w-[49%]">
                         <h1 class="mb-2">Perusahaan</h1>
                         <select class="js-example-basic-single w-full rounded-2xl" name="perusahaan" required
                             style="width: 100%;" value="{{ $md_loker[0]->perusahaan }}">
@@ -85,7 +85,7 @@
                                     {{ $pt->perusahaan }}</option>
                             @endforeach
                         </select>
-                    </label>
+                    </label> --}}
 
                     {{-- <label for="jenis_pekerjaan" class="w-[49%]">
                         <h1>Jenis Pekerjaan</h1>

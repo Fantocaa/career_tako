@@ -48,14 +48,14 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
         <div
             className={
                 active
-                    ? "flex md:grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 flex-wrap gap-4 2xl:gap-8"
+                    ? "flex md:grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 flex-wrap gap-4 2xl:gap-8"
                     : "hidden"
             }
         >
             <>
                 {formDataProp.map((item) => (
                     <div
-                        className="bg-white p-8 rounded-xl h-full flex flex-col justify-between w-full  shadow-md"
+                        className="bg-white p-8 rounded-xl h-full flex flex-col justify-between w-full shadow-md"
                         key={item.id}
                     >
                         <h1 className="font-bold">{item.pekerjaan}</h1>
@@ -64,11 +64,11 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                             <h1 className="font-bold">{item.perusahaan}</h1>
                         )} */}
 
-                        <h2 className="text-BlueTako pt-2">
+                        {/* <h2 className="text-BlueTako pt-2">
                             {item.perusahaan}
-                        </h2>
-                        <p className="text-xs pt-4">{item.deskripsi}</p>
-                        <div className="flex items-center gap-4 pt-2">
+                        </h2> */}
+                        {/* <p className="text-xs pt-4">{item.deskripsi}</p> */}
+                        <div className="flex items-center gap-4 pt-4">
                             <div className="flex gap-2">
                                 <img src="/images/program.svg" alt="" />
                                 <h1>{item.jenis_pekerjaan}</h1>

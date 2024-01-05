@@ -141,9 +141,9 @@ const Faq = () => {
 
     return (
         <Layout pageTitle="FAQ | Tako Karir">
-            <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
+            <section className="bg-BgTako font-inter text-DarkTako md:pt-16 min-h-screen flex flex-col">
                 <NavElse />
-                <div className="container flex-wrap mx-auto px-8 xl:px-16 2xl:px-32 py-16 pt-28 md:pt-16 justify-between">
+                <div className="container mx-auto px-8 xl:px-16 2xl:px-32 py-16 pt-28 md:pt-16">
                     <div className="bg-white p-4 rounded-lg py-8">
                         <div className="pb-8 p-4 rounded-lg">
                             <h1 className="text-center font-bold text-2xl md:text-4xl ">
