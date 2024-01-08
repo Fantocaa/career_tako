@@ -5,21 +5,23 @@ const FaqCTA = () => {
     return (
         <section className="bg-BlueTako font-inter text-white">
             <div className="relative">
-                <div className="container mx-auto px-4 md:px-8 py-32 text-center relative z-10">
-                    <h1
-                        className="font-bold text-2xl md:text-4xl pb-4"
-                        data-aos="zoom-in-up"
-                        data-aos-duration="800"
-                    >
-                        Masih punya pertanyaan?
-                    </h1>
+                <div className="container w-full mx-auto px-4 md:px-8 py-32 text-center relative z-10">
+                    <div data-aos="zoom-in-up" data-aos-duration="800">
+                        <h1 className="font-bold text-2xl md:text-4xl pb-2">
+                            Masih punya pertanyaan?
+                        </h1>
+                        <h1 className="font-bold text-2xl md:text-4xl pb-8">
+                            Yuk cek FAQ di bawah
+                        </h1>
+                    </div>
                     <p
-                        className="pb-4"
+                        className="pb-8 2xl:text-xl w-[50%] mx-auto"
                         data-aos="zoom-in-up"
                         data-aos-duration="800"
                     >
-                        Kamu masih bingung atau punya pertanyaan lebih lanjut,
-                        kami siap membantu kamu!
+                        Jika Anda memiliki pertanyaan yang belum terjawab di FAQ
+                        ini, jangan ragu untuk menghubungi kami di
+                        recruitment@tako.co.id
                     </p>
                     <Link href="/faq">
                         <button
@@ -27,7 +29,7 @@ const FaqCTA = () => {
                             data-aos="zoom-in-up"
                             data-aos-duration="800"
                         >
-                            Lihat FAQ
+                            Lihat FAQ Rekrutmen
                         </button>
                     </Link>
                 </div>

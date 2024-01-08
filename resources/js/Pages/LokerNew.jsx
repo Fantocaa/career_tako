@@ -13,6 +13,8 @@ import "../Components/css/style.css";
 import { useMediaQuery } from "react-responsive";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import NoLoker from "@/Components/NoLoker";
+import HeaderPro from "@/Components/HeaderPro";
 
 const LokerNew = () => {
     const { state } = usePage();
@@ -128,27 +130,31 @@ const LokerNew = () => {
             <SkeletonTheme baseColor="#202020" highlightColor="#444444">
                 <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                     <NavElse />
-                    <div className="bg-DarkTako text-white font-inter w-full py-32 relative">
+                    <HeaderPro />
+                    {/* <div className="bg-DarkTako text-white font-inter w-full py-32 relative">
                         <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32">
                             <h1 className="font-bold text-2xl lg:text-4xl pt-8">
-                                Lowongan Pekerjaan
+                                Temukan Peluang Karier yang Tepat
                             </h1>
-                            <p className="text-xs md:text-base pt-2 lg:pt-4">
-                                Kami membuka kesempatan yang sama, baik untuk
-                                para talenta muda dan untuk para profesional.
-                                Pilih kategori yang sesuai dengan pengalaman
-                                kerjamu!
+                            <p className="text-xs md:text-base 2xl:text-lg pt-2 lg:pt-4 2xl:pt-6">
+                                Kami memahami bahwa setiap orang memiliki
+                                potensi dan minat yang berbeda-beda. Oleh karena
+                                itu, kami menyediakan berbagai peluang karier
+                                yang dapat Anda pilih sesuai dengan minat dan
+                                kemampuan Anda. Kami memiliki berbagai posisi
+                                yang tersedia, mulai dari posisi intern,
+                                entry-level hingga posisi senior.
                             </p>
                             <img
                                 src="/images/bg.jpg"
                                 alt=""
                                 className="absolute inset-0 w-full h-full object-cover"
                                 style={{
-                                    opacity: "0.1", // Sesuaikan tingkat opacity sesuai keinginan Anda
+                                    opacity: "0.15", // Sesuaikan tingkat opacity sesuai keinginan Anda
                                 }}
                             />
                         </div>
-                    </div>
+                    </div> */}
                     {/* <div className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-white bg-BlueTako w-full md:pb-20">
                         <div className="text-center container mx-auto">
                             <div className="w-full">
@@ -198,6 +204,7 @@ const LokerNew = () => {
                         </div>
                     </div> */}
                     <SectionLoker />
+                    <NoLoker />
                     <Footer />
                 </section>
             </SkeletonTheme>

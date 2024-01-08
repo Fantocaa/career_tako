@@ -95,8 +95,8 @@ const Why = () => {
                                 />
                             </div>
                         </div>
-                        <p className="py-8">
-                            Kami di Tako Group sangat mendukung pengembangan
+                        <p className="py-8 2xl:text-xl">
+                            Kami di Tako Koporasi sangat mendukung pengembangan
                             talenta muda, namun kami juga membuka peluang bagi
                             individu yang memiliki jiwa kepemimpinan dan
                             pengalaman. Bergabunglah dengan kami untuk memulai

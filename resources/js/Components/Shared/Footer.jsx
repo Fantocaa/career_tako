@@ -55,7 +55,7 @@ const Footer = () => {
                 <div className="w-full h-1 bg-white rounded-2xl"></div>
                 <div>
                     <h1 className="text-xs md:text-base text-center pt-12">
-                        © 2023 PT. TAKO ANUGERAH KOPORASI, All Rights Reserved
+                        © 2024 PT. TAKO ANUGERAH KOPORASI, All Rights Reserved
                     </h1>
                 </div>
             </div>

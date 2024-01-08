@@ -7,7 +7,7 @@ import Layout from "@/Layouts/Layout";
 const Finish = () => {
     return (
         <Layout pageTitle="Finish | Tako Karir">
-            <section className="bg-BgTako font-inter text-DarkTako md:pt-16 mx-auto">
+            <section className="bg-BgTako font-inter text-DarkTako md:pt-16 mx-auto min-h-screen flex flex-col">
                 <NavElse />
                 <div className="flex flex-col justify-center pt-24 pb-16 md:pb-24 container mx-auto">
                     <img
@@ -16,12 +16,12 @@ const Finish = () => {
                         className="h-32 md:h-56"
                     />
                     <div className="text-center">
-                        <h1 className="text-xl md:text-2xl font-bold">
+                        <h1 className="text-xl md:text-2xl font-bold pt-2">
                             Terima Kasih Sudah Melamar
                         </h1>
                         <p className="pt-2 px-4 text-xs md:text-base">
-                            Kami akan merespon lamaran anda melalui Email.
-                            Terima Kasih!
+                            Kami akan merespon lamaran anda melalui WhatsApp
+                            atau Email. Terima Kasih!
                         </p>
                     </div>
                     <div className="text-center pt-4">

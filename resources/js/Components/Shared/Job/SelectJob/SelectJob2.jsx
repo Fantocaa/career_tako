@@ -53,9 +53,9 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                     >
                         <div>
                             <h1 className="font-bold">{item.pekerjaan}</h1>
-                            <h2 className="text-BlueTako pt-2">
+                            {/* <h2 className="text-BlueTako pt-2">
                                 {item.perusahaan}
-                            </h2>
+                            </h2> */}
                             <p className="text-xs pt-4">{item.deskripsi}</p>
                             <div className="flex items-center gap-8 pt-2">
                                 <div className="flex gap-2">
@@ -67,8 +67,8 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                     <h1>{item.batas_lamaran}</h1>
                                 </div>
                             </div>
-                            <div className=" justify-between">
-                                <div className="flex gap-2 pt-4 flex-wrap">
+                            <div className="pt-4 flex gap-4">
+                                {/* <div className="flex gap-2 pt-4 flex-wrap">
                                     <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
                                         Marketing strategy
                                     </div>
@@ -81,14 +81,28 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                     <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
                                         Time Management
                                     </div>
-                                </div>
+                                </div> */}
+                                {formDataSkill
+                                    .filter(
+                                        (skills) =>
+                                            skills.id_kotak_loker === item.id
+                                    )
+                                    .map((skillItem) => (
+                                        <div key={skillItem.id}>
+                                            {/* Tampilkan skill sesuai kebutuhan */}
+
+                                            <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
+                                                <p>{skillItem.nama_skill}</p>
+                                            </div>
+                                        </div>
+                                    ))}
                             </div>
                             {/* <div className="text-xs pt-4">
                             
                             Batas Lamaran : {formatDate(item.batas_lamaran)}
                         </div> */}
                         </div>
-                        <div className="flex flex-col pt-4 gap-4 w-36">
+                        <div className="flex flex-col gap-4 w-36">
                             <div className="w-full">
                                 <Link href={`/loker/pekerjaan/${item.id}`}>
                                     <button className="bg-BlueTako text-BlueTako bg-opacity-10 py-2 rounded-lg w-full">

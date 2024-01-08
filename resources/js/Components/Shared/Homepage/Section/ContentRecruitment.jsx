@@ -27,13 +27,20 @@ const ContentRecruitment = () => {
                             Proses Rekrutmen
                         </h1>
                         <p
-                            className="text-xs mx-auto text-center pt-2 opacity-90 md:w-[460px] lg:text-base lg:w-[600px]"
+                            className="text-xs mx-auto text-center pt-4 opacity-90 md:w-[460px] lg:text-base lg:w-[864px]"
                             data-aos="fade-in"
                         >
-                            Tim Pencarian Rekruter kami akan dengan cermat
+                            {/* Tim Pencarian Rekruter kami akan dengan cermat
                             mengelola proses rekrutmen, dan kandidat akan
                             dinilai berdasarkan kompetensinya selama proses
-                            seleksi.
+                            seleksi. */}
+                            Bergabunglah dengan kami dalam mengukir jejak sukses
+                            melalui proses seleksi PT. Tako Anugerah Koporasi
+                            yang berfokus pada potensi, kompetensi, dan
+                            kesesuaian dengan visi & misi PT. Tako Anugerah
+                            Koporasi. Kami memastikan setiap langkah proses
+                            rekrutmen dilakukan secara transparan, profesional,
+                            dan membawa kita lebih dekat dengan bakat terbaik.
                         </p>
                         <div className="lg:flex lg:pt-24 gap-40 justify-center items-center">
                             <img
@@ -45,27 +52,34 @@ const ContentRecruitment = () => {
                                 data-aos="fade-in"
                             />
                             <div data-aos="fade-in">
-                                <h1 className="text-2xl font-bold lg:text-4xl">
+                                <h1 className="text-2xl font-bold lg:text-3xl">
                                     <span className="text-BlueTako text-base font-normal mr-2 lg:mr-4 lg:text-2xl">
                                         01.
                                     </span>
                                     Apply
                                 </h1>
                                 <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base">
-                                    Temukan pekerjaan yang sesuai dengan
+                                    {/* Temukan pekerjaan yang sesuai dengan
                                     keterampilan dan minat Anda. Anda dapat
                                     menemukan pada Lowongan Pekerjaan yang
-                                    tersedia di bagian di atas.
+                                    tersedia di bagian di atas. */}
+                                    Temukan pekerjaan yang sesuai dengan
+                                    kompetensi Anda. Anda dapat menemukan dengan
+                                    klik “Kembangkan Karier Anda” yang tersedia
+                                    di bagian atas.
                                 </p>
                                 <div className="pt-4">
                                     <h2 className="text-xs font-semibold lg:text-base">
                                         Tips untuk Pendaftar :
                                     </h2>
                                     <p className="text-xs pt-2 opacity-90 lg:text-base">
-                                        Buatlah resume yang menonjolkan
+                                        {/* Buatlah resume yang menonjolkan
                                         keterampilan dan pengalaman Anda yang
                                         terkait dengan pekerjaan yang ingin Anda
-                                        lamar.
+                                        lamar. */}
+                                        Isi data dengan jujur, pastikan CV Anda
+                                        lengkap dan relevan dengan posisi yang
+                                        dilamar.
                                     </p>
                                 </div>
                             </div>
@@ -82,33 +96,46 @@ const ContentRecruitment = () => {
                                 data-aos="fade-in"
                             />
                             <div className="w-full lg:w-1/2" data-aos="fade-in">
-                                <h1 className="text-2xl font-bold lg:text-4xl">
+                                <h1 className="text-2xl font-bold lg:text-3xl">
                                     <span className="text-BlueTako text-base font-normal mr-2 lg:mr-4 lg:text-2xl">
                                         02.
                                     </span>
                                     Assessment
                                 </h1>
                                 <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base">
-                                    Pelaksanaan penilaian bergantung pada posisi
+                                    {/* Pelaksanaan penilaian bergantung pada posisi
                                     yang Anda lamar. Secara umum, Lamaran Anda
                                     akan melalui tahapan-tahapan berikut:
                                     Penyaringan Resume, Wawancara, Diskusi
                                     Kelompok, Wawancara Lanjutan, dan Tawaran
-                                    Pekerjaan.
+                                    Pekerjaan. */}
+                                    Tahap ini bertujuan untuk menilai kemampuan
+                                    dan kesesuaian Anda dengan posisi yang
+                                    dilamar. Assessment berupa tes teknikal, tes
+                                    kepribadian, dan wawancara.
                                 </p>
                                 <div className="pt-4">
                                     <h2 className="text-xs font-semibold lg:text-base">
                                         Tips untuk Pendaftar :
                                     </h2>
-                                    <ul className="text-xs pt-2 opacity-90 list-disc list-inside lg:text-base">
+                                    <ul className="text-xs pt-2 opacity-90 list-disc lg:text-base">
                                         <li>
-                                            Tanyakan rincian tentang setiap
+                                            {/* Tanyakan rincian tentang setiap
                                             proses penilaian kepada perekrut
-                                            saat Anda diundang.
+                                            saat Anda diundang. */}
+                                            Persiapkan diri Anda secara matang
+                                            untuk mengikuti rangkaian tes di
+                                            atas
                                         </li>
                                         <li className="pt-1">
-                                            Percaya diri dan Jadilah diri
-                                            sendiri
+                                            {/* Percaya diri dan Jadilah diri
+                                            sendiri */}
+                                            Pelajari secara detail tentang
+                                            perusahaan dan posisi yang dilamar
+                                        </li>
+                                        <li className="pt-1">
+                                            Jadi diri sendiri, terus berlatih,
+                                            dan percaya diri
                                         </li>
                                     </ul>
                                 </div>
@@ -126,26 +153,38 @@ const ContentRecruitment = () => {
                                 data-aos="fade-in"
                             />
                             <div data-aos="fade-in">
-                                <h1 className="text-2xl font-bold lg:text-4xl">
+                                <h1 className="text-2xl font-bold lg:text-3xl">
                                     <span className="text-BlueTako text-base font-normal mr-2 lg:mr-4 lg:text-2xl">
                                         03.
                                     </span>
-                                    Acceptance
+                                    Acceptance & Onboarding
                                 </h1>
                                 <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base">
-                                    Lamaran yang berhasil akan ditinjau ulang
-                                    oleh tim kami berdasarkan kompetensi Anda.
-                                    Anda akan diinformasikan oleh tim Rekruter
-                                    kami tentang hasilnya.
-                                    <br />
-                                    <br />
-                                    Ketika Anda bergabung dengan kami,
-                                    bersiaplah untuk mengembangkan masa depan
-                                    Anda. Selalu bangun dengan semangat untuk
-                                    membuat pembaruan dalam hidup. Ambillah
-                                    tindakan, berani mengambil tantangan, dan
-                                    terus maju.
+                                    Tahap ini adalah tahap terakhir dari seluruh
+                                    rangkaian rekrutmen. Pada tahap ini, pelamar
+                                    yang lolos seleksi akan menerima surat
+                                    penawaran kerja dan yang belum lolos akan
+                                    diinformasikan oleh Tim Rekrutmen
                                 </p>
+                                <div className="pt-4">
+                                    <h2 className="text-xs font-semibold lg:text-base">
+                                        Tips untuk Pendaftar :
+                                    </h2>
+                                    <ul className="text-xs pt-2 opacity-90 list-disc lg:text-base">
+                                        <li>
+                                            Bacalah surat penawaran kerja dengan
+                                            cermat sebelum menandatanganinya
+                                        </li>
+                                        <li className="pt-1">
+                                            Tanyakan hal-hal yang belum jelas
+                                            kepada rekruter
+                                        </li>
+                                        <li className="pt-1">
+                                            Pastikan Anda siap untuk memulai
+                                            pekerjaan dan perjalanan baru
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </>

@@ -45,22 +45,28 @@ const ImageSlider = () => {
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
-                            Selamat Datang di Karir Tako
+                            {/* Selamat Datang di Karir Tako */}
+                            Jelajahi Peluang Karier Anda
                         </p>
                         <h1
                             className="text-white text-4xl lg:text-6xl font-bold pb-2 md:pb-4"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
-                            Temukan Karier Impianmu dengan Lebih Mudah
+                            {/* Temukan Karier Impianmu dengan Lebih Mudah */}
+                            Where Passion Meets Profession
                         </h1>
                         <p
                             className="text-white text-xl"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
-                            Temukan Posisi yang Sesuai dengan Profesionalismu,
-                            Baik Lowongan Pekerjaan atau Ragam Proyek Lainnya
+                            {/* Temukan Posisi yang Sesuai dengan Profesionalismu,
+                            Baik Lowongan Pekerjaan atau Ragam Proyek Lainnya */}
+                            Temukan potensi terbaik Anda, berkembang, dan jadi
+                            bagian dari kami dalam menciptakan solusi dan
+                            inovasi di dunia logistic, distribution, chicken
+                            integration, dan hospitality.
                         </p>
                         <div className="w-full pt-8">
                             <Link href="/loker" className="inline-block">
@@ -70,7 +76,8 @@ const ImageSlider = () => {
                                     data-aos-duration="1000"
                                 >
                                     <h1 className="text-lg font-semibold">
-                                        Daftar Lowongan Kerja
+                                        {/* Daftar Lowongan Kerja */}
+                                        Kembangkan Karier Anda
                                     </h1>
                                     <svg
                                         width="24"

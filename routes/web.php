@@ -77,12 +77,17 @@ Route::get('/contact', function () {
     return Inertia::render('Contact');
 });
 
+Route::get('/loker/dropcv', function () {
+    return Inertia::render('FormEmailCustom');
+});
+
 Route::get('/finish', function () {
     return Inertia::render('Finish');
 })->name('finish');
 
 
 Route::post('/formulir/submit/', [MdLokerController::class, 'submit_loker']);
+Route::post('/formulir/submit_custom/', [MdLokerController::class, 'submit_loker_custom']);
 
 Route::get('/form/view_pro', [MdLokerController::class, 'index_profesional']);
 Route::get('/form/view_intern', [MdLokerController::class, 'index_internship']);

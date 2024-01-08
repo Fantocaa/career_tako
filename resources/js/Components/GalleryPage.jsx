@@ -14,14 +14,21 @@ const GalleryPage = () => {
                     Gallery
                 </h1>
                 <p
-                    className="text-center py-4 lg:w-[720px]"
+                    className="text-center py-4 lg:w-[720px] 2xl:w-[1024px] 2xl:pb-8 2xl:pt-6"
                     data-aos="fade-up"
                     data-aos-duration="800"
                 >
-                    Kami memiliki tempat kerja yang menyenangkan dan penuh
+                    {/* Kami memiliki tempat kerja yang menyenangkan dan penuh
                     semangat. Kami bangga dengan budaya kerja kami yang positif
                     dan produktif. Lihatlah galeri kami untuk mengetahui lebih
-                    lanjut!
+                    lanjut! */}
+                    PT. Tako Anugerah Koporasi adalah perusahaan yang
+                    berkomitmen untuk menciptakan lingkungan dengan kerjasama
+                    tim yang kuat, solutif, inovatif, dan saling percaya. Budaya
+                    kerja tersebut tercermin dalam setiap aspek kehidupan
+                    perusahaan, mulai dari cara kami bekerja hingga cara kami
+                    berinteraksi satu sama lain. Lihat galeri untuk melihat
+                    keseruannya!
                 </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-full">

@@ -46,7 +46,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     <Warn />
                 </div>
                 {/* <Gallery /> */}
-                <div className="md:pt-96 lg:pt-0 pb-16">
+                <div className="md:pt-96 lg:pt-0 2xl:pt-32 pb-16">
                     <GalleryPage />
                 </div>
                 <FaqCTA />
