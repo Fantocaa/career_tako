@@ -58,16 +58,6 @@ Route::get('/loker/perusahaan/{id}', [MdLokerController::class, 'show_detail_per
 
 Route::get('/loker/pekerjaan/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
 
-// Route::get('/lowongan_kerja', function () {
-//     return view('loker.loker');
-// });
-
-Route::get('/lowongan_kerja', [MdLokerController::class, 'loker']);
-
-// Nonaktifkan pemeriksaan CSRF sementara
-// Route::post('/search', [MdLokerController::class, 'search'])->withoutMiddleware(['verifyCsrfToken']);
-
-// Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Route::get('/faq', function () {
     return Inertia::render('Faq');
@@ -85,6 +75,16 @@ Route::get('/finish', function () {
     return Inertia::render('Finish');
 })->name('finish');
 
+// Route::get('/lowongan_kerja', function () {
+//     return view('loker.loker');
+// });
+
+// Route::get('/lowongan_kerja', [MdLokerController::class, 'loker']);
+
+// Nonaktifkan pemeriksaan CSRF sementara
+// Route::post('/search', [MdLokerController::class, 'search'])->withoutMiddleware(['verifyCsrfToken']);
+
+// Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Route::post('/formulir/submit/', [MdLokerController::class, 'submit_loker']);
 Route::post('/formulir/submit_custom/', [MdLokerController::class, 'submit_loker_custom']);
