@@ -228,7 +228,7 @@ const Faq = () => {
     ];
 
     return (
-        <Layout pageTitle="FAQ | Tako Karir">
+        <Layout pageTitle="FAQ | Tako Karier">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16 min-h-screen flex flex-col">
                 <NavElse />
                 <HeaderFAQ />

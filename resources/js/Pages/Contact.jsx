@@ -35,7 +35,7 @@ const Contact = () => {
     // }
 
     return (
-        <Layout pageTitle="Contact | Tako Karir">
+        <Layout pageTitle="Contact | Tako Karier">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                 <NavElse />
                 <div className="container flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 justify-between items-center">

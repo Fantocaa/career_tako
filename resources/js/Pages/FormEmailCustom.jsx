@@ -269,7 +269,7 @@ const FormEmail = () => {
     }
 
     return (
-        <Layout pageTitle="Formulir | Tako Karir">
+        <Layout pageTitle="Formulir | Tako Karier">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
                 <NavElse />
                 <div className="bg-BgTako py-32 container px-4 md:px-8 lg:px-32 mx-auto">

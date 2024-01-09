@@ -30,7 +30,7 @@ const DetailLoker = () => {
         // password: "meong",
         id: md_loker[0].id,
         pekerjaan: md_loker[0].pekerjaan,
-        perusahaan: md_loker[0].perusahaan,
+        // perusahaan: md_loker[0].perusahaan,
         jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
         batas_lamaran: md_loker[0].batas_lamaran, // Inisialisasi properti batas_lamaran
         isi_konten: md_loker[0].deskripsi,
@@ -39,14 +39,14 @@ const DetailLoker = () => {
     // console.log(md_loker);
 
     const urlLink = window.location.href;
-    const urlLinkDekstop = "karir.tako.co.id" + window.location.pathname;
+    const urlLinkDekstop = "karier.tako.co.id" + window.location.pathname;
 
     console.log(urlLinkDekstop);
 
     return (
         <>
             {/* {formData.map((item) => ( */}
-            <Layout pageTitle="Detail Loker | Tako Karir">
+            <Layout pageTitle="Detail Loker | Tako Karier">
                 <section
                     className="bg-BgTako font-inter text-DarkTako md:pt-16 min-h-screen flex flex-col"
                     // key={item.id}
@@ -162,7 +162,7 @@ const DetailLoker = () => {
                                     <div className="w-full">
                                         {/* <Link href={`/job/formulir/${item.id}`}> */}
                                         <Link
-                                            href={`/job/formulir/${values.id}`}
+                                            href={`/loker/pekerjaan/formulir/${values.id}`}
                                         >
                                             <button className="bg-BlueTako text-white py-2 rounded-lg w-full text-xs">
                                                 Lamar
@@ -200,7 +200,7 @@ const DetailLoker = () => {
                                                     url: urlLink,
                                                     title:
                                                         values.pekerjaan +
-                                                        " - karir.tako.co.id",
+                                                        " - karier.tako.co.id",
                                                     // images: [imgBase64],
                                                 })
                                             }
@@ -212,7 +212,7 @@ const DetailLoker = () => {
                                     <div className="w-full">
                                         {/* <Link href={`/job/formulir/${item.id}`}> */}
                                         <Link
-                                            href={`/job/formulir/${values.id}`}
+                                            href={`/loker/pekerjaan/formulir/${values.id}`}
                                         >
                                             <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
                                                 Lamar

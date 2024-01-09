@@ -127,7 +127,7 @@ const LokerNew = () => {
     }
 
     return (
-        <Layout pageTitle="Lowongan Pekerjaan | Tako Karir">
+        <Layout pageTitle="Lowongan Pekerjaan | Tako Karier">
             <SkeletonTheme baseColor="#202020" highlightColor="#444444">
                 <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
                     <NavElse />

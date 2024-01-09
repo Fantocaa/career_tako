@@ -6,7 +6,7 @@ import Layout from "@/Layouts/Layout";
 
 const Finish = () => {
     return (
-        <Layout pageTitle="Finish | Tako Karir">
+        <Layout pageTitle="Finish | Tako Karier">
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16 mx-auto min-h-screen flex flex-col">
                 <NavElse />
                 <div className="flex flex-col justify-center pt-24 pb-16 md:pb-24 container mx-auto">

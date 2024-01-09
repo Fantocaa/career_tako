@@ -316,9 +316,9 @@ class MdLokerController extends Controller
 
         $md_loker = DB::table('md_lokers')
 
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
+            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten')
 
-            ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+            // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
 
             ->where('md_lokers.id', '=', $id)
 

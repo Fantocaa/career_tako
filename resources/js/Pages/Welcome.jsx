@@ -34,7 +34,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
     // Render halaman setelah data diambil dan halaman ter-load
     return (
-        <Layout pageTitle="Beranda | Tako Karir">
+        <Layout pageTitle="Beranda | Tako Karier">
             {/* <Head>
             <title>Meong</title>
             // <meta name="description" content="Your page description" /> */}
