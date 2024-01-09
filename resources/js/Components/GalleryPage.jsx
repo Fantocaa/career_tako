@@ -51,7 +51,7 @@ const GalleryPage = () => {
                     >
                         <div className="col-span-2 overflow-hidden rounded-xl h-full">
                             <img
-                                src="/images/photo/DSC08028.webp"
+                                src="/images/photo/DSC08028 (1).webp"
                                 className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -65,7 +65,7 @@ const GalleryPage = () => {
                                 </button>
                             </form>
                             <img
-                                src="/images/photo/DSC08028.webp"
+                                src="/images/photo/DSC08028 (1).webp"
                                 className="object-cover w-full"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -85,7 +85,7 @@ const GalleryPage = () => {
                     >
                         <div className="col-span-2 overflow-hidden rounded-xl h-full">
                             <img
-                                src="/images/photo/DSC08059.webp"
+                                src="/images/photo/DSC08059 (1).webp"
                                 className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -99,7 +99,7 @@ const GalleryPage = () => {
                                 </button>
                             </form>
                             <img
-                                src="/images/photo/DSC08059.webp"
+                                src="/images/photo/DSC08059 (1).webp"
                                 className="object-cover w-full"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -119,7 +119,7 @@ const GalleryPage = () => {
                     >
                         <div className="col-span-2 overflow-hidden rounded-xl h-full">
                             <img
-                                src="/images/photo/DSC08042.webp"
+                                src="/images/photo/DSC08042 (1).webp"
                                 className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -133,7 +133,7 @@ const GalleryPage = () => {
                                 </button>
                             </form>
                             <img
-                                src="/images/photo/DSC08042.webp"
+                                src="/images/photo/DSC08042 (1).webp"
                                 className="object-cover w-full"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -153,7 +153,7 @@ const GalleryPage = () => {
                     >
                         <div className="overflow-hidden rounded-xl h-full">
                             <img
-                                src="/images/photo/DSC08110.webp"
+                                src="/images/photo/DSC08110 (1).webp"
                                 className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -167,7 +167,7 @@ const GalleryPage = () => {
                                 </button>
                             </form>
                             <img
-                                src="/images/photo/DSC08110.webp"
+                                src="/images/photo/DSC08110 (1).webp"
                                 className="object-cover w-full"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -187,7 +187,7 @@ const GalleryPage = () => {
                     >
                         <div className="overflow-hidden rounded-xl h-full">
                             <img
-                                src="/images/photo/DSC08141.webp"
+                                src="/images/photo/DSC08141 (1).webp"
                                 className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -201,7 +201,7 @@ const GalleryPage = () => {
                                 </button>
                             </form>
                             <img
-                                src="/images/photo/DSC08141.webp"
+                                src="/images/photo/DSC08141 (1).webp"
                                 className="object-cover w-full"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -221,7 +221,7 @@ const GalleryPage = () => {
                     >
                         <div className="overflow-hidden rounded-xl h-full">
                             <img
-                                src="/images/photo/DSC08116.webp"
+                                src="/images/photo/DSC08116 (1).webp"
                                 className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -235,7 +235,7 @@ const GalleryPage = () => {
                                 </button>
                             </form>
                             <img
-                                src="/images/photo/DSC08116.webp"
+                                src="/images/photo/DSC08116 (1).webp"
                                 className="object-cover w-full"
                                 alt="Tailwind CSS Carousel component"
                             />
