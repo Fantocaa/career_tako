@@ -5,7 +5,7 @@ import Aos from "aos";
 
 const Warn = () => {
     return (
-        <section className=" bg-RedTako font-inter text-white py-16 2xl:py-32 2xl:pb-64">
+        <section className=" bg-RedTako font-inter text-white py-16 2xl:py-32 md:pb-[464px] lg:pb-40 2xl:pb-64">
             <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32">
                 <div className="flex gap-4 items-center">
                     <div className="md:w-1/2 pb-8 md:pt-8">
@@ -56,6 +56,38 @@ const Warn = () => {
                     data-aos-duration="1000"
                 >
                     <div className="bg-white rounded-2xl text-DarkTako p-8 2xl:p-10 md:flex md:flex-wrap md:gap-4 2xl:gap-10 md:justify-between md:absolute shadow-md -translate-y-4 lg:-translate-y-20 2xl:-translate-y-24">
+                        <div className="flex flex-col items-center justify-start text-center md:w-[48%] lg:w-[20%] 2xl:w-[48%] 2xl:flex-wrap pt-16 md:pt-0">
+                            <img
+                                src="/images/icon/2.svg"
+                                alt=""
+                                className="animate-float-m"
+                            />
+                            <h1 className="pt-4 pb-2 font-bold text-2xl lg:text-base">
+                                {/* Saluran Resmi */}
+                                Melamar di Saluran Resmi
+                            </h1>
+                            <p className="lg:text-xs text-DarkTako 2xl:text-base">
+                                {/* Kami hanya memposting lowongan pekerjaan di
+                                situs Glints, JobStreet, Indeed, & Web resmi
+                                Karir kami. */}
+                                Kami hanya memposting lowongan pekerjaan di{" "}
+                                <span className="font-bold">
+                                    situs resmi kami
+                                </span>{" "}
+                                dan di job portal terpercaya lainnya seperti{" "}
+                                <span className="font-bold">
+                                    LinkedIn, Glints, Jobstreet, dan Indeed
+                                </span>{" "}
+                                dengan nama{" "}
+                                <span className="font-bold">
+                                    PT. Tako Anugerah Koporasi{" "}
+                                </span>
+                                . Jika menemukan lowongan pekerjaan yang
+                                mengatasnamakan PT. Tako Anugerah Koporasi di
+                                situs lain, harap berhati-hati. Lowongan
+                                tersebut mungkin merupakan penipuan!
+                            </p>
+                        </div>
                         <div className="flex flex-col items-center justify-start text-center md:w-[48%] lg:w-[20%] 2xl:w-[48%] 2xl:flex-wrap">
                             <img
                                 src="/images/icon/1.svg"
@@ -74,32 +106,7 @@ const Warn = () => {
                                 resmi PT. Tako Anugerah Koporasi sebelum
                                 melanjutkan proses rekrutmen. PT. Tako Anugerah
                                 Koporasi hanya akan menghubungi kandidat melalui
-                                nomor **** atau email recruitment@tako.co.id
-                            </p>
-                        </div>
-                        <div className="flex flex-col items-center justify-start text-center md:w-[48%] lg:w-[20%] 2xl:w-[48%] 2xl:flex-wrap pt-16 md:pt-0">
-                            <img
-                                src="/images/icon/2.svg"
-                                alt=""
-                                className="animate-float-m"
-                            />
-                            <h1 className="pt-4 pb-2 font-bold text-2xl lg:text-base">
-                                {/* Saluran Resmi */}
-                                Melamar di Saluran Resmi
-                            </h1>
-                            <p className="lg:text-xs text-DarkTako 2xl:text-base">
-                                {/* Kami hanya memposting lowongan pekerjaan di
-                                situs Glints, JobStreet, Indeed, & Web resmi
-                                Karir kami. */}
-                                Kami hanya memposting lowongan pekerjaan di
-                                situs resmi kami dan di situs job portal
-                                terpercaya lainnya seperti LinkedIn, Glints,
-                                Jobstreet, dan Indeed dengan nama PT. Tako
-                                Anugerah Koporasi.
-                                {/* Jika menemukan lowongan
-                                pekerjaan yang mengatasnamakan PT. Tako Anugerah
-                                Koporasi di situs lain, harap berhati-hati.
-                                Lowongan tersebut mungkin merupakan penipuan! */}
+                                WhatsApp atau email recruitment@tako.co.id
                             </p>
                         </div>
                         <div className="flex flex-col items-center justify-start text-center md:w-[48%] lg:w-[20%] 2xl:w-[48%] 2xl:flex-wrap lg:pt-0 pt-16">
@@ -110,7 +117,7 @@ const Warn = () => {
                             />
                             <h1 className="pt-4 pb-2 font-bold text-2xl lg:text-base">
                                 {/* Tidak Ada Biaya */}
-                                Proses Rekrutmen Kami 100% Tanpa Biaya
+                                100% Tanpa Biaya
                             </h1>
                             <p className="lg:text-xs text-DarkTako 2xl:text-base">
                                 {/* Kami dan Rekruter yang kami tunjuk tidak pernah
@@ -118,8 +125,9 @@ const Warn = () => {
                                 PT. Tako Anugerah Koporasi tidak pernah meminta
                                 pembayaran apa pun dari kandidat selama proses
                                 rekrutmen. Oleh karena itu, jika Anda diminta
-                                untuk membayar biaya apa pun, harap
-                                berhati-hati!
+                                untuk membayar biaya apa pun yang
+                                mengatasnamakan PT. Tako Anugerah Koporasi,
+                                harap berhati-hati!
                             </p>
                         </div>
                         <div className="flex flex-col items-center justify-start text-center md:w-[48%] lg:w-[20%] 2xl:w-[48%] 2xl:flex-wrap lg:pt-0 pt-16">
@@ -136,11 +144,10 @@ const Warn = () => {
                                 mencurigakan harap laporkan ke email
                                 recruitment@tako.co.id */}
                                 Jika Anda menemukan lowongan pekerjaan atau
-                                panggilan proses rekrutmen yang mencurigakan,
+                                panggilan proses rekrutmen yang mencurigakan
+                                mengatasnamakan PT. Tako Anugerah Koporasi,
                                 harap segera hubungi kami di
-                                recruitment@tako.co.id Kami akan segera
-                                menindaklanjuti laporan Anda dan mengambil
-                                tindakan yang diperlukan.
+                                recruitment@tako.co.id
                             </p>
                         </div>
                     </div>

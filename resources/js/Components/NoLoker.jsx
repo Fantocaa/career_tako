@@ -3,19 +3,20 @@ import { Link } from "@inertiajs/react";
 
 const NoLoker = () => {
     return (
-        <section className="font-inter text-DarkTako md:pt-16 pb-32">
+        <section className="font-inter text-DarkTako md:pt-16">
             <div className="container px-4 md:px-8 xl:px-16 2xl:px-32 w-full mx-auto">
                 <div className="md:flex items-center gap-4 xl:gap-8 bg-white px-4 2xl:px-16 py-8 rounded-xl shadow-lg">
                     <div className="w-full lg:w-1/2">
-                        <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
-                            Apabila posisi lowongan kerja tidak ada
+                        <h1 className="font-bold text-2xl md:text-3xl lg:text-2xl">
+                            Belum menemukan lowongan kerja yang sesuai?
                         </h1>
-                        <p className="pt-4 pb-8">
-                            Tidak menemukan lowongan kerja yang sesuai? Jangan
-                            khawatir, Anda dapat mengirimkan CV Anda kepada
-                            kami. Kami selalu mencari talenta-talenta terbaik
-                            untuk bergabung dengan tim kami. Siapa tahu, Anda
-                            adalah orang yang kami cari!
+                        <p className="pt-4 pb-8 text-lg">
+                            {/* Belum menemukan lowongan kerja yang sesuai? <br />
+                            <br /> */}
+                            Jangan khawatir, Anda dapat mengirimkan CV Anda
+                            kepada kami. Kami selalu mencari talenta-talenta
+                            terbaik untuk bergabung dengan tim kami. Siapa tahu,
+                            Anda adalah orang yang kami cari!
                         </p>
                         <Link href="/loker/dropcv">
                             <button className="bg-BlueTako hover:bg-white hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-white flex gap-4 justify-center items-center transition-all duration-300 ease-in-out shadow-lg w-full">

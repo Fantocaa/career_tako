@@ -15,9 +15,9 @@ const ImageSlider = () => {
     // }, []);
 
     const images = [
-        { url: "/images/banner-1.webp", caption: "Caption 1" },
-        { url: "/images/banner-2.webp", caption: "Caption 2" },
-        { url: "/images/banner-3.webp", caption: "Caption 3" },
+        { url: "/images/photo/frame_459.webp", caption: "Caption 1" },
+        { url: "/images/photo/frame_460.webp", caption: "Caption 2" },
+        { url: "/images/photo/frame_461.webp", caption: "Caption 3" },
     ];
 
     // const [isSliderActive, setIsSliderActive] = useState(true);
@@ -39,7 +39,7 @@ const ImageSlider = () => {
             <div className="container mx-auto relative flex items-center justify-start font-inter h-screen w-full px-4 md:px-8 xl:px-16 2xl:px-32">
                 {/* <Search /> */}
                 <div className="absolute z-10 md:w-[70%] lg:w-1/2">
-                    <div className="px-4 md:px-0 text-center md:text-left ">
+                    <div className="pr-4 md:px-0 text-center md:text-left ">
                         <p
                             className="text-white pb-2 md:pb-4 text-xl lg:text-2xl pt-8 md:pt-0"
                             data-aos="fade-up"
@@ -49,7 +49,7 @@ const ImageSlider = () => {
                             Jelajahi Peluang Karier Anda
                         </p>
                         <h1
-                            className="text-white text-4xl lg:text-6xl font-bold pb-2 md:pb-4"
+                            className="text-white text-4xl lg:text-6xl font-bold pb-2 md:pb-4 2xl:w-[80%]"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
@@ -57,7 +57,7 @@ const ImageSlider = () => {
                             Where Passion Meets Profession
                         </h1>
                         <p
-                            className="text-white text-xl"
+                            className="text-white text-xl 2xl:w-[75%]"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >

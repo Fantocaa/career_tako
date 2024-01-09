@@ -4,6 +4,7 @@ import Nav from "@/Components/Shared/Homepage/Nav";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import Layout from "@/Layouts/Layout";
+import BackToTop from "@/Components/BackToTop";
 
 const Contact = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan
@@ -84,6 +85,7 @@ const Contact = () => {
                         </div>
                     </div>
                 </div>
+                <BackToTop />
                 <Footer />
             </section>
         </Layout>

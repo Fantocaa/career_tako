@@ -15,6 +15,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import NoLoker from "@/Components/NoLoker";
 import HeaderPro from "@/Components/HeaderPro";
+import BackToTop from "@/Components/BackToTop";
 
 const LokerNew = () => {
     const { state } = usePage();
@@ -203,8 +204,9 @@ const LokerNew = () => {
                             </div>
                         </div>
                     </div> */}
-                    <SectionLoker />
                     <NoLoker />
+                    <SectionLoker />
+                    <BackToTop />
                     <Footer />
                 </section>
             </SkeletonTheme>

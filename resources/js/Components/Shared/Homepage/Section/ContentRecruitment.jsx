@@ -16,7 +16,7 @@ const ContentRecruitment = () => {
     return (
         <div className="mx-auto">
             <ImageSlider />
-            <Why />
+            {/* <Why /> */}
             <div className="container mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-16">
                 <div className="px-4 bg-white py-8 rounded-md md:px-8 xl:px-16 2xl:px-32 lg:py-16">
                     <>
