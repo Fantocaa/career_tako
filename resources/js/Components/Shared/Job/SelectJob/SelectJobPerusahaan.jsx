@@ -67,7 +67,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         {/* <h2 className="text-BlueTako pt-2">
                             {item.perusahaan}
                         </h2> */}
-                        {/* <p className="text-xs pt-4">{item.deskripsi}</p> */}
+                        <p className="text-xs pt-4">{item.deskripsi}</p>
                         <div className="flex items-center gap-4 pt-4">
                             <div className="flex gap-2">
                                 <img src="/images/program.svg" alt="" />
