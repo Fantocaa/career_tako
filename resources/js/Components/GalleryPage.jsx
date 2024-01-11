@@ -153,7 +153,7 @@ const GalleryPage = () => {
                     >
                         <div className="overflow-hidden rounded-xl h-full">
                             <img
-                                src="/images/photo/DSC08110 (1).webp"
+                                src="/images/photo/DSC08110 (1)_1_11zon.webp"
                                 className="w-full rounded-xl object-cover h-full hover:scale-105 transition-all duration-500"
                                 alt="Tailwind CSS Carousel component"
                             />
@@ -167,7 +167,7 @@ const GalleryPage = () => {
                                 </button>
                             </form>
                             <img
-                                src="/images/photo/DSC08110 (1).webp"
+                                src="/images/photo/DSC08110 (1)_1_11zon.webp"
                                 className="object-cover w-full"
                                 alt="Tailwind CSS Carousel component"
                             />
