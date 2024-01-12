@@ -176,14 +176,14 @@ const SectionLoker = () => {
                                     }
                                     id="search"
                                 />
-                                <button
+                                {/* <button
                                     className={`absolute inset-y-0 right-4 ${
                                         searchTerm ? "" : "hidden"
                                     }`}
                                     onClick={() => handleReset()}
                                 >
                                     X
-                                </button>
+                                </button> */}
                             </div>
                             <select
                                 className="rounded-2xl border-DarkTako border-opacity-25 w-full lg:w-64"

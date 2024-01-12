@@ -23,7 +23,7 @@ const HistoryTable = () => {
     // Gunakan useEffect untuk memuat data melalui AJAX saat komponen dimuat
     useEffect(() => {
         // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
-        fetch("/api_form") // Ganti dengan rute yang sesuai
+        fetch("/api/api_form") // Ganti dengan rute yang sesuai
             .then((response) => response.json())
             .then((data) => {
                 // const updatedData = data.map((item, index) => ({
@@ -54,11 +54,11 @@ const HistoryTable = () => {
 
             // sortable: true,
         },
-        {
-            name: "Perusahaan",
-            // selector: "perusahaan",
-            selector: (row) => row.perusahaan,
-        },
+        // {
+        //     name: "Perusahaan",
+        //     // selector: "perusahaan",
+        //     selector: (row) => row.perusahaan,
+        // },
         {
             name: "Tanggal",
             // selector: "batas_lamaran",

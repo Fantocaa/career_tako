@@ -17,7 +17,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
         const fetchData = async () => {
             try {
                 // Kirim data ke server
-                const response = await Axios.get("/form");
+                const response = await Axios.get("/api/form");
                 // const response = await Axios.post("/form");
                 setFormData(response.data);
             } catch (error) {
@@ -28,7 +28,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
         const fetchDataSkill = async () => {
             try {
                 // Kirim data ke server
-                const response_3 = await Axios.get("/skill");
+                const response_3 = await Axios.get("/api/skill");
                 setFormDataSkill(response_3.data);
             } catch (error) {
                 console.error("Error sending data:", error);

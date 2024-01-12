@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\email;
 use App\Http\Controllers\LokerController;
-use App\Http\Controllers\MdLokerController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MdLokerController;
 use App\Http\Controllers\PerusahaanController;
 
 /*
@@ -86,12 +86,11 @@ Route::get('/finish', function () {
 
 // Route::get('/login', [LoginController::class, 'index'])->name('login');
 
-Route::post('/formulir/submit/', [MdLokerController::class, 'submit_loker']);
-Route::post('/formulir/submit_custom/', [MdLokerController::class, 'submit_loker_custom']);
+
 
 Route::get('/form/view_pro', [MdLokerController::class, 'index_profesional']);
 Route::get('/form/view_intern', [MdLokerController::class, 'index_internship']);
-Route::resource('form', MdLokerController::class);
+// Route::resource('form', MdLokerController::class);
 
 // Route::get('/job/internship/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
 
@@ -116,24 +115,24 @@ Route::post('/forgot_proses', [LoginController::class, 'forgot_proses'])->name('
 
 // API
 
-Route::get('/json_perusahaan', [PerusahaanController::class, 'json_perusahaan'])->name('json_perusahaan');
+// Route::get('/json_perusahaan', [PerusahaanController::class, 'json_perusahaan'])->name('json_perusahaan');
 
-Route::get('/json_perusahaan_table', [PerusahaanController::class, 'json_perusahaan_table'])->name('json_perusahaan_table');
+// Route::get('/json_perusahaan_table', [PerusahaanController::class, 'json_perusahaan_table'])->name('json_perusahaan_table');
 
-Route::post('/api/search', [MdLokerController::class, 'loker'])->name('search');;
+// Route::post('/api/search', [MdLokerController::class, 'loker'])->name('search');
 
-Route::get('/skill', [MdLokerController::class, 'skill']);
+// Route::get('/skill', [MdLokerController::class, 'skill']);
 
-Route::get('/api_program/{id}', [MdLokerController::class, 'api_program']);
-Route::get('/api_program_perusahaan/{id}', [MdLokerController::class, 'api_program_perusahaan']);
+// Route::get('/api_program/{id}', [MdLokerController::class, 'api_program']);
+// Route::get('/api_program_perusahaan/{id}', [MdLokerController::class, 'api_program_perusahaan']);
 
-Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_program_id']);
+// Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_program_id']);
 
-Route::get('/api/perusahaan/{id}', [MdLokerController::class, 'api_perusahaan']);
+// Route::get('/api/perusahaan/{id}', [MdLokerController::class, 'api_perusahaan']);
 
-Route::get('/api/perusahaan_select/{id}', [MdLokerController::class, 'api_perusahaan_selected']);
-Route::get('/api_form', [MdLokerController::class, 'api_form']);
-Route::get('/time_expired', [MdLokerController::class, 'time_expired']);
+// Route::get('/api/perusahaan_select/{id}', [MdLokerController::class, 'api_perusahaan_selected']);
+// Route::get('/api_form', [MdLokerController::class, 'api_form']);
+// Route::get('/time_expired', [MdLokerController::class, 'time_expired']);
 
 Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'], function () {
     Route::get('/dashboard', function () {

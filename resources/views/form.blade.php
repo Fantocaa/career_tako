@@ -60,7 +60,7 @@
                 </h1>
             </div>
 
-            <form id="vue" action="{{ url('/form') }}" method="POST" class="w-full">
+            <form id="vue" action="{{ url('/api/form') }}" method="POST" class="w-full">
                 @csrf
                 <div class="flex flex-wrap pt-8 gap-4">
                     <label for="nama" class="w-[49%]">
@@ -194,7 +194,7 @@
             $('.js-example-basic-single').select2({
                 placeholder: 'Pilih Program',
                 ajax: {
-                    url: '/json_perusahaan', // Ganti dengan URL API yang sesuai
+                    url: '/api/json_perusahaan', // Ganti dengan URL API yang sesuai
                     dataType: 'json',
                     // processResults: function(data) {
                     //     return {

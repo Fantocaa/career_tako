@@ -135,7 +135,7 @@ const TableDashboard = () => {
     });
 
     const fetchData = () => {
-        Axios.get("/form")
+        Axios.get("/api/form")
             .then((response) => {
                 setDataFromAPI(response.data);
             })

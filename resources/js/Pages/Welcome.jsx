@@ -17,7 +17,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
         const fetchData = async () => {
             try {
-                const response = await fetch("/time_expired"); // Ganti dengan rute yang sesuai
+                const response = await fetch("/api/time_expired"); // Ganti dengan rute yang sesuai
                 const result = await response.json();
                 setData(result);
                 // setLoading(false);

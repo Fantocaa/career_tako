@@ -28,7 +28,8 @@ const LokerNew = () => {
         const fetchData = async () => {
             try {
                 // Kirim data ke server
-                const response = await axios.get("/json_perusahaan");
+                // const response = await axios.get("/json_perusahaan");
+                const response = await axios.get("/api/json_perusahaan");
                 setFormData(response.data);
             } catch (error) {
                 console.error("Error sending data:", error);
@@ -37,7 +38,7 @@ const LokerNew = () => {
 
         const fetchDataTime = async () => {
             try {
-                const response = await fetch("/time_expired"); // Ganti dengan rute yang sesuai
+                const response = await fetch("/api/time_expired"); // Ganti dengan rute yang sesuai
                 const result = await response.json();
                 setData(result);
                 // setLoading(false);

@@ -4,6 +4,8 @@ use App\Http\Controllers\FormController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MdLokerController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PerusahaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +22,30 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::post('apicoba',  [FormController::class, 'store'])->name('api.apicoba');
+Route::post('/formulir/submit/', [MdLokerController::class, 'submit_loker']);
+Route::post('/formulir/submit_custom/', [MdLokerController::class, 'submit_loker_custom']);
+
+Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
+Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
+Route::get('/kecamatan/{id1}/{id2}', [MdLokerController::class, 'kecamatan']);
+
+Route::resource('form', MdLokerController::class);
+
+Route::get('/json_perusahaan', [PerusahaanController::class, 'json_perusahaan'])->name('json_perusahaan');
+
+Route::get('/json_perusahaan_table', [PerusahaanController::class, 'json_perusahaan_table'])->name('json_perusahaan_table');
+
+Route::post('/search', [MdLokerController::class, 'loker'])->name('search');
+
+Route::get('/skill', [MdLokerController::class, 'skill']);
+
+Route::get('/api_program/{id}', [MdLokerController::class, 'api_program']);
+Route::get('/api_program_perusahaan/{id}', [MdLokerController::class, 'api_program_perusahaan']);
+
+Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_program_id']);
+
+Route::get('/perusahaan/{id}', [MdLokerController::class, 'api_perusahaan']);
+
+Route::get('/perusahaan_select/{id}', [MdLokerController::class, 'api_perusahaan_selected']);
+Route::get('/api_form', [MdLokerController::class, 'api_form']);
+Route::get('/time_expired', [MdLokerController::class, 'time_expired']);

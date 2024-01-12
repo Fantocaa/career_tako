@@ -4,7 +4,7 @@ import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import { Link, router, usePage } from "@inertiajs/react";
 import Select from "react-select";
-import Axios from "axios";
+import axios from "axios";
 import Layout from "@/Layouts/Layout";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -91,7 +91,7 @@ const FormEmail = () => {
 
     useEffect(() => {
         // Panggil API untuk mendapatkan daftar provinsi saat komponen dimuat
-        fetch("/provinsi")
+        fetch("/api/provinsi")
             .then((response) => response.json())
             .then((data) => {
                 // Memformat data provinsi menjadi format yang diperlukan oleh react-select
@@ -116,7 +116,7 @@ const FormEmail = () => {
         const kodeProvinsi = selectedOption.value;
 
         // Panggil API untuk mendapatkan daftar kabupaten/kota berdasarkan kode provinsi
-        fetch(`/kabupaten/${kodeProvinsi}`)
+        fetch(`/api/kabupaten/${kodeProvinsi}`)
             .then((response) => response.json())
             .then((data) => {
                 const formattedOptions = data.map((item) => ({
@@ -143,7 +143,7 @@ const FormEmail = () => {
         const kodeProvinsi = selectedProvinsi.value;
 
         // Panggil API untuk mendapatkan daftar kecamatan berdasarkan kode kabupaten/kota dan kode provinsi
-        fetch(`/kecamatan/${kodeProvinsi}/${kodeKabupaten}`)
+        fetch(`/api/kecamatan/${kodeProvinsi}/${kodeKabupaten}`)
             .then((response) => response.json())
             .then((data) => {
                 const formattedOptions = data.map((item) => ({
@@ -173,19 +173,15 @@ const FormEmail = () => {
     async function onSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
-        // console.log(capca);
         if (capca != "") {
             try {
                 const token = document.querySelector(
                     'meta[name="csrf-token"]'
-                ).content; // Mengambil token CSRF dari elemen <meta>
+                ).content;
 
                 const formData = new FormData();
-                formData.append("_token", token); // Menambahkan token CSRF ke FormData
+                formData.append("_token", token);
 
-                // formData.append("pekerjaan", values.pekerjaan);
-                // formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
-                // formData.append("perusahaan", values.perusahaan);
                 formData.append("nama", values.nama);
                 formData.append("jenis_kelamin", values.jenis_kelamin);
                 formData.append("tanggal_lahir", values.tanggal_lahir);
@@ -207,64 +203,49 @@ const FormEmail = () => {
                 const file = e.target.fileUpload.files[0];
                 formData.append("file", file);
 
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", "/formulir/submit_custom", true);
+                axios
+                    .post("/api/formulir/submit_custom", formData)
+                    .then((response) => {
+                        setValues({
+                            nama: "",
+                            jenis_kelamin: "",
+                            agama: "",
+                            tanggal_lahir: "",
+                            emails: "",
+                            provinsi: provinsiOptions.label,
+                            kabupaten: kabupatenOptions.label,
+                            kecamatan: kecamatanOptions.label,
+                            kodepos: "",
+                            alamat: "",
+                            no_telp: "",
+                            gaji: "",
+                            file: "",
+                            promosi: "",
+                            pendidikan: "",
+                            instansi: "",
+                            ipk: "",
+                            pekerjaanyd: "",
+                        });
 
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            // Berhasil
-                            // Membersihkan formulir jika berhasil
-                            setValues({
-                                // password: "meong",
-                                // pekerjaan: md_loker.pekerjaan,
-                                // jenis_pekerjaan: md_loker.jenis_pekerjaan,
-                                // perusahaan: md_loker[0].perusahaan,
-                                nama: "",
-                                jenis_kelamin: "",
-                                agama: "",
-                                tanggal_lahir: "",
-                                emails: "",
-                                provinsi: provinsiOptions.label,
-                                kabupaten: kabupatenOptions.label,
-                                kecamatan: kecamatanOptions.label,
-                                kodepos: "",
-                                alamat: "",
-                                no_telp: "",
-                                gaji: "",
-                                file: "",
-                                promosi: "",
-                                pendidikan: "",
-                                instansi: "",
-                                ipk: "",
-                                pekerjaanyd: "",
-                            });
-
-                            // console.log("Sukses:", xhr.responseText);
-                            router.get("/finish");
-                        } else {
-                            // Gagal
-                            console.error(
-                                "Error sending data:",
-                                xhr.status,
-                                xhr.statusText
-                            );
-                            alert("Terjadi kesalahan saat mengirim data.");
-                        }
-                    }
-                };
-
-                xhr.send(formData);
+                        router.get("/finish");
+                    })
+                    .catch((error) => {
+                        console.error("Error sending data:", error);
+                        alert("Terjadi kesalahan saat mengirim data.");
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
             } catch (error) {
                 console.error("Error sending data:", error);
                 alert("Terjadi kesalahan saat mengirim data.");
+                setIsLoading(false);
             }
         } else {
             setTimeout(() => {
-                // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
                 alert("Terjadi kesalahan saat mengirim data.");
                 setIsLoading(false);
-            }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
+            }, 1000);
         }
     }
 
