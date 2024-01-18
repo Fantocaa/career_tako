@@ -95,7 +95,7 @@ const WarnNew = () => {
                             </p>
                         </div>
                         <div
-                            className="bg-white text-DarkTako p-8 mt-8 rounded-2xl mt-8 md:hidden"
+                            className="bg-white text-DarkTako p-8 mt-8 rounded-2xl md:hidden"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
