@@ -1,0 +1,21 @@
+name: Deploy karier.tako.co.id
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: rsync deployments
+      uses: burnett01/rsync-deployments@6.0.0
+      with:
+        switches: -avzr --delete --exclude="" --include="" --filter=""
+        path: src/
+        remote_path: /home/nuxer/production/career_tako/public
+        remote_host: karier.tako.co.id
+        remote_port: 22112
+        remote_user: nuxer
+        remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
