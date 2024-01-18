@@ -18,6 +18,8 @@ const ImageSlider = () => {
         { url: "/images/photo/frame_459.webp", caption: "Caption 1" },
         { url: "/images/photo/frame_460.webp", caption: "Caption 2" },
         { url: "/images/photo/frame_461.webp", caption: "Caption 3" },
+        { url: "/images/photo/frame_488.webp", caption: "Caption 4" },
+        { url: "/images/photo/frame_489.webp", caption: "Caption 5" },
     ];
 
     // const [isSliderActive, setIsSliderActive] = useState(true);

@@ -15,7 +15,7 @@ const WarnNew = () => {
                             </h1>
                         </div>
                         <div data-aos="fade-up" data-aos-duration="1400">
-                            <p className="text-center md:text-left">
+                            <p className="text-center md:text-left 2xl:text-xl">
                                 PT. Tako Anugerah Koporasi adalah perusahaan
                                 terkemuka di bidang logistik, distribusi,
                                 chicken integration, dan hospitality. Kami
@@ -41,11 +41,19 @@ const WarnNew = () => {
                                 Melamar di Saluran Resmi
                             </h1>
                             <p>
-                                Kami hanya memposting lowongan pekerjaan di
-                                situs resmi kami dan di job portal terpercaya
-                                lainnya seperti LinkedIn, Glints, Jobstreet, dan
-                                Indeed dengan nama PT. Tako Anugerah Koporasi .
-                                Jika menemukan lowongan pekerjaan yang
+                                Kami hanya memposting lowongan pekerjaan di{" "}
+                                <span className="font-bold">
+                                    situs resmi kami
+                                </span>{" "}
+                                dan di job portal terpercaya lainnya seperti{" "}
+                                <span className="font-bold">
+                                    LinkedIn, Glints, Jobstreet, dan Indeed
+                                </span>{" "}
+                                dengan nama{" "}
+                                <span className="font-bold">
+                                    PT. Tako Anugerah Koporasi
+                                </span>
+                                . Jika menemukan lowongan pekerjaan yang
                                 mengatasnamakan PT. Tako Anugerah Koporasi di
                                 situs lain, harap berhati-hati. Lowongan
                                 tersebut mungkin merupakan penipuan!
@@ -69,7 +77,10 @@ const WarnNew = () => {
                                 resmi PT. Tako Anugerah Koporasi sebelum
                                 melanjutkan proses rekrutmen. PT. Tako Anugerah
                                 Koporasi hanya akan menghubungi kandidat melalui
-                                WhatsApp atau email recruitment@tako.co.id
+                                WhatsApp atau email{" "}
+                                <span className="font-bold">
+                                    recruitment@tako.co.id
+                                </span>
                             </p>
                         </div>
                         <div
@@ -86,12 +97,14 @@ const WarnNew = () => {
                                 100% Tanpa Biaya
                             </h1>
                             <p>
-                                PT. Tako Anugerah Koporasi tidak pernah meminta
-                                pembayaran apa pun dari kandidat selama proses
-                                rekrutmen. Oleh karena itu, jika Anda diminta
-                                untuk membayar biaya apa pun yang
-                                mengatasnamakan PT. Tako Anugerah Koporasi,
-                                harap berhati-hati!
+                                PT. Tako Anugerah Koporasi{" "}
+                                <span className="font-bold">
+                                    tidak pernah meminta pembayaran apa pun
+                                </span>{" "}
+                                dari kandidat selama proses rekrutmen. Oleh
+                                karena itu, jika Anda diminta untuk membayar
+                                biaya apa pun yang mengatasnamakan PT. Tako
+                                Anugerah Koporasi, harap berhati-hati!
                             </p>
                         </div>
                         <div
@@ -111,8 +124,10 @@ const WarnNew = () => {
                                 Jika Anda menemukan lowongan pekerjaan atau
                                 panggilan proses rekrutmen yang mencurigakan
                                 mengatasnamakan PT. Tako Anugerah Koporasi,
-                                harap segera hubungi kami di
-                                recruitment@tako.co.id
+                                harap segera hubungi kami di{" "}
+                                <span className="font-bold">
+                                    recruitment@tako.co.id
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -142,12 +157,14 @@ const WarnNew = () => {
                                 100% Tanpa Biaya
                             </h1>
                             <p>
-                                PT. Tako Anugerah Koporasi tidak pernah meminta
-                                pembayaran apa pun dari kandidat selama proses
-                                rekrutmen. Oleh karena itu, jika Anda diminta
-                                untuk membayar biaya apa pun yang
-                                mengatasnamakan PT. Tako Anugerah Koporasi,
-                                harap berhati-hati!
+                                PT. Tako Anugerah Koporasi{" "}
+                                <span className="font-bold">
+                                    tidak pernah meminta pembayaran apa pun
+                                </span>{" "}
+                                dari kandidat selama proses rekrutmen. Oleh
+                                karena itu, jika Anda diminta untuk membayar
+                                biaya apa pun yang mengatasnamakan PT. Tako
+                                Anugerah Koporasi, harap berhati-hati!
                             </p>
                         </div>
                         <div
@@ -167,8 +184,10 @@ const WarnNew = () => {
                                 Jika Anda menemukan lowongan pekerjaan atau
                                 panggilan proses rekrutmen yang mencurigakan
                                 mengatasnamakan PT. Tako Anugerah Koporasi,
-                                harap segera hubungi kami di
-                                recruitment@tako.co.id
+                                harap segera hubungi kami di{" "}
+                                <span className="font-bold">
+                                    recruitment@tako.co.id
+                                </span>
                             </p>
                         </div>
                     </div>
