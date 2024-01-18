@@ -36,7 +36,7 @@ const ImageSlider = () => {
 
     return (
         <>
-            <div className="container mx-auto relative flex items-center justify-start font-inter h-screen w-full px-4 md:px-8 xl:px-16 2xl:px-32">
+            <div className="container max-w-[1440px] mx-auto relative flex items-center justify-start font-inter h-screen w-full px-4 md:px-8 xl:px-16 2xl:px-32">
                 {/* <Search /> */}
                 <div className="absolute z-10 md:w-[70%] lg:w-1/2">
                     <div className="pr-4 md:px-0 text-center md:text-left ">

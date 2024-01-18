@@ -17,7 +17,7 @@ const ContentRecruitmentNew = () => {
         <div className="mx-auto">
             <ImageSlider />
             {/* <Why /> */}
-            <div className="container mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-32">
+            <div className="container max-w-[1440px] mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-32">
                 <h1
                     className="text-center font-bold text-2xl lg:text-4xl"
                     data-aos="fade-in"
@@ -122,7 +122,7 @@ const ContentRecruitmentNew = () => {
                         </>
                     </div>
 
-                    <div className="px-4 bg-white py-8 rounded-2xl md:px-8 xl:px-16 lg:py-16 md:w-1/2 mt-8">
+                    <div className="px-4 bg-white py-8 rounded-2xl md:px-8 xl:px-16 lg:py-16 md:w-1/2 mt-8 md:mt-0">
                         <>
                             <div>
                                 <div className="w-full" data-aos="fade-in">

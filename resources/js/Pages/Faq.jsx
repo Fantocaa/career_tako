@@ -232,7 +232,7 @@ const Faq = () => {
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16 min-h-screen flex flex-col">
                 <NavElse />
                 <HeaderFAQ />
-                <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 py-16  md:pt-16">
+                <div className="container max-w-[1440px] mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 py-16  md:pt-16">
                     <div className="bg-white p-4 rounded-lg py-8">
                         <div className="pb-8 p-4 rounded-lg">
                             {/* <h1 className="text-center font-bold text-2xl md:text-4xl ">

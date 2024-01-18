@@ -27,7 +27,7 @@ const Navbar = () => {
                 scrolled ? "scrolled-bg" : "bg-transparent"
             }`}
         >
-            <div className="container px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto w-full z-50 ">
+            <div className="container max-w-[1440px] px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto w-full z-50 ">
                 <div className="flex justify-between items-center">
                     <Link href="https://tako.co.id/">
                         {scrolled ? (

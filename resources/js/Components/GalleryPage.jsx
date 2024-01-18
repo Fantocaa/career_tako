@@ -9,7 +9,7 @@ const GalleryPage = () => {
 
     return (
         // <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:pt-16 lg:pt-64 pb-16">
-        <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:pt-16 pb-16">
+        <div className="container max-w-[1440px] mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:pt-16 pb-16">
             <div className="pb-8 flex flex-col items-center">
                 <h1
                     className="text-4xl font-bold text-center"

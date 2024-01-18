@@ -4,7 +4,7 @@ import React from "react";
 const HeaderFAQ = () => {
     return (
         <div className="bg-BlueTako text-white font-inter w-full py-16 md:py-8">
-            <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:py-24">
+            <div className="container max-w-[1440px] mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:py-24">
                 <div className="md:flex gap-8 2xl:gap-16 items-center">
                     <div className="md:w-[65%]">
                         <h1 className="font-bold text-3xl lg:text-4xl 2xl:text-[40px] pt-14 md:pt-8 w-[90%] md:w-full">
