@@ -253,7 +253,7 @@ const FormEmail = () => {
         <Layout pageTitle="Formulir | Tako Karier">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
                 <NavElse />
-                <div className="bg-BgTako py-32 container px-4 md:px-8 lg:px-32 mx-auto">
+                <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 lg:px-32 mx-auto">
                     <div className="bg-white mx-auto rounded-lg px-2 md:px-4">
                         <h1 className="font-bold text-xl md:text-2xl  text-center py-8">
                             Registration Form Drop CV

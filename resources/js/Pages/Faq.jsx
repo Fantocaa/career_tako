@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "@/Components/Shared/Homepage/Navbar";
 import Footer from "@/Components/Shared/Footer";
 import {
     Accordion,
@@ -15,6 +14,7 @@ import { useEffect, useState } from "react";
 import HeaderFAQ from "../Components/HeaderFAQ";
 import { Link } from "@inertiajs/react";
 import BackToTop from "@/Components/BackToTop";
+import Nav from "@/Components/Shared/Homepage/Nav";
 
 const Faq = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan
@@ -229,8 +229,8 @@ const Faq = () => {
 
     return (
         <Layout pageTitle="FAQ | Tako Karier">
-            <section className="bg-BgTako font-inter text-DarkTako md:pt-16 min-h-screen flex flex-col">
-                <NavElse />
+            <section className="bg-BgTako font-inter text-DarkTako flex flex-col">
+                <Nav />
                 <HeaderFAQ />
                 <div className="container max-w-[1440px] mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 py-16  md:pt-16">
                     <div className="bg-white p-4 rounded-lg py-8">

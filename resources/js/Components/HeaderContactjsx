@@ -1,6 +1,6 @@
 import React from "react";
 
-const HeaderFAQ = () => {
+const HeaderContact = () => {
     return (
         // <div className="bg-BlueTako text-white font-inter w-full py-16 md:py-8">
         //     <div className="container max-w-[1440px] mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:py-24">
@@ -56,4 +56,4 @@ const HeaderFAQ = () => {
     );
 };
 
-export default HeaderFAQ;
+export default HeaderContact;

@@ -29,7 +29,7 @@ const Navbar = () => {
         >
             <div className="container max-w-[1440px] px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto w-full z-50 ">
                 <div className="flex justify-between items-center">
-                    <Link href="https://tako.co.id/">
+                    <a href="https://tako.co.id/" target="__blank">
                         {scrolled ? (
                             <div className="w-10 h-10 md:w-24 md:h-16 flex items-center">
                                 <img
@@ -45,7 +45,7 @@ const Navbar = () => {
                                 />
                             </div>
                         )}
-                    </Link>
+                    </a>
                     <div className="md:flex text-BlueTako">
                         <Link
                             className={`mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold ${

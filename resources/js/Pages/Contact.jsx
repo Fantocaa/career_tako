@@ -1,10 +1,11 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Nav from "@/Components/Shared/Homepage/Nav";
 import Footer from "@/Components/Shared/Footer";
-import NavElse from "@/Components/Shared/Else/NavElse";
+// import NavElse from "@/Components/Shared/Else/NavElse";
 import Layout from "@/Layouts/Layout";
 import BackToTop from "@/Components/BackToTop";
+import Nav from "@/Components/Shared/Homepage/Nav";
+import HeaderFAQ from "@/Components/HeaderFAQ";
 
 const Contact = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan
@@ -36,8 +37,9 @@ const Contact = () => {
 
     return (
         <Layout pageTitle="Contact | Tako Karier">
-            <section className="bg-BgTako font-inter text-DarkTako md:pt-16">
-                <NavElse />
+            <section className="bg-BgTako font-inter text-DarkTako">
+                <Nav />
+                <HeaderFAQ />
                 <div className="container max-w-[1440px] flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 justify-between items-center">
                     <div className="bg-white rounded-lg p-6 md:flex items-center gap-4">
                         <div className="hidden md:block md:w-1/2 ">

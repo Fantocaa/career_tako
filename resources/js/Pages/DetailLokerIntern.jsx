@@ -52,7 +52,7 @@ const DetailLoker = () => {
                     // key={item.id}
                 >
                     <Nav />
-                    <div className="container flex-wrap mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 py-16 pt-28 md:pt-16 justify-between">
+                    <div className="container max-w-[1440px] flex-wrap mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 py-16 pt-28 md:pt-16 justify-between">
                         <div className="bg-white p-4 rounded-lg py-8 md:px-8">
                             <div className="flex items-end">
                                 <div className="w-full">
