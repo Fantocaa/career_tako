@@ -7,7 +7,10 @@ import GalleryPage from "@/Components/GalleryPage";
 import FaqCTA from "@/Components/Shared/Homepage/Section/FaqCTA";
 import BackToTop from "@/Components/BackToTop";
 import Layout from "@/Layouts/Layout";
+import ContentRecruitmentNew from "@/Components/Shared/Homepage/Section/ContentRecruitmentNew";
+import WarnNew from "@/Components/Shared/Homepage/Section/WarnNew";
 import { useEffect, useState } from "react";
+import "../../css/app.css";
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     const [data, setData] = useState([]); // State untuk data perusahaan
@@ -40,17 +43,21 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             // <meta name="description" content="Your page description" /> */}
             <section className="bg-BgTako font-inter text-DarkTako">
                 <Nav />
-                <ContentRecruitment />
+                {/* <div className="pt-56"> */}
+                <ContentRecruitmentNew />
+                {/* </div> */}
+                {/* <ContentRecruitment /> */}
                 {/* <div className="py-96"></div> */}
                 <div className="py-16">
-                    <Warn />
+                    {/* <Warn /> */}
+                    <WarnNew />
                 </div>
                 {/* <Gallery /> */}
-                <div className="md:pt-96 lg:pt-0 2xl:pt-32 pb-16">
+                <div className="md:pt-96 lg:pt-0 2xl:pt-16 pb-16">
                     <GalleryPage />
                 </div>
                 <FaqCTA />
-                <CTA />
+                {/* <CTA /> */}
                 <BackToTop />
                 <Footer />
             </section>

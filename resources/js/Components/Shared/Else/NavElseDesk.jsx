@@ -31,7 +31,7 @@ const NavElseDesk = () => {
             <div className="container px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto">
                 <div className="flex justify-between items-center">
                     <div className="w-10 h-10 md:w-24 md:h-16 flex items-center">
-                        <Link href="/">
+                        <Link href="https://tako.co.id/">
                             <img
                                 src="/images/tako_new.webp"
                                 alt="Tako Logo"

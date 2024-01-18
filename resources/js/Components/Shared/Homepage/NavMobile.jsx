@@ -36,7 +36,7 @@ const NavMobile = () => {
             <nav className="container py-2 px-4 md:px-8 xl:px-16 mx-auto">
                 <div className="flex justify-between items-center">
                     <div className="w-24 md:w-16 md:h-16 -translate-x-3">
-                        <Link href="/">
+                        <Link href="https://tako.co.id/">
                             {scrolled ? (
                                 <img
                                     src="/images/tako_new.webp"
