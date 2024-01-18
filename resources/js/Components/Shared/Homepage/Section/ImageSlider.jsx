@@ -38,7 +38,7 @@ const ImageSlider = () => {
 
     return (
         <>
-            <div className="container max-w-[1440px] mx-auto relative flex items-center justify-start font-inter h-screen w-full px-4 md:px-8 xl:px-16 2xl:px-32">
+            <div className="container max-w-[1440px] mx-auto relative flex items-center justify-start font-inter h-screen md:min-h-full w-full px-4 md:px-8 xl:px-16 2xl:px-32">
                 {/* <Search /> */}
                 <div className="absolute z-10 md:w-[70%] lg:w-1/2">
                     <div className="pr-4 md:px-0 text-center md:text-left ">
@@ -47,7 +47,6 @@ const ImageSlider = () => {
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
-                            {/* Selamat Datang di Karir Tako */}
                             Jelajahi Peluang Karier Anda
                         </p>
                         <h1
@@ -55,7 +54,6 @@ const ImageSlider = () => {
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
-                            {/* Temukan Karier Impianmu dengan Lebih Mudah */}
                             Where Passion Meets Profession
                         </h1>
                         <p
@@ -63,8 +61,6 @@ const ImageSlider = () => {
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
-                            {/* Temukan Posisi yang Sesuai dengan Profesionalismu,
-                            Baik Lowongan Pekerjaan atau Ragam Proyek Lainnya */}
                             Temukan potensi terbaik Anda, berkembang, dan jadi
                             bagian dari kami dalam menciptakan solusi dan
                             inovasi di dunia logistic, distribution, chicken

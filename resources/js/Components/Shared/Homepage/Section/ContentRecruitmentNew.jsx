@@ -40,7 +40,7 @@ const ContentRecruitmentNew = () => {
                     data-aos="fade-up"
                 >
                     <>
-                        <div className="lg:flex items-end w-full lg:gap-16">
+                        <div className="md:flex-col md:flex lg:flex-row lg:items-end w-full lg:gap-16">
                             <div data-aos="fade-in" data-aos-duration="5000">
                                 <h1 className="text-xl md:text-2xl font-bold lg:text-3xl">
                                     <span className="text-BlueTako text-base font-normal mr-2 lg:mr-4 lg:text-2xl">
