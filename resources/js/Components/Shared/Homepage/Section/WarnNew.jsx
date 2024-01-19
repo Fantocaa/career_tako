@@ -138,7 +138,7 @@ const WarnNew = () => {
                             className="flex justify-center items-center"
                         >
                             <img
-                                src="/images/bu_deby.webp"
+                                src="/images/bu_deby2.webp"
                                 className="-z-10"
                                 alt="warn"
                             />
