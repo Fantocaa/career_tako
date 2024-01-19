@@ -5,7 +5,7 @@ const HeaderContact = () => {
         <>
             <div className="text-white font-inter w-full relative">
                 <img
-                    src="/images/photo/frame_463.webp"
+                    src="/images/photo/frame_496.webp"
                     alt="loker"
                     className="w-full h-[480px] md:h-[640px] object-cover object-top"
                 />

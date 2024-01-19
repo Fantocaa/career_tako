@@ -40,7 +40,7 @@ const Contact = () => {
             <section className="bg-BgTako font-inter text-DarkTako">
                 <Nav />
                 <HeaderContact />
-                <div className="container max-w-[1440px] flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 justify-between items-center">
+                <div className="container max-w-[1440px] flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:py-16 pb-16 md:py-8 justify-between items-center">
                     <div className="bg-white rounded-lg p-6 md:flex items-center gap-4 py-16 md:px-32">
                         {/* <div className="hidden md:block md:w-1/2 ">
                             <img src="images/contact.svg" alt="" className="" />

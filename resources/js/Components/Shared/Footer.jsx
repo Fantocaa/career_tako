@@ -8,13 +8,13 @@ const Footer = () => {
                 <div className="block md:flex justify-between items-center pb-12">
                     <div className="flex items-center gap-4">
                         <div className="">
-                            <Link href="/">
+                            <a href="https://tako.co.id/">
                                 <img
                                     src="/images/logo-footer.png"
                                     alt="Tako Logo"
                                     className="w-16 h-16"
                                 />
-                            </Link>
+                            </a>
                         </div>
                         <div>
                             <h1 className="font-bold">
