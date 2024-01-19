@@ -5,7 +5,7 @@ const NoLoker = () => {
     return (
         <section className="font-inter text-DarkTako pt-16">
             <div className="container max-w-[1440px] px-4 md:px-8 xl:px-16 2xl:px-32 w-full mx-auto">
-                <div className="md:flex items-center gap-4 xl:gap-8 2xl:gap-12 bg-white px-4 2xl:px-8 py-8 rounded-xl shadow-lg">
+                <div className="md:flex items-center gap-4 xl:gap-8 2xl:gap-16 bg-white px-4 2xl:px-8 py-8 rounded-xl shadow-lg">
                     <div className="w-full lg:w-1/2">
                         <h1 className="font-bold text-2xl md:text-3xl lg:text-3xl">
                             Belum menemukan lowongan kerja yang sesuai?
