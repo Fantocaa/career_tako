@@ -127,7 +127,7 @@ const SectionLoker = () => {
             <section className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16  pb-16 md:py-8 flex-wrap items-center text-DarkTako container max-w-[1440px]">
                 <>
                     <div className="flex justify-between items-end pb-8 flex-wrap gap-4 w-full">
-                        <h1 className="text-BlueTako font-bold text-2xl ">
+                        <h1 className="text-BlueTako font-bold text-2xl translate">
                             ({jobCount}) Pekerjaan yang tersedia
                         </h1>
                     </div>
@@ -167,7 +167,7 @@ const SectionLoker = () => {
                                 <input
                                     type="text"
                                     placeholder="Cari Lowongan yang anda inginkan"
-                                    className="rounded-xl border-DarkTako border-opacity-25 w-full h-12 block pl-12"
+                                    className="rounded-xl border-DarkTako border-opacity-25 w-full h-12 block pl-12 translate"
                                     // onInput={}
                                     value={searchTerm}
                                     // onChange={(e) => setSearchTerm(e.target.value)}
@@ -190,11 +190,19 @@ const SectionLoker = () => {
                                 value={selectedOption}
                                 onChange={handleSelectChange}
                             >
-                                <option value="All">Semua Program</option>
-                                <option value="Internship">
+                                <option value="All" className="translate">
+                                    Semua Program
+                                </option>
+                                <option
+                                    value="Internship"
+                                    className="translate"
+                                >
                                     Internship (Magang / Praktik Kerja)
                                 </option>
-                                <option value="Profesional">
+                                <option
+                                    value="Profesional"
+                                    className="translate"
+                                >
                                     Profesional (Fresh Graduate / Berpengalaman)
                                 </option>
                             </select>
@@ -297,7 +305,7 @@ const SectionLoker = () => {
 
                 {formData.length === 0 ? (
                     <div className="flex justify-center w-full pt-16">
-                        <p className="text-DarkTako">
+                        <p className="text-DarkTako translate">
                             Maaf, tidak ada lowongan yang tersedia saat ini.
                         </p>
                     </div>

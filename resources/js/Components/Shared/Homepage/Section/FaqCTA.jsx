@@ -1,5 +1,9 @@
 import { Link } from "@inertiajs/react";
 import React from "react";
+import he from "he";
+
+const translatedText = "Let&#39;s check the FAQ below"; // Misalkan ini adalah teks yang sudah diterjemahkan
+const decodedText = he.decode(translatedText);
 
 const FaqCTA = () => {
     return (
@@ -7,17 +11,18 @@ const FaqCTA = () => {
             <div className="relative">
                 <div className="container w-full mx-auto px-4 md:px-8 py-32 text-center relative z-10">
                     <div data-aos="zoom-in-up" data-aos-duration="800">
-                        <h1 className="font-bold text-2xl md:text-4xl pb-2">
+                        <h1 className="font-bold text-2xl md:text-4xl pb-2 translate">
                             Masih punya pertanyaan?
                         </h1>
-                        <h1 className="font-bold text-2xl md:text-4xl pb-12">
+                        <h1 className="font-bold text-2xl md:text-4xl pb-12 translate">
                             Yuk cek FAQ di bawah
+                            {/* {decodedText} */}
                         </h1>
                     </div>
 
                     <Link href="/faq">
                         <button
-                            className="font-bold bg-YellowTako text-DarkTako hover:bg-YellowTako hover:bg-opacity-80 transition-all p-4 rounded-lg cursor-pointer z-10"
+                            className="font-bold bg-YellowTako text-DarkTako hover:bg-YellowTako hover:bg-opacity-80 transition-all p-4 rounded-lg cursor-pointer z-10 translate"
                             data-aos="zoom-in-up"
                             data-aos-duration="800"
                         >
@@ -25,7 +30,7 @@ const FaqCTA = () => {
                         </button>
                     </Link>
                     <p
-                        className="pt-8 md:text-lg 2xl:text-xl w-full md:w-[80%] lg:w-[50%] mx-auto"
+                        className="pt-8 md:text-lg 2xl:text-xl w-full md:w-[80%] lg:w-[50%] mx-auto translate"
                         data-aos="zoom-in-up"
                         data-aos-duration="800"
                     >

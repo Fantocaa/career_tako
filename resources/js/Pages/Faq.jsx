@@ -59,13 +59,13 @@ const Faq = () => {
     const faqData = [
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Dimana saya bisa melihat lowongan pekerjaan yang sedang
                     dibuka?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     Anda bisa melihat lowongan pekerjaan di PT. Tako Anugerah
                     Koporasi melalui website{" "}
                     <Link href="/loker" className="text-BlueTako underline">
@@ -76,13 +76,13 @@ const Faq = () => {
         },
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Apakah saya bisa melamar lebih dari 1 posisi secara
                     bersamaan?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     Bisa, Anda bisa melamar{" "}
                     <span className="font-bold">maksimal 2 posisi</span> {""}
                     secara bersamaan. Jadi, pastikan sesuai dengan kompetensi
@@ -92,12 +92,12 @@ const Faq = () => {
         },
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Saya mengalami kesulitan ketika mengunggah berkas CV
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     Pastikan berkas CV yang Anda upload dalam format PDF dengan
                     ukuran maksimal 2 MB.
                 </p>
@@ -105,13 +105,13 @@ const Faq = () => {
         },
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Apakah saya bisa mengajukan internship di PT. Tako Anugerah
                     Koporasi?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     Tentu bisa, silakan untuk melakukan proses pendaftaran
                     sesuai alurnya. Untuk program silahkan isi dengan nama{" "}
                     <span className="font-bold">Internship</span> dan jangan
@@ -124,13 +124,13 @@ const Faq = () => {
         },
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Berapa lama proses rekrutmen di PT. Tako Anugerah Koporasi
                     berlangsung?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     Proses rekrutmen di PT. Tako Anugerah Koporasi berlangsung{" "}
                     <span className="font-bold">
                         selama 2 minggu hingga 1 bulan.
@@ -140,12 +140,12 @@ const Faq = () => {
         },
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Bagaimana cara mengetahui bahwa lamaran saya diterima?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     Lamaran kamu kami terima ketika sudah mengisi semua data dan
                     mengunggah CV yang dibutuhkan. Setelah Anda submit akan
                     muncul tampilan{" "}
@@ -158,13 +158,13 @@ const Faq = () => {
         },
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Apakah ada biaya selama proses rekrutmen di PT. Tako
                     Anugerah Koporasi?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     <span className="font-bold">Tidak ada</span>, proses
                     rekrutmen kami{" "}
                     <span className="font-bold">100% gratis</span>. Jika Anda
@@ -176,13 +176,13 @@ const Faq = () => {
         },
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Apa yang harus saya lakukan jika tidak lolos proses
                     rekrutmen?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     Jika Anda tidak lolos proses rekrutmen, jangan berkecil
                     hati. Pelajari apa yang menjadi kekurangan Anda dan lakukan
                     perbaikan. Anda juga dapat mencoba melamar kembali ke
@@ -193,14 +193,14 @@ const Faq = () => {
 
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Saya tertarik untuk menjadi bagian dari PT. Tako Anugerah
                     Koporasi, namun belum ada lowongan posisi yang cocok. Apakah
                     saya bisa mengirimkan CV saya terlebih dahulu?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     <span className="font-bold">Tentu bisa</span>. Silakan untuk
                     mengisi data lowongan pekerjaan dan mengirimkan CV Anda.
                     Kami akan menyimpan data Anda dan menghubungi dikemudian
@@ -210,13 +210,13 @@ const Faq = () => {
         },
         {
             question: (
-                <p className="text-xs md:text-base leading-5">
+                <p className="text-xs md:text-base leading-5 translate">
                     Apabila saya ada kendala lainnya, saya harus menghubungi
                     siapa?
                 </p>
             ),
             answer: (
-                <p className="opacity-90 text-xs md:text-base leading-5">
+                <p className="opacity-90 text-xs md:text-base leading-5 translate">
                     Anda bisa menghubungi kami melalui recruitment@tako.co.id
                     dengan{" "}
                     <span className="font-bold">subjek Rekrutmen_Nama</span>.

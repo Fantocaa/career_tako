@@ -48,4 +48,7 @@ Route::get('/perusahaan/{id}', [MdLokerController::class, 'api_perusahaan']);
 
 Route::get('/perusahaan_select/{id}', [MdLokerController::class, 'api_perusahaan_selected']);
 Route::get('/api_form', [MdLokerController::class, 'api_form']);
+
 Route::get('/time_expired', [MdLokerController::class, 'time_expired']);
+
+Route::post('/translate', [MdLokerController::class, 'translate']);

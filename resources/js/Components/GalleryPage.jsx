@@ -19,7 +19,7 @@ const GalleryPage = () => {
                     Gallery
                 </h1>
                 <p
-                    className="text-center py-4 lg:w-[720px] 2xl:w-[1024px] 2xl:pb-8 2xl:pt-6"
+                    className="text-center py-4 lg:w-[720px] 2xl:w-[1024px] 2xl:pb-8 2xl:pt-6 translate"
                     data-aos="fade-up"
                     data-aos-duration="800"
                 >
@@ -35,7 +35,7 @@ const GalleryPage = () => {
                     berinteraksi satu sama lain.
                 </p>
                 <h1
-                    className="pt-2 md:pt-0 font-bold text-2xl text-center"
+                    className="pt-2 md:pt-0 font-bold text-2xl text-center translate"
                     data-aos="fade-up"
                     data-aos-duration="800"
                 >

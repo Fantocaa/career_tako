@@ -10,12 +10,12 @@ const WarnNew = () => {
                 <div className="flex gap-8">
                     <div className="md:w-1/2 pb-8 md:pt-8">
                         <div data-aos="fade-up" data-aos-duration="1200">
-                            <h1 className="text-center md:text-left font-bold text-2xl md:text-4xl pb-4 lg:pt-4">
+                            <h1 className="text-center md:text-left font-bold text-2xl md:text-4xl pb-4 lg:pt-4 translate">
                                 HATI-HATI PENIPUAN !!!
                             </h1>
                         </div>
                         <div data-aos="fade-up" data-aos-duration="1400">
-                            <p className="text-center md:text-left 2xl:text-xl">
+                            <p className="text-center md:text-left 2xl:text-xl translate">
                                 PT. Tako Anugerah Koporasi adalah perusahaan
                                 terkemuka di bidang logistik, distribusi,
                                 chicken integration, dan hospitality. Kami
@@ -37,20 +37,20 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4">
+                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
                                 Melamar di Saluran Resmi
                             </h1>
-                            <p>
+                            <p className="translate">
                                 Kami hanya memposting lowongan pekerjaan di{" "}
-                                <span className="font-bold">
+                                <span className="font-bold translate">
                                     situs resmi kami
                                 </span>{" "}
                                 dan di job portal terpercaya lainnya seperti{" "}
-                                <span className="font-bold">
+                                <span className="font-bold translate">
                                     LinkedIn, Glints, Jobstreet, dan Indeed
                                 </span>{" "}
                                 dengan nama{" "}
-                                <span className="font-bold">
+                                <span className="font-bold translate">
                                     PT. Tako Anugerah Koporasi
                                 </span>
                                 . Jika menemukan lowongan pekerjaan yang
@@ -69,18 +69,16 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4">
+                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
                                 Verifikasi Undangan Rekrutmen
                             </h1>
-                            <p>
+                            <p className="translate">
                                 Pastikan setiap informasi berasal dari sumber
                                 resmi PT. Tako Anugerah Koporasi sebelum
                                 melanjutkan proses rekrutmen. PT. Tako Anugerah
                                 Koporasi hanya akan menghubungi kandidat melalui
                                 WhatsApp atau email{" "}
-                                <span className="font-bold">
-                                    recruitment@tako.co.id
-                                </span>
+                                <span className="">recruitment@tako.co.id</span>
                             </p>
                         </div>
                         <div
@@ -93,12 +91,12 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4">
+                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
                                 100% Tanpa Biaya
                             </h1>
-                            <p>
+                            <p className="translate">
                                 PT. Tako Anugerah Koporasi{" "}
-                                <span className="font-bold">
+                                <span className="font-bold translate">
                                     tidak pernah meminta pembayaran apa pun
                                 </span>{" "}
                                 dari kandidat selama proses rekrutmen. Oleh
@@ -125,9 +123,7 @@ const WarnNew = () => {
                                 panggilan proses rekrutmen yang mencurigakan
                                 mengatasnamakan PT. Tako Anugerah Koporasi,
                                 harap segera hubungi kami di{" "}
-                                <span className="font-bold">
-                                    recruitment@tako.co.id
-                                </span>
+                                <span className="">recruitment@tako.co.id</span>
                             </p>
                         </div>
                     </div>
@@ -153,12 +149,12 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4">
+                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
                                 100% Tanpa Biaya
                             </h1>
-                            <p>
+                            <p className="translate">
                                 PT. Tako Anugerah Koporasi{" "}
-                                <span className="font-bold">
+                                <span className="">
                                     tidak pernah meminta pembayaran apa pun
                                 </span>{" "}
                                 dari kandidat selama proses rekrutmen. Oleh
@@ -177,17 +173,15 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4">
+                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
                                 Segera Laporkan
                             </h1>
-                            <p>
+                            <p className="translate">
                                 Jika Anda menemukan lowongan pekerjaan atau
                                 panggilan proses rekrutmen yang mencurigakan
                                 mengatasnamakan PT. Tako Anugerah Koporasi,
                                 harap segera hubungi kami di{" "}
-                                <span className="font-bold">
-                                    recruitment@tako.co.id
-                                </span>
+                                <span className="">recruitment@tako.co.id</span>
                             </p>
                         </div>
                     </div>

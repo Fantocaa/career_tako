@@ -43,7 +43,7 @@ const ImageSlider = () => {
                 <div className="absolute z-10 md:w-[70%] lg:w-1/2">
                     <div className="pr-4 md:px-0 text-center md:text-left ">
                         <p
-                            className="text-white pb-2 md:pb-4 text-xl lg:text-2xl pt-8 md:pt-0"
+                            className="text-white pb-2 md:pb-4 text-xl lg:text-2xl pt-8 md:pt-0 translate"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
@@ -57,7 +57,7 @@ const ImageSlider = () => {
                             Where Passion Meets Profession
                         </h1>
                         <p
-                            className="text-white text-xl 2xl:w-[75%]"
+                            className="text-white text-xl 2xl:w-[75%] translate"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
@@ -73,7 +73,7 @@ const ImageSlider = () => {
                                     data-aos="fade-up"
                                     data-aos-duration="1000"
                                 >
-                                    <h1 className="text-lg font-semibold">
+                                    <h1 className="text-lg font-semibold translate">
                                         {/* Daftar Lowongan Kerja */}
                                         Kembangkan Karier Anda
                                     </h1>

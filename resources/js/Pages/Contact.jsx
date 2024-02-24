@@ -46,10 +46,10 @@ const Contact = () => {
                             <img src="images/contact.svg" alt="" className="" />
                         </div> */}
                         <div className="rounded-lg text-center ">
-                            <h1 className="font-bold text-2xl lg:text-3xl ">
+                            <h1 className="font-bold text-2xl lg:text-3xl translate">
                                 Terhubung dengan Kami
                             </h1>
-                            <p className="pt-4 mb-8 text-xs md:pb-4 lg:text-base">
+                            <p className="pt-4 mb-8 text-xs md:pb-4 lg:text-base translate">
                                 Kami percaya bahwa membangun hubungan yang kuat
                                 dengan pelanggan, mitra, dan karyawan adalah
                                 kunci untuk kesuksesan. Kami ingin terhubung

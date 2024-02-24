@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\JsonResponse;
 // use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Response;
+use Google\Cloud\Translate\V2\TranslateClient;
 
 class MdLokerController extends Controller
 {
@@ -113,8 +114,6 @@ class MdLokerController extends Controller
 
         return response()->json($program);
     }
-
-
 
     public function api_program_id($program, $id)
     {
@@ -820,6 +819,19 @@ class MdLokerController extends Controller
         }
 
         return response()->json('meong');
+    }
+
+    public function translate(Request $request)
+    {
+        $translate = new TranslateClient([
+            'key' => 'AIzaSyAIAyTqwdElG1l8dWkqzElE14zvg_-gc9I'
+        ]);
+
+        $result = $translate->translate($request->text, [
+            'target' => $request->target,
+        ]);
+
+        return response()->json($result['text']);
     }
 
 

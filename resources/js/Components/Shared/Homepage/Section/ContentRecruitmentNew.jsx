@@ -19,13 +19,13 @@ const ContentRecruitmentNew = () => {
             {/* <Why /> */}
             <div className="container max-w-[1440px] mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-32">
                 <h1
-                    className="text-center font-bold text-2xl lg:text-4xl"
+                    className="text-center font-bold text-2xl lg:text-4xl translate"
                     data-aos="fade-in"
                 >
                     Proses Rekrutmen
                 </h1>
                 <p
-                    className="text-xs mx-auto text-center pt-4 opacity-90 md:w-[460px] lg:text-base lg:w-[864px] pb-12"
+                    className="text-xs mx-auto text-center pt-4 opacity-90 md:w-[460px] lg:text-base lg:w-[864px] pb-12 translate"
                     data-aos="fade-in"
                 >
                     Bergabunglah dengan kami dalam mengukir jejak sukses melalui
@@ -48,17 +48,17 @@ const ContentRecruitmentNew = () => {
                                     </span>
                                     Apply
                                 </h1>
-                                <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base">
+                                <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base translate">
                                     Temukan pekerjaan yang sesuai dengan
                                     kompetensi Anda. Anda dapat menemukan dengan
                                     klik “Kembangkan Karier Anda” yang tersedia
                                     di bagian atas.
                                 </p>
                                 <div className="pt-4">
-                                    <h2 className="text-xs font-semibold lg:text-base">
+                                    <h2 className="text-xs font-semibold lg:text-base translate">
                                         Tips untuk Pendaftar :
                                     </h2>
-                                    <p className="text-xs pt-2 opacity-90 lg:text-base pb-4">
+                                    <p className="text-xs pt-2 opacity-90 lg:text-base pb-4 translate">
                                         Isi data dengan jujur, pastikan CV Anda
                                         lengkap dan relevan dengan posisi yang
                                         dilamar.
@@ -84,7 +84,7 @@ const ContentRecruitmentNew = () => {
                                         </span>
                                         Assessment
                                     </h1>
-                                    <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base">
+                                    <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base translate">
                                         Tahap ini bertujuan untuk menilai
                                         kemampuan dan kesesuaian Anda dengan
                                         posisi yang dilamar. Assessment berupa
@@ -92,11 +92,11 @@ const ContentRecruitmentNew = () => {
                                         wawancara.
                                     </p>
                                     <div className="pt-4">
-                                        <h2 className="text-xs font-semibold lg:text-base">
+                                        <h2 className="text-xs font-semibold lg:text-base translate">
                                             Tips untuk Pendaftar :
                                         </h2>
                                         <ul className="text-xs pt-2 opacity-90 list-disc lg:text-base ml-5">
-                                            <li>
+                                            <li className="translate">
                                                 {/* Tanyakan rincian tentang setiap
                                             proses penilaian kepada perekrut
                                             saat Anda diundang. */}
@@ -104,14 +104,14 @@ const ContentRecruitmentNew = () => {
                                                 matang untuk mengikuti rangkaian
                                                 tes di atas
                                             </li>
-                                            <li className="pt-1">
+                                            <li className="pt-1 translate">
                                                 {/* Percaya diri dan Jadilah diri
                                             sendiri */}
                                                 Pelajari secara detail tentang
                                                 perusahaan dan posisi yang
                                                 dilamar
                                             </li>
-                                            <li className="pt-1">
+                                            <li className="pt-1 translate">
                                                 Jadi diri sendiri, terus
                                                 berlatih, dan percaya diri
                                             </li>
@@ -132,7 +132,7 @@ const ContentRecruitmentNew = () => {
                                         </span>
                                         Acceptance & Onboarding
                                     </h1>
-                                    <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base">
+                                    <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base translate">
                                         Tahap ini adalah tahap terakhir dari
                                         seluruh rangkaian rekrutmen. Pada tahap
                                         ini, pelamar yang lolos seleksi akan
@@ -141,20 +141,20 @@ const ContentRecruitmentNew = () => {
                                         Rekrutmen.
                                     </p>
                                     <div className="pt-4">
-                                        <h2 className="text-xs font-semibold lg:text-base">
+                                        <h2 className="text-xs font-semibold lg:text-base translate">
                                             Tips untuk Pendaftar :
                                         </h2>
                                         <ul className="text-xs pt-2 opacity-90 list-disc lg:text-base ml-5">
-                                            <li>
+                                            <li className="translate">
                                                 Bacalah surat penawaran kerja
                                                 dengan cermat sebelum
                                                 menandatanganinya
                                             </li>
-                                            <li className="pt-1">
+                                            <li className="pt-1 translate">
                                                 Tanyakan hal-hal yang belum
                                                 jelas kepada rekruter
                                             </li>
-                                            <li className="pt-1">
+                                            <li className="pt-1 translate">
                                                 Pastikan Anda siap untuk memulai
                                                 pekerjaan dan perjalanan baru
                                             </li>

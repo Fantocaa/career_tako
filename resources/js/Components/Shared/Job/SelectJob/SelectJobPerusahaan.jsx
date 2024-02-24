@@ -58,7 +58,9 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         className="bg-white p-8 rounded-xl h-full flex flex-col justify-between w-full shadow-md"
                         key={item.id}
                     >
-                        <h1 className="font-bold">{item.pekerjaan}</h1>
+                        <h1 className="font-bold translate">
+                            {item.pekerjaan}
+                        </h1>
 
                         {/* {values && (
                             <h1 className="font-bold">{item.perusahaan}</h1>
@@ -67,15 +69,21 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         {/* <h2 className="text-BlueTako pt-2">
                             {item.perusahaan}
                         </h2> */}
-                        <p className="text-xs pt-4">{item.deskripsi}</p>
+                        <p className="text-xs pt-4 translate">
+                            {item.deskripsi}
+                        </p>
                         <div className="flex items-center gap-4 pt-4">
                             <div className="flex gap-2">
                                 <img src="/images/program.svg" alt="" />
-                                <h1>{item.jenis_pekerjaan}</h1>
+                                <h1 className="translate">
+                                    {item.jenis_pekerjaan}
+                                </h1>
                             </div>
                             <div className="flex gap-2">
                                 <img src="/images/clock.svg" alt="" />
-                                <h1>{item.batas_lamaran}</h1>
+                                <h1 className="translate">
+                                    {item.batas_lamaran}
+                                </h1>
                             </div>
                         </div>
                         <div className="pt-2">
@@ -91,7 +99,9 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                                             {/* Tampilkan skill sesuai kebutuhan */}
 
                                             <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                                <p>{skillItem.nama_skill}</p>
+                                                <p className="translate">
+                                                    {skillItem.nama_skill}
+                                                </p>
                                             </div>
                                         </div>
                                     ))}
@@ -104,7 +114,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                             <div className="flex pt-8 gap-2">
                                 <div className="w-full">
                                     <Link href={`/loker/pekerjaan/${item.id}`}>
-                                        <button className="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full">
+                                        <button className="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full translate">
                                             Lihat Detail
                                         </button>
                                     </Link>
@@ -113,8 +123,8 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                                     <Link
                                         href={`/loker/pekerjaan/formulir/${item.id}`}
                                     >
-                                        <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
-                                            Lamar
+                                        <button className="bg-BlueTako text-white py-2 rounded-lg w-full translate">
+                                            Apply
                                         </button>
                                     </Link>
                                 </div>
