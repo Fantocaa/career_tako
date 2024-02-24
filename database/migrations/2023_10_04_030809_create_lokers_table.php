@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('lokers', function (Blueprint $table) {
             $table->id();
             $table->string('pekerjaan')->nullable();
-            $table->string('perusahaan')->nullable();
-            $table->string('deskripsi')->nullable();
+            // $table->string('perusahaan')->nullable();
+            $table->mediumText('deskripsi')->nullable();
             $table->string('jenis_pekerjaan')->nullable();
             $table->date('batas_lamaran')->nullable();
             $table->mediumText('isi_konten')->nullable();
