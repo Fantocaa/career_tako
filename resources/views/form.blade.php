@@ -145,9 +145,13 @@
                         </div>
                     </div> --}}
 
-                    <label for="isi_konten" class="w-full">Deskripsi
-                        <input type="text" name="isi_konten" required class="rounded-2xl w-full"
-                            placeholder="Masukkan Deskripsi">
+                    <label for="isi_konten" class="w-full">Deskripsi Singkat
+                        <input id="isi_konten" type="text" name="isi_konten" required class="rounded-2xl w-full"
+                            placeholder="Masukkan Deskripsi" maxlength="255">
+                        <div class="flex gap-2 justify-end pt-2">
+                            <p>Maksimal Karakter =</p>
+                            <p id="charCount"> 0 / 255</p>
+                        </div>
                     </label>
 
                     {{-- <label for="deskripsi">
@@ -214,6 +218,19 @@
                     cache: true
                 }
             });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const input = document.getElementById('isi_konten');
+            const charCount = document.getElementById('charCount');
+
+            if (input && charCount) {
+                input.addEventListener('input', () => {
+                    charCount.textContent = `${input.value.length} / 255`;
+                });
+            }
         });
     </script>
 

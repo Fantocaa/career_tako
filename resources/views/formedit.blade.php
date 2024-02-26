@@ -144,9 +144,13 @@
                     </div>
 
                     <label for="isi_konten" class="w-full">
-                        <h1 class="mb-2">Deskripsi</h1>
-                        <input type="text" name="isi_konten" value="{{ $md_loker[0]->deskripsi }}" required
-                            class="rounded-2xl w-full">
+                        <h1 class="mb-2">Deskripsi Singkat</h1>
+                        <input id="isi_konten" type="text" name="isi_konten" value="{{ $md_loker[0]->deskripsi }}"
+                            required class="rounded-2xl w-full" maxlength="255">
+                        <div class="flex gap-2 justify-end pt-2">
+                            <p>Maksimal Karakter =</p>
+                            <p id="charCount"> 0 / 255</p>
+                        </div>
                     </label>
                     <label for="deskripsi" class="w-full ">
                         <h1 class="mb-2">Isi Konten</h1>
@@ -173,6 +177,23 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const input = document.getElementById('isi_konten');
+            const charCount = document.getElementById('charCount');
+
+            if (input && charCount) {
+                // Initialize character count on page load
+                charCount.textContent = `${input.value.length} / 255`;
+
+                // Update character count on input change
+                input.addEventListener('input', () => {
+                    charCount.textContent = `${input.value.length} / 255`;
+                });
+            }
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
