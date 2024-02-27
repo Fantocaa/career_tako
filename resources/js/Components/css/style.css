@@ -43,7 +43,9 @@
 /* BackToTop.css */
 .back-to-top {
     display: fixed;
-    transition: opacity 0.3s, transform 0.3s ease-in;
+    transition:
+        opacity 0.3s,
+        transform 0.3s ease-in;
     opacity: 0;
     transform: scale(0);
 }

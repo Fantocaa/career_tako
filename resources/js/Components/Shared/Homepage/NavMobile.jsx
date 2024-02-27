@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import "../../css/style.css";
+import he from "he";
+import axios from "axios";
 
 const NavMobile = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedLanguage, setSelectedLanguage] = useState("id");
 
     useEffect(() => {
         const handleScroll = () => {
@@ -27,12 +31,66 @@ const NavMobile = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
+    const changeLanguage = (language) => {
+        const elementsToTranslate = document.querySelectorAll(".translate"); // Select elements with class 'translate'
+        setIsLoading(true); // Mulai menampilkan loading
+        setIsMobileMenuOpen(false); // Close the mobile menu
+        setSelectedLanguage(language);
+        document.body.style.overflow = "hidden"; // Disable scroll
+
+        elementsToTranslate.forEach((element, index) => {
+            // Save the original text
+            if (!element.dataset.originalText) {
+                element.dataset.originalText = element.innerText;
+            }
+
+            setTimeout(() => {
+                if (language === "id") {
+                    // If the language is Indonesian, revert to the original text
+                    element.innerText = element.dataset.originalText;
+
+                    // Jika ini adalah elemen terakhir, hentikan penampilan loading
+                    if (index === elementsToTranslate.length - 1) {
+                        setIsLoading(false);
+                        document.body.style.overflow = "auto"; // Enable scroll
+                    }
+                } else {
+                    axios
+                        .post("/api/translate", {
+                            text: element.innerText,
+                            target: language,
+                        })
+                        .then((response) => {
+                            element.innerText = he.decode(response.data);
+                            // Jika ini adalah elemen terakhir, hentikan penampilan loading
+                            if (index === elementsToTranslate.length - 1) {
+                                setIsLoading(false);
+                                document.body.style.overflow = "auto"; // Enable scroll
+                            }
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                            setIsLoading(false); // Hentikan penampilan loading jika terjadi error
+                            document.body.style.overflow = "auto"; // Enable scroll
+                        });
+                }
+            }, index * 400); // Menunda setiap permintaan sebanyak 1 detik
+        });
+    };
+
     return (
         <div
             className={`fixed w-full font-inter z-50 ${
                 scrolled ? "scrolled-bg" : "bg-transparent"
             }`}
         >
+            <>
+                {isLoading && (
+                    <div className="w-screen h-screen bg-BlueTako bg-opacity-90 flex justify-center absolute z-50">
+                        <span className="loading loading-dots loading-lg bg-white"></span>
+                    </div>
+                )}
+            </>
             <nav className="container py-2 px-4 md:px-8 xl:px-16 mx-auto">
                 <div className="flex justify-between items-center">
                     <div className="w-24 md:w-16 md:h-16 -translate-x-3">
@@ -60,7 +118,8 @@ const NavMobile = () => {
                         <input
                             type="checkbox"
                             className="hidden"
-                            onClick={toggleMobileMenu}
+                            checked={isMobileMenuOpen}
+                            onChange={toggleMobileMenu} // Tambahkan ini
                         />
 
                         {/* hamburger icon */}
@@ -128,6 +187,79 @@ const NavMobile = () => {
                             >
                                 Contact
                             </Link>
+                            <div>
+                                {/* <select
+                                    onChange={(event) =>
+                                        changeLanguage(event.target.value)
+                                    }
+                                    className={`bg-white border-1 border-BlueTako rounded-full mt-4 md:mt-0 md:ml-2 opacity-75 hover:opacity-100 font-semibold ${
+                                        scrolled
+                                            ? "text-scrolled"
+                                            : "text-BlueTako border-transparent"
+                                    }`}
+                                >
+                                    <option
+                                        value="id"
+                                        className={` ${
+                                            scrolled
+                                                ? "text-scrolled"
+                                                : "text-DarkTako"
+                                        }`}
+                                    >
+                                        Bahasa Indonesia
+                                    </option>
+                                    <option
+                                        value="en"
+                                        className={` ${
+                                            scrolled
+                                                ? "text-scrolled"
+                                                : "text-DarkTako"
+                                        }`}
+                                    >
+                                        English
+                                    </option>
+                                    <option
+                                        value="zh"
+                                        className={` ${
+                                            scrolled
+                                                ? "text-scrolled"
+                                                : "text-DarkTako"
+                                        }`}
+                                    >
+                                        中文 (Chinese)
+                                    </option>
+                                </select> */}
+                                <select
+                                    value={selectedLanguage}
+                                    onChange={(event) =>
+                                        changeLanguage(event.target.value)
+                                    }
+                                    className={`bg-white border-1 border-BlueTako rounded-full mt-4 md:mt-0 md:ml-2 opacity-75 hover:opacity-100 font-semibold ${
+                                        scrolled
+                                            ? "text-scrolled"
+                                            : "text-BlueTako border-transparent"
+                                    }`}
+                                >
+                                    <option
+                                        value="id"
+                                        className={`${scrolled ? "text-scrolled" : "text-DarkTako"}`}
+                                    >
+                                        Bahasa Indonesia
+                                    </option>
+                                    <option
+                                        value="en"
+                                        className={`${scrolled ? "text-scrolled" : "text-DarkTako"}`}
+                                    >
+                                        English
+                                    </option>
+                                    <option
+                                        value="zh"
+                                        className={`${scrolled ? "text-scrolled" : "text-DarkTako"}`}
+                                    >
+                                        中文 (Chinese)
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 )}

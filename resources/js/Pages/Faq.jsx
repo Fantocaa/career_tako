@@ -1,11 +1,11 @@
 import React from "react";
 import Footer from "@/Components/Shared/Footer";
-import {
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    Typography,
-} from "@mui/material";
+// import {
+//     Accordion,
+//     AccordionSummary,
+//     AccordionDetails,
+//     Typography,
+// } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styled from "styled-components";
 import NavElse from "@/Components/Shared/Else/NavElse";
@@ -15,6 +15,17 @@ import HeaderFAQ from "../Components/HeaderFAQ";
 import { Link } from "@inertiajs/react";
 import BackToTop from "@/Components/BackToTop";
 import Nav from "@/Components/Shared/Homepage/Nav";
+
+import {
+    Accordion,
+    AccordionItem,
+    AccordionItemHeading,
+    AccordionItemButton,
+    AccordionItemPanel,
+} from "react-accessible-accordion";
+
+// Demo styles, see 'Styles' section below for some notes on use.
+import "react-accessible-accordion/dist/fancy-example.css";
 
 const Faq = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan
@@ -56,6 +67,7 @@ const Faq = () => {
             box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1); /* Ganti dengan properti shadow yang Anda inginkan */
         }
     `;
+
     const faqData = [
         {
             question: (
@@ -193,7 +205,7 @@ const Faq = () => {
 
         {
             question: (
-                <p className="text-xs md:text-base leading-5 translate">
+                <p className="text-xs md:text-base leading-5 translate w-[95%]">
                     Saya tertarik untuk menjadi bagian dari PT. Tako Anugerah
                     Koporasi, namun belum ada lowongan posisi yang cocok. Apakah
                     saya bisa mengirimkan CV saya terlebih dahulu?
@@ -235,36 +247,31 @@ const Faq = () => {
                 <div className="container max-w-[1440px] mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 py-16  md:pt-16">
                     <div className="bg-white p-4 rounded-lg py-8">
                         <div className="pb-8 p-4 rounded-lg">
-                            {/* <h1 className="text-center font-bold text-2xl md:text-4xl ">
-                                Frequently Asked Question
-                            </h1> */}
-                            <h1 className="text-center text-xs md:text-base 2xl:text-2xl pt-4 font-semibold">
+                            <h1 className="text-center text-xs md:text-base 2xl:text-2xl pt-4 font-semibold translate">
                                 Apa yang ingin Anda ketahui tentang kami?
                             </h1>
                         </div>
-
-                        <AccordionContainer>
-                            {faqData.map((faq, index) => (
-                                <Accordion key={index}>
-                                    <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        aria-controls={`panel${
-                                            index + 1
-                                        }a-content`}
-                                        id={`panel${index + 1}a-header`}
-                                    >
-                                        <Typography component="div">
-                                            {faq.question}
-                                        </Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Typography component="div">
-                                            {faq.answer}
-                                        </Typography>
-                                    </AccordionDetails>
-                                </Accordion>
+                        <Accordion>
+                            {faqData.map((item, index) => (
+                                <AccordionItem key={index}>
+                                    <AccordionItemHeading>
+                                        <AccordionItemButton className="px-5 py-4 bg-white text-DarkTako">
+                                            <div className="flex justify-between">
+                                                {item.question}
+                                                <img
+                                                    src="images/arrow-down.svg"
+                                                    alt="Icon"
+                                                    className="icon"
+                                                />
+                                            </div>
+                                        </AccordionItemButton>
+                                    </AccordionItemHeading>
+                                    <AccordionItemPanel className="px-5 py-4 bg-BgTako text-DarkTako">
+                                        {item.answer}
+                                    </AccordionItemPanel>
+                                </AccordionItem>
                             ))}
-                        </AccordionContainer>
+                        </Accordion>
                     </div>
                 </div>
                 <BackToTop />
@@ -273,18 +280,5 @@ const Faq = () => {
         </Layout>
     );
 };
-
-// const AccordionContainer = styled.div`
-//     width: 100%;
-//     // max-width: 800px; /* Atur sesuai kebutuhan */
-//     margin: 0 auto;
-//     /* Set rounded using CSS custom properties */
-//     :root {
-//         --accordion-rounded: 20px;
-//     }
-
-//     /* Apply rounded to the container */
-//     border-radius: var(--accordion-rounded);
-// `;
 
 export default Faq;

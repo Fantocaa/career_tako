@@ -42,15 +42,15 @@ const WarnNew = () => {
                             </h1>
                             <p className="translate">
                                 Kami hanya memposting lowongan pekerjaan di{" "}
-                                <span className="font-bold translate">
+                                <span className="translate">
                                     situs resmi kami
                                 </span>{" "}
                                 dan di job portal terpercaya lainnya seperti{" "}
-                                <span className="font-bold translate">
+                                <span className="translate">
                                     LinkedIn, Glints, Jobstreet, dan Indeed
                                 </span>{" "}
                                 dengan nama{" "}
-                                <span className="font-bold translate">
+                                <span className="translate">
                                     PT. Tako Anugerah Koporasi
                                 </span>
                                 . Jika menemukan lowongan pekerjaan yang

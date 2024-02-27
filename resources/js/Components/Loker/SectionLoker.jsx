@@ -166,8 +166,9 @@ const SectionLoker = () => {
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Cari Lowongan yang anda inginkan"
-                                    className="rounded-xl border-DarkTako border-opacity-25 w-full h-12 block pl-12 translate"
+                                    // placeholder="Cari Lowongan yang anda inginkan"
+                                    placeholder="Search"
+                                    className="rounded-xl border-DarkTako border-opacity-25 w-full h-12 block pl-12"
                                     // onInput={}
                                     value={searchTerm}
                                     // onChange={(e) => setSearchTerm(e.target.value)}
