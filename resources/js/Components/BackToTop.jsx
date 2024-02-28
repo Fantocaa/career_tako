@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const BackToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -22,7 +22,16 @@ const BackToTop = () => {
     };
 
     // Tambahkan event listener untuk mengikuti posisi scroll
-    window.addEventListener("scroll", handleScroll);
+    // window.addEventListener("scroll", handleScroll);
+    useEffect(() => {
+        // Tambahkan event listener untuk mengikuti posisi scroll
+        window.addEventListener("scroll", handleScroll);
+
+        // Bersihkan event listener ketika komponen dilepas
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []); // Dependensi kosong berarti efek ini hanya berjalan sekali (pada mount)
 
     return (
         <div

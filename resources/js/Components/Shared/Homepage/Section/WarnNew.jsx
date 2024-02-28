@@ -1,22 +1,25 @@
 import React from "react";
 import Aos from "aos";
+import { useTranslation } from "react-i18next";
 // import "aos/dist/aos.css";
 // import "../../../css/style.css";
 
 const WarnNew = () => {
+    const { t } = useTranslation(); // Tambahkan ini
     return (
         <section className=" bg-RedTako font-inter text-white py-16 2xl:py-32 relative overflow-hidden">
             <div className="container max-w-[1440px] mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 ">
                 <div className="flex gap-8">
                     <div className="md:w-1/2 pb-8 md:pt-8">
                         <div data-aos="fade-up" data-aos-duration="1200">
-                            <h1 className="text-center md:text-left font-bold text-2xl md:text-4xl pb-4 lg:pt-4 translate">
-                                HATI-HATI PENIPUAN !!!
+                            <h1 className="text-center md:text-left font-bold text-2xl md:text-4xl pb-4 lg:pt-4 ">
+                                {/* HATI-HATI PENIPUAN !!! */}
+                                {t("warn.title")}
                             </h1>
                         </div>
                         <div data-aos="fade-up" data-aos-duration="1400">
-                            <p className="text-center md:text-left 2xl:text-xl translate">
-                                PT. Tako Anugerah Koporasi adalah perusahaan
+                            <p className="text-center md:text-left 2xl:text-xl ">
+                                {/* PT. Tako Anugerah Koporasi adalah perusahaan
                                 terkemuka di bidang logistik, distribusi,
                                 chicken integration, dan hospitality. Kami
                                 berkomitmen untuk menyediakan lingkungan kerja
@@ -24,7 +27,8 @@ const WarnNew = () => {
                                 Termasuk komitmen kami untuk melindungi kandidat
                                 dari penipuan perekrutan. Oleh karena itu, kami
                                 sangat memprioritaskan keamanan dan integritas
-                                dalam proses rekrutmen kami.
+                                dalam proses rekrutmen kami. */}
+                                {t("warn.title.2")}
                             </p>
                         </div>
                         <div
@@ -37,26 +41,20 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
-                                Melamar di Saluran Resmi
+                            <h1 className="font-bold text-xl pb-2 pt-4 ">
+                                {t("sub.warn.title.1")}
+                                {/* Melamar di Saluran Resmi */}
                             </h1>
-                            <p className="translate">
-                                Kami hanya memposting lowongan pekerjaan di{" "}
-                                <span className="translate">
-                                    situs resmi kami
-                                </span>{" "}
-                                dan di job portal terpercaya lainnya seperti{" "}
-                                <span className="translate">
-                                    LinkedIn, Glints, Jobstreet, dan Indeed
-                                </span>{" "}
-                                dengan nama{" "}
-                                <span className="translate">
-                                    PT. Tako Anugerah Koporasi
-                                </span>
-                                . Jika menemukan lowongan pekerjaan yang
+                            <p className="">
+                                {t("sub.warn.body.1")}
+                                {/* Kami hanya memposting lowongan pekerjaan di
+                                situs resmi kami dan di job portal terpercaya
+                                lainnya seperti LinkedIn, Glints, Jobstreet, dan
+                                Indeed dengan nama PT. Tako Anugerah Koporasi .
+                                Jika menemukan lowongan pekerjaan yang
                                 mengatasnamakan PT. Tako Anugerah Koporasi di
                                 situs lain, harap berhati-hati. Lowongan
-                                tersebut mungkin merupakan penipuan!
+                                tersebut mungkin merupakan penipuan! */}
                             </p>
                         </div>
                         <div
@@ -69,16 +67,17 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
-                                Verifikasi Undangan Rekrutmen
+                            <h1 className="font-bold text-xl pb-2 pt-4 ">
+                                {t("sub.warn.title.2")}
+                                {/* Verifikasi Undangan Rekrutmen */}
                             </h1>
-                            <p className="translate">
-                                Pastikan setiap informasi berasal dari sumber
+                            <p className="">
+                                {t("sub.warn.body.2")}
+                                {/* Pastikan setiap informasi berasal dari sumber
                                 resmi PT. Tako Anugerah Koporasi sebelum
                                 melanjutkan proses rekrutmen. PT. Tako Anugerah
                                 Koporasi hanya akan menghubungi kandidat melalui
-                                WhatsApp atau email{" "}
-                                <span className="">recruitment@tako.co.id</span>
+                                WhatsApp atau email recruitment@tako.co.id */}
                             </p>
                         </div>
                         <div
@@ -91,18 +90,18 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
-                                100% Tanpa Biaya
+                            <h1 className="font-bold text-xl pb-2 pt-4 ">
+                                {t("sub.warn.title.3")}
+                                {/* 100% Tanpa Biaya */}
                             </h1>
-                            <p className="translate">
-                                PT. Tako Anugerah Koporasi{" "}
-                                <span className="font-bold translate">
-                                    tidak pernah meminta pembayaran apa pun
-                                </span>{" "}
-                                dari kandidat selama proses rekrutmen. Oleh
-                                karena itu, jika Anda diminta untuk membayar
-                                biaya apa pun yang mengatasnamakan PT. Tako
-                                Anugerah Koporasi, harap berhati-hati!
+                            <p className="">
+                                {t("sub.warn.body.3")}
+                                {/* PT. Tako Anugerah Koporasi tidak pernah meminta
+                                pembayaran apa pun dari kandidat selama proses
+                                rekrutmen. Oleh karena itu, jika Anda diminta
+                                untuk membayar biaya apa pun yang
+                                mengatasnamakan PT. Tako Anugerah Koporasi,
+                                harap berhati-hati! */}
                             </p>
                         </div>
                         <div
@@ -116,14 +115,16 @@ const WarnNew = () => {
                                 className="animate-float-m"
                             />
                             <h1 className="font-bold text-xl pb-2 pt-4">
-                                Segera Laporkan
+                                {t("sub.warn.title.4")}
+                                {/* Segera Laporkan */}
                             </h1>
                             <p>
-                                Jika Anda menemukan lowongan pekerjaan atau
+                                {t("sub.warn.body.4")}
+                                {/* Jika Anda menemukan lowongan pekerjaan atau
                                 panggilan proses rekrutmen yang mencurigakan
                                 mengatasnamakan PT. Tako Anugerah Koporasi,
-                                harap segera hubungi kami di{" "}
-                                <span className="">recruitment@tako.co.id</span>
+                                harap segera hubungi kami di
+                                recruitment@tako.co.id */}
                             </p>
                         </div>
                     </div>
@@ -149,18 +150,18 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
-                                100% Tanpa Biaya
+                            <h1 className="font-bold text-xl pb-2 pt-4 ">
+                                {/* 100% Tanpa Biaya */}
+                                {t("sub.warn.title.3")}
                             </h1>
-                            <p className="translate">
-                                PT. Tako Anugerah Koporasi{" "}
-                                <span className="">
-                                    tidak pernah meminta pembayaran apa pun
-                                </span>{" "}
-                                dari kandidat selama proses rekrutmen. Oleh
-                                karena itu, jika Anda diminta untuk membayar
-                                biaya apa pun yang mengatasnamakan PT. Tako
-                                Anugerah Koporasi, harap berhati-hati!
+                            <p className="">
+                                {t("sub.warn.body.3")}
+                                {/* PT. Tako Anugerah Koporasi tidak pernah meminta
+                                pembayaran apa pun dari kandidat selama proses
+                                rekrutmen. Oleh karena itu, jika Anda diminta
+                                untuk membayar biaya apa pun yang
+                                mengatasnamakan PT. Tako Anugerah Koporasi,
+                                harap berhati-hati! */}
                             </p>
                         </div>
                         <div
@@ -173,15 +174,17 @@ const WarnNew = () => {
                                 alt=""
                                 className="animate-float-m"
                             />
-                            <h1 className="font-bold text-xl pb-2 pt-4 translate">
-                                Segera Laporkan
+                            <h1 className="font-bold text-xl pb-2 pt-4 ">
+                                {t("sub.warn.title.4")}
+                                {/* Segera Laporkan */}
                             </h1>
-                            <p className="translate">
-                                Jika Anda menemukan lowongan pekerjaan atau
+                            <p className="">
+                                {t("sub.warn.body.4")}
+                                {/* Jika Anda menemukan lowongan pekerjaan atau
                                 panggilan proses rekrutmen yang mencurigakan
                                 mengatasnamakan PT. Tako Anugerah Koporasi,
-                                harap segera hubungi kami di{" "}
-                                <span className="">recruitment@tako.co.id</span>
+                                harap segera hubungi kami di
+                                recruitment@tako.co.id */}
                             </p>
                         </div>
                     </div>

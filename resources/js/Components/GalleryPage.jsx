@@ -3,9 +3,11 @@ import "aos/dist/aos.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "../../css/app.css";
+import { useTranslation } from "react-i18next";
 
 const GalleryPage = () => {
     const [hover, setHover] = useState(false);
+    const { t } = useTranslation(); // Tambahkan ini
 
     return (
         // <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:pt-16 lg:pt-64 pb-16">
@@ -27,19 +29,21 @@ const GalleryPage = () => {
                     semangat. Kami bangga dengan budaya kerja kami yang positif
                     dan produktif. Lihatlah galeri kami untuk mengetahui lebih
                     lanjut! */}
-                    PT. Tako Anugerah Koporasi adalah perusahaan yang
+                    {t("gal.title")}
+                    {/* PT. Tako Anugerah Koporasi adalah perusahaan yang
                     berkomitmen untuk menciptakan lingkungan dengan kerjasama
                     tim yang kuat, solutif, inovatif, dan saling percaya. Budaya
                     kerja tersebut tercermin dalam setiap aspek kehidupan
                     perusahaan, mulai dari cara kami bekerja hingga cara kami
-                    berinteraksi satu sama lain.
+                    berinteraksi satu sama lain. */}
                 </p>
                 <h1
                     className="pt-2 md:pt-0 font-bold text-2xl text-center translate"
                     data-aos="fade-up"
                     data-aos-duration="800"
                 >
-                    Cek galeri untuk melihat keseruannya!
+                    {t("gal.body")}
+                    {/* Cek galeri untuk melihat keseruannya! */}
                 </h1>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-full">

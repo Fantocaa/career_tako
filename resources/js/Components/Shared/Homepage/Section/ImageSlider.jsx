@@ -3,6 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "@inertiajs/react";
 import Search from "./Search";
+import { useTranslation } from "react-i18next";
 
 const ImageSlider = () => {
     // const [bladeView, setBladeView] = useState(null);
@@ -35,6 +36,7 @@ const ImageSlider = () => {
     // const handleMouseLeave = () => {
     //     setTooltipVisible(false); // Menyembunyikan tooltip saat kursor meninggalkan
     // };
+    const { t } = useTranslation(); // Tambahkan ini
 
     return (
         <>
@@ -47,7 +49,7 @@ const ImageSlider = () => {
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
-                            Jelajahi Peluang Karier Anda
+                            {t("Jelajahi Peluang Karier Anda")}
                         </p>
                         <h1
                             className="text-white text-4xl lg:text-6xl font-bold pb-2 md:pb-4 2xl:w-[80%]"
@@ -61,10 +63,11 @@ const ImageSlider = () => {
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
-                            Temukan potensi terbaik Anda, berkembang, dan jadi
+                            {t("Temukan")}
+                            {/* Temukan potensi terbaik Anda, berkembang, dan jadi
                             bagian dari kami dalam menciptakan solusi dan
                             inovasi di dunia logistic, distribution, chicken
-                            integration, dan hospitality.
+                            integration, dan hospitality. */}
                         </p>
                         <div className="w-full pt-8">
                             <Link href="/loker" className="inline-block">
@@ -74,8 +77,8 @@ const ImageSlider = () => {
                                     data-aos-duration="1000"
                                 >
                                     <h1 className="text-lg font-semibold translate">
-                                        {/* Daftar Lowongan Kerja */}
-                                        Kembangkan Karier Anda
+                                        {/* Kembangkan Karier Anda */}
+                                        {t("Kembangkan")}
                                     </h1>
                                     <svg
                                         width="24"

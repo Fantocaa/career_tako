@@ -12,36 +12,36 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
         return date.toLocaleDateString("id-ID", options);
     }
 
-    useEffect(() => {
-        // Panggil fungsi API di sini saat komponen pertama kali di-mount
-        const fetchData = async () => {
-            try {
-                // Kirim data ke server
-                const response = await Axios.get("/api/form");
-                // const response = await Axios.post("/form");
-                setFormData(response.data);
-            } catch (error) {
-                console.error("Error sending data:", error);
-            }
-        };
+    // useEffect(() => {
+    //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
+    //     const fetchData = async () => {
+    //         try {
+    //             // Kirim data ke server
+    //             const response = await Axios.get("/api/form");
+    //             // const response = await Axios.post("/form");
+    //             setFormData(response.data);
+    //         } catch (error) {
+    //             console.error("Error sending data:", error);
+    //         }
+    //     };
 
-        const fetchDataSkill = async () => {
-            try {
-                // Kirim data ke server
-                const response_3 = await Axios.get("/api/skill");
-                setFormDataSkill(response_3.data);
-            } catch (error) {
-                console.error("Error sending data:", error);
-            }
-        };
+    //     const fetchDataSkill = async () => {
+    //         try {
+    //             // Kirim data ke server
+    //             const response_3 = await Axios.get("/api/skill");
+    //             setFormDataSkill(response_3.data);
+    //         } catch (error) {
+    //             console.error("Error sending data:", error);
+    //         }
+    //     };
 
-        fetchDataSkill();
+    //     fetchDataSkill();
 
-        fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+    //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
 
-        // Hanya perlu dijalankan saat komponen pertama kali di-mount,
-        // sehingga dependensi di bawah ini kosong
-    }, []);
+    //     // Hanya perlu dijalankan saat komponen pertama kali di-mount,
+    //     // sehingga dependensi di bawah ini kosong
+    // }, []);
 
     return (
         <div className={active ? "flex flex-wrap gap-4 w-full" : "hidden"}>
@@ -51,7 +51,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                         className="bg-white p-8 rounded-xl h-full flex justify-between w-full items-center"
                         key={item.id}
                     >
-                        <div>
+                        <div className="w-[75%]">
                             <h1 className="font-bold">{item.pekerjaan}</h1>
                             {/* <h2 className="text-BlueTako pt-2">
                                 {item.perusahaan}
@@ -85,7 +85,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                 {formDataSkill
                                     .filter(
                                         (skills) =>
-                                            skills.id_kotak_loker === item.id
+                                            skills.id_kotak_loker === item.id,
                                     )
                                     .map((skillItem) => (
                                         <div key={skillItem.id}>

@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
-// import { Pagination } from "@mui/material";
+import React, { useEffect, useState, useContext, useLayoutEffect } from "react";
+import axios from "axios";
 import Axios from "axios";
 import SelectJobPerusahaan from "../Shared/Job/SelectJob/SelectJobPerusahaan";
 import SelectJob2 from "../Shared/Job/SelectJob/SelectJob2";
 import ReactPaginate from "react-paginate";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useTranslation } from "react-i18next";
+import LanguageContext from "../Shared/Homepage/LanguageContext";
+import he from "he";
 
 const SectionLoker = () => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
@@ -30,6 +33,16 @@ const SectionLoker = () => {
         return date.toLocaleDateString("id-ID", options);
     }
 
+    const { selectedLanguage } = useContext(LanguageContext);
+
+    useEffect(() => {
+        const storedLanguage = localStorage.getItem("language");
+        if (storedLanguage !== selectedLanguage) {
+            localStorage.setItem("language", selectedLanguage);
+        }
+        changeLanguage(selectedLanguage || storedLanguage || "id");
+    });
+
     const handleMenu1Click = () => {
         if (!menu1Active) {
             setMenu1Active(true);
@@ -48,6 +61,50 @@ const SectionLoker = () => {
         }
     };
 
+    const changeLanguage = (language) => {
+        const elementsToTranslate = document.querySelectorAll(".translate"); // Select elements with class 'translate'
+
+        elementsToTranslate.forEach((element, index) => {
+            // Save the original text
+            if (!element.dataset.originalText) {
+                element.dataset.originalText = element.innerText;
+            }
+
+            setTimeout(() => {
+                if (language === "id") {
+                    // If the language is Indonesian, revert to the original text
+                    element.innerText = element.dataset.originalText;
+                } else if (
+                    localStorage.getItem(
+                        `translation-${element.dataset.originalText}`,
+                    )
+                ) {
+                    // Load the translated text from localStorage if it exists
+                    element.innerText = localStorage.getItem(
+                        `translation-${element.dataset.originalText}`,
+                    );
+                } else {
+                    axios
+                        .post("/api/translate", {
+                            text: element.innerText,
+                            target: language,
+                        })
+                        .then((response) => {
+                            element.innerText = he.decode(response.data);
+                            // Save the translated text to localStorage
+                            localStorage.setItem(
+                                `translation-${element.dataset.originalText}`,
+                                he.decode(response.data),
+                            );
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                }
+            }, index * 300); // Delay each request by 1 second
+        });
+    };
+
     const fetchData = async (page) => {
         try {
             setLoading(true);
@@ -56,6 +113,7 @@ const SectionLoker = () => {
             });
             const count = response.data.total;
             setJobCount(count);
+
             setFormData(response.data.data);
             setPageCount(response.data.last_page);
             setCurrentPage(1);
@@ -88,14 +146,6 @@ const SectionLoker = () => {
         setCurrentPage(1);
     }, [searchTerm, selectedOption]);
 
-    // const handlePageClick = async (data) => {
-    //     // console.log(data.selected);
-    //     let currentPage = data.selected + 1;
-    //     setCurrentPage(currentPage);
-    //     fetchData(currentPage);
-    //     setglobalPage(currentPage);
-    // };
-
     const handlePageClick = async (data) => {
         let nextPage = data.selected + 1; // Increment page number
 
@@ -103,8 +153,6 @@ const SectionLoker = () => {
             const response = await Axios.get(`/api/perusahaan/${nextPage}`, {
                 params: { search: searchTerm, selection: selectedOption },
             });
-
-            // Your success logic here
 
             const count = response.data.total;
             setJobCount(count);
@@ -114,21 +162,20 @@ const SectionLoker = () => {
             setCurrentPage(nextPage); // Update currentPage if the request is successful
         } catch (error) {
             console.error("Error fetching data:", error);
-
-            // Your error handling logic here
-
-            // If the request fails, revert to the previous page
             nextPage = currentPage;
         }
     };
+
+    const { t } = useTranslation(); // Tambahkan ini
 
     return (
         <SkeletonTheme baseColor="#202020" highlightColor="#444444">
             <section className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16  pb-16 md:py-8 flex-wrap items-center text-DarkTako container max-w-[1440px]">
                 <>
                     <div className="flex justify-between items-end pb-8 flex-wrap gap-4 w-full">
-                        <h1 className="text-BlueTako font-bold text-2xl translate">
-                            ({jobCount}) Pekerjaan yang tersedia
+                        <h1 className="text-BlueTako font-bold text-2xl ">
+                            ({jobCount}){/* Pekerjaan yang tersedia */}
+                            {t("job.count")}
                         </h1>
                     </div>
                 </>
@@ -177,34 +224,23 @@ const SectionLoker = () => {
                                     }
                                     id="search"
                                 />
-                                {/* <button
-                                    className={`absolute inset-y-0 right-4 ${
-                                        searchTerm ? "" : "hidden"
-                                    }`}
-                                    onClick={() => handleReset()}
-                                >
-                                    X
-                                </button> */}
                             </div>
                             <select
                                 className="rounded-2xl border-DarkTako border-opacity-25 w-full lg:w-64"
                                 value={selectedOption}
                                 onChange={handleSelectChange}
                             >
-                                <option value="All" className="translate">
-                                    Semua Program
+                                <option value="All" className="">
+                                    {/* Semua Program */}
+                                    {t("job.all")}
                                 </option>
-                                <option
-                                    value="Internship"
-                                    className="translate"
-                                >
-                                    Internship (Magang / Praktik Kerja)
+                                <option value="Internship" className="">
+                                    {/* Internship (Magang / Praktik Kerja) */}
+                                    {t("job.intern")}
                                 </option>
-                                <option
-                                    value="Profesional"
-                                    className="translate"
-                                >
-                                    Profesional (Fresh Graduate / Berpengalaman)
+                                <option value="Profesional" className="">
+                                    {/* Profesional (Fresh Graduate / Berpengalaman) */}
+                                    {t("job.pro")}
                                 </option>
                             </select>
 
@@ -274,7 +310,6 @@ const SectionLoker = () => {
                             disabled={menu2Active}
                         >
                             {/* <img src="/images/logo/menu2.svg" alt="" className="" /> */}
-
                             <svg
                                 width="24"
                                 height="24"
@@ -306,8 +341,9 @@ const SectionLoker = () => {
 
                 {formData.length === 0 ? (
                     <div className="flex justify-center w-full pt-16">
-                        <p className="text-DarkTako translate">
-                            Maaf, tidak ada lowongan yang tersedia saat ini.
+                        <p className="text-DarkTako ">
+                            {/* Maaf, tidak ada lowongan yang tersedia saat ini. */}
+                            {t("job.notfound")}
                         </p>
                     </div>
                 ) : (

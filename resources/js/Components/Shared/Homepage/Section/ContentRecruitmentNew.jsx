@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import "../../../css/style.css";
 import Why from "./Why";
 import ImageSlider from "@/Components/Shared/Homepage/Section/ImageSlider";
+import { useTranslation } from "react-i18next";
 
 const ContentRecruitmentNew = () => {
     useEffect(() => {
@@ -12,6 +13,8 @@ const ContentRecruitmentNew = () => {
         });
     }, []);
 
+    const { t } = useTranslation(); // Tambahkan ini
+
     const isMediumScreen = window.innerWidth > 767.9;
     return (
         <div className="mx-auto">
@@ -19,21 +22,22 @@ const ContentRecruitmentNew = () => {
             {/* <Why /> */}
             <div className="container max-w-[1440px] mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-32">
                 <h1
-                    className="text-center font-bold text-2xl lg:text-4xl translate"
+                    className="text-center font-bold text-2xl lg:text-4xl "
                     data-aos="fade-in"
                 >
-                    Proses Rekrutmen
+                    {t("Proses Rekrutmen")}
                 </h1>
                 <p
-                    className="text-xs mx-auto text-center pt-4 opacity-90 md:w-[460px] lg:text-base lg:w-[864px] pb-12 translate"
+                    className="text-xs mx-auto text-center pt-4 opacity-90 md:w-[460px] lg:text-base lg:w-[864px] pb-12 "
                     data-aos="fade-in"
                 >
-                    Bergabunglah dengan kami dalam mengukir jejak sukses melalui
+                    {t("Bergabunglah")}
+                    {/* Bergabunglah dengan kami dalam mengukir jejak sukses melalui
                     proses seleksi PT. Tako Anugerah Koporasi yang berfokus pada
                     potensi, kompetensi, dan kesesuaian dengan visi & misi PT.
                     Tako Anugerah Koporasi. Kami memastikan setiap langkah
                     proses rekrutmen dilakukan secara transparan, profesional,
-                    dan membawa kita lebih dekat dengan bakat terbaik.
+                    dan membawa kita lebih dekat dengan bakat terbaik. */}
                 </p>
                 <div
                     className="px-4 bg-white py-8 rounded-2xl md:px-8 xl:px-16 lg:py-16"
@@ -48,20 +52,23 @@ const ContentRecruitmentNew = () => {
                                     </span>
                                     Apply
                                 </h1>
-                                <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base translate">
-                                    Temukan pekerjaan yang sesuai dengan
+                                <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base ">
+                                    {t("01_1")}
+                                    {/* Temukan pekerjaan yang sesuai dengan
                                     kompetensi Anda. Anda dapat menemukan dengan
                                     klik “Kembangkan Karier Anda” yang tersedia
-                                    di bagian atas.
+                                    di bagian atas. */}
                                 </p>
                                 <div className="pt-4">
-                                    <h2 className="text-xs font-semibold lg:text-base translate">
-                                        Tips untuk Pendaftar :
+                                    <h2 className="text-xs font-semibold lg:text-base ">
+                                        {t("01_2")}
+                                        {/* Tips untuk Pendaftar : */}
                                     </h2>
-                                    <p className="text-xs pt-2 opacity-90 lg:text-base pb-4 translate">
-                                        Isi data dengan jujur, pastikan CV Anda
+                                    <p className="text-xs pt-2 opacity-90 lg:text-base pb-4 ">
+                                        {t("01_3")}
+                                        {/* Isi data dengan jujur, pastikan CV Anda
                                         lengkap dan relevan dengan posisi yang
-                                        dilamar.
+                                        dilamar. */}
                                     </p>
                                 </div>
                             </div>
@@ -84,36 +91,41 @@ const ContentRecruitmentNew = () => {
                                         </span>
                                         Assessment
                                     </h1>
-                                    <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base translate">
-                                        Tahap ini bertujuan untuk menilai
+                                    <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base ">
+                                        {t("02_1")}
+                                        {/* Tahap ini bertujuan untuk menilai
                                         kemampuan dan kesesuaian Anda dengan
                                         posisi yang dilamar. Assessment berupa
                                         tes teknikal, tes kepribadian, dan
-                                        wawancara.
+                                        wawancara. */}
                                     </p>
                                     <div className="pt-4">
-                                        <h2 className="text-xs font-semibold lg:text-base translate">
-                                            Tips untuk Pendaftar :
+                                        <h2 className="text-xs font-semibold lg:text-base ">
+                                            {t("02_2")}
+                                            {/* Tips untuk Pendaftar : */}
                                         </h2>
                                         <ul className="text-xs pt-2 opacity-90 list-disc lg:text-base ml-5">
-                                            <li className="translate">
+                                            <li className="">
                                                 {/* Tanyakan rincian tentang setiap
                                             proses penilaian kepada perekrut
                                             saat Anda diundang. */}
-                                                Persiapkan diri Anda secara
+                                                {t("02_3")}
+                                                {/* Persiapkan diri Anda secara
                                                 matang untuk mengikuti rangkaian
-                                                tes di atas
+                                                tes di atas */}
                                             </li>
-                                            <li className="pt-1 translate">
+                                            <li className="pt-1 ">
                                                 {/* Percaya diri dan Jadilah diri
                                             sendiri */}
-                                                Pelajari secara detail tentang
+                                                {t("02_4")}
+                                                {/* Pelajari secara detail tentang
                                                 perusahaan dan posisi yang
-                                                dilamar
+                                                dilamar */}
                                             </li>
-                                            <li className="pt-1 translate">
-                                                Jadi diri sendiri, terus
-                                                berlatih, dan percaya diri
+                                            <li className="pt-1 ">
+                                                {t("02_5")}
+                                                {/* Jadi diri sendiri, terus
+                                                berlatih, dan percaya diri */}
                                             </li>
                                         </ul>
                                     </div>
@@ -132,31 +144,36 @@ const ContentRecruitmentNew = () => {
                                         </span>
                                         Acceptance & Onboarding
                                     </h1>
-                                    <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base translate">
-                                        Tahap ini adalah tahap terakhir dari
+                                    <p className="text-xs pt-2 lg:pt-4 opacity-90 lg:text-base ">
+                                        {t("03_1")}
+                                        {/* Tahap ini adalah tahap terakhir dari
                                         seluruh rangkaian rekrutmen. Pada tahap
                                         ini, pelamar yang lolos seleksi akan
                                         menerima surat penawaran kerja dan yang
                                         belum lolos akan diinformasikan oleh Tim
-                                        Rekrutmen.
+                                        Rekrutmen. */}
                                     </p>
                                     <div className="pt-4">
-                                        <h2 className="text-xs font-semibold lg:text-base translate">
-                                            Tips untuk Pendaftar :
+                                        <h2 className="text-xs font-semibold lg:text-base ">
+                                            {t("03_2")}
+                                            {/* Tips untuk Pendaftar : */}
                                         </h2>
                                         <ul className="text-xs pt-2 opacity-90 list-disc lg:text-base ml-5">
-                                            <li className="translate">
-                                                Bacalah surat penawaran kerja
+                                            <li className="">
+                                                {t("03_3")}
+                                                {/* Bacalah surat penawaran kerja
                                                 dengan cermat sebelum
-                                                menandatanganinya
+                                                menandatanganinya */}
                                             </li>
-                                            <li className="pt-1 translate">
-                                                Tanyakan hal-hal yang belum
-                                                jelas kepada rekruter
+                                            <li className="pt-1 ">
+                                                {t("03_4")}
+                                                {/* Tanyakan hal-hal yang belum
+                                                jelas kepada rekruter */}
                                             </li>
-                                            <li className="pt-1 translate">
-                                                Pastikan Anda siap untuk memulai
-                                                pekerjaan dan perjalanan baru
+                                            <li className="pt-1 ">
+                                                {t("03_5")}
+                                                {/* Pastikan Anda siap untuk memulai
+                                                pekerjaan dan perjalanan baru */}
                                             </li>
                                         </ul>
                                     </div>

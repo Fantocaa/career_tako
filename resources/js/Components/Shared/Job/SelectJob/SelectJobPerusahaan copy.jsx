@@ -6,6 +6,7 @@ import LanguageContext from "../../Homepage/LanguageContext";
 const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
     const [formData, setFormData] = useState([]);
     const [formDataSkill, setFormDataSkill] = useState([]);
+    const { selectedLanguage } = useContext(LanguageContext);
 
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -26,6 +27,42 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
         //     }
         // };
 
+        const fetchData = async () => {
+            try {
+                const response = await Axios.get("/api/form");
+                const translatedData = await Promise.all(
+                    response.data.map(async (item) => {
+                        const translatedItem = { ...item };
+                        const fieldsToTranslate = [
+                            "pekerjaan",
+                            "deskripsi",
+                            "jenis_pekerjaan",
+                            "batas_lamaran",
+                            "nama_skill",
+                        ]; // tambahkan field lain yang perlu diterjemahkan
+
+                        for (const field of fieldsToTranslate) {
+                            const translationResponse = await Axios.post(
+                                "/api/translate",
+                                {
+                                    text: item[field],
+                                    target: selectedLanguage, // asumsikan selectedLanguage berisi kode bahasa yang dipilih pengguna
+                                },
+                            );
+
+                            translatedItem[field] = translationResponse.data;
+                        }
+
+                        return translatedItem;
+                    }),
+                );
+
+                setFormData(formDataProp);
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        };
+
         const fetchDataSkill = async () => {
             try {
                 // Kirim data ke server
@@ -38,12 +75,14 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
 
         fetchDataSkill();
 
-        // fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+        fetchData(); // Panggil fungsi fetchData saat komponen di-mount
 
         // Hanya perlu dijalankan saat komponen pertama kali di-mount,
         // sehingga dependensi di bawah ini kosong
-    }, []);
+    }, [formDataProp, selectedLanguage]);
+    // }, []);
 
+    // console.log(values);
     return (
         <div
             className={
@@ -61,6 +100,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         <h1 className="font-bold translate">
                             {item.pekerjaan}
                         </h1>
+
                         {/* {values && (
                             <h1 className="font-bold">{item.perusahaan}</h1>
                         )} */}
@@ -74,11 +114,15 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         <div className="flex items-center gap-4 pt-4">
                             <div className="flex gap-2">
                                 <img src="/images/program.svg" alt="" />
-                                <h1 className="">{item.jenis_pekerjaan}</h1>
+                                <h1 className="translate">
+                                    {item.jenis_pekerjaan}
+                                </h1>
                             </div>
                             <div className="flex gap-2">
                                 <img src="/images/clock.svg" alt="" />
-                                <h1 className="">{item.batas_lamaran}</h1>
+                                <h1 className="translate">
+                                    {item.batas_lamaran}
+                                </h1>
                             </div>
                         </div>
                         <div className="pt-2">

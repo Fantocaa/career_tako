@@ -6,10 +6,12 @@ import NavElse from "@/Components/Shared/Else/NavElse";
 import Layout from "@/Layouts/Layout";
 import BackToTop from "@/Components/BackToTop";
 import HeaderContact from "@/Components/HeaderContact";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan
     const [isPageLoaded, setIsPageLoaded] = useState(false);
+    const { t } = useTranslation(); // Tambahkan ini
 
     useEffect(() => {
         // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
@@ -47,16 +49,18 @@ const Contact = () => {
                         </div> */}
                         <div className="rounded-lg text-center ">
                             <h1 className="font-bold text-2xl lg:text-3xl translate">
-                                Terhubung dengan Kami
+                                {/* Terhubung dengan Kami */}
+                                {t("contact.title")}
                             </h1>
                             <p className="pt-4 mb-8 text-xs md:pb-4 lg:text-base translate">
-                                Kami percaya bahwa membangun hubungan yang kuat
+                                {/* Kami percaya bahwa membangun hubungan yang kuat
                                 dengan pelanggan, mitra, dan karyawan adalah
                                 kunci untuk kesuksesan. Kami ingin terhubung
                                 dengan Anda di berbagai platform untuk berbagi
                                 berita dan informasi terbaru kami, menjawab
                                 pertanyaan Anda, dan berkolaborasi dalam
-                                proyek-proyek baru.
+                                proyek-proyek baru. */}
+                                {t("contact.body")}
                             </p>
                             <div className="rounded-lg lg:flex gap-2 lg:gap-8 py-4 lg:py-4 bg-BlueTako bg-opacity-10 flex flex-col lg:flex-row items-start justify-center pl-4">
                                 <div className="flex items-center lg:pb-0   gap-2">

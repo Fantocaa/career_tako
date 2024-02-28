@@ -26,16 +26,16 @@ const LokerNew = () => {
 
     useEffect(() => {
         // Panggil fungsi API di sini saat komponen pertama kali di-mount
-        const fetchData = async () => {
-            try {
-                // Kirim data ke server
-                // const response = await axios.get("/json_perusahaan");
-                const response = await axios.get("/api/json_perusahaan");
-                setFormData(response.data);
-            } catch (error) {
-                console.error("Error sending data:", error);
-            }
-        };
+        // const fetchData = async () => {
+        //     try {
+        //         // Kirim data ke server
+        //         // const response = await axios.get("/json_perusahaan");
+        //         const response = await axios.get("/api/json_perusahaan");
+        //         setFormData(response.data);
+        //     } catch (error) {
+        //         console.error("Error sending data:", error);
+        //     }
+        // };
 
         const fetchDataTime = async () => {
             try {
@@ -51,7 +51,7 @@ const LokerNew = () => {
             }
         };
 
-        fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+        // fetchData(); // Panggil fungsi fetchData saat komponen di-mount
         fetchDataTime(); // Panggil fungsi fetchData saat komponen di-mount
     }, [state]);
 

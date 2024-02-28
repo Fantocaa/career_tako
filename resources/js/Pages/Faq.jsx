@@ -1,11 +1,11 @@
 import React from "react";
 import Footer from "@/Components/Shared/Footer";
-// import {
-//     Accordion,
-//     AccordionSummary,
-//     AccordionDetails,
-//     Typography,
-// } from "@mui/material";
+import {
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    Typography,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styled from "styled-components";
 import NavElse from "@/Components/Shared/Else/NavElse";
@@ -16,20 +16,21 @@ import { Link } from "@inertiajs/react";
 import BackToTop from "@/Components/BackToTop";
 import Nav from "@/Components/Shared/Homepage/Nav";
 
-import {
-    Accordion,
-    AccordionItem,
-    AccordionItemHeading,
-    AccordionItemButton,
-    AccordionItemPanel,
-} from "react-accessible-accordion";
+// import {
+//     Accordion,
+//     AccordionItem,
+//     AccordionItemHeading,
+//     AccordionItemButton,
+//     AccordionItemPanel,
+// } from "react-accessible-accordion";
+// import "react-accessible-accordion/dist/fancy-example.css";
 
-// Demo styles, see 'Styles' section below for some notes on use.
-import "react-accessible-accordion/dist/fancy-example.css";
+import { useTranslation } from "react-i18next";
 
 const Faq = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan
     const [isPageLoaded, setIsPageLoaded] = useState(false);
+    const { t } = useTranslation(); // Tambahkan ini
 
     useEffect(() => {
         // Lakukan permintaan AJAX untuk mendapatkan data perusahaan
@@ -72,14 +73,16 @@ const Faq = () => {
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Dimana saya bisa melihat lowongan pekerjaan yang sedang
-                    dibuka?
+                    {/* Dimana saya bisa melihat lowongan pekerjaan yang sedang
+                    dibuka? */}
+                    {t("question.1")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    Anda bisa melihat lowongan pekerjaan di PT. Tako Anugerah
-                    Koporasi melalui website{" "}
+                    {/* Anda bisa melihat lowongan pekerjaan di PT. Tako Anugerah
+                    Koporasi melalui website{" "} */}
+                    {t("answer.1")}
                     <Link href="/loker" className="text-BlueTako underline">
                         https://karier.tako.co.id/loker
                     </Link>
@@ -89,116 +92,118 @@ const Faq = () => {
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Apakah saya bisa melamar lebih dari 1 posisi secara
-                    bersamaan?
+                    {/* Apakah saya bisa melamar lebih dari 1 posisi secara
+                    bersamaan? */}
+                    {t("question.2")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    Bisa, Anda bisa melamar{" "}
-                    <span className="font-bold">maksimal 2 posisi</span> {""}
-                    secara bersamaan. Jadi, pastikan sesuai dengan kompetensi
-                    Anda.
+                    {/* Bisa, Anda bisa melamar maksimal 2 posisi secara bersamaan.
+                    Jadi, pastikan sesuai dengan kompetensi Anda. */}
+                    {t("answer.2")}
                 </p>
             ),
         },
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Saya mengalami kesulitan ketika mengunggah berkas CV
+                    {/* Saya mengalami kesulitan ketika mengunggah berkas CV */}
+                    {t("question.3")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    Pastikan berkas CV yang Anda upload dalam format PDF dengan
-                    ukuran maksimal 2 MB.
+                    {/* Pastikan berkas CV yang Anda upload dalam format PDF dengan
+                    ukuran maksimal 2 MB. */}
+                    {t("answer.3")}
                 </p>
             ),
         },
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Apakah saya bisa mengajukan internship di PT. Tako Anugerah
-                    Koporasi?
+                    {/* Apakah saya bisa mengajukan internship di PT. Tako Anugerah
+                    Koporasi? */}
+                    {t("question.4")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    Tentu bisa, silakan untuk melakukan proses pendaftaran
+                    {/* Tentu bisa, silakan untuk melakukan proses pendaftaran
                     sesuai alurnya. Untuk program silahkan isi dengan nama{" "}
-                    <span className="font-bold">Internship</span> dan jangan
-                    lupa untuk mengunggah{" "}
-                    <span className="font-bold">
-                        Surat Pengajuan Internship dan CV dalam 1 dokumen.
-                    </span>
+                    Internship dan jangan lupa untuk mengunggah Surat Pengajuan
+                    Internship dan CV dalam 1 dokumen. */}
+                    {t("answer.4")}
                 </p>
             ),
         },
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Berapa lama proses rekrutmen di PT. Tako Anugerah Koporasi
-                    berlangsung?
+                    {/* Berapa lama proses rekrutmen di PT. Tako Anugerah Koporasi
+                    berlangsung? */}
+                    {t("question.5")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    Proses rekrutmen di PT. Tako Anugerah Koporasi berlangsung{" "}
-                    <span className="font-bold">
-                        selama 2 minggu hingga 1 bulan.
-                    </span>
+                    {/* Proses rekrutmen di PT. Tako Anugerah Koporasi berlangsung{" "}
+                    selama 2 minggu hingga 1 bulan. */}
+                    {t("answer.5")}
                 </p>
             ),
         },
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Bagaimana cara mengetahui bahwa lamaran saya diterima?
+                    {/* Bagaimana cara mengetahui bahwa lamaran saya diterima? */}
+                    {t("question.6")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    Lamaran kamu kami terima ketika sudah mengisi semua data dan
+                    {/* Lamaran kamu kami terima ketika sudah mengisi semua data dan
                     mengunggah CV yang dibutuhkan. Setelah Anda submit akan
-                    muncul tampilan{" "}
-                    <span className="font-bold">
-                        “Terima Kasih Sudah Melamar”
-                    </span>{" "}
-                    yang menandakan bahwa lamaran Anda sudah kami terima.
+                    muncul tampilan “Terima Kasih Sudah Melamar” yang menandakan
+                    bahwa lamaran Anda sudah kami terima. */}
+                    {t("answer.6")}
                 </p>
             ),
         },
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Apakah ada biaya selama proses rekrutmen di PT. Tako
-                    Anugerah Koporasi?
+                    {/* Apakah ada biaya selama proses rekrutmen di PT. Tako
+                    Anugerah Koporasi? */}
+                    {t("question.7")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    <span className="font-bold">Tidak ada</span>, proses
-                    rekrutmen kami{" "}
-                    <span className="font-bold">100% gratis</span>. Jika Anda
+                    {/* Tidak ada, proses rekrutmen kami 100% gratis. Jika Anda
                     diminta untuk membayar biaya apa pun, jangan pernah membayar
                     biaya tersebut. Segera laporkan kepada kami melaui di
-                    recruitment@tako.co.id
+                    recruitment@tako.co.id */}
+                    {t("answer.7")}
                 </p>
             ),
         },
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Apa yang harus saya lakukan jika tidak lolos proses
-                    rekrutmen?
+                    {/* Apa yang harus saya lakukan jika tidak lolos proses
+                    rekrutmen? */}
+                    {t("question.8")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    Jika Anda tidak lolos proses rekrutmen, jangan berkecil
+                    {/* Jika Anda tidak lolos proses rekrutmen, jangan berkecil
                     hati. Pelajari apa yang menjadi kekurangan Anda dan lakukan
                     perbaikan. Anda juga dapat mencoba melamar kembali ke
-                    perusahaan tersebut di masa depan.
+                    perusahaan tersebut di masa depan. */}
+                    {t("answer.8")}
                 </p>
             ),
         },
@@ -206,34 +211,36 @@ const Faq = () => {
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate w-[95%]">
-                    Saya tertarik untuk menjadi bagian dari PT. Tako Anugerah
+                    {/* Saya tertarik untuk menjadi bagian dari PT. Tako Anugerah
                     Koporasi, namun belum ada lowongan posisi yang cocok. Apakah
-                    saya bisa mengirimkan CV saya terlebih dahulu?
+                    saya bisa mengirimkan CV saya terlebih dahulu? */}
+                    {t("question.9")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    <span className="font-bold">Tentu bisa</span>. Silakan untuk
-                    mengisi data lowongan pekerjaan dan mengirimkan CV Anda.
-                    Kami akan menyimpan data Anda dan menghubungi dikemudian
-                    hari jika terdapat posisi yang kami rasa cocok dengan Anda.
+                    {/* Tentu bisa. Silakan untuk mengisi data lowongan pekerjaan
+                    dan mengirimkan CV Anda. Kami akan menyimpan data Anda dan
+                    menghubungi dikemudian hari jika terdapat posisi yang kami
+                    rasa cocok dengan Anda. */}
+                    {t("answer.9")}
                 </p>
             ),
         },
         {
             question: (
                 <p className="text-xs md:text-base leading-5 translate">
-                    Apabila saya ada kendala lainnya, saya harus menghubungi
-                    siapa?
+                    {/* Apabila saya ada kendala lainnya, saya harus menghubungi
+                    siapa? */}
+                    {t("question.10")}
                 </p>
             ),
             answer: (
                 <p className="opacity-90 text-xs md:text-base leading-5 translate">
-                    Anda bisa menghubungi kami melalui recruitment@tako.co.id
-                    dengan{" "}
-                    <span className="font-bold">subjek Rekrutmen_Nama</span>.
-                    Lalu sampaikan dan sertakan tangkapan layarnya dari kendala
-                    yang Anda temukan.
+                    {/* Anda bisa menghubungi kami melalui recruitment@tako.co.id
+                    dengan subjek Rekrutmen_Nama. Lalu sampaikan dan sertakan
+                    tangkapan layarnya dari kendala yang Anda temukan. */}
+                    {t("answer.10")}
                 </p>
             ),
         },
@@ -248,30 +255,32 @@ const Faq = () => {
                     <div className="bg-white p-4 rounded-lg py-8">
                         <div className="pb-8 p-4 rounded-lg">
                             <h1 className="text-center text-xs md:text-base 2xl:text-2xl pt-4 font-semibold translate">
-                                Apa yang ingin Anda ketahui tentang kami?
+                                {/* Apa yang ingin Anda ketahui tentang kami? */}
+                                {t("question.title")}
                             </h1>
                         </div>
-                        <Accordion>
-                            {faqData.map((item, index) => (
-                                <AccordionItem key={index}>
-                                    <AccordionItemHeading>
-                                        <AccordionItemButton className="px-5 py-4 bg-white text-DarkTako">
-                                            <div className="flex justify-between">
-                                                {item.question}
-                                                <img
-                                                    src="images/arrow-down.svg"
-                                                    alt="Icon"
-                                                    className="icon"
-                                                />
-                                            </div>
-                                        </AccordionItemButton>
-                                    </AccordionItemHeading>
-                                    <AccordionItemPanel className="px-5 py-4 bg-BgTako text-DarkTako">
-                                        {item.answer}
-                                    </AccordionItemPanel>
-                                </AccordionItem>
+                        <AccordionContainer>
+                            {faqData.map((faq, index) => (
+                                <Accordion key={index}>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls={`panel${
+                                            index + 1
+                                        }a-content`}
+                                        id={`panel${index + 1}a-header`}
+                                    >
+                                        <Typography component="div">
+                                            {faq.question}
+                                        </Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography component="div">
+                                            {faq.answer}
+                                        </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
                             ))}
-                        </Accordion>
+                        </AccordionContainer>
                     </div>
                 </div>
                 <BackToTop />
