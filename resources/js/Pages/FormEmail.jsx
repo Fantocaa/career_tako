@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
@@ -7,6 +7,9 @@ import Select from "react-select";
 import axios from "axios";
 import Layout from "@/Layouts/Layout";
 import ReCAPTCHA from "react-google-recaptcha";
+import LanguageContext from "@/Components/Shared/Homepage/LanguageContext";
+import he from "he";
+import { useTranslation } from "react-i18next";
 
 const FormEmail = () => {
     const {
@@ -176,7 +179,7 @@ const FormEmail = () => {
         if (capca != "") {
             try {
                 const token = document.querySelector(
-                    'meta[name="csrf-token"]'
+                    'meta[name="csrf-token"]',
                 ).content; // Mengambil token CSRF dari elemen <meta>
 
                 const formData = new FormData();
@@ -254,6 +257,66 @@ const FormEmail = () => {
         }
     }
 
+    const { selectedLanguage } = useContext(LanguageContext);
+
+    useEffect(() => {
+        const storedLanguage = localStorage.getItem("language");
+        if (storedLanguage !== selectedLanguage) {
+            localStorage.setItem("language", selectedLanguage);
+        }
+        translatePekerjaan(selectedLanguage || storedLanguage || "id");
+    }, [selectedLanguage]);
+
+    const translatePekerjaan = async (language) => {
+        if (language === "id") {
+            // If the language is Indonesian, revert to the original text
+            setValues((prevValues) => ({
+                ...prevValues,
+                pekerjaan: md_loker[0].pekerjaan,
+            }));
+        } else if (
+            localStorage.getItem(`translation-${md_loker[0].pekerjaan}`)
+        ) {
+            // Load the translated text from localStorage if it exists
+            const translatedText = localStorage.getItem(
+                `translation-${md_loker[0].pekerjaan}`,
+            );
+            setValues((prevValues) => ({
+                ...prevValues,
+                pekerjaan: translatedText,
+            }));
+        } else {
+            try {
+                const response = await axios.post("/api/translate", {
+                    text: md_loker[0].pekerjaan,
+                    target: language,
+                });
+                const translatedText = he.decode(response.data);
+                // Save the translated text to localStorage
+                localStorage.setItem(
+                    `translation-${md_loker[0].pekerjaan}`,
+                    translatedText,
+                );
+                setValues((prevValues) => ({
+                    ...prevValues,
+                    pekerjaan: translatedText,
+                }));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        const storedLanguage = localStorage.getItem("language");
+        if (storedLanguage !== selectedLanguage) {
+            localStorage.setItem("language", selectedLanguage);
+        }
+        translatePekerjaan(selectedLanguage || storedLanguage || "id");
+    }, [selectedLanguage]);
+
+    const { t } = useTranslation(); // Tambahkan ini
+
     return (
         <Layout pageTitle="Formulir | Tako Karier">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
@@ -261,7 +324,7 @@ const FormEmail = () => {
                 <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 lg:px-32 mx-auto">
                     <div className="bg-white mx-auto rounded-lg px-2 md:px-4">
                         <h1 className="font-bold text-xl md:text-2xl  text-center py-8">
-                            Registration Form
+                            {t("form.title")}
                         </h1>
                         <form
                             onSubmit={onSubmit}
@@ -274,12 +337,14 @@ const FormEmail = () => {
                             <div className="flex gap-4 flex-wrap">
                                 {/* Pekerjaan */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                    <h1 className="pb-2">Pekerjaan</h1>
+                                    <h1 className="pb-2">
+                                        Pekerjaan yang dipilih
+                                    </h1>
                                     <input
                                         {...register("pekerjaan", {
                                             required: true,
                                         })}
-                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10 "
                                         disabled
                                         value={values.pekerjaan}
                                         id="pekerjaan"
@@ -288,7 +353,9 @@ const FormEmail = () => {
 
                                 {/* Program */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                    <h1 className="pb-2">Program</h1>
+                                    <h1 className="pb-2">
+                                        Program yang dipilih
+                                    </h1>
                                     <input
                                         {...register("jenis_pekerjaan", {
                                             required: true,
@@ -517,7 +584,7 @@ const FormEmail = () => {
                                                 value={provinsiOptions.find(
                                                     (option) =>
                                                         option.label ===
-                                                        values.provinsi
+                                                        values.provinsi,
                                                 )}
                                                 id="provinsi"
                                                 placeholder="Pilih Provinsi Anda"
@@ -540,7 +607,7 @@ const FormEmail = () => {
                                                 value={kabupatenOptions.find(
                                                     (option) =>
                                                         option.label ===
-                                                        values.kabupaten
+                                                        values.kabupaten,
                                                 )}
                                                 id="kabupaten"
                                                 isDisabled={!isProvinsiSelected}
@@ -565,7 +632,7 @@ const FormEmail = () => {
                                                 value={kecamatanOptions.find(
                                                     (option) =>
                                                         option.label ===
-                                                        values.kecamatan
+                                                        values.kecamatan,
                                                 )}
                                                 onChange={handleKecamatanChange}
                                                 id="kecamatan"
@@ -767,7 +834,7 @@ const FormEmail = () => {
                                     <p>
                                         <span className="text-RedTako">*</span>
                                         Khusus Internship. Upload CV serta Surat
-                                        Pengajuan Internship
+                                        Pengajuan Internship dalam 1 file PDF
                                     </p>
                                 </div>
                                 <div className="pt-8">

@@ -7,8 +7,6 @@ import Select from "react-select";
 import axios from "axios";
 import Layout from "@/Layouts/Layout";
 import ReCAPTCHA from "react-google-recaptcha";
-import LanguageContext from "@/Components/Shared/Homepage/LanguageContext";
-import he from "he";
 
 const FormEmail = () => {
     const {
@@ -37,8 +35,8 @@ const FormEmail = () => {
 
     const [values, setValues] = useState({
         // password: "meong",
-        // pekerjaan: md_loker[0].pekerjaan,
-        // jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
+        pekerjaan: md_loker[0].pekerjaan,
+        jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
         // perusahaan: md_loker[0].perusahaan,
         nama: "",
         jenis_kelamin: "",
@@ -57,7 +55,6 @@ const FormEmail = () => {
         pendidikan: "",
         instansi: "",
         ipk: "",
-        pekerjaanyd: "",
     });
 
     // const handleChange = (e) => {
@@ -175,15 +172,19 @@ const FormEmail = () => {
     async function onSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
+        // console.log(capca);
         if (capca != "") {
             try {
                 const token = document.querySelector(
-                    'meta[name="csrf-token"]',
-                ).content;
+                    'meta[name="csrf-token"]'
+                ).content; // Mengambil token CSRF dari elemen <meta>
 
                 const formData = new FormData();
-                formData.append("_token", token);
+                formData.append("_token", token); // Menambahkan token CSRF ke FormData
 
+                formData.append("pekerjaan", values.pekerjaan);
+                formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
+                // formData.append("perusahaan", values.perusahaan);
                 formData.append("nama", values.nama);
                 formData.append("jenis_kelamin", values.jenis_kelamin);
                 formData.append("tanggal_lahir", values.tanggal_lahir);
@@ -200,15 +201,20 @@ const FormEmail = () => {
                 formData.append("pendidikan", values.pendidikan);
                 formData.append("instansi", values.instansi);
                 formData.append("ipk", values.ipk);
-                formData.append("pekerjaanyd", values.pekerjaanyd);
 
                 const file = e.target.fileUpload.files[0];
                 formData.append("file", file);
 
                 axios
-                    .post("/api/formulir/submit_custom", formData)
+                    .post("/api/formulir/submit", formData)
                     .then((response) => {
+                        // Berhasil
+                        // Membersihkan formulir jika berhasil
                         setValues({
+                            // password: "meong",
+                            pekerjaan: md_loker.pekerjaan,
+                            jenis_pekerjaan: md_loker.jenis_pekerjaan,
+                            // perusahaan: md_loker[0].perusahaan,
                             nama: "",
                             jenis_kelamin: "",
                             agama: "",
@@ -226,28 +232,25 @@ const FormEmail = () => {
                             pendidikan: "",
                             instansi: "",
                             ipk: "",
-                            pekerjaanyd: "",
                         });
 
+                        // console.log("Sukses:", response.data);
                         router.get("/finish");
                     })
                     .catch((error) => {
                         console.error("Error sending data:", error);
                         alert("Terjadi kesalahan saat mengirim data.");
-                    })
-                    .finally(() => {
-                        setIsLoading(false);
                     });
             } catch (error) {
                 console.error("Error sending data:", error);
                 alert("Terjadi kesalahan saat mengirim data.");
-                setIsLoading(false);
             }
         } else {
             setTimeout(() => {
+                // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
                 alert("Terjadi kesalahan saat mengirim data.");
                 setIsLoading(false);
-            }, 1000);
+            }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         }
     }
 
@@ -255,21 +258,67 @@ const FormEmail = () => {
         <Layout pageTitle="Formulir | Tako Karier">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
                 <NavElse />
-                <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto">
+                <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 lg:px-32 mx-auto">
                     <div className="bg-white mx-auto rounded-lg px-2 md:px-4">
                         <h1 className="font-bold text-xl md:text-2xl  text-center py-8">
-                            Formulir Registrasi
+                            Registration Form
                         </h1>
                         <form
                             onSubmit={onSubmit}
                             ref={formRef}
-                            className="items-center space-y-4 w-full p-8 mx-auto"
+                            className="items-center space-y-4 w-full px-4 mx-auto pb-8"
                             // action="/submit_loker"
                             method="post"
                             encType="multipart/form-data"
                         >
+                            <div className="flex gap-4 flex-wrap">
+                                {/* Pekerjaan */}
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                    <h1 className="pb-2">Pekerjaan</h1>
+                                    <input
+                                        {...register("pekerjaan", {
+                                            required: true,
+                                        })}
+                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                        disabled
+                                        value={values.pekerjaan}
+                                        id="pekerjaan"
+                                    />
+                                </div>
+
+                                {/* Program */}
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                    <h1 className="pb-2">Program</h1>
+                                    <input
+                                        {...register("jenis_pekerjaan", {
+                                            required: true,
+                                        })}
+                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                        disabled
+                                        value={values.jenis_pekerjaan}
+                                        id="program"
+                                    />
+                                </div>
+
+                                {/* Perusahaan */}
+                                {/* <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                    <h1 className="pb-2">Perusahaan</h1>
+                                    <input
+                                        {...register("perusahaan", {
+                                            required: true,
+                                        })}
+                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                        disabled
+                                        value={values.perusahaan}
+                                        id="perusahaan"
+                                    />
+                                </div> */}
+                            </div>
+                            <div className="py-4 md:py-8">
+                                <div className="border-t w-full border-DarkTako border-opacity-25" />
+                            </div>
                             {/* Nama */}
-                            <div className="w-full pb-4 pt-8">
+                            <div className="w-full pb-4">
                                 <h1 className="pb-2">
                                     Nama Lengkap
                                     <span className="text-RedTako">*</span>
@@ -468,7 +517,7 @@ const FormEmail = () => {
                                                 value={provinsiOptions.find(
                                                     (option) =>
                                                         option.label ===
-                                                        values.provinsi,
+                                                        values.provinsi
                                                 )}
                                                 id="provinsi"
                                                 placeholder="Pilih Provinsi Anda"
@@ -491,7 +540,7 @@ const FormEmail = () => {
                                                 value={kabupatenOptions.find(
                                                     (option) =>
                                                         option.label ===
-                                                        values.kabupaten,
+                                                        values.kabupaten
                                                 )}
                                                 id="kabupaten"
                                                 isDisabled={!isProvinsiSelected}
@@ -516,7 +565,7 @@ const FormEmail = () => {
                                                 value={kecamatanOptions.find(
                                                     (option) =>
                                                         option.label ===
-                                                        values.kecamatan,
+                                                        values.kecamatan
                                                 )}
                                                 onChange={handleKecamatanChange}
                                                 id="kecamatan"
@@ -676,58 +725,24 @@ const FormEmail = () => {
                                     </span>
                                 )}
                             </div>
-                            <div className="flex gap-4 flex-wrap">
-                                {/* Gaji*/}
-                                <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                    <h1 className="pb-2">
-                                        Gaji
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("gaji", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Ekpektasi gaji anda (Contoh : Rp.5.000.000)"
-                                        value={values.gaji}
-                                        id="gaji"
-                                        onChange={handleChange}
-                                    />
-                                    {errors.nomor && (
-                                        <span className="text-RedTako">
-                                            No. Telpon jangan sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-
-                                {/* Pekerjaan yang Diharapkan */}
-                                <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                    <h1 className="pb-2">
-                                        Pekerjaan yang Diharapkan
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("pekerjaanyd", {
-                                            required: true,
-                                        })}
-                                        className="w-full border-grey border-opacity-30 p-2 rounded"
-                                        placeholder="Masukkan Pekerjaan yang Diharapkan"
-                                        value={values.pekerjaanyd}
-                                        id="pekerjaanyd"
-                                        onChange={handleChange}
-                                        aria-invalid={
-                                            errors.pekerjaanyd
-                                                ? "true"
-                                                : "false"
-                                        }
-                                    />
-                                    {errors.pekerjaanyd?.type ===
-                                        "required" && (
-                                        <p role="alert">
-                                            Tolong Nama jangan sampai kosong
-                                        </p>
-                                    )}
-                                </div>
+                            {/* Gaji*/}
+                            <div className="w-full pb-4">
+                                <h1 className="pb-2">
+                                    Gaji<span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register("gaji", { required: true })}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    placeholder="Masukkan Ekpektasi gaji anda (Contoh : Rp.5.000.000)"
+                                    value={values.gaji}
+                                    id="gaji"
+                                    onChange={handleChange}
+                                />
+                                {errors.nomor && (
+                                    <span className="text-RedTako">
+                                        No. Telpon jangan sampai kosong
+                                    </span>
+                                )}
                             </div>
                             {/* File PDF*/}
                             <div className="w-full pb-4">

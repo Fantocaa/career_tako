@@ -62,50 +62,39 @@ const DetailLoker = () => {
         elementsToTranslate.forEach((element, index) => {
             // Save the original text
             if (!element.dataset.originalText) {
-                element.dataset.originalText = element.innerHTML;
+                element.dataset.originalText = element.innerText;
             }
 
             setTimeout(() => {
                 if (language === "id") {
                     // If the language is Indonesian, revert to the original text
-                    element.innerHTML = element.dataset.originalText;
+                    element.innerText = element.dataset.originalText;
                 } else if (
                     localStorage.getItem(
                         `translation-${element.dataset.originalText}`,
                     )
                 ) {
                     // Load the translated text from localStorage if it exists
-                    element.innerHTML = localStorage.getItem(
+                    element.innerText = localStorage.getItem(
                         `translation-${element.dataset.originalText}`,
                     );
                 } else {
-                    // Split the text into lines
-                    const lines = element.innerHTML.split("<br>");
-                    const translatedLines = lines.map(async (line) => {
-                        try {
-                            const response = await axios.post(
-                                "/api/translate",
-                                {
-                                    text: line,
-                                    target: language,
-                                },
-                            );
-                            const translatedText = he.decode(response.data);
+                    axios
+                        .post("/api/translate", {
+                            text: element.innerText,
+                            target: language,
+                        })
+                        .then((response) => {
+                            element.innerText = he.decode(response.data);
                             // Save the translated text to localStorage
                             localStorage.setItem(
-                                `translation-${line}`,
-                                translatedText,
+                                `translation-${element.dataset.originalText}`,
+                                he.decode(response.data),
                             );
-                            return translatedText;
-                        } catch (error) {
+                        })
+                        .catch((error) => {
                             console.error(error);
-                        }
-                    });
-
-                    // Wait for all translations to complete and then join the lines back together
-                    Promise.all(translatedLines).then((translatedLines) => {
-                        element.innerHTML = translatedLines.join("<br>");
-                    });
+                        });
                 }
             }, index * 300); // Delay each request by 1 second
         });

@@ -1,8 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "@inertiajs/react";
 import "../../css/style.css";
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
+import { initReactI18next } from "react-i18next";
+import Backend from "i18next-http-backend";
+import LanguageContext from "../Homepage/LanguageContext";
+
+i18n.use(Backend)
+    .use(initReactI18next)
+    .init({
+        backend: {
+            loadPath: "/locales/{{lng}}/translation.json",
+        },
+        lng: "id",
+        fallbackLng: "id",
+        interpolation: {
+            escapeValue: false,
+        },
+    });
 
 const NavElseDesk = () => {
+    const { selectedLanguage, setSelectedLanguage } =
+        useContext(LanguageContext);
+
+    const { t } = useTranslation(); // Tambahkan ini
+
+    useEffect(() => {
+        const language = localStorage.getItem("language") || "id"; // Get the selected language from local storage, default to 'id' if not found
+        i18n.changeLanguage(language);
+    }, []);
+
+    const changeLanguage = (language) => {
+        // setIsLoading(true); // Mulai menampilkan loading
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+        localStorage.setItem("language", language); // Save the selected language in local storage
+    };
+
     // const [scrolled, setScrolled] = useState(false);
 
     // useEffect(() => {
@@ -39,12 +74,13 @@ const NavElseDesk = () => {
                             />
                         </a>
                     </div>
-                    <div className="md:flex text-BlueTako ">
+                    <div className="md:flex text-BlueTako items-center">
                         <Link
                             className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
                             href="/"
                         >
-                            Beranda
+                            {/* Beranda */}
+                            {t("Beranda")}
                         </Link>
                         {/* <Link
                             className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
@@ -62,20 +98,36 @@ const NavElseDesk = () => {
                             className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
                             href="/loker"
                         >
-                            Lowongan Pekerjaan
+                            {/* Lowongan Pekerjaan */}
+                            {t("Lowongan Pekerjaan")}
                         </Link>
                         <Link
                             className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
                             href="/faq"
                         >
-                            FAQ
+                            {/* FAQ */}
+                            {t("FAQ")}
                         </Link>
                         <Link
                             className="mt-4 md:mt-0 md:mx-4 opacity-75 hover:opacity-100 font-semibold"
                             href="/contact"
                         >
-                            Contact
+                            {/* Contact */}
+                            {t("Contact")}
                         </Link>
+                        <div>
+                            <select
+                                value={selectedLanguage}
+                                onChange={(event) =>
+                                    changeLanguage(event.target.value)
+                                }
+                                className="rounded-full"
+                            >
+                                <option value="id">Bahasa Indonesia</option>
+                                <option value="en">English</option>
+                                <option value="zh">中文 (Chinese)</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

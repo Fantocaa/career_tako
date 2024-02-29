@@ -71,5 +71,6 @@
     "job.all": "Semua Program",
     "job.intern": "Internship (Magang / Praktik Kerja)",
     "job.pro": "Profesional (Fresh Graduate / Berpengalaman)",
-    "job.notfound": "Maaf, tidak ada lowongan yang tersedia saat ini."
+    "job.notfound": "Maaf, tidak ada lowongan yang tersedia saat ini.",
+    "form.title": "Formulir Registrasi"
 }

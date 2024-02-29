@@ -22,7 +22,7 @@
     "03_4": "Ask the recruiter about anything unclear",
     "03_5": "Make sure you are ready to start a new job and journey",
     "warn.title": "BEWARE OF FRAUD !!!",
-    "warn.title.2": "HATI-HATI PENIPUAN !!!",
+    "warn.title.2": "PT. Tako Anugerah Koporasi is a leading company in the fields of logistics, distribution, chicken integration and hospitality. We are committed to providing a safe and comfortable work environment for all our employees. This includes our commitment to protecting candidates from recruitment fraud. Therefore, we highly prioritize security and integrity in our recruitment process.",
     "sub.warn.title.1": "Apply on Official Channels",
     "sub.warn.body.1": "We only post job vacancies on our official website and on other trusted job portals such as LinkedIn, Glints, Jobstreet, and Indeed under the name PT Tako Anugerah Koporasi. If you find job vacancies on other websites with the name PT Tako Anugerah Koporasi, please be careful. The vacancy may be a scam.",
     "sub.warn.title.2": "Verify the Recruitment Invitation",
@@ -71,5 +71,6 @@
     "job.all": " All Program",
     "job.intern": "Internship (Internship / Work Practice)",
     "job.pro": "Professional (Fresh Graduate / Experienced)",
-    "job.notfound": "Sorry, there are no vacancies available at this time."
+    "job.notfound": "Sorry, there are no vacancies available at this time.",
+    "form.title": "Registration Form"
 }

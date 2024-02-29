@@ -12,36 +12,36 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
         return date.toLocaleDateString("id-ID", options);
     }
 
-    // useEffect(() => {
-    //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
-    //     const fetchData = async () => {
-    //         try {
-    //             // Kirim data ke server
-    //             const response = await Axios.get("/api/form");
-    //             // const response = await Axios.post("/form");
-    //             setFormData(response.data);
-    //         } catch (error) {
-    //             console.error("Error sending data:", error);
-    //         }
-    //     };
+    useEffect(() => {
+        //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
+        //     const fetchData = async () => {
+        //         try {
+        //             // Kirim data ke server
+        //             const response = await Axios.get("/api/form");
+        //             // const response = await Axios.post("/form");
+        //             setFormData(response.data);
+        //         } catch (error) {
+        //             console.error("Error sending data:", error);
+        //         }
+        //     };
 
-    //     const fetchDataSkill = async () => {
-    //         try {
-    //             // Kirim data ke server
-    //             const response_3 = await Axios.get("/api/skill");
-    //             setFormDataSkill(response_3.data);
-    //         } catch (error) {
-    //             console.error("Error sending data:", error);
-    //         }
-    //     };
+        const fetchDataSkill = async () => {
+            try {
+                // Kirim data ke server
+                const response_3 = await Axios.get("/api/skill");
+                setFormDataSkill(response_3.data);
+            } catch (error) {
+                console.error("Error sending data:", error);
+            }
+        };
 
-    //     fetchDataSkill();
+        fetchDataSkill();
 
-    //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
+        //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
 
-    //     // Hanya perlu dijalankan saat komponen pertama kali di-mount,
-    //     // sehingga dependensi di bawah ini kosong
-    // }, []);
+        //     // Hanya perlu dijalankan saat komponen pertama kali di-mount,
+        //     // sehingga dependensi di bawah ini kosong
+    }, []);
 
     return (
         <div className={active ? "flex flex-wrap gap-4 w-full" : "hidden"}>
@@ -52,11 +52,15 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                         key={item.id}
                     >
                         <div className="w-[75%]">
-                            <h1 className="font-bold">{item.pekerjaan}</h1>
+                            <h1 className="font-bold translate">
+                                {item.pekerjaan}
+                            </h1>
                             {/* <h2 className="text-BlueTako pt-2">
                                 {item.perusahaan}
                             </h2> */}
-                            <p className="text-xs pt-4">{item.deskripsi}</p>
+                            <p className="text-xs pt-4 translate">
+                                {item.deskripsi}
+                            </p>
                             <div className="flex items-center gap-8 pt-2">
                                 <div className="flex gap-2">
                                     <img src="/images/program.svg" alt="" />
@@ -115,7 +119,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                     href={`/loker/pekerjaan/formulir/${item.id}`}
                                 >
                                     <button className="bg-BlueTako text-white py-2 rounded-lg w-full">
-                                        Lamar
+                                        Apply
                                     </button>
                                 </Link>
                             </div>

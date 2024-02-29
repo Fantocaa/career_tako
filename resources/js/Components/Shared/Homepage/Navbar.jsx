@@ -62,13 +62,13 @@ const Navbar = () => {
                 scrolled ? "scrolled-bg" : "bg-transparent"
             }`}
         >
-            <>
+            {/* <>
                 {isLoading && (
                     <div className="w-screen h-screen bg-BlueTako bg-opacity-90 flex justify-center absolute z-50">
                         <span className="loading loading-dots loading-lg bg-white"></span>
                     </div>
                 )}
-            </>
+            </> */}
             <div className="container max-w-[1440px] px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto w-full z-50 ">
                 <div className="flex justify-between items-center">
                     <a href="https://tako.co.id/" target="__blank">
