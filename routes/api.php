@@ -26,7 +26,8 @@ Route::post('/formulir/submit/', [MdLokerController::class, 'submit_loker']);
 Route::post('/formulir/submit_custom/', [MdLokerController::class, 'submit_loker_custom']);
 
 Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
-Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
+// Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
+Route::get('/kabupaten', [MdLokerController::class, 'kabupaten']);
 Route::get('/kecamatan/{id1}/{id2}', [MdLokerController::class, 'kecamatan']);
 
 Route::resource('form', MdLokerController::class);

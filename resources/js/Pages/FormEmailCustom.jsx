@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
@@ -9,6 +9,7 @@ import Layout from "@/Layouts/Layout";
 import ReCAPTCHA from "react-google-recaptcha";
 import LanguageContext from "@/Components/Shared/Homepage/LanguageContext";
 import he from "he";
+import { useTranslation } from "react-i18next";
 
 const FormEmail = () => {
     const {
@@ -32,6 +33,8 @@ const FormEmail = () => {
     const [isKabupatenSelected, setIsKabupatenSelected] = useState(false);
     const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
 
+    const [riwayatPekerjaan, setRiwayatPekerjaan] = useState([{}]);
+
     const disabledInputClasses =
         "text-DarkTako text-opacity-50 bg-grey bg-opacity-10";
 
@@ -41,6 +44,7 @@ const FormEmail = () => {
         // jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
         // perusahaan: md_loker[0].perusahaan,
         nama: "",
+        nik: "",
         jenis_kelamin: "",
         agama: "",
         tanggal_lahir: "",
@@ -55,8 +59,17 @@ const FormEmail = () => {
         file: "",
         promosi: "",
         pendidikan: "",
+        prodi: "",
+        thn_in: "",
+        thn_out: "",
         instansi: "",
-        ipk: "",
+        riwayat_nama_perusahaan: "",
+        riwayat_alamat_perusahaan: "",
+        riwayat_tahun_in: "",
+        riwayat_tahun_out: "",
+        riwayat_posisi: "",
+        riwayat_tugas: "",
+        riwayat_berhenti: "",
         pekerjaanyd: "",
     });
 
@@ -109,63 +122,73 @@ const FormEmail = () => {
     }, []);
 
     // Fungsi yang dipanggil saat memilih provinsi
-    const handleProvinsiChange = (selectedOption) => {
-        setIsProvinsiSelected(true); // Setel state menjadi true saat provinsi dipilih
-        setSelectedProvinsi(selectedOption); // Simpan nilai provinsi yang dipilih
+    // const handleProvinsiChange = (selectedOption) => {
+    //     setIsProvinsiSelected(true); // Setel state menjadi true saat provinsi dipilih
+    //     setSelectedProvinsi(selectedOption); // Simpan nilai provinsi yang dipilih
 
-        values.provinsi = selectedOption.label;
-        // Ambil kode provinsi yang dipilih
-        const kodeProvinsi = selectedOption.value;
+    //     values.provinsi = selectedOption.label;
+    //     // Ambil kode provinsi yang dipilih
+    //     const kodeProvinsi = selectedOption.value;
 
-        // Panggil API untuk mendapatkan daftar kabupaten/kota berdasarkan kode provinsi
-        fetch(`/api/kabupaten/${kodeProvinsi}`)
-            .then((response) => response.json())
-            .then((data) => {
-                const formattedOptions = data.map((item) => ({
-                    label: item.nama,
-                    value: item.kode,
-                }));
-                setKabupatenOptions(formattedOptions);
-            })
-            .catch((error) => {
-                console.error("Error fetching kabupaten/kota data:", error);
-            });
-    };
+    //     // Panggil API untuk mendapatkan daftar kabupaten/kota berdasarkan kode provinsi
+    //     fetch(`/api/kabupaten/${kodeProvinsi}`)
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             const formattedOptions = data.map((item) => ({
+    //                 label: item.nama,
+    //                 value: item.kode,
+    //             }));
+    //             setKabupatenOptions(formattedOptions);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching kabupaten/kota data:", error);
+    //         });
+    // };
 
-    // Fungsi yang dipanggil saat memilih kabupaten/kota
+    // // Fungsi yang dipanggil saat memilih kabupaten/kota
+    // const handleKabupatenChange = (selectedOption) => {
+    //     setIsKabupatenSelected(true); // Setel state menjadi true saat provinsi dipilih
+
+    //     // Ambil kode kabupaten/kota yang dipilih
+    //     const kodeKabupaten = selectedOption.value;
+
+    //     values.kabupaten = selectedOption.label;
+
+    //     // Ambil kode provinsi yang dipilih
+    //     const kodeProvinsi = selectedProvinsi.value;
+
+    //     // Panggil API untuk mendapatkan daftar kecamatan berdasarkan kode kabupaten/kota dan kode provinsi
+    //     fetch(`/api/kecamatan/${kodeProvinsi}/${kodeKabupaten}`)
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             const formattedOptions = data.map((item) => ({
+    //                 label: item.nama,
+    //                 value: item.kode,
+    //             }));
+    //             setKecamatanOptions(formattedOptions);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching kecamatan data:", error);
+    //         });
+    // };
+
+    // const handleKecamatanChange = (selectedOption) => {
+    //     setIsKecamatanSelected(true); // Setel state menjadi true saat kecamatan dipilih
+
+    //     const kodeKecamatan = selectedOption.value;
+
+    //     values.kecamatan = selectedOption.label;
+    // };
+
     const handleKabupatenChange = (selectedOption) => {
-        setIsKabupatenSelected(true); // Setel state menjadi true saat provinsi dipilih
+        setIsKabupatenSelected(true); // Setel state menjadi true saat kabupaten/kota dipilih
 
         // Ambil kode kabupaten/kota yang dipilih
         const kodeKabupaten = selectedOption.value;
 
         values.kabupaten = selectedOption.label;
-
-        // Ambil kode provinsi yang dipilih
-        const kodeProvinsi = selectedProvinsi.value;
-
-        // Panggil API untuk mendapatkan daftar kecamatan berdasarkan kode kabupaten/kota dan kode provinsi
-        fetch(`/api/kecamatan/${kodeProvinsi}/${kodeKabupaten}`)
-            .then((response) => response.json())
-            .then((data) => {
-                const formattedOptions = data.map((item) => ({
-                    label: item.nama,
-                    value: item.kode,
-                }));
-                setKecamatanOptions(formattedOptions);
-            })
-            .catch((error) => {
-                console.error("Error fetching kecamatan data:", error);
-            });
     };
 
-    const handleKecamatanChange = (selectedOption) => {
-        setIsKecamatanSelected(true); // Setel state menjadi true saat kecamatan dipilih
-
-        const kodeKecamatan = selectedOption.value;
-
-        values.kecamatan = selectedOption.label;
-    };
     var capca = "";
     const onChangeCaptcha = (value) => {
         capca = value;
@@ -185,21 +208,36 @@ const FormEmail = () => {
                 formData.append("_token", token);
 
                 formData.append("nama", values.nama);
+                formData.append("nik", values.nik);
                 formData.append("jenis_kelamin", values.jenis_kelamin);
                 formData.append("tanggal_lahir", values.tanggal_lahir);
                 formData.append("agama", values.agama);
                 formData.append("emails", values.emails);
                 formData.append("no_telp", values.no_telp);
-                formData.append("provinsi", values.provinsi);
+                // formData.append("provinsi", values.provinsi);
                 formData.append("kabupaten", values.kabupaten);
-                formData.append("kecamatan", values.kecamatan);
-                formData.append("kodepos", values.kodepos);
+                // formData.append("kecamatan", values.kecamatan);
+                // formData.append("kodepos", values.kodepos);
                 formData.append("alamat", values.alamat);
                 formData.append("gaji", values.gaji);
-                formData.append("promosi", values.promosi);
                 formData.append("pendidikan", values.pendidikan);
+                formData.append("prodi", values.prodi);
+                formData.append("thn_in", values.thn_in);
+                formData.append("thn_out", values.thn_out);
                 formData.append("instansi", values.instansi);
-                formData.append("ipk", values.ipk);
+                formData.append(
+                    "riwayat_nama_perusahaan",
+                    values.riwayat_nama_perusahaan,
+                );
+                formData.append(
+                    "riwayat_alamat_perusahaan",
+                    values.riwayat_alamat_perusahaan,
+                );
+                formData.append("riwayat_tahun_in", values.riwayat_tahun_in);
+                formData.append("riwayat_tahun_out", values.riwayat_tahun_out);
+                formData.append("riwayat_posisi", values.riwayat_posisi);
+                formData.append("riwayat_tugas", values.riwayat_tugas);
+                formData.append("riwayat_berhenti", values.riwayat_berhenti);
                 formData.append("pekerjaanyd", values.pekerjaanyd);
 
                 const file = e.target.fileUpload.files[0];
@@ -210,22 +248,32 @@ const FormEmail = () => {
                     .then((response) => {
                         setValues({
                             nama: "",
+                            nik: "",
                             jenis_kelamin: "",
                             agama: "",
                             tanggal_lahir: "",
                             emails: "",
-                            provinsi: provinsiOptions.label,
+                            // provinsi: provinsiOptions.label,
                             kabupaten: kabupatenOptions.label,
-                            kecamatan: kecamatanOptions.label,
-                            kodepos: "",
+                            // kecamatan: kecamatanOptions.label,
+                            // kodepos: "",
                             alamat: "",
                             no_telp: "",
                             gaji: "",
                             file: "",
                             promosi: "",
                             pendidikan: "",
+                            prodi: "",
+                            thn_in: "",
+                            thn_out: "",
                             instansi: "",
-                            ipk: "",
+                            riwayat_nama_perusahaan: "",
+                            riwayat_alamat_perusahaan: "",
+                            riwayat_tahun_in: "",
+                            riwayat_tahun_out: "",
+                            riwayat_posisi: "",
+                            riwayat_tugas: "",
+                            riwayat_berhenti: "",
                             pekerjaanyd: "",
                         });
 
@@ -251,63 +299,129 @@ const FormEmail = () => {
         }
     }
 
+    const { t } = useTranslation(); // Tambahkan ini
+
     return (
         <Layout pageTitle="Formulir | Tako Karier">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
                 <NavElse />
                 <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto">
-                    <div className="bg-white mx-auto rounded-lg px-2 md:px-4">
-                        <h1 className="font-bold text-xl md:text-2xl  text-center py-8">
-                            Formulir Registrasi
+                    <div className="bg-white mx-auto rounded-lg px-2 md:px-4 lg:pt-4">
+                        <h1 className="font-semibold text-xl md:text-2xl text-center py-4 mb-10 bg-BlueTako text-white rounded-lg">
+                            {t("form.title")}
                         </h1>
                         <form
                             onSubmit={onSubmit}
                             ref={formRef}
-                            className="items-center space-y-4 w-full p-8 mx-auto"
+                            className="items-center space-y-4 w-full px-4 mx-auto pb-8"
                             // action="/submit_loker"
                             method="post"
                             encType="multipart/form-data"
                         >
+                            <div className="flex gap-4 flex-wrap">
+                                {/* Pekerjaan */}
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                    <h1 className="pb-2">
+                                        Pekerjaan yang dipilih
+                                    </h1>
+                                    <input
+                                        {...register("pekerjaan", {
+                                            required: true,
+                                        })}
+                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10 "
+                                        disabled
+                                        value={values.pekerjaan}
+                                        id="pekerjaan"
+                                    />
+                                </div>
+
+                                {/* Program */}
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                    <h1 className="pb-2">
+                                        Program yang dipilih
+                                    </h1>
+                                    <input
+                                        {...register("jenis_pekerjaan", {
+                                            required: true,
+                                        })}
+                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                        disabled
+                                        value={values.jenis_pekerjaan}
+                                        id="program"
+                                    />
+                                </div>
+
+                                {/* Perusahaan */}
+                                {/* <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                    <h1 className="pb-2">Perusahaan</h1>
+                                    <input
+                                        {...register("perusahaan", {
+                                            required: true,
+                                        })}
+                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
+                                        disabled
+                                        value={values.perusahaan}
+                                        id="perusahaan"
+                                    />
+                                </div> */}
+                            </div>
+                            <div className="py-4 md:py-8">
+                                <div className="border-t w-full border-DarkTako border-opacity-25" />
+                            </div>
+                            <h1 className="text-2xl font-bold text-center py-2 pb-8 rounded-lg">
+                                Data Pribadi
+                            </h1>
                             {/* Nama */}
-                            <div className="w-full pb-4 pt-8">
-                                <h1 className="pb-2">
-                                    Nama Lengkap
-                                    <span className="text-RedTako">*</span>
-                                </h1>
-                                {/* <input
-                                    {...register("nama", { required: true })}
-                                    className="w-full border-grey border-opacity-30 p-2 rounded"
-                                    placeholder="Masukkan Nama"
-                                    value={values.nama}
-                                    id="nama"
-                                    onChange={handleChange}
-                                />
-                                {errors.nama && (
-                                    <span className="text-RedTako">
-                                        Tolong Nama jangan sampai kosong
-                                    </span>
-                                )} */}
-                                <input
-                                    {...register("nama", { required: true })}
-                                    className="w-full border-grey border-opacity-30 p-2 rounded"
-                                    placeholder="Masukkan Nama"
-                                    value={values.nama}
-                                    id="nama"
-                                    onChange={handleChange}
-                                    aria-invalid={
-                                        errors.nama ? "true" : "false"
-                                    }
-                                />
-                                {/* {errors.nama && (
-                                    <span className="text-RedTako">
-                                        Tolong Nama jangan sampai kosong
-                                    </span>
-                                )} */}
-                                {errors.nama?.type === "required" && (
-                                    <p role="alert">
-                                        Tolong Nama jangan sampai kosong
-                                    </p>
-                                )}
+                            <div className="flex gap-4 flex-wrap">
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
+                                    <h1 className="pb-2">
+                                        Nama Lengkap
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register("nama", {
+                                            required: true,
+                                        })}
+                                        className="w-full border-grey border-opacity-30 p-2 rounded"
+                                        placeholder="Masukkan Nama"
+                                        value={values.nama}
+                                        id="nama"
+                                        onChange={handleChange}
+                                        aria-invalid={
+                                            errors.nama ? "true" : "false"
+                                        }
+                                    />
+                                    {errors.nama?.type === "required" && (
+                                        <p role="alert">
+                                            Tolong Nama jangan sampai kosong
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
+                                    <h1 className="pb-2">
+                                        NIK
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register("nik", {
+                                            required: true,
+                                        })}
+                                        className="w-full border-grey border-opacity-30 p-2 rounded"
+                                        placeholder="Masukkan NIK"
+                                        value={values.nik}
+                                        id="nik"
+                                        type="number"
+                                        onChange={handleChange}
+                                        aria-invalid={
+                                            errors.nik ? "true" : "false"
+                                        }
+                                    />
+                                    {errors.nik?.type === "required" && (
+                                        <p role="alert">
+                                            Tolong Nama jangan sampai kosong
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex gap-4 flex-wrap">
                                 {/* Gender */}
@@ -335,7 +449,7 @@ const FormEmail = () => {
                                         <option value="Perempuan">
                                             Perempuan
                                         </option>
-                                        <option value="Lainnya">Lainnya</option>
+                                        {/* <option value="Lainnya">Lainnya</option> */}
                                     </select>
                                     {errors.gender && (
                                         <span className="text-RedTako">
@@ -362,6 +476,9 @@ const FormEmail = () => {
                                         <option>Pilih Agama Anda</option>
                                         <option value="Islam">Islam</option>
                                         <option value="Kristen">Kristen</option>
+                                        <option value="Katholik">
+                                            Katholik
+                                        </option>
                                         <option value="Hindu">Hindu</option>
                                         <option value="Budha">Budha</option>
                                         <option value="Kong Hu Chu">
@@ -417,7 +534,7 @@ const FormEmail = () => {
                                         })}
                                         className="w-full p-2 border-grey border-opacity-30 rounded"
                                         placeholder="Masukkan Email Anda"
-                                        type="text"
+                                        type="email"
                                         value={values.emails}
                                         id="emails"
                                         onChange={handleChange}
@@ -452,104 +569,33 @@ const FormEmail = () => {
                                         </span>
                                     )}
                                 </div>
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] py-4">
+                                    <h2 className="pb-2">
+                                        Kabupaten/Kota Tempat Lahir
+                                    </h2>
+                                    <Select
+                                        options={kabupatenOptions}
+                                        onChange={handleKabupatenChange}
+                                        value={kabupatenOptions.find(
+                                            (option) =>
+                                                option.label ===
+                                                values.kabupaten,
+                                        )}
+                                        id="kabupaten"
+                                        placeholder="Pilih Kabupaten/Kota Anda"
+                                        styles={{
+                                            control: (base) => ({
+                                                ...base,
+                                                padding: "2px",
+                                            }),
+                                        }}
+                                    />
+                                </div>
                             </div>
                             {/* Tempat Lahir*/}
-                            <div className="w-full">
-                                <>
-                                    <div className="block md:flex pb-4">
-                                        <div className="w-full md:w-[50%] pb-8 md:pb-4 mr-4 ">
-                                            <h2 className="pb-2">
-                                                Provinsi Tempat Lahir
-                                            </h2>
-                                            <Select
-                                                options={provinsiOptions}
-                                                onChange={handleProvinsiChange}
-                                                // value={values.provinsi}
-                                                value={provinsiOptions.find(
-                                                    (option) =>
-                                                        option.label ===
-                                                        values.provinsi,
-                                                )}
-                                                id="provinsi"
-                                                placeholder="Pilih Provinsi Anda"
-                                                styles={{
-                                                    control: (base) => ({
-                                                        ...base,
-                                                        padding: "2px",
-                                                    }),
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="w-full md:w-[50%] pb-4 md:pb-0">
-                                            <h2 className="pb-2">
-                                                Kabupaten/Kota Tempat Lahir
-                                            </h2>
-                                            <Select
-                                                options={kabupatenOptions}
-                                                onChange={handleKabupatenChange}
-                                                // value={values.kabupaten}
-                                                value={kabupatenOptions.find(
-                                                    (option) =>
-                                                        option.label ===
-                                                        values.kabupaten,
-                                                )}
-                                                id="kabupaten"
-                                                isDisabled={!isProvinsiSelected}
-                                                placeholder="Pilih Kabupaten/Kota Anda"
-                                                styles={{
-                                                    control: (base) => ({
-                                                        ...base,
-                                                        padding: "2px",
-                                                    }),
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="block md:flex ">
-                                        <div className="w-full mr-4 pb-8  md:pb-4">
-                                            <h2 className="pb-2">
-                                                Kecamatan Tempat Lahir
-                                            </h2>
-                                            <Select
-                                                options={kecamatanOptions}
-                                                // value={values.kecamatan}
-                                                value={kecamatanOptions.find(
-                                                    (option) =>
-                                                        option.label ===
-                                                        values.kecamatan,
-                                                )}
-                                                onChange={handleKecamatanChange}
-                                                id="kecamatan"
-                                                className="w-full"
-                                                isDisabled={
-                                                    !isKabupatenSelected
-                                                }
-                                                placeholder="Pilih Kecamatan Anda"
-                                            />
-                                        </div>
-                                        <div className="w-full pb-4 md:pb-0">
-                                            <h2 className="w-full lg:w-[50%] pb-2 mr-4">
-                                                Kode Pos Tempat Lahir
-                                            </h2>
-                                            <input
-                                                type="number"
-                                                className={`w-full p-2 py-[6px] border-grey border-opacity-10 rounded ${
-                                                    !isKecamatanSelected
-                                                        ? disabledInputClasses
-                                                        : "border-opacity-30"
-                                                }`}
-                                                value={values.kodepos}
-                                                id="kodepos"
-                                                onChange={handleChange}
-                                                disabled={!isKecamatanSelected}
-                                                placeholder="Masukkan Kode Pos Anda"
-                                            />
-                                        </div>
-                                    </div>
-                                </>
-                            </div>
+
                             {/* Alamat Tempat Tinggal*/}
-                            <div className="w-full pb-4">
+                            <div className="w-full">
                                 <h1 className="pb-2">
                                     Alamat Tempat Tinggal
                                     <span className="text-RedTako">*</span>
@@ -569,7 +615,14 @@ const FormEmail = () => {
                                     </span>
                                 )}
                             </div>
-                            <div className="flex gap-4 flex-wrap pb-4">
+
+                            <div className="py-4 md:py-8">
+                                <div className="border-t w-full border-DarkTako border-opacity-25" />
+                            </div>
+                            <h1 className="text-2xl font-bold text-center py-2 pb-8">
+                                Riwayat Pendidikan
+                            </h1>
+                            <div className="flex gap-4 flex-wrap">
                                 {/* Pendidikan Terakhir */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
                                     <h1 className="pb-2">
@@ -593,9 +646,15 @@ const FormEmail = () => {
                                         <option value="SMP">SMP</option>
                                         <option value="SMA/SMK">SMA/SMK</option>
                                         <option value="D3/D4">D3/D4</option>
-                                        <option value="S1">S1</option>
-                                        <option value="S2">S2</option>
-                                        <option value="S3">S3</option>
+                                        <option value="S1">
+                                            Strata - 1 (S1)
+                                        </option>
+                                        <option value="S2">
+                                            Strata - 2 (S2)
+                                        </option>
+                                        <option value="S3">
+                                            Strata - 3 (S3)
+                                        </option>
                                     </select>
                                     {errors.agama && (
                                         <span className="text-RedTako">
@@ -607,7 +666,7 @@ const FormEmail = () => {
                                 {/* Intansi Pendidikan */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                     <h1 className="pb-2">
-                                        Nama Intansi Pendidikan Terakhir
+                                        Nama Instansi Pendidikan Terakhir
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <input
@@ -631,129 +690,398 @@ const FormEmail = () => {
 
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
                                     <h1 className="pb-2">
-                                        IPK/GPA (Grade Point Average)
+                                        Jurusan/Program Studi
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <input
-                                        {...register("ipk", {
+                                        {...register("prodi", {
                                             required: true,
                                         })}
                                         className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Nilai IPK/GPA Anda (Contoh : 3.50)"
-                                        type="number"
-                                        step=".01"
-                                        value={values.ipk}
-                                        id="ipk"
+                                        placeholder="Masukkan Jurusan/Program Studi"
+                                        type="text"
+                                        value={values.prodi}
+                                        id="prodi"
                                         onChange={handleChange}
                                     />
-                                    {errors.ipk && (
+                                    {errors.prodi && (
                                         <span className="text-RedTako">
-                                            Intansi Pendidikan Terakhir jangan
-                                            sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                            {/* Promosi*/}
-                            <div className="w-full pb-4">
-                                <h1 className="pb-2">
-                                    Prommosikan Diri Anda
-                                    <span className="text-RedTako">*</span>
-                                </h1>
-                                <textarea
-                                    {...register("promosi", { required: true })}
-                                    className="w-full p-2 border-grey border-opacity-30 rounded"
-                                    placeholder="Masukkan Promosi"
-                                    value={values.promosi}
-                                    id="promosi"
-                                    onChange={handleChange}
-                                    rows={4}
-                                />
-                                {errors.promosi && (
-                                    <span className="text-RedTako">
-                                        promosi Tempat Tinggal jangan sampai
-                                        kosong
-                                    </span>
-                                )}
-                            </div>
-                            <div className="flex gap-4 flex-wrap">
-                                {/* Gaji*/}
-                                <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                    <h1 className="pb-2">
-                                        Gaji
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("gaji", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Ekpektasi gaji anda (Contoh : Rp.5.000.000)"
-                                        value={values.gaji}
-                                        id="gaji"
-                                        onChange={handleChange}
-                                    />
-                                    {errors.nomor && (
-                                        <span className="text-RedTako">
-                                            No. Telpon jangan sampai kosong
+                                            Jurusan/Program Studi Terakhir
+                                            jangan sampai kosong
                                         </span>
                                     )}
                                 </div>
 
-                                {/* Pekerjaan yang Diharapkan */}
-                                <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                    <h1 className="pb-2">
-                                        Pekerjaan yang Diharapkan
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("pekerjaanyd", {
-                                            required: true,
-                                        })}
-                                        className="w-full border-grey border-opacity-30 p-2 rounded"
-                                        placeholder="Masukkan Pekerjaan yang Diharapkan"
-                                        value={values.pekerjaanyd}
-                                        id="pekerjaanyd"
-                                        onChange={handleChange}
-                                        aria-invalid={
-                                            errors.pekerjaanyd
-                                                ? "true"
-                                                : "false"
-                                        }
-                                    />
-                                    {errors.pekerjaanyd?.type ===
-                                        "required" && (
-                                        <p role="alert">
-                                            Tolong Nama jangan sampai kosong
-                                        </p>
-                                    )}
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
+                                    <div className="w-full">
+                                        <h1 className="pb-2">
+                                            Tahun Masuk
+                                            <span className="text-RedTako">
+                                                *
+                                            </span>
+                                        </h1>
+                                        <input
+                                            {...register("thn_in", {
+                                                required: true,
+                                            })}
+                                            className="w-full p-2 border-grey border-opacity-30 rounded"
+                                            placeholder="Masukkan Tahun Masuk"
+                                            type="number"
+                                            value={values.thn_in}
+                                            id="thn_in"
+                                            onChange={handleChange}
+                                        />
+                                        {errors.thn_in && (
+                                            <span className="text-RedTako">
+                                                Tahun Masuk jangan sampai kosong
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="w-full">
+                                        <h1 className="pb-2">
+                                            Tahun Keluar
+                                            <span className="text-RedTako">
+                                                *
+                                            </span>
+                                        </h1>
+                                        <input
+                                            {...register("thn_out", {
+                                                required: true,
+                                            })}
+                                            className="w-full p-2 border-grey border-opacity-30 rounded"
+                                            placeholder="Masukkan Tahun Keluar"
+                                            type="number"
+                                            value={values.thn_out}
+                                            id="thn_out"
+                                            onChange={handleChange}
+                                        />
+                                        {errors.thn_out && (
+                                            <span className="text-RedTako">
+                                                Tahun Keluar jangan sampai
+                                                kosong
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
+                            <div className="py-4 md:py-8">
+                                <div className="border-t w-full border-DarkTako border-opacity-25" />
+                            </div>
+                            {/* Promosi*/}
+                            {/* Gaji*/}
+                            <h1 className="text-2xl font-bold text-center py-2 pb-8">
+                                Riwayat Pekerjaan
+                            </h1>
+                            <div>
+                                {riwayatPekerjaan.map((riwayat, index) => (
+                                    <div key={index}>
+                                        <div className="flex gap-4 flex-wrap">
+                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                                <h1 className="pb-2">
+                                                    Nama Perusahaan
+                                                    <span className="text-RedTako">
+                                                        *
+                                                    </span>
+                                                </h1>
+                                                <input
+                                                    {...register(
+                                                        "riwayat_nama_perusahaan",
+                                                        {
+                                                            required: true,
+                                                        },
+                                                    )}
+                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                                    placeholder="Masukkan Nama Perusahaan Sebelumnya"
+                                                    value={
+                                                        values.riwayat_nama_perusahaan
+                                                    }
+                                                    id="riwayat_nama_perusahaan"
+                                                    onChange={handleChange}
+                                                />
+                                                {errors.nomor && (
+                                                    <span className="text-RedTako">
+                                                        Nama Perusahaan jangan
+                                                        sampai kosong
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                                <h1 className="pb-2">
+                                                    Alamat Perusahaan
+                                                    <span className="text-RedTako">
+                                                        *
+                                                    </span>
+                                                </h1>
+                                                <input
+                                                    {...register(
+                                                        "riwayat_alamat_perusahaan",
+                                                        {
+                                                            required: true,
+                                                        },
+                                                    )}
+                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                                    placeholder="Masukkan Alamat Perusahaan Sebelumnya"
+                                                    value={
+                                                        values.riwayat_alamat_perusahaan
+                                                    }
+                                                    id="riwayat_alamat_perusahaan"
+                                                    onChange={handleChange}
+                                                />
+                                                {errors.nomor && (
+                                                    <span className="text-RedTako">
+                                                        No. Telpon jangan sampai
+                                                        kosong
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
+                                                <div className="w-full">
+                                                    <h1 className="pb-2">
+                                                        Tahun Masuk
+                                                        <span className="text-RedTako">
+                                                            *
+                                                        </span>
+                                                    </h1>
+                                                    <input
+                                                        {...register(
+                                                            "riwayat_tahun_in",
+                                                            {
+                                                                required: true,
+                                                            },
+                                                        )}
+                                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                                        placeholder="Masukkan Tahun Masuk"
+                                                        type="number"
+                                                        value={
+                                                            values.riwayat_tahun_in
+                                                        }
+                                                        id="riwayat_tahun_in"
+                                                        onChange={handleChange}
+                                                    />
+                                                    {errors.riwayat_tahun_in && (
+                                                        <span className="text-RedTako">
+                                                            Tahun Masuk jangan
+                                                            sampai kosong
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <div className="w-full">
+                                                    <h1 className="pb-2">
+                                                        Tahun Keluar
+                                                        <span className="text-RedTako">
+                                                            *
+                                                        </span>
+                                                    </h1>
+                                                    <input
+                                                        {...register(
+                                                            "riwayat_tahun_out",
+                                                            {
+                                                                required: true,
+                                                            },
+                                                        )}
+                                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                                        placeholder="Masukkan Tahun Keluar"
+                                                        type="number"
+                                                        value={
+                                                            values.riwayat_tahun_out
+                                                        }
+                                                        id="riwayat_tahun_out"
+                                                        onChange={handleChange}
+                                                    />
+                                                    {errors.riwayat_tahun_out && (
+                                                        <span className="text-RedTako">
+                                                            Tahun Keluar jangan
+                                                            sampai kosong
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                                <h1 className="pb-2">
+                                                    Posisi/Jabatan
+                                                    <span className="text-RedTako">
+                                                        *
+                                                    </span>
+                                                </h1>
+                                                <input
+                                                    {...register(
+                                                        "riwayat_posisi",
+                                                        {
+                                                            required: true,
+                                                        },
+                                                    )}
+                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                                    placeholder="Masukkan Posisi/Jabatan Sebelumnya"
+                                                    value={
+                                                        values.riwayat_posisi
+                                                    }
+                                                    id="riwayat_posisi"
+                                                    onChange={handleChange}
+                                                />
+                                                {errors.riwayat_posisi && (
+                                                    <span className="text-RedTako">
+                                                        No. Telpon jangan sampai
+                                                        kosong
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="w-full pt-4">
+                                                <h1 className="pb-2">
+                                                    Uraian Tugas
+                                                    <span className="text-RedTako">
+                                                        *
+                                                    </span>
+                                                </h1>
+                                                <textarea
+                                                    {...register(
+                                                        "riwayat_tugas",
+                                                        {
+                                                            required: true,
+                                                        },
+                                                    )}
+                                                    className="w-full p-2 border-grey border-opacity-30 rounded h-32"
+                                                    placeholder="Uraikan Tugas Pekerjaan Anda"
+                                                    value={values.riwayat_tugas}
+                                                    id="riwayat_tugas"
+                                                    onChange={handleChange}
+                                                />
+                                                {errors.riwayat_tugas && (
+                                                    <span className="text-RedTako">
+                                                        Uraian Tugas jangan
+                                                        sampai kosong
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                                <h1 className="pb-2">
+                                                    Alasan Berhenti
+                                                    <span className="text-RedTako">
+                                                        *
+                                                    </span>
+                                                </h1>
+                                                <input
+                                                    {...register(
+                                                        "riwayat_berhenti",
+                                                        {
+                                                            required: true,
+                                                        },
+                                                    )}
+                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                                    placeholder="Masukkan Alasan Mengapa Anda Berhenti"
+                                                    value={
+                                                        values.riwayat_berhenti
+                                                    }
+                                                    id="riwayat_berhenti"
+                                                    onChange={handleChange}
+                                                />
+                                                {errors.nomor && (
+                                                    <span className="text-RedTako">
+                                                        No. Telpon jangan sampai
+                                                        kosong
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                                <h1 className="pb-2">
+                                                    Gaji Terakhir
+                                                    <span className="text-RedTako">
+                                                        *
+                                                    </span>
+                                                </h1>
+                                                <input
+                                                    {...register("gaji", {
+                                                        required: true,
+                                                    })}
+                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                                    placeholder="Masukkan Ekpektasi gaji anda (Contoh : Rp.5.000.000)"
+                                                    value={values.gaji}
+                                                    id="gaji"
+                                                    onChange={handleChange}
+                                                />
+                                                {errors.nomor && (
+                                                    <span className="text-RedTako">
+                                                        No. Telpon jangan sampai
+                                                        kosong
+                                                    </span>
+                                                )}
+                                            </div>
+                                            {/* Pekerjaan yang Diharapkan */}
+                                            <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                                <h1 className="pb-2">
+                                                    Pekerjaan yang Diharapkan
+                                                    <span className="text-RedTako">
+                                                        *
+                                                    </span>
+                                                </h1>
+                                                <input
+                                                    {...register(
+                                                        "pekerjaanyd",
+                                                        {
+                                                            required: true,
+                                                        },
+                                                    )}
+                                                    className="w-full border-grey border-opacity-30 p-2 rounded"
+                                                    placeholder="Masukkan Pekerjaan yang Diharapkan"
+                                                    value={values.pekerjaanyd}
+                                                    id="pekerjaanyd"
+                                                    onChange={handleChange}
+                                                    aria-invalid={
+                                                        errors.pekerjaanyd
+                                                            ? "true"
+                                                            : "false"
+                                                    }
+                                                />
+                                                {errors.pekerjaanyd?.type ===
+                                                    "required" && (
+                                                    <p role="alert">
+                                                        Tolong Nama jangan
+                                                        sampai kosong
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                {/* <button
+                                    type="button"
+                                    onClick={handleAddRiwayat}
+                                >
+                                    Tambah Riwayat Pekerjaan
+                                </button> */}
+                            </div>
+
                             {/* File PDF*/}
-                            <div className="w-full pb-4">
-                                <h1 className="pb-2">Upload CV</h1>
-                                <div className="w-full">
-                                    <input
-                                        {...register("fileUpload")} // Gunakan nama yang sesuai
-                                        type="file"
-                                        accept=".pdf" // Batasi hanya menerima file PDF
-                                        className="w-52 border-grey border-opacity-30 rounded"
-                                        value={values.file}
-                                        id="file"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="text-xs pt-2">
-                                    <p>
-                                        <span className="text-RedTako">*</span>
-                                        Hanya menerima file dalam bentuk PDF.
-                                        Max 2mb
-                                    </p>
-                                    <p>
-                                        <span className="text-RedTako">*</span>
-                                        Khusus Internship. Upload CV serta Surat
-                                        Pengajuan Internship
-                                    </p>
+                            <div className="w-full pb-4 pt-16 flex justify-end gap-56 flex-row-reverse">
+                                <div>
+                                    <h1 className="pb-2">Upload CV</h1>
+                                    <div className="w-full">
+                                        <input
+                                            {...register("fileUpload")} // Gunakan nama yang sesuai
+                                            type="file"
+                                            accept=".pdf" // Batasi hanya menerima file PDF
+                                            className="w-52 border-grey border-opacity-30 rounded"
+                                            value={values.file}
+                                            id="file"
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="text-xs pt-2">
+                                        <p>
+                                            <span className="text-RedTako">
+                                                *
+                                            </span>
+                                            Hanya menerima file dalam bentuk
+                                            PDF. Max 2mb
+                                        </p>
+                                        <p>
+                                            <span className="text-RedTako">
+                                                *
+                                            </span>
+                                            Khusus Internship. Upload CV serta
+                                            Surat Pengajuan Internship dalam 1
+                                            file PDF
+                                        </p>
+                                    </div>
                                 </div>
                                 <div className="pt-8">
                                     <ReCAPTCHA
@@ -787,6 +1115,7 @@ const FormEmail = () => {
                         </form>
                     </div>
                 </div>
+
                 <Footer />
             </section>
         </Layout>

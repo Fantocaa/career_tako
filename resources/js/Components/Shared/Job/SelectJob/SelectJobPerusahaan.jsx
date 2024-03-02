@@ -58,7 +58,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         className="bg-white p-8 rounded-xl h-full flex flex-col justify-between w-full shadow-md"
                         key={item.id}
                     >
-                        <h1 className="font-bold translate">
+                        <h1 className="font-bold translate text-xl">
                             {item.pekerjaan}
                         </h1>
                         {/* {values && (
@@ -68,7 +68,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         {/* <h2 className="text-BlueTako pt-2">
                             {item.perusahaan}
                         </h2> */}
-                        <p className="text-xs pt-4 translate">
+                        <p className="text-xs pt-4 translate 2xl:text-base">
                             {item.deskripsi}
                         </p>
                         <div className="flex items-center gap-4 pt-4">

@@ -1,26 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "@inertiajs/react";
 import "../../css/style.css";
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
+import { initReactI18next } from "react-i18next";
+import Backend from "i18next-http-backend";
+import LanguageContext from "../Homepage/LanguageContext";
+
+i18n.use(Backend)
+    .use(initReactI18next)
+    .init({
+        backend: {
+            loadPath: "/locales/{{lng}}/translation.json",
+        },
+        lng: "id",
+        fallbackLng: "id",
+        interpolation: {
+            escapeValue: false,
+        },
+    });
 
 const NavElseMobile = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     // const [scrolled, setScrolled] = useState(false);
+    const { selectedLanguage, setSelectedLanguage } =
+        useContext(LanguageContext);
 
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         if (window.scrollY > 0) {
-    //             setScrolled(true);
-    //         } else {
-    //             setScrolled(false);
-    //         }
-    //     };
+    const { t } = useTranslation(); // Tambahkan ini
 
-    //     window.addEventListener("scroll", handleScroll);
+    useEffect(() => {
+        const language = localStorage.getItem("language") || "id"; // Get the selected language from local storage, default to 'id' if not found
+        i18n.changeLanguage(language);
+    }, []);
 
-    //     return () => {
-    //         window.removeEventListener("scroll", handleScroll);
-    //     };
-    // }, []);
+    const changeLanguage = (language) => {
+        // setIsLoading(true); // Mulai menampilkan loading
+        setSelectedLanguage(language);
+        i18n.changeLanguage(language);
+        localStorage.setItem("language", language); // Save the selected language in local storage
+    };
 
     // Fungsi untuk mengganti keadaan menu mobile saat tombol hamburger diklik
     const toggleMobileMenu = () => {
@@ -40,24 +58,6 @@ const NavElseMobile = () => {
                             />
                         </a>
                     </div>
-
-                    {/* Tombol hamburger untuk tampilan mobile */}
-                    {/* <div className="md:hidden flex items-center">
-                        <button
-                            onClick={toggleMobileMenu}
-                            className="text-DarkTako hover:text-gray-200 focus:outline-none"
-                        >
-                            <svg
-                                className="fill-current"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 512 512"
-                            >
-                                <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-                            </svg>
-                        </button>
-                    </div> */}
 
                     <label className="md:hidden btn btn-circle swap swap-rotate border-none w-8 h-8">
                         {/* this hidden checkbox controls the state */}
@@ -98,7 +98,8 @@ const NavElseMobile = () => {
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/"
                             >
-                                Beranda
+                                {/* Beranda */}
+                                {t("Beranda")}
                             </Link>
                             {/* <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
@@ -110,20 +111,51 @@ const NavElseMobile = () => {
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/loker"
                             >
-                                Lowongan Pekerjaan
+                                {/* Lowongan Pekerjaan */}
+                                {t("Lowongan Pekerjaan")}
                             </Link>
                             <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/faq"
                             >
-                                FAQ
+                                {/* FAQ */}
+                                {t("FAQ")}
                             </Link>
                             <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/contact"
                             >
-                                Contact
+                                {/* Contact */}
+                                {t("Contact")}
                             </Link>
+                            <div>
+                                <select
+                                    value={selectedLanguage}
+                                    onChange={(event) =>
+                                        changeLanguage(event.target.value)
+                                    }
+                                    className="border-1 border-BlueTako rounded-full mt-4 md:mt-0 md:ml-2 opacity-75 hover:opacity-90 font-semibold text-BlueTako"
+                                >
+                                    <option
+                                        value="id"
+                                        className="text-DarkTako"
+                                    >
+                                        Bahasa Indonesia
+                                    </option>
+                                    <option
+                                        value="en"
+                                        className="text-DarkTako"
+                                    >
+                                        English
+                                    </option>
+                                    <option
+                                        value="zh"
+                                        className="text-DarkTako"
+                                    >
+                                        中文 (Chinese)
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 )}

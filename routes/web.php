@@ -98,9 +98,9 @@ Route::get('/form/view_intern', [MdLokerController::class, 'index_internship']);
 
 Route::get('/loker/pekerjaan/formulir/{id}', [MdLokerController::class, 'show_lamar_loker']);
 
-Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
-Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
-Route::get('/kecamatan/{id1}/{id2}', [MdLokerController::class, 'kecamatan']);
+// Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
+// Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
+// Route::get('/kecamatan/{id1}/{id2}', [MdLokerController::class, 'kecamatan']);
 
 // Route Link End
 

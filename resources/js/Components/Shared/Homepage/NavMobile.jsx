@@ -1,14 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "@inertiajs/react";
 import "../../css/style.css";
 import he from "he";
 import axios from "axios";
+import i18n from "i18next";
+import { useTranslation } from "react-i18next";
+import { initReactI18next } from "react-i18next";
+import Backend from "i18next-http-backend";
+import LanguageContext from "./LanguageContext";
+
+i18n.use(Backend)
+    .use(initReactI18next)
+    .init({
+        backend: {
+            loadPath: "/locales/{{lng}}/translation.json",
+        },
+        lng: "id",
+        fallbackLng: "id",
+        interpolation: {
+            escapeValue: false,
+        },
+    });
 
 const NavMobile = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState("id");
+    const { selectedLanguage, setSelectedLanguage } =
+        useContext(LanguageContext);
+
+    const { t } = useTranslation(); // Tambahkan ini
 
     useEffect(() => {
         const handleScroll = () => {
@@ -31,51 +52,16 @@ const NavMobile = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
+    useEffect(() => {
+        const language = localStorage.getItem("language") || "id"; // Get the selected language from local storage, default to 'id' if not found
+        i18n.changeLanguage(language);
+    }, []);
+
     const changeLanguage = (language) => {
-        const elementsToTranslate = document.querySelectorAll(".translate"); // Select elements with class 'translate'
-        setIsLoading(true); // Mulai menampilkan loading
-        setIsMobileMenuOpen(false); // Close the mobile menu
+        // setIsLoading(true); // Mulai menampilkan loading
         setSelectedLanguage(language);
-        document.body.style.overflow = "hidden"; // Disable scroll
-
-        elementsToTranslate.forEach((element, index) => {
-            // Save the original text
-            if (!element.dataset.originalText) {
-                element.dataset.originalText = element.innerText;
-            }
-
-            setTimeout(() => {
-                if (language === "id") {
-                    // If the language is Indonesian, revert to the original text
-                    element.innerText = element.dataset.originalText;
-
-                    // Jika ini adalah elemen terakhir, hentikan penampilan loading
-                    if (index === elementsToTranslate.length - 1) {
-                        setIsLoading(false);
-                        document.body.style.overflow = "auto"; // Enable scroll
-                    }
-                } else {
-                    axios
-                        .post("/api/translate", {
-                            text: element.innerText,
-                            target: language,
-                        })
-                        .then((response) => {
-                            element.innerText = he.decode(response.data);
-                            // Jika ini adalah elemen terakhir, hentikan penampilan loading
-                            if (index === elementsToTranslate.length - 1) {
-                                setIsLoading(false);
-                                document.body.style.overflow = "auto"; // Enable scroll
-                            }
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                            setIsLoading(false); // Hentikan penampilan loading jika terjadi error
-                            document.body.style.overflow = "auto"; // Enable scroll
-                        });
-                }
-            }, index * 400); // Menunda setiap permintaan sebanyak 1 detik
-        });
+        i18n.changeLanguage(language);
+        localStorage.setItem("language", language); // Save the selected language in local storage
     };
 
     return (
@@ -84,13 +70,13 @@ const NavMobile = () => {
                 scrolled ? "scrolled-bg" : "bg-transparent"
             }`}
         >
-            <>
+            {/* <>
                 {isLoading && (
                     <div className="w-screen h-screen bg-BlueTako bg-opacity-90 flex justify-center absolute z-50">
                         <span className="loading loading-dots loading-lg bg-white"></span>
                     </div>
                 )}
-            </>
+            </> */}
             <nav className="container py-2 px-4 md:px-8 xl:px-16 mx-auto">
                 <div className="flex justify-between items-center">
                     <div className="w-24 md:w-16 md:h-16 -translate-x-3">
@@ -153,7 +139,7 @@ const NavMobile = () => {
                 {isMobileMenuOpen && (
                     <div className="relative z-50 top-0">
                         <div
-                            className={`md:hidden flex mt-12 mr-[21px] absolute bg-BlueTako bg-opacity-90 flex-col text-white p-4 scale-125 rounded-2xl right-0 ${
+                            className={`md:hidden flex mt-12 mr-6 absolute bg-BlueTako bg-opacity-90 flex-col text-white p-4 scale-125 rounded-2xl right-0 ${
                                 isMobileMenuOpen ? "open" : "closed"
                             }`}
                         >
@@ -161,7 +147,8 @@ const NavMobile = () => {
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/"
                             >
-                                Beranda
+                                {/* Beranda */}
+                                {t("Beranda")}
                             </Link>
                             {/* <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
@@ -173,62 +160,24 @@ const NavMobile = () => {
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/loker"
                             >
-                                Lowongan Pekerjaan
+                                {/* Lowongan Pekerjaan */}
+                                {t("Lowongan Pekerjaan")}
                             </Link>
                             <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/faq"
                             >
-                                FAQ
+                                {/* FAQ */}
+                                {t("FAQ")}
                             </Link>
                             <Link
                                 className="my-2 hover:text-BlueTako border-b border-white"
                                 href="/contact"
                             >
-                                Contact
+                                {/* Contact */}
+                                {t("Contact")}
                             </Link>
                             <div>
-                                {/* <select
-                                    onChange={(event) =>
-                                        changeLanguage(event.target.value)
-                                    }
-                                    className={`bg-white border-1 border-BlueTako rounded-full mt-4 md:mt-0 md:ml-2 opacity-75 hover:opacity-100 font-semibold ${
-                                        scrolled
-                                            ? "text-scrolled"
-                                            : "text-BlueTako border-transparent"
-                                    }`}
-                                >
-                                    <option
-                                        value="id"
-                                        className={` ${
-                                            scrolled
-                                                ? "text-scrolled"
-                                                : "text-DarkTako"
-                                        }`}
-                                    >
-                                        Bahasa Indonesia
-                                    </option>
-                                    <option
-                                        value="en"
-                                        className={` ${
-                                            scrolled
-                                                ? "text-scrolled"
-                                                : "text-DarkTako"
-                                        }`}
-                                    >
-                                        English
-                                    </option>
-                                    <option
-                                        value="zh"
-                                        className={` ${
-                                            scrolled
-                                                ? "text-scrolled"
-                                                : "text-DarkTako"
-                                        }`}
-                                    >
-                                        中文 (Chinese)
-                                    </option>
-                                </select> */}
                                 <select
                                     value={selectedLanguage}
                                     onChange={(event) =>
