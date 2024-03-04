@@ -377,6 +377,7 @@ class MdLokerController extends Controller
     {
 
         // dd($request->all());
+        dd($request);
         $request->validate([
             // 'nama' => 'required|string|min:5',
             'nama' => 'required',
@@ -507,132 +508,6 @@ class MdLokerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-
-    public function submit_loker_custom(Request $request)
-    {
-        $request->validate([
-            // 'nama' => 'required|string|min:5',
-            'nama' => 'required',
-            'nik' => 'required',
-            'jenis_kelamin' => 'required',
-            'agama' => 'required',
-            'tanggal_lahir' => 'required',
-            'emails' => 'required',
-            'no_telp' => 'required',
-            // 'provinsi' => 'required',
-            'kabupaten' => 'required',
-            'alamat' => 'required',
-            'pendidikan' => 'required',
-            'instansi' => 'required',
-            "prodi" => 'required',
-            "thn_in" => 'required',
-            "thn_out" => 'required',
-            "riwayat_nama_perusahaan" => 'required',
-            "riwayat_alamat_perusahaan" => 'required',
-            "riwayat_tahun_in" => 'required',
-            "riwayat_tahun_out" => 'required',
-            "riwayat_posisi" => 'required',
-            "riwayat_tugas" => 'required',
-            "riwayat_berhenti" => 'required',
-            'gaji' => 'required',
-        ], [
-            'nama.required' => 'Nama harus diisi.',
-            'nik.required' => 'Nik harus diisi.',
-            'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih.',
-            'agama.required' => 'Agama harus dipilih.',
-            'tanggal_lahir.required' => ' Tanggal Lahir harus diisi.',
-            'emails.required' => 'Email harus diisi.',
-            'no_telp.required' => 'Nomor Telepon harus diisi.',
-            // 'provinsi.required' => 'Provinsi harus dipilih.',
-            'kabupaten.required' => 'Kabupaten harus dipilih.',
-            // 'kecamatan.required' => 'Kecamatan harus dipilih.',
-            // 'kodepos.required' => 'Kode Pos harus dipilih.',
-            'alamat.required' => 'Alamat harus diisi.',
-            // 'promosi.required' => 'Promosi harus diisi.',
-            'pendidikan.required' => 'Pendidikan harus diisi.',
-            'instansi.required' => 'Instansi Pendidikan harus diisi.',
-            'prodi.required' => 'Program Studi harus diisi.',
-            'thn_in.required' => 'Tahun Masuk Pendidikan harus diisi.',
-            'thn_out.required' => 'Tahun Keluar Pendidikan harus diisi.',
-            'riwayat_nama_perusahaan.required' => 'Riwayat Nama Perusahaan harus diisi.',
-            'riwayat_alamat_perusahaan.required' => 'Riwayat Alamat Perusahaan harus diisi.',
-            'riwayat_tahun_in.required' => 'Tahun Masuk Perusahaan harus diisi.',
-            'riwayat_tahun_out.required' => 'Tahun Keluar Perusahaan harus diisi.',
-            'riwayat_posisi.required' => 'Riwayat Posisi Perusahaan harus diisi.',
-            'riwayat_tugas.required' => 'Riwayat Tugas Perusahaan harus diisi.',
-            'riwayat_berhenti.required' => 'Riwayat Berhenti Perusahaan harus diisi.',
-            'gaji.required' => 'Gaji harus diisi.',
-        ]);
-
-        // $data["email"] = "fantocaa17@gmail.com";
-        $data["email"] = "recruitment@tako.co.id";
-        $data["title"] = "[Web Karir Tako] ";
-        $data["body"] = "Calon Pelamar Baru";
-        $data["pekerjaan"] = $request->pekerjaan;
-        $data["jenis_pekerjaan"] = $request->jenis_pekerjaan;
-        // $data["perusahaan"] = $request->perusahaan;
-        $data["nama"] = $request->nama;
-        $data["nik"] = $request->nik;
-        $data["jenis_kelamin"] = $request->jenis_kelamin;
-        $data["agama"] = $request->agama;
-        $data["tanggal_lahir"] = $request->tanggal_lahir;
-        $data["emails"] = $request->emails;
-        $data["no_telp"] = $request->no_telp;
-        // $data["provinsi"] = $request->provinsi;
-        $data["kabupaten"] = $request->kabupaten;
-        // $data["kecamatan"] = $request->kecamatan;
-        // $data["kodepos"] = $request->kodepos;
-        $data["alamat"] = $request->alamat;
-        // $data['promosi'] = $request->promosi;
-        $data['pendidikan'] = $request->pendidikan;
-        $data['instansi'] = $request->instansi;
-        $data['prodi'] = $request->prodi;
-        $data['thn_in'] = $request->thn_in;
-        $data['thn_out'] = $request->thn_out;
-        $data['riwayat_nama_perusahaan'] = $request->riwayat_nama_perusahaan;
-        $data['riwayat_alamat_perusahaan'] = $request->riwayat_alamat_perusahaan;
-        $data['riwayat_tahun_in'] = $request->riwayat_tahun_in;
-        $data['riwayat_tahun_out'] = $request->riwayat_tahun_out;
-        $data['riwayat_posisi'] = $request->riwayat_posisi;
-        $data['riwayat_tugas'] = $request->riwayat_tugas;
-        $data['riwayat_berhenti'] = $request->riwayat_berhenti;
-        $data["gaji"] = $request->gaji;
-        $data['pekerjaanyd'] = $request->pekerjaanyd;
-
-        // dd($data);
-
-        $file = $request->file('file'); // Dapatkan objek file dari permintaan
-
-        $maxSize = 2 * 1024 * 1024; // 2MB in bytes
-        // $maxSize = 2048;
-        // dd($maxSize);
-
-
-        if ($file->getSize() <= $maxSize) {
-            // Pastikan file ada sebelum melampirkannya
-            Mail::send('mailfromcustom', $data, function ($message) use ($data, $file) {
-                $message->to($data["email"])
-
-                    // ->subject($data["title"]);
-                    ->subject($data["title"] . ' ' . 'Calon Pelamar Baru dari Drop CV' . ' - ' . $data["pekerjaanyd"]); // Menggabungkan title dan pekerjaan dalam subjek
-
-                $message->attach($file->getRealPath(), [
-                    'as' => 'CV.pdf', // Nama file yang akan digunakan dalam email
-                    'mime' => 'application/pdf', // MIME type file PDF
-                ]);
-            });
-            // dd($file->getSize());
-
-            echo "Email berhasil dikirim";
-        } else {
-            echo "File tidak ditemukan dalam permintaan.";
-        }
-
-        // return response()->json([$request]);
-
-        // return redirect()->route('finish');
-        return Inertia::render('Finish');
-    }
 
     public function store(Storemd_lokerRequest $request)
     {

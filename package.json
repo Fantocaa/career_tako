@@ -30,7 +30,7 @@
     },
     "dependencies": {
         "@emailjs/browser": "^3.11.0",
-        "@emotion/react": "^11.11.1",
+        "@emotion/react": "^11.11.4",
         "@emotion/styled": "^11.11.0",
         "@fortawesome/free-solid-svg-icons": "^6.4.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
@@ -46,7 +46,7 @@
         "dompurify": "^3.0.6",
         "dotenv": "^16.4.5",
         "formik": "^2.4.5",
-        "framer-motion": "^10.16.4",
+        "framer-motion": "^10.18.0",
         "he": "^1.2.0",
         "i18next-http-backend": "^2.5.0",
         "lucide-react": "^0.284.0",

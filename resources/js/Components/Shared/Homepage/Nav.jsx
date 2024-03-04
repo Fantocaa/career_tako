@@ -1,6 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
-import Navbar from "./Navbar";
+import Navbar from "./NavbarContext";
 import NavMobile from "./NavMobile";
 
 const Nav = () => {

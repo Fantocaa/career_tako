@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useLayoutEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Axios from "axios";
 import SelectJobPerusahaan from "../Shared/Job/SelectJob/SelectJobPerusahaan";
@@ -51,57 +51,79 @@ const SectionLoker = () => {
         }
     };
 
+    // useEffect(() => {
+    //     const storedLanguage = localStorage.getItem("language");
+    //     if (storedLanguage !== selectedLanguage) {
+    //         localStorage.setItem("language", selectedLanguage);
+    //     }
+    //     changeLanguage(selectedLanguage || storedLanguage || "id");
+    // }, [selectedLanguage]);
+
     const { selectedLanguage } = useContext(LanguageContext);
+    const { t } = useTranslation();
+    const [isTranslating, setIsTranslating] = useState(false);
 
     useEffect(() => {
+        const storedLanguage = localStorage.getItem(
+            "language",
+            selectedLanguage,
+        );
+        changeLanguage(storedLanguage);
+    }, [selectedLanguage]);
+
+    // Efek ini dijalankan saat komponen pertama kali di-mount
+    useEffect(() => {
         const storedLanguage = localStorage.getItem("language");
-        if (storedLanguage !== selectedLanguage) {
-            localStorage.setItem("language", selectedLanguage);
-        }
-        changeLanguage(selectedLanguage || storedLanguage || "id");
-    });
+        changeLanguage(storedLanguage);
+    }, []); // Tambahkan array kosong agar efek ini dijalankan sekali saat mount
 
     const changeLanguage = (language) => {
-        const elementsToTranslate = document.querySelectorAll(".translate"); // Select elements with class 'translate'
+        setIsTranslating(true);
+        console.log(`Changing language to: ${language}`);
+        const elementsToTranslate = document.querySelectorAll(".translate");
 
         elementsToTranslate.forEach((element, index) => {
-            // Save the original text
             if (!element.dataset.originalText) {
                 element.dataset.originalText = element.innerText;
             }
 
-            setTimeout(() => {
-                if (language === "id") {
-                    // If the language is Indonesian, revert to the original text
-                    element.innerText = element.dataset.originalText;
-                } else if (
-                    localStorage.getItem(
-                        `translation-${element.dataset.originalText}`,
-                    )
-                ) {
-                    // Load the translated text from localStorage if it exists
-                    element.innerText = localStorage.getItem(
-                        `translation-${element.dataset.originalText}`,
-                    );
-                } else {
-                    axios
-                        .post("/api/translate", {
-                            text: element.innerText,
-                            target: language,
-                        })
-                        .then((response) => {
-                            element.innerText = he.decode(response.data);
-                            // Save the translated text to localStorage
-                            localStorage.setItem(
-                                `translation-${element.dataset.originalText}`,
-                                he.decode(response.data),
-                            );
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                        });
-                }
-            }, index * 300); // Delay each request by 1 second
+            let translatedText = localStorage.getItem(
+                `translation-${language}-${element.dataset.originalText}`,
+            );
+
+            if (language === "id") {
+                element.innerText = element.dataset.originalText;
+            } else if (translatedText) {
+                element.innerText = translatedText;
+            } else {
+                axios
+                    .post("/api/translate", {
+                        text: element.innerText,
+                        target: language,
+                    })
+                    .then((response) => {
+                        console.log(response.data); // Pastikan respons diterima dengan benar
+                        element.innerText = he.decode(response.data);
+                        localStorage.setItem(
+                            `translation-${language}-${element.dataset.originalText}`,
+                            he.decode(response.data),
+                        );
+                        console.log(
+                            `translate '${element.dataset.originalText}' to '${he.decode(response.data)}'`,
+                        );
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+
+                console.log(
+                    `Translation request sent for '${element.dataset.originalText}'`,
+                );
+            }
+
+            if (index === elementsToTranslate.length - 1) {
+                setIsTranslating(false);
+            }
         });
     };
 
@@ -165,8 +187,6 @@ const SectionLoker = () => {
             nextPage = currentPage;
         }
     };
-
-    const { t } = useTranslation(); // Tambahkan ini
 
     return (
         <SkeletonTheme baseColor="#202020" highlightColor="#444444">
@@ -338,7 +358,7 @@ const SectionLoker = () => {
                         </button>
                     </div>
                 </div>
-
+                {/* <div className="bg-white opacity-90 blur"> */}
                 {formData.length === 0 ? (
                     <div className="flex justify-center w-full pt-16">
                         <p className="text-DarkTako ">
@@ -397,6 +417,7 @@ const SectionLoker = () => {
                         activeClassName="bg-BlueTako bg-opacity-10 "
                     />
                 </div>
+                {/* </div> */}
             </section>
         </SkeletonTheme>
     );

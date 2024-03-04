@@ -309,14 +309,17 @@ const FormEmail = () => {
     const { t } = useTranslation(); // Tambahkan ini
 
     return (
-        <Layout pageTitle="Formulir | Tako Karier">
+        <Layout pageTitle="Drop Formulir | Tako Karier">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
                 <NavElse />
                 <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 lg:px-32 mx-auto">
+                    <h1 className="font-bold text-xl md:text-2xl text-center rounded-lg">
+                        {t("form.title")}
+                    </h1>
+                    <h2 className="text-center py-4 rounded-lg mb-4">
+                        {t("form.sub")}
+                    </h2>
                     <div className="bg-white mx-auto rounded-lg px-2 md:px-4 lg:pt-4">
-                        <h1 className="font-semibold text-xl md:text-2xl text-center py-4 mb-10 bg-BlueTako text-white rounded-lg">
-                            {t("form.title")}
-                        </h1>
                         <form
                             onSubmit={onSubmit}
                             ref={formRef}
@@ -357,32 +360,18 @@ const FormEmail = () => {
                                         id="program"
                                     />
                                 </div>
-
-                                {/* Perusahaan */}
-                                {/* <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                    <h1 className="pb-2">Perusahaan</h1>
-                                    <input
-                                        {...register("perusahaan", {
-                                            required: true,
-                                        })}
-                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
-                                        disabled
-                                        value={values.perusahaan}
-                                        id="perusahaan"
-                                    />
-                                </div> */}
                             </div>
                             <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
                             </div>
-                            <h1 className="text-2xl font-bold text-center py-2 pb-8 rounded-lg">
-                                Data Pribadi
+                            <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako mb-8">
+                                {t("form.tab.1")}
                             </h1>
                             {/* Nama */}
                             <div className="flex gap-4 flex-wrap">
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
                                     <h1 className="pb-2">
-                                        Nama Lengkap
+                                        {t("form.name")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <input
@@ -390,7 +379,7 @@ const FormEmail = () => {
                                             required: true,
                                         })}
                                         className="w-full border-grey border-opacity-30 p-2 rounded"
-                                        placeholder="Masukkan Nama"
+                                        placeholder={t("form.name.ph")}
                                         value={values.nama}
                                         id="nama"
                                         onChange={handleChange}
@@ -406,7 +395,7 @@ const FormEmail = () => {
                                 </div>
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
                                     <h1 className="pb-2">
-                                        NIK
+                                        {t("form.nik")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <input
@@ -414,7 +403,7 @@ const FormEmail = () => {
                                             required: true,
                                         })}
                                         className="w-full border-grey border-opacity-30 p-2 rounded"
-                                        placeholder="Masukkan NIK"
+                                        placeholder={t("form.nik.ph")}
                                         value={values.nik}
                                         id="nik"
                                         type="number"
@@ -434,7 +423,7 @@ const FormEmail = () => {
                                 {/* Gender */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
                                     <h1 className="pb-2">
-                                        Jenis Kelamin
+                                        {t("form.gender")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <select
@@ -447,14 +436,12 @@ const FormEmail = () => {
                                         id="jenis_kelamin"
                                         onChange={handleChange}
                                     >
-                                        <option>
-                                            Pilih Jenis Kelamin Anda
-                                        </option>
+                                        <option>{t("form.gender.ph.1")}</option>
                                         <option value="Laki-Laki">
-                                            Laki-Laki
+                                            {t("form.gender.ph.2")}
                                         </option>
                                         <option value="Perempuan">
-                                            Perempuan
+                                            {t("form.gender.ph.3")}
                                         </option>
                                         {/* <option value="Lainnya">Lainnya</option> */}
                                     </select>
@@ -467,7 +454,7 @@ const FormEmail = () => {
                                 {/* Agama */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
                                     <h1 className="pb-2">
-                                        Agama
+                                        {t("form.agama")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <select
@@ -475,12 +462,12 @@ const FormEmail = () => {
                                             required: true,
                                         })}
                                         className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
-                                        placeholder="Pilih Program Anda"
+                                        placeholder={t("form.agama.ph")}
                                         value={values.agama}
                                         id="agama"
                                         onChange={handleChange}
                                     >
-                                        <option>Pilih Agama Anda</option>
+                                        <option>{t("form.agama.ph")}</option>
                                         <option value="Islam">Islam</option>
                                         <option value="Kristen">Kristen</option>
                                         <option value="Katholik">
@@ -502,7 +489,7 @@ const FormEmail = () => {
                                 {/* Tanggal Lahir */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] relative">
                                     <h1 className="pb-2">
-                                        Tanggal Lahir
+                                        {t("form.lahir")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     {/* <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none ">
@@ -532,7 +519,7 @@ const FormEmail = () => {
                                 {/* Email */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 md:pt-0">
                                     <h1 className="pb-2">
-                                        Email
+                                        {t("form.email")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <input
@@ -540,7 +527,7 @@ const FormEmail = () => {
                                             required: true,
                                         })}
                                         className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Email Anda"
+                                        placeholder={t("form.email.ph")}
                                         type="email"
                                         value={values.emails}
                                         id="emails"
@@ -556,7 +543,7 @@ const FormEmail = () => {
                                 {/* No Telp*/}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] py-4">
                                     <h1 className="pb-2">
-                                        No. Telpon
+                                        {t("form.phone")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <input
@@ -564,7 +551,7 @@ const FormEmail = () => {
                                             required: true,
                                         })}
                                         className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan No. Telpon Anda"
+                                        placeholder={t("form.phone.ph")}
                                         value={values.no_telp}
                                         id="no_telp"
                                         type="number"
@@ -578,7 +565,7 @@ const FormEmail = () => {
                                 </div>
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] py-4">
                                     <h2 className="pb-2">
-                                        Kabupaten/Kota Tempat Lahir
+                                        {t("form.kabupaten")}
                                     </h2>
                                     <Select
                                         options={kabupatenOptions}
@@ -589,7 +576,7 @@ const FormEmail = () => {
                                                 values.kabupaten,
                                         )}
                                         id="kabupaten"
-                                        placeholder="Pilih Kabupaten/Kota Anda"
+                                        placeholder={t("form.kabupaten.ph")}
                                         styles={{
                                             control: (base) => ({
                                                 ...base,
@@ -602,15 +589,15 @@ const FormEmail = () => {
                             {/* Tempat Lahir*/}
 
                             {/* Alamat Tempat Tinggal*/}
-                            <div className="w-full">
+                            <div className="w-full pb-8">
                                 <h1 className="pb-2">
-                                    Alamat Tempat Tinggal
+                                    {t("form.address")}
                                     <span className="text-RedTako">*</span>
                                 </h1>
                                 <input
                                     {...register("alamat", { required: true })}
                                     className="w-full p-2 border-grey border-opacity-30 rounded"
-                                    placeholder="Masukkan Alamat Tempat Tinggal Anda"
+                                    placeholder={t("form.address.ph")}
                                     value={values.alamat}
                                     id="alamat"
                                     onChange={handleChange}
@@ -623,17 +610,17 @@ const FormEmail = () => {
                                 )}
                             </div>
 
-                            <div className="py-4 md:py-8">
+                            {/* <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
-                            </div>
-                            <h1 className="text-2xl font-bold text-center py-2 pb-8">
-                                Riwayat Pendidikan
+                            </div> */}
+                            <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako">
+                                {t("form.tab.2")}
                             </h1>
-                            <div className="flex gap-4 flex-wrap">
+                            <div className="flex gap-4 flex-wrap pt-8">
                                 {/* Pendidikan Terakhir */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
                                     <h1 className="pb-2">
-                                        Pendidikan Terakhir
+                                        {t("form.edu")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <select
@@ -641,26 +628,32 @@ const FormEmail = () => {
                                             required: true,
                                         })}
                                         className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
-                                        placeholder="Pilih Pendidikan Terakhir Anda"
+                                        placeholder={t("form.edu.ph")}
                                         value={values.pendidikan}
                                         id="pendidikan"
                                         onChange={handleChange}
                                     >
-                                        <option>
-                                            Pilih Pendidikan Terakhir Anda
+                                        <option>{t("form.edu.ph")}</option>
+                                        <option value="SD">
+                                            {t("form.edu.sd")}
                                         </option>
-                                        <option value="SD">SD</option>
-                                        <option value="SMP">SMP</option>
-                                        <option value="SMA/SMK">SMA/SMK</option>
-                                        <option value="D3/D4">D3/D4</option>
+                                        <option value="SMP">
+                                            {t("form.edu.smp")}
+                                        </option>
+                                        <option value="SMA/SMK">
+                                            {t("form.edu.sma")}
+                                        </option>
+                                        <option value="D3/D4">
+                                            {t("form.edu.d3")}
+                                        </option>
                                         <option value="S1">
-                                            Strata - 1 (S1)
+                                            {t("form.edu.s1")}
                                         </option>
                                         <option value="S2">
-                                            Strata - 2 (S2)
+                                            {t("form.edu.s2")}
                                         </option>
                                         <option value="S3">
-                                            Strata - 3 (S3)
+                                            {t("form.edu.s3")}
                                         </option>
                                     </select>
                                     {errors.agama && (
@@ -673,7 +666,7 @@ const FormEmail = () => {
                                 {/* Intansi Pendidikan */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                     <h1 className="pb-2">
-                                        Nama Instansi Pendidikan Terakhir
+                                        {t("form.school")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <input
@@ -681,7 +674,7 @@ const FormEmail = () => {
                                             required: true,
                                         })}
                                         className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Nama Intansi Pendidikan Terakhir Anda"
+                                        placeholder={t("form.school.ph")}
                                         type="text"
                                         value={values.instansi}
                                         id="instansi"
@@ -697,7 +690,7 @@ const FormEmail = () => {
 
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
                                     <h1 className="pb-2">
-                                        Jurusan/Program Studi
+                                        {t("form.major")}
                                         <span className="text-RedTako">*</span>
                                     </h1>
                                     <input
@@ -705,7 +698,7 @@ const FormEmail = () => {
                                             required: true,
                                         })}
                                         className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder="Masukkan Jurusan/Program Studi"
+                                        placeholder={t("form.major.ph")}
                                         type="text"
                                         value={values.prodi}
                                         id="prodi"
@@ -722,7 +715,7 @@ const FormEmail = () => {
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
                                     <div className="w-full">
                                         <h1 className="pb-2">
-                                            Tahun Masuk
+                                            {t("form.year.1")}
                                             <span className="text-RedTako">
                                                 *
                                             </span>
@@ -732,7 +725,7 @@ const FormEmail = () => {
                                                 required: true,
                                             })}
                                             className="w-full p-2 border-grey border-opacity-30 rounded"
-                                            placeholder="Masukkan Tahun Masuk"
+                                            placeholder={t("form.year.1.ph")}
                                             type="number"
                                             value={values.thn_in}
                                             id="thn_in"
@@ -744,9 +737,9 @@ const FormEmail = () => {
                                             </span>
                                         )}
                                     </div>
-                                    <div className="w-full">
+                                    <div className="w-full pb-8">
                                         <h1 className="pb-2">
-                                            Tahun Keluar
+                                            {t("form.year.2")}
                                             <span className="text-RedTako">
                                                 *
                                             </span>
@@ -756,7 +749,7 @@ const FormEmail = () => {
                                                 required: true,
                                             })}
                                             className="w-full p-2 border-grey border-opacity-30 rounded"
-                                            placeholder="Masukkan Tahun Keluar"
+                                            placeholder={t("form.year.2.ph")}
                                             type="number"
                                             value={values.thn_out}
                                             id="thn_out"
@@ -771,21 +764,20 @@ const FormEmail = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="py-4 md:py-8">
+                            {/* <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
-                            </div>
-                            {/* Promosi*/}
+                            </div> */}
                             {/* Gaji*/}
-                            <h1 className="text-2xl font-bold text-center py-2 pb-8">
-                                Riwayat Pekerjaan
+                            <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako">
+                                {t("form.tab.3")}
                             </h1>
                             <div>
                                 {riwayatPekerjaan.map((riwayat, index) => (
                                     <div key={index}>
-                                        <div className="flex gap-4 flex-wrap">
+                                        <div className="flex gap-4 flex-wrap pt-4">
                                             <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
                                                 <h1 className="pb-2">
-                                                    Nama Perusahaan
+                                                    {t("form.company")}
                                                     <span className="text-RedTako">
                                                         *
                                                     </span>
@@ -798,7 +790,9 @@ const FormEmail = () => {
                                                         },
                                                     )}
                                                     className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder="Masukkan Nama Perusahaan Sebelumnya"
+                                                    placeholder={t(
+                                                        "form.company.ph",
+                                                    )}
                                                     value={
                                                         values.riwayat_nama_perusahaan
                                                     }
@@ -814,7 +808,7 @@ const FormEmail = () => {
                                             </div>
                                             <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
                                                 <h1 className="pb-2">
-                                                    Alamat Perusahaan
+                                                    {t("form.company.address")}
                                                     <span className="text-RedTako">
                                                         *
                                                     </span>
@@ -827,24 +821,26 @@ const FormEmail = () => {
                                                         },
                                                     )}
                                                     className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder="Masukkan Alamat Perusahaan Sebelumnya"
+                                                    placeholder={t(
+                                                        "form.company.address.ph",
+                                                    )}
                                                     value={
                                                         values.riwayat_alamat_perusahaan
                                                     }
                                                     id="riwayat_alamat_perusahaan"
                                                     onChange={handleChange}
                                                 />
-                                                {errors.nomor && (
+                                                {/* {errors.nomor && (
                                                     <span className="text-RedTako">
                                                         No. Telpon jangan sampai
                                                         kosong
                                                     </span>
-                                                )}
+                                                )} */}
                                             </div>
                                             <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
                                                 <div className="w-full">
                                                     <h1 className="pb-2">
-                                                        Tahun Masuk
+                                                        {t("form.year.1")}
                                                         <span className="text-RedTako">
                                                             *
                                                         </span>
@@ -857,7 +853,9 @@ const FormEmail = () => {
                                                             },
                                                         )}
                                                         className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                        placeholder="Masukkan Tahun Masuk"
+                                                        placeholder={t(
+                                                            "form.year.1.ph",
+                                                        )}
                                                         type="number"
                                                         value={
                                                             values.riwayat_tahun_in
@@ -874,7 +872,7 @@ const FormEmail = () => {
                                                 </div>
                                                 <div className="w-full">
                                                     <h1 className="pb-2">
-                                                        Tahun Keluar
+                                                        {t("form.year.2")}
                                                         <span className="text-RedTako">
                                                             *
                                                         </span>
@@ -887,7 +885,9 @@ const FormEmail = () => {
                                                             },
                                                         )}
                                                         className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                        placeholder="Masukkan Tahun Keluar"
+                                                        placeholder={t(
+                                                            "form.year.2.ph",
+                                                        )}
                                                         type="number"
                                                         value={
                                                             values.riwayat_tahun_out
@@ -905,7 +905,7 @@ const FormEmail = () => {
                                             </div>
                                             <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
                                                 <h1 className="pb-2">
-                                                    Posisi/Jabatan
+                                                    {t("form.position")}
                                                     <span className="text-RedTako">
                                                         *
                                                     </span>
@@ -918,7 +918,9 @@ const FormEmail = () => {
                                                         },
                                                     )}
                                                     className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder="Masukkan Posisi/Jabatan Sebelumnya"
+                                                    placeholder={t(
+                                                        "form.position.ph",
+                                                    )}
                                                     value={
                                                         values.riwayat_posisi
                                                     }
@@ -934,7 +936,7 @@ const FormEmail = () => {
                                             </div>
                                             <div className="w-full pt-4">
                                                 <h1 className="pb-2">
-                                                    Uraian Tugas
+                                                    {t("form.job")}
                                                     <span className="text-RedTako">
                                                         *
                                                     </span>
@@ -947,7 +949,9 @@ const FormEmail = () => {
                                                         },
                                                     )}
                                                     className="w-full p-2 border-grey border-opacity-30 rounded h-32"
-                                                    placeholder="Uraikan Tugas Pekerjaan Anda"
+                                                    placeholder={t(
+                                                        "form.job.ph",
+                                                    )}
                                                     value={values.riwayat_tugas}
                                                     id="riwayat_tugas"
                                                     onChange={handleChange}
@@ -961,7 +965,7 @@ const FormEmail = () => {
                                             </div>
                                             <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
                                                 <h1 className="pb-2">
-                                                    Alasan Berhenti
+                                                    {t("form.stop")}
                                                     <span className="text-RedTako">
                                                         *
                                                     </span>
@@ -974,7 +978,9 @@ const FormEmail = () => {
                                                         },
                                                     )}
                                                     className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder="Masukkan Alasan Mengapa Anda Berhenti"
+                                                    placeholder={t(
+                                                        "form.stop.ph",
+                                                    )}
                                                     value={
                                                         values.riwayat_berhenti
                                                     }
@@ -990,7 +996,7 @@ const FormEmail = () => {
                                             </div>
                                             <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
                                                 <h1 className="pb-2">
-                                                    Gaji Terakhir
+                                                    {t("form.salary")}
                                                     <span className="text-RedTako">
                                                         *
                                                     </span>
@@ -1000,7 +1006,9 @@ const FormEmail = () => {
                                                         required: true,
                                                     })}
                                                     className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder="Masukkan Ekpektasi gaji anda (Contoh : Rp.5.000.000)"
+                                                    placeholder={t(
+                                                        "form.salary.ph",
+                                                    )}
                                                     value={values.gaji}
                                                     id="gaji"
                                                     onChange={handleChange}
@@ -1010,6 +1018,42 @@ const FormEmail = () => {
                                                         No. Telpon jangan sampai
                                                         kosong
                                                     </span>
+                                                )}
+                                            </div>
+                                            {/* Pekerjaan yang Diharapkan */}
+                                            <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                                <h1 className="pb-2">
+                                                    {t("form.job.expected")}
+                                                    <span className="text-RedTako">
+                                                        *
+                                                    </span>
+                                                </h1>
+                                                <input
+                                                    {...register(
+                                                        "pekerjaanyd",
+                                                        {
+                                                            required: true,
+                                                        },
+                                                    )}
+                                                    className="w-full border-grey border-opacity-30 p-2 rounded"
+                                                    placeholder={t(
+                                                        "form.job.expected.ph",
+                                                    )}
+                                                    value={values.pekerjaanyd}
+                                                    id="pekerjaanyd"
+                                                    onChange={handleChange}
+                                                    aria-invalid={
+                                                        errors.pekerjaanyd
+                                                            ? "true"
+                                                            : "false"
+                                                    }
+                                                />
+                                                {errors.pekerjaanyd?.type ===
+                                                    "required" && (
+                                                    <p role="alert">
+                                                        Tolong Nama jangan
+                                                        sampai kosong
+                                                    </p>
                                                 )}
                                             </div>
                                         </div>
@@ -1024,9 +1068,12 @@ const FormEmail = () => {
                             </div>
 
                             {/* File PDF*/}
-                            <div className="w-full pb-4 pt-16 flex justify-end gap-56 flex-row-reverse">
+                            <div className="w-full pb-4 pt-4 flex justify-end gap-56 flex-row-reverse">
                                 <div>
-                                    <h1 className="pb-2">Upload CV</h1>
+                                    <h1 className="pb-2">
+                                        {t("form.file")}
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
                                     <div className="w-full">
                                         <input
                                             {...register("fileUpload")} // Gunakan nama yang sesuai
@@ -1043,16 +1090,13 @@ const FormEmail = () => {
                                             <span className="text-RedTako">
                                                 *
                                             </span>
-                                            Hanya menerima file dalam bentuk
-                                            PDF. Max 2mb
+                                            {t("form.file.note.1")}
                                         </p>
                                         <p>
                                             <span className="text-RedTako">
                                                 *
                                             </span>
-                                            Khusus Internship. Upload CV serta
-                                            Surat Pengajuan Internship dalam 1
-                                            file PDF
+                                            {t("form.file.note.2")}
                                         </p>
                                     </div>
                                 </div>
@@ -1064,24 +1108,16 @@ const FormEmail = () => {
                                 </div>
                             </div>
                             {/* Submit */}
-                            <div className="w-full bg-BlueTako rounded-xl text-white text-center p-2 hover:bg-BlueTako hover:bg-opacity-90 transition-all">
-                                {/* <input
-                                    type="submit"
-                                    className="w-full p-2 cursor-pointer text-white"
-                                    value="Kirim"
-                                />
-                                <span class="loading loading-spinner">
-                                    Loading
-                                </span> */}
+                            <div className="w-full bg-BlueTako rounded-xl text-white text-center hover:bg-BlueTako hover:bg-opacity-90 transition-all">
                                 {isLoading ? (
-                                    <span className="loading loading-spinner">
+                                    <span className="loading loading-spinner py-4">
                                         Loading
                                     </span>
                                 ) : (
                                     <input
                                         type="submit"
-                                        className="w-full cursor-pointer text-white"
-                                        value="Kirim"
+                                        className="w-full py-3 cursor-pointer text-white"
+                                        value={t("form.submit")}
                                     />
                                 )}
                             </div>
