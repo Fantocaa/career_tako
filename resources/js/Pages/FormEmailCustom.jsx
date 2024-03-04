@@ -269,7 +269,7 @@ const FormEmail = () => {
                     <h2 className="text-center py-4 rounded-lg mb-4">
                         {t("form.sub")}
                     </h2>
-                    <div className="bg-white mx-auto rounded-lg px-2 md:px-4 lg:pt-8">
+                    <div className="bg-white mx-auto rounded-lg px-2 md:px-4 pt-8">
                         <form
                             onSubmit={onSubmit}
                             ref={formRef}
@@ -982,7 +982,7 @@ const FormEmail = () => {
                             </div>
 
                             {/* File PDF*/}
-                            <div className="w-full pb-4 pt-4 flex justify-end gap-56 flex-row-reverse">
+                            <div className="w-full pb-4 lg:pt-4 lg:flex justify-end lg:gap-40 xl:gap-56 lg:flex-row-reverse">
                                 <div>
                                     <h1 className="pb-2">
                                         {t("form.file")}
