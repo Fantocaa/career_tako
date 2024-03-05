@@ -10,18 +10,31 @@ import ReCAPTCHA from "react-google-recaptcha";
 import LanguageContext from "@/Components/Shared/Homepage/LanguageContext";
 import he from "he";
 import { useTranslation } from "react-i18next";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+    nama: yup.string().required("Tolong Nama jangan sampai kosong"),
+    // kabupaten: yup.string().required("Kabupaten is required"),
+    // tambahkan lebih banyak validasi sesuai kebutuhan Anda
+});
 
 const FormEmail = () => {
     const {
         register,
         handleSubmit,
+        control,
+        watch,
+        reset,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        resolver: yupResolver(schema),
+    });
 
     const formRef = useRef(null);
 
     const { props } = usePage();
-    const { md_loker } = props;
+    // const { md_loker } = props;
 
     const [provinsiOptions, setProvinsiOptions] = useState([]);
     const [kabupatenOptions, setKabupatenOptions] = useState([]);
@@ -73,15 +86,6 @@ const FormEmail = () => {
         pekerjaanyd: "",
     });
 
-    // const handleChange = (e) => {
-    //     const key = e.target.id;
-    //     const value = e.target.value;
-    //     setValues((values) => ({
-    //         ...values,
-    //         [key]: value,
-    //     }));
-    // };
-
     const handleChange = (e) => {
         const key = e.target.id;
         const value = e.target.value;
@@ -130,13 +134,14 @@ const FormEmail = () => {
         values.kabupaten = selectedOption.label;
     };
 
-    var capca = "";
+    let capca = "";
     const onChangeCaptcha = (value) => {
         capca = value;
     };
+
     const [isLoading, setIsLoading] = useState(false);
 
-    async function onSubmit(e) {
+    async function onSubmit(e, capca) {
         e.preventDefault();
         setIsLoading(true);
         // console.log(capca);
@@ -184,6 +189,7 @@ const FormEmail = () => {
                 formData.append("riwayat_posisi", values.riwayat_posisi);
                 formData.append("riwayat_tugas", values.riwayat_tugas);
                 formData.append("riwayat_berhenti", values.riwayat_berhenti);
+                formData.append("pekerjaanyd", values.pekerjaanyd);
                 // formData.append("ipk", values.ipk);
 
                 const file = e.target.fileUpload.files[0];
@@ -226,6 +232,7 @@ const FormEmail = () => {
                             riwayat_posisi: "",
                             riwayat_tugas: "",
                             riwayat_berhenti: "",
+                            pekerjaanyd: "",
                         });
 
                         // console.log("Sukses:", response.data);
@@ -233,16 +240,32 @@ const FormEmail = () => {
                     })
                     .catch((error) => {
                         console.error("Error sending data:", error);
-                        alert("Terjadi kesalahan saat mengirim data.");
+                        if (error.response) {
+                            setTimeout(() => {
+                                // The request was made and the server responded with a status code
+                                // that falls out of the range of 2xx
+                                console.log(error.response.data);
+                                console.log(error.response.status);
+                                console.log(error.response.headers);
+                                alert(error.response.data.message); // Tampilkan pesan error dari backend
+                                setIsLoading(false);
+                            }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
+                        } else if (error.request) {
+                            // The request was made but no response was received
+                            console.log(error.request);
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.log("Error", error.message);
+                        }
                     });
             } catch (error) {
                 console.error("Error sending data:", error);
-                alert("Terjadi kesalahan saat mengirim data.");
+                alert("2");
             }
         } else {
             setTimeout(() => {
                 // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
-                alert("Terjadi kesalahan saat mengirim data.");
+                alert("3");
                 setIsLoading(false);
             }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         }
@@ -282,7 +305,7 @@ const FormEmail = () => {
                                 {t("form.tab.1")}
                             </h1>
                             {/* Nama */}
-                            <div className="flex gap-4 flex-wrap">
+                            <div className="flex gap-4 flex-wrap pt-4">
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
                                     <h1 className="pb-2">
                                         {t("form.name")}
@@ -530,7 +553,7 @@ const FormEmail = () => {
                             <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako">
                                 {t("form.tab.2")}
                             </h1>
-                            <div className="flex gap-4 flex-wrap pt-8">
+                            <div className="flex gap-4 flex-wrap pt-4">
                                 {/* Pendidikan Terakhir */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
                                     <h1 className="pb-2">
@@ -938,9 +961,9 @@ const FormEmail = () => {
                                             <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                                 <h1 className="pb-2">
                                                     {t("form.job.expected")}
-                                                    <span className="text-RedTako">
+                                                    {/* <span className="text-RedTako">
                                                         *
-                                                    </span>
+                                                    </span> */}
                                                 </h1>
                                                 <input
                                                     {...register(

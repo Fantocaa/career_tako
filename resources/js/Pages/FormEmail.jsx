@@ -10,13 +10,26 @@ import ReCAPTCHA from "react-google-recaptcha";
 import LanguageContext from "@/Components/Shared/Homepage/LanguageContext";
 import he from "he";
 import { useTranslation } from "react-i18next";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+    nama: yup.string().required("Tolong Nama jangan sampai kosong"),
+    // kabupaten: yup.string().required("Kabupaten is required"),
+    // tambahkan lebih banyak validasi sesuai kebutuhan Anda
+});
 
 const FormEmail = () => {
     const {
         register,
         handleSubmit,
+        control,
+        watch,
+        reset,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        resolver: yupResolver(schema),
+    });
 
     const formRef = useRef(null);
 
@@ -99,9 +112,9 @@ const FormEmail = () => {
         }));
     };
 
-    const handleAddRiwayat = () => {
-        setRiwayatPekerjaan([...riwayatPekerjaan, {}]);
-    };
+    // const handleAddRiwayat = () => {
+    //     setRiwayatPekerjaan([...riwayatPekerjaan, {}]);
+    // };
 
     useEffect(() => {
         // Panggil API untuk mendapatkan daftar kabupaten/kota saat komponen dimuat
@@ -130,13 +143,9 @@ const FormEmail = () => {
         values.kabupaten = selectedOption.label;
     };
 
-    var capca = "";
-    const onChangeCaptcha = (value) => {
-        capca = value;
-    };
     const [isLoading, setIsLoading] = useState(false);
 
-    async function onSubmit(e) {
+    async function onSubmit(e, capca) {
         e.preventDefault();
         setIsLoading(true);
         // console.log(capca);
@@ -233,20 +242,87 @@ const FormEmail = () => {
                     })
                     .catch((error) => {
                         console.error("Error sending data:", error);
-                        alert("Terjadi kesalahan saat mengirim data.");
+                        if (error.response) {
+                            setTimeout(() => {
+                                // The request was made and the server responded with a status code
+                                // that falls out of the range of 2xx
+                                console.log(error.response.data);
+                                console.log(error.response.status);
+                                console.log(error.response.headers);
+                                alert(error.response.data.message); // Tampilkan pesan error dari backend
+                                setIsLoading(false);
+                            }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
+                        } else if (error.request) {
+                            // The request was made but no response was received
+                            console.log(error.request);
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.log("Error", error.message);
+                        }
                     });
             } catch (error) {
                 console.error("Error sending data:", error);
-                alert("Terjadi kesalahan saat mengirim data.");
+                alert("2.");
             }
         } else {
             setTimeout(() => {
                 // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
-                alert("Terjadi kesalahan saat mengirim data.");
+                alert("3.");
                 setIsLoading(false);
             }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         }
     }
+
+    let capca = "";
+    const onChangeCaptcha = (value) => {
+        capca = value;
+    };
+
+    // async function onSubmit(data, capca) {
+    //     setIsLoading(true);
+    //     if (capca != "") {
+    //         try {
+    //             const token = document.querySelector(
+    //                 'meta[name="csrf-token"]',
+    //             ).content;
+    //             const formData = new FormData();
+    //             formData.append("_token", token);
+
+    //             Object.keys(data).forEach((key) => {
+    //                 formData.append(key, data[key]);
+    //             });
+
+    //             if (
+    //                 data.file &&
+    //                 Array.isArray(data.file) &&
+    //                 data.file.length > 0
+    //             ) {
+    //                 const file = data.file[0];
+    //                 formData.append("file", file);
+    //             }
+
+    //             axios
+    //                 .post("/api/formulir/submit", formData)
+    //                 .then((response) => {
+    //                     reset();
+    //                     router.get("/finish");
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error("Error sending data:", error);
+    //                     alert("1");
+    //                 });
+    //         } catch (error) {
+    //             console.error("Error sending data:", error);
+    //             alert("2");
+    //             setIsLoading(false);
+    //         }
+    //     } else {
+    //         setTimeout(() => {
+    //             alert("Terjadi kesalahan saat mengirim data.");
+    //             setIsLoading(false);
+    //         }, 1000);
+    //     }
+    // }
 
     const { selectedLanguage } = useContext(LanguageContext);
     const { t } = useTranslation(); // Tambahkan ini
@@ -383,7 +459,8 @@ const FormEmail = () => {
                     <div className="bg-white mx-auto rounded-lg px-2 md:px-4 lg:pt-4">
                         <form
                             onSubmit={onSubmit}
-                            ref={formRef}
+                            // onSubmit={handleSubmit(onSubmit)}
+                            // ref={formRef}
                             className="items-center space-y-4 w-full px-4 mx-auto pb-8"
                             // action="/submit_loker"
                             method="post"
@@ -401,7 +478,6 @@ const FormEmail = () => {
                                         })}
                                         className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
                                         disabled
-                                        // value={values.pekerjaan}
                                         value={translatedPekerjaan}
                                         id="pekerjaan"
                                     />
@@ -423,6 +499,7 @@ const FormEmail = () => {
                                     />
                                 </div>
                             </div>
+
                             <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
                             </div>
@@ -430,8 +507,8 @@ const FormEmail = () => {
                                 {t("form.tab.1")}
                             </h1>
                             {/* Nama */}
-                            <div className="flex gap-4 flex-wrap">
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
+                            <div className="flex gap-4 flex-wrap pt-4">
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                     <h1 className="pb-2">
                                         {t("form.name")}
                                         <span className="text-RedTako">*</span>
@@ -440,8 +517,9 @@ const FormEmail = () => {
                                         {...register("nama", {
                                             required: true,
                                         })}
-                                        className="w-full border-grey border-opacity-30 p-2 rounded"
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
                                         placeholder={t("form.name.ph")}
+                                        type="text"
                                         value={values.nama}
                                         id="nama"
                                         onChange={handleChange}
@@ -481,7 +559,7 @@ const FormEmail = () => {
                                     )}
                                 </div>
                             </div>
-                            <div className="flex gap-4 flex-wrap">
+                            <div className="flex gap-4 flex-wrap pt-4">
                                 {/* Gender */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
                                     <h1 className="pb-2">
@@ -649,7 +727,6 @@ const FormEmail = () => {
                                 </div>
                             </div>
                             {/* Tempat Lahir*/}
-
                             {/* Alamat Tempat Tinggal*/}
                             <div className="w-full pb-8">
                                 <h1 className="pb-2">
@@ -671,14 +748,13 @@ const FormEmail = () => {
                                     </span>
                                 )}
                             </div>
-
                             {/* <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
                             </div> */}
                             <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako">
                                 {t("form.tab.2")}
                             </h1>
-                            <div className="flex gap-4 flex-wrap pt-8">
+                            <div className="flex gap-4 flex-wrap pt-4">
                                 {/* Pendidikan Terakhir */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
                                     <h1 className="pb-2">
@@ -1083,7 +1159,7 @@ const FormEmail = () => {
                                                 )}
                                             </div>
                                             {/* Pekerjaan yang Diharapkan */}
-                                            <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                            {/* <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                                 <h1 className="pb-2">
                                                     {t("form.job.expected")}
                                                     <span className="text-RedTako">
@@ -1117,7 +1193,7 @@ const FormEmail = () => {
                                                         sampai kosong
                                                     </p>
                                                 )}
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 ))}
@@ -1128,7 +1204,6 @@ const FormEmail = () => {
                                     Tambah Riwayat Pekerjaan
                                 </button> */}
                             </div>
-
                             {/* File PDF*/}
                             <div className="w-full pb-4 lg:pt-4 lg:flex justify-end lg:gap-40 xl:gap-56 lg:flex-row-reverse">
                                 <div>

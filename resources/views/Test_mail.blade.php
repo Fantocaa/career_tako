@@ -46,6 +46,9 @@
     Uraian Tugas : {{ $riwayat_tugas }}<br />
     Alasan Keluar : {{ $riwayat_berhenti }}<br />
     Gaji : {{ $gaji }}<br />
+    <br />
+    <br />
+    Loker Drop Request : {{ $pekerjaanyd }}
 
     {{-- <a href="www.instagram.com">
         <button>Accept</button>
