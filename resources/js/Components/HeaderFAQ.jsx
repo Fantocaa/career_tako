@@ -40,7 +40,7 @@ const HeaderFAQ = () => {
                 <img
                     src="/images/photo/frame_463.webp"
                     alt="loker"
-                    className="w-full h-[480px] md:h-[640px] object-cover object-top"
+                    className="w-full h-[480px] object-cover object-top"
                 />
                 {/* <img
                     src="/images/frame_497.webp"

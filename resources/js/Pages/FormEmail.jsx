@@ -788,7 +788,7 @@ const FormEmail = () => {
                                             })}
                                             className="w-full p-2 border-grey border-opacity-30 rounded"
                                             placeholder={t("form.year.1.ph")}
-                                            type="number"
+                                            type="month"
                                             value={values.thn_in}
                                             id="thn_in"
                                             onChange={handleChange}
@@ -812,7 +812,7 @@ const FormEmail = () => {
                                             })}
                                             className="w-full p-2 border-grey border-opacity-30 rounded"
                                             placeholder={t("form.year.2.ph")}
-                                            type="number"
+                                            type="month"
                                             value={values.thn_out}
                                             id="thn_out"
                                             onChange={handleChange}
@@ -918,7 +918,7 @@ const FormEmail = () => {
                                                         placeholder={t(
                                                             "form.year.1.ph",
                                                         )}
-                                                        type="number"
+                                                        type="month"
                                                         value={
                                                             values.riwayat_tahun_in
                                                         }
@@ -950,7 +950,7 @@ const FormEmail = () => {
                                                         placeholder={t(
                                                             "form.year.2.ph",
                                                         )}
-                                                        type="number"
+                                                        type="month"
                                                         value={
                                                             values.riwayat_tahun_out
                                                         }
