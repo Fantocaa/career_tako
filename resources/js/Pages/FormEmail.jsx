@@ -272,46 +272,6 @@ const FormEmail = () => {
         changeLanguage(storedLanguage);
     }, [selectedLanguage]);
 
-    // const translatePekerjaan = async (language) => {
-    //     if (language === "id") {
-    //         // If the language is Indonesian, revert to the original text
-    //         setValues((prevValues) => ({
-    //             ...prevValues,
-    //             pekerjaan: md_loker[0].pekerjaan,
-    //         }));
-    //     } else if (
-    //         localStorage.getItem(`translation-${md_loker[0].pekerjaan}`)
-    //     ) {
-    //         // Load the translated text from localStorage if it exists
-    //         const translatedText = localStorage.getItem(
-    //             `translation-${md_loker[0].pekerjaan}`,
-    //         );
-    //         setValues((prevValues) => ({
-    //             ...prevValues,
-    //             pekerjaan: translatedText,
-    //         }));
-    //     } else {
-    //         try {
-    //             const response = await axios.post("/api/translate", {
-    //                 text: md_loker[0].pekerjaan,
-    //                 target: language,
-    //             });
-    //             const translatedText = he.decode(response.data);
-    //             // Save the translated text to localStorage
-    //             localStorage.setItem(
-    //                 `translation-${md_loker[0].pekerjaan}`,
-    //                 translatedText,
-    //             );
-    //             setValues((prevValues) => ({
-    //                 ...prevValues,
-    //                 pekerjaan: translatedText,
-    //             }));
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    // };
-
     const translateText = async (text, language) => {
         let translatedText = localStorage.getItem(
             `translation-${language}-${text}`,

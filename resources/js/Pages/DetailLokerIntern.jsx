@@ -57,57 +57,63 @@ const DetailLoker = () => {
     });
 
     const changeLanguage = (language) => {
-        const elementsToTranslate = document.querySelectorAll(".translate"); // Select elements with class 'translate'
+        // console.log(`Changing language to: ${language}`);
+        const elementsToTranslate = document.querySelectorAll(".translate");
 
         elementsToTranslate.forEach((element, index) => {
-            // Save the original text
-            if (!element.dataset.originalText) {
-                element.dataset.originalText = element.innerHTML;
-            }
-
             setTimeout(() => {
+                if (!element.dataset.originalText) {
+                    element.dataset.originalText = element.innerHTML;
+                }
+
+                let translatedText = localStorage.getItem(
+                    `translation-${language}-${element.dataset.originalText}`,
+                );
+
                 if (language === "id") {
-                    // If the language is Indonesian, revert to the original text
                     element.innerHTML = element.dataset.originalText;
-                } else if (
-                    localStorage.getItem(
-                        `translation-${element.dataset.originalText}`,
-                    )
-                ) {
-                    // Load the translated text from localStorage if it exists
-                    element.innerHTML = localStorage.getItem(
-                        `translation-${element.dataset.originalText}`,
-                    );
+                } else if (translatedText) {
+                    element.innerHTML = translatedText;
                 } else {
                     // Split the text into lines
                     const lines = element.innerHTML.split("<br>");
                     const translatedLines = lines.map(async (line) => {
-                        try {
-                            const response = await axios.post(
-                                "/api/translate",
-                                {
-                                    text: line,
-                                    target: language,
-                                },
-                            );
-                            const translatedText = he.decode(response.data);
-                            // Save the translated text to localStorage
-                            localStorage.setItem(
-                                `translation-${line}`,
-                                translatedText,
-                            );
-                            return translatedText;
-                        } catch (error) {
-                            console.error(error);
-                        }
+                        return axios
+                            .post("/api/translate", {
+                                text: line,
+                                target: language,
+                            })
+                            .then((response) => {
+                                // console.log(response.data); // Ensure the response is received correctly
+                                const translatedLine = he.decode(response.data);
+                                localStorage.setItem(
+                                    `translation-${language}-${line}`,
+                                    translatedLine,
+                                );
+                                // console.log(
+                                //     `translate '${line}' to '${translatedLine}'`,
+                                // );
+                                return translatedLine;
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
                     });
 
                     // Wait for all translations to complete and then join the lines back together
                     Promise.all(translatedLines).then((translatedLines) => {
                         element.innerHTML = translatedLines.join("<br>");
                     });
+
+                    // console.log(
+                    //     `Translation request sent for '${element.dataset.originalText}'`,
+                    // );
                 }
-            }, index * 300); // Delay each request by 1 second
+
+                if (index === elementsToTranslate.length - 1) {
+                    // setIsTranslating(false);
+                }
+            }, index * 100); // Delay each request by 1 second
         });
     };
 
@@ -243,6 +249,7 @@ const DetailLoker = () => {
                                 <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px] "></div>
                             </div>
                             {/* Harusnya disini baru isi RichText */}
+
                             <div
                                 dangerouslySetInnerHTML={{
                                     __html: values.deskripsi,
@@ -254,6 +261,7 @@ const DetailLoker = () => {
                             >
                                 {/* {values.deskripsi} */}
                             </div>
+
                             <div className="lg:hidden">
                                 {/* <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px]"></div> */}
                                 <div className="flex pt-8 gap-2 ">
