@@ -130,5 +130,7 @@
     "form.file": "上传文件（最新简历、学历证书、成绩单、身份证、户口簿、无犯罪证明、驾驶证、纳税人识别号）",
     "form.file.note.1": "仅接受 PDF 格式的 1 个文件，最大 2MB",
     "form.file.note.2": "仅限实习生。将简历和实习申请信上传为 1 个 PDF 文件",
-    "form.submit": "提交申请"
+    "form.submit": "提交申请",
+    "form.selected.work": "入选作品",
+    "form.selected.program": "所选节目"
 }

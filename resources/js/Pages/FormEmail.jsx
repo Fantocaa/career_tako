@@ -249,64 +249,165 @@ const FormEmail = () => {
     }
 
     const { selectedLanguage } = useContext(LanguageContext);
+    const { t } = useTranslation(); // Tambahkan ini
+
+    // useEffect(() => {
+    //     const storedLanguage = localStorage.getItem("language");
+    //     if (storedLanguage !== selectedLanguage) {
+    //         localStorage.setItem("language", selectedLanguage);
+    //     }
+    //     translatePekerjaan(selectedLanguage || storedLanguage || "id");
+    // }, [selectedLanguage]);
 
     useEffect(() => {
         const storedLanguage = localStorage.getItem("language");
-        if (storedLanguage !== selectedLanguage) {
-            localStorage.setItem("language", selectedLanguage);
-        }
-        translatePekerjaan(selectedLanguage || storedLanguage || "id");
+        changeLanguage(storedLanguage);
+    }); // kalau pakai [] dijalankan sekali . kalau dihapus dijalankan berkali kali
+
+    useEffect(() => {
+        const storedLanguage = localStorage.getItem(
+            "language",
+            selectedLanguage,
+        );
+        changeLanguage(storedLanguage);
     }, [selectedLanguage]);
 
-    const translatePekerjaan = async (language) => {
+    // const translatePekerjaan = async (language) => {
+    //     if (language === "id") {
+    //         // If the language is Indonesian, revert to the original text
+    //         setValues((prevValues) => ({
+    //             ...prevValues,
+    //             pekerjaan: md_loker[0].pekerjaan,
+    //         }));
+    //     } else if (
+    //         localStorage.getItem(`translation-${md_loker[0].pekerjaan}`)
+    //     ) {
+    //         // Load the translated text from localStorage if it exists
+    //         const translatedText = localStorage.getItem(
+    //             `translation-${md_loker[0].pekerjaan}`,
+    //         );
+    //         setValues((prevValues) => ({
+    //             ...prevValues,
+    //             pekerjaan: translatedText,
+    //         }));
+    //     } else {
+    //         try {
+    //             const response = await axios.post("/api/translate", {
+    //                 text: md_loker[0].pekerjaan,
+    //                 target: language,
+    //             });
+    //             const translatedText = he.decode(response.data);
+    //             // Save the translated text to localStorage
+    //             localStorage.setItem(
+    //                 `translation-${md_loker[0].pekerjaan}`,
+    //                 translatedText,
+    //             );
+    //             setValues((prevValues) => ({
+    //                 ...prevValues,
+    //                 pekerjaan: translatedText,
+    //             }));
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     }
+    // };
+
+    const translateText = async (text, language) => {
+        let translatedText = localStorage.getItem(
+            `translation-${language}-${text}`,
+        );
+
         if (language === "id") {
-            // If the language is Indonesian, revert to the original text
-            setValues((prevValues) => ({
-                ...prevValues,
-                pekerjaan: md_loker[0].pekerjaan,
-            }));
-        } else if (
-            localStorage.getItem(`translation-${md_loker[0].pekerjaan}`)
-        ) {
-            // Load the translated text from localStorage if it exists
-            const translatedText = localStorage.getItem(
-                `translation-${md_loker[0].pekerjaan}`,
-            );
-            setValues((prevValues) => ({
-                ...prevValues,
-                pekerjaan: translatedText,
-            }));
+            return text;
+        } else if (translatedText) {
+            return translatedText;
         } else {
             try {
                 const response = await axios.post("/api/translate", {
-                    text: md_loker[0].pekerjaan,
+                    text: text,
                     target: language,
                 });
-                const translatedText = he.decode(response.data);
-                // Save the translated text to localStorage
+                translatedText = he.decode(response.data);
                 localStorage.setItem(
-                    `translation-${md_loker[0].pekerjaan}`,
+                    `translation-${language}-${text}`,
                     translatedText,
                 );
-                setValues((prevValues) => ({
-                    ...prevValues,
-                    pekerjaan: translatedText,
-                }));
+                return translatedText;
             } catch (error) {
                 console.error(error);
             }
         }
     };
 
-    useEffect(() => {
-        const storedLanguage = localStorage.getItem("language");
-        if (storedLanguage !== selectedLanguage) {
-            localStorage.setItem("language", selectedLanguage);
-        }
-        translatePekerjaan(selectedLanguage || storedLanguage || "id");
-    }, [selectedLanguage]);
+    const [translatedPekerjaan, setTranslatedPekerjaan] = useState("");
 
-    const { t } = useTranslation(); // Tambahkan ini
+    useEffect(() => {
+        (async () => {
+            const result = await translateText(
+                values.pekerjaan,
+                selectedLanguage,
+            );
+            setTranslatedPekerjaan(result);
+        })();
+    }, [values.pekerjaan, selectedLanguage]);
+
+    const changeLanguage = (language) => {
+        // setIsTranslating(true);
+        console.log(`Changing language to: ${language}`);
+        const elementsToTranslate = document.querySelectorAll(".translate");
+
+        elementsToTranslate.forEach((element, index) => {
+            if (!element.dataset.originalText) {
+                element.dataset.originalText = element.innerText;
+            }
+
+            let translatedText = localStorage.getItem(
+                `translation-${language}-${element.dataset.originalText}`,
+            );
+
+            if (language === "id") {
+                element.innerText = element.dataset.originalText;
+            } else if (translatedText) {
+                element.innerText = translatedText;
+            } else {
+                axios
+                    .post("/api/translate", {
+                        text: element.innerText,
+                        target: language,
+                    })
+                    .then((response) => {
+                        console.log(response.data); // Pastikan respons diterima dengan benar
+                        element.innerText = he.decode(response.data);
+                        localStorage.setItem(
+                            `translation-${language}-${element.dataset.originalText}`,
+                            he.decode(response.data),
+                        );
+                        console.log(
+                            `translate '${element.dataset.originalText}' to '${he.decode(response.data)}'`,
+                        );
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+
+                console.log(
+                    `Translation request sent for '${element.dataset.originalText}'`,
+                );
+            }
+
+            if (index === elementsToTranslate.length - 1) {
+                // setIsTranslating(false);
+            }
+        });
+    };
+
+    // useEffect(() => {
+    //     const storedLanguage = localStorage.getItem("language");
+    //     if (storedLanguage !== selectedLanguage) {
+    //         localStorage.setItem("language", selectedLanguage);
+    //     }
+    //     translatePekerjaan(selectedLanguage || storedLanguage || "id");
+    // }, [selectedLanguage]);
 
     return (
         <Layout pageTitle="Drop Formulir | Tako Karier">
@@ -332,15 +433,16 @@ const FormEmail = () => {
                                 {/* Pekerjaan */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                     <h1 className="pb-2">
-                                        Pekerjaan yang dipilih
+                                        {t("form.selected.work")}
                                     </h1>
                                     <input
                                         {...register("pekerjaan", {
                                             required: true,
                                         })}
-                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10 "
+                                        className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
                                         disabled
-                                        value={values.pekerjaan}
+                                        // value={values.pekerjaan}
+                                        value={translatedPekerjaan}
                                         id="pekerjaan"
                                     />
                                 </div>
@@ -348,7 +450,7 @@ const FormEmail = () => {
                                 {/* Program */}
                                 <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
                                     <h1 className="pb-2">
-                                        Program yang dipilih
+                                        {t("form.selected.program")}
                                     </h1>
                                     <input
                                         {...register("jenis_pekerjaan", {
@@ -1068,7 +1170,7 @@ const FormEmail = () => {
                             </div>
 
                             {/* File PDF*/}
-                            <div className="w-full pb-4 pt-4 flex justify-end gap-56 flex-row-reverse">
+                            <div className="w-full pb-4 lg:pt-4 lg:flex justify-end lg:gap-40 xl:gap-56 lg:flex-row-reverse">
                                 <div>
                                     <h1 className="pb-2">
                                         {t("form.file")}

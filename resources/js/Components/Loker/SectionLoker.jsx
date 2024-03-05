@@ -64,18 +64,17 @@ const SectionLoker = () => {
     const [isTranslating, setIsTranslating] = useState(false);
 
     useEffect(() => {
+        const storedLanguage = localStorage.getItem("language");
+        changeLanguage(storedLanguage);
+    }); // kalau pakai [] dijalankan sekali . kalau dihapus dijalankan berkali kali
+
+    useEffect(() => {
         const storedLanguage = localStorage.getItem(
             "language",
             selectedLanguage,
         );
         changeLanguage(storedLanguage);
     }, [selectedLanguage]);
-
-    // Efek ini dijalankan saat komponen pertama kali di-mount
-    useEffect(() => {
-        const storedLanguage = localStorage.getItem("language");
-        changeLanguage(storedLanguage);
-    }, []); // Tambahkan array kosong agar efek ini dijalankan sekali saat mount
 
     const changeLanguage = (language) => {
         setIsTranslating(true);

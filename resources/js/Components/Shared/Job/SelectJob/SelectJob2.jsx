@@ -72,20 +72,6 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                 </div>
                             </div>
                             <div className="pt-4 flex gap-4">
-                                {/* <div className="flex gap-2 pt-4 flex-wrap">
-                                    <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                        Marketing strategy
-                                    </div>
-                                    <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                        Negotiation
-                                    </div>
-                                    <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                        Problem Solver
-                                    </div>
-                                    <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                        Time Management
-                                    </div>
-                                </div> */}
                                 {formDataSkill
                                     .filter(
                                         (skills) =>
@@ -96,7 +82,9 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                             {/* Tampilkan skill sesuai kebutuhan */}
 
                                             <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
-                                                <p>{skillItem.nama_skill}</p>
+                                                <p className="translate">
+                                                    {skillItem.nama_skill}
+                                                </p>
                                             </div>
                                         </div>
                                     ))}

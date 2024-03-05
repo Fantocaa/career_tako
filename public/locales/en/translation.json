@@ -130,5 +130,7 @@
     "form.file": "Upload Documents (Latest CV, Diploma, Transcript, ID Card, Family Card, Certificate of Good Conduct, Driver's License, Tax ID)",
     "form.file.note.1": "Accepts only 1 file in PDF format. Max 2mb",
     "form.file.note.2": "For Internship Only. Upload CV and Internship Request Letter in 1 PDF file",
-    "form.submit": "Submit Application"
+    "form.submit": "Submit Application",
+    "form.selected.work": "Selected work",
+    "form.selected.program": "Selected program"
 }

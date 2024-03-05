@@ -130,5 +130,7 @@
     "form.file": "Upload Berkas (CV terbaru, Ijazah, Transkrip Nilai, KTP, KK, SKCK, SIM, NPWP)",
     "form.file.note.1": "Hanya menerima 1 file dalam bentuk PDF. Max 2mb",
     "form.file.note.2": "Khusus Internship. Upload CV serta Surat Pengajuan Internship dalam 1 file PDF",
-    "form.submit": "Kirim Lamaran"
+    "form.submit": "Kirim Lamaran",
+    "form.selected.work": "Pekerjaan yang dipilih",
+    "form.selected.program": "Program yang dipilih"
 }
