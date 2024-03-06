@@ -58,13 +58,13 @@ const Footer = () => {
                             <div>
                                 <img src="/images/call.webp" alt="call" />
                             </div>
-                            <h1 className="md:w-1/2">081 280 578 717</h1>
+                            <h1 className="md:w-1/2">+62 878-8157-6959</h1>
                             <div className="md:hidden flex gap-4">
                                 <div className="flex-shrink-0">
                                     <img src="/images/mail.webp" alt="mail" />
                                 </div>
                                 <h1 className="w-full md:w-1/2">
-                                    info@tako.co.id
+                                    recruitment@tako.co.id
                                 </h1>
                             </div>
                         </div>
@@ -81,7 +81,9 @@ const Footer = () => {
                             <div>
                                 <img src="/images/mail.webp" alt="mail" />
                             </div>
-                            <h1 className="w-full md:w-1/2">info@tako.co.id</h1>
+                            <h1 className="w-full md:w-1/2">
+                                recruitment@tako.co.id
+                            </h1>
                         </div>
                     </div>
                 </div>

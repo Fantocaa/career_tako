@@ -68,7 +68,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         {/* <h2 className="text-BlueTako pt-2">
                             {item.perusahaan}
                         </h2> */}
-                        <p className="text-xs pt-4 translate 2xl:text-base">
+                        <p className="text-xs pt-4 translate lg:text-sm xl:text-base">
                             {item.deskripsi}
                         </p>
                         <div className="flex items-center gap-4 pt-4">
