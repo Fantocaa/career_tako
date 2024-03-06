@@ -450,10 +450,10 @@ const FormEmail = () => {
     const monthString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
 
     return (
-        <Layout pageTitle="Drop Formulir | Tako Karier">
+        <Layout pageTitle="Formulir | Tako Karier">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
                 <NavElse />
-                <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 lg:px-32 mx-auto">
+                <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto">
                     <h1 className="font-bold text-xl md:text-2xl text-center rounded-lg">
                         {t("form.title")}
                     </h1>
@@ -488,7 +488,7 @@ const FormEmail = () => {
                                 </div>
 
                                 {/* Program */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
                                     <h1 className="pb-2">
                                         {t("form.selected.program")}
                                     </h1>
@@ -504,10 +504,10 @@ const FormEmail = () => {
                                 </div>
                             </div>
 
-                            <div className="py-4 md:py-8">
+                            {/* <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
-                            </div>
-                            <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako mb-8">
+                            </div> */}
+                            <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako">
                                 {t("form.tab.1")}
                             </h1>
                             {/* Nama */}
