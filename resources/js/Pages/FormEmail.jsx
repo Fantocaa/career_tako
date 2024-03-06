@@ -70,7 +70,7 @@ const FormEmail = () => {
         no_telp: "",
         gaji: "",
         file: "",
-        promosi: "",
+        // promosi: "",
         pendidikan: "",
         prodi: "",
         thn_in: "",
@@ -445,6 +445,10 @@ const FormEmail = () => {
     //     translatePekerjaan(selectedLanguage || storedLanguage || "id");
     // }, [selectedLanguage]);
 
+    const today = new Date();
+    const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+    const monthString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+
     return (
         <Layout pageTitle="Drop Formulir | Tako Karier">
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
@@ -648,6 +652,7 @@ const FormEmail = () => {
                                         value={values.tanggal_lahir}
                                         id="tanggal_lahir"
                                         onChange={handleChange}
+                                        max={dateString}
                                     />
                                     {errors.tanggal_lahir && (
                                         <span className="text-RedTako">
@@ -868,6 +873,7 @@ const FormEmail = () => {
                                             value={values.thn_in}
                                             id="thn_in"
                                             onChange={handleChange}
+                                            max={monthString}
                                         />
                                         {errors.thn_in && (
                                             <span className="text-RedTako">
@@ -892,6 +898,7 @@ const FormEmail = () => {
                                             value={values.thn_out}
                                             id="thn_out"
                                             onChange={handleChange}
+                                            max={monthString}
                                         />
                                         {errors.thn_out && (
                                             <span className="text-RedTako">
@@ -1000,6 +1007,7 @@ const FormEmail = () => {
                                                         }
                                                         id="riwayat_tahun_in"
                                                         onChange={handleChange}
+                                                        max={monthString}
                                                     />
                                                     {errors.riwayat_tahun_in && (
                                                         <span className="text-RedTako">
@@ -1032,6 +1040,7 @@ const FormEmail = () => {
                                                         }
                                                         id="riwayat_tahun_out"
                                                         onChange={handleChange}
+                                                        max={monthString}
                                                     />
                                                     {errors.riwayat_tahun_out && (
                                                         <span className="text-RedTako">
