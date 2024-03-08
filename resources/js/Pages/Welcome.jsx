@@ -44,6 +44,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             <section className="bg-BgTako font-inter text-DarkTako">
                 <Nav />
                 {/* <div className="pt-56"> */}
+
                 <ContentRecruitmentNew />
                 {/* </div> */}
                 {/* <ContentRecruitment /> */}

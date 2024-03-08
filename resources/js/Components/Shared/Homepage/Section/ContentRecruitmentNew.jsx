@@ -5,6 +5,7 @@ import "../../../css/style.css";
 import Why from "./Why";
 import ImageSlider from "@/Components/Shared/Homepage/Section/ImageSlider";
 import { useTranslation } from "react-i18next";
+import InterviewPage from "@/Pages/InterviewPage";
 
 const ContentRecruitmentNew = () => {
     useEffect(() => {
@@ -19,6 +20,7 @@ const ContentRecruitmentNew = () => {
     return (
         <div className="mx-auto">
             <ImageSlider />
+            <InterviewPage />
             {/* <Why /> */}
             <div className="container max-w-[1440px] mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-32">
                 <h1
