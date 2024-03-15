@@ -1,36 +1,31 @@
 import React from "react";
 import "../style.css";
+import { useTranslation } from "react-i18next";
 
 const InterviewPage = () => {
+    const { t } = useTranslation(); // Tambahkan ini
+
     return (
         <div className="container max-w-[1440px] mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-32 ">
             <div className="bg-BlueTako p-4 md:p-8 py-16 rounded-xl gap-8">
                 <div className="w-full md:flex gap-4">
                     <div className="w-full md:w-[50%] lg:w-[40%] pb-8 md:pb-0 lg:pb-8 md:flex lg:block items-center">
                         <h1 className="text-[36px] leading-[40px] font-bold text-white lg:w-[95%]">
-                            Kamu adalah{" "}
+                            {t("video.title.1")}{" "}
                             <span className="text-YellowTako">
-                                Talenta Terbaik
+                                {t("video.title.2")}
                             </span>{" "}
-                            yang Kami Cari!
+                            {t("video.title.3")}
                         </h1>
                         <p className="text-white py-8 md:hidden lg:block 2xl:w-[95%]">
-                            Bergabunglah dengan kami untuk mengejar impian
-                            bersama PT. TAKO ANUGERAH KOPORASI! Kamu adalah
-                            Talenta Terbaik yang kami cari untuk membangun masa
-                            depan yang gemilang. Bersama, kita akan menciptakan
-                            inovasi, menghadirkan solusi kreatif, dan menjalani
-                            perjalanan karier yang penuh prestasi. Jadi, siap
-                            untuk menjadi bagian dari tim unggul kami? Ayo,
-                            bergabung dan wujudkan potensimu bersama PT. TAKO
-                            ANUGERAH KOPORASI!
+                            {t("video.body")}
                         </p>
                         <button
                             className="md:hidden lg:block bg-white hover:opacity-75 hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-BlueTako flex gap-4 items-center transition-all duration-300 ease-in-out font-semibold shadow-sm"
                             // data-aos="fade-up"
                             // data-aos-duration="1000"
                         >
-                            Kembangkan diri Anda!
+                            {t("video.button")}
                         </button>
                     </div>
                     <div className="bg-white p-4 rounded-xl">
