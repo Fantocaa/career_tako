@@ -65,7 +65,7 @@ const SectionLoker = () => {
 
     useEffect(() => {
         const storedLanguage = localStorage.getItem("language");
-        changeLanguage(storedLanguage);
+        // changeLanguage(storedLanguage);
     }); // kalau pakai [] dijalankan sekali . kalau dihapus dijalankan berkali kali
 
     useEffect(() => {
@@ -73,58 +73,58 @@ const SectionLoker = () => {
             "language",
             selectedLanguage,
         );
-        changeLanguage(storedLanguage);
+        // changeLanguage(storedLanguage);
     }, [selectedLanguage]);
 
-    const changeLanguage = (language) => {
-        setIsTranslating(true);
-        console.log(`Changing language to: ${language}`);
-        const elementsToTranslate = document.querySelectorAll(".translate");
+    // const changeLanguage = (language) => {
+    //     setIsTranslating(true);
+    //     console.log(`Changing language to: ${language}`);
+    //     const elementsToTranslate = document.querySelectorAll(".translate");
 
-        elementsToTranslate.forEach((element, index) => {
-            if (!element.dataset.originalText) {
-                element.dataset.originalText = element.innerText;
-            }
+    //     elementsToTranslate.forEach((element, index) => {
+    //         if (!element.dataset.originalText) {
+    //             element.dataset.originalText = element.innerText;
+    //         }
 
-            let translatedText = localStorage.getItem(
-                `translation-${language}-${element.dataset.originalText}`,
-            );
+    //         let translatedText = localStorage.getItem(
+    //             `translation-${language}-${element.dataset.originalText}`,
+    //         );
 
-            if (language === "id") {
-                element.innerText = element.dataset.originalText;
-            } else if (translatedText) {
-                element.innerText = translatedText;
-            } else {
-                axios
-                    .post("/api/translate", {
-                        text: element.innerText,
-                        target: language,
-                    })
-                    .then((response) => {
-                        console.log(response.data); // Pastikan respons diterima dengan benar
-                        element.innerText = he.decode(response.data);
-                        localStorage.setItem(
-                            `translation-${language}-${element.dataset.originalText}`,
-                            he.decode(response.data),
-                        );
-                        console.log(
-                            `translate '${element.dataset.originalText}' to '${he.decode(response.data)}'`,
-                        );
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
+    //         if (language === "id") {
+    //             element.innerText = element.dataset.originalText;
+    //         } else if (translatedText) {
+    //             element.innerText = translatedText;
+    //         } else {
+    //             axios
+    //                 .post("/api/translate", {
+    //                     text: element.innerText,
+    //                     target: language,
+    //                 })
+    //                 .then((response) => {
+    //                     console.log(response.data); // Pastikan respons diterima dengan benar
+    //                     element.innerText = he.decode(response.data);
+    //                     localStorage.setItem(
+    //                         `translation-${language}-${element.dataset.originalText}`,
+    //                         he.decode(response.data),
+    //                     );
+    //                     console.log(
+    //                         `translate '${element.dataset.originalText}' to '${he.decode(response.data)}'`,
+    //                     );
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error(error);
+    //                 });
 
-                console.log(
-                    `Translation request sent for '${element.dataset.originalText}'`,
-                );
-            }
+    //             console.log(
+    //                 `Translation request sent for '${element.dataset.originalText}'`,
+    //             );
+    //         }
 
-            if (index === elementsToTranslate.length - 1) {
-                setIsTranslating(false);
-            }
-        });
-    };
+    //         if (index === elementsToTranslate.length - 1) {
+    //             setIsTranslating(false);
+    //         }
+    //     });
+    // };
 
     const fetchData = async (page) => {
         try {
