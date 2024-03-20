@@ -31,7 +31,7 @@ const HeaderPro = () => {
                                 {t("loker.title.3")}
                                 {/* yang Tepat */}
                             </h1>
-                            <p className="text-xs md:text-base 2xl:text-lg pt-2 lg:pt-4 2xl:pt-6 xl:w-[65%] 2xl:w-full">
+                            <p className="text-base md:text-base 2xl:text-lg pt-4 md:pt-2 lg:pt-4 2xl:pt-6 xl:w-[65%] 2xl:w-full">
                                 {/* Kami memahami bahwa setiap orang memiliki
                                 potensi dan minat yang berbeda-beda. Oleh karena
                                 itu, kami menyediakan berbagai peluang karier
