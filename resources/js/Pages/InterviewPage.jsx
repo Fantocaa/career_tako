@@ -1,6 +1,7 @@
 import React from "react";
 import "../style.css";
 import { useTranslation } from "react-i18next";
+import { Link } from "@inertiajs/react";
 
 const InterviewPage = () => {
     const { t } = useTranslation(); // Tambahkan ini
@@ -20,13 +21,15 @@ const InterviewPage = () => {
                         <p className="text-white py-8 md:hidden lg:block 2xl:w-[95%]">
                             {t("video.body")}
                         </p>
-                        <button
-                            className="md:hidden lg:block bg-white hover:opacity-75 hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-BlueTako flex gap-4 items-center transition-all duration-300 ease-in-out font-semibold shadow-sm"
-                            // data-aos="fade-up"
-                            // data-aos-duration="1000"
-                        >
-                            {t("video.button")}
-                        </button>
+                        <Link href="/loker">
+                            <button
+                                className="md:hidden lg:block bg-white hover:opacity-75 hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-BlueTako flex gap-4 items-center transition-all duration-300 ease-in-out font-semibold shadow-sm"
+                                // data-aos="fade-up"
+                                // data-aos-duration="1000"
+                            >
+                                {t("video.button")}
+                            </button>
+                        </Link>
                     </div>
                     <div className="bg-white p-4 rounded-xl">
                         {/* <iframe
@@ -69,13 +72,15 @@ const InterviewPage = () => {
                     bergabung dan wujudkan potensimu bersama PT. TAKO ANUGERAH
                     KOPORASI!
                 </p>
-                <button
-                    className="hidden md:block lg:hidden bg-white hover:opacity-75 hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-BlueTako gap-4 items-center transition-all duration-300 ease-in-out font-semibold shadow-sm"
-                    // data-aos="fade-up"
-                    // data-aos-duration="1000"
-                >
-                    Kembangkan diri Anda!
-                </button>
+                <Link href="/loker">
+                    <button
+                        className="hidden md:block lg:hidden bg-white hover:opacity-75 hover:text-BlueTako fill-white hover:fill-BlueTako py-3 px-4 rounded-xl text-BlueTako gap-4 items-center transition-all duration-300 ease-in-out font-semibold shadow-sm"
+                        // data-aos="fade-up"
+                        // data-aos-duration="1000"
+                    >
+                        {t("video.button")}
+                    </button>
+                </Link>
             </div>
         </div>
     );

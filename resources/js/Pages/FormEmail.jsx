@@ -145,6 +145,14 @@ const FormEmail = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = getCookie("XSRF-TOKEN");
+
     async function onSubmit(e, capca) {
         e.preventDefault();
         setIsLoading(true);
@@ -277,52 +285,6 @@ const FormEmail = () => {
     const onChangeCaptcha = (value) => {
         capca = value;
     };
-
-    // async function onSubmit(data, capca) {
-    //     setIsLoading(true);
-    //     if (capca != "") {
-    //         try {
-    //             const token = document.querySelector(
-    //                 'meta[name="csrf-token"]',
-    //             ).content;
-    //             const formData = new FormData();
-    //             formData.append("_token", token);
-
-    //             Object.keys(data).forEach((key) => {
-    //                 formData.append(key, data[key]);
-    //             });
-
-    //             if (
-    //                 data.file &&
-    //                 Array.isArray(data.file) &&
-    //                 data.file.length > 0
-    //             ) {
-    //                 const file = data.file[0];
-    //                 formData.append("file", file);
-    //             }
-
-    //             axios
-    //                 .post("/api/formulir/submit", formData)
-    //                 .then((response) => {
-    //                     reset();
-    //                     router.get("/finish");
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error("Error sending data:", error);
-    //                     alert("1");
-    //                 });
-    //         } catch (error) {
-    //             console.error("Error sending data:", error);
-    //             alert("2");
-    //             setIsLoading(false);
-    //         }
-    //     } else {
-    //         setTimeout(() => {
-    //             alert("Terjadi kesalahan saat mengirim data.");
-    //             setIsLoading(false);
-    //         }, 1000);
-    //     }
-    // }
 
     const { selectedLanguage } = useContext(LanguageContext);
     const { t } = useTranslation(); // Tambahkan ini

@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\FormController;
+use App\Http\Controllers\MdLokerController;
+use App\Http\Controllers\MKaryawanController;
+use App\Http\Controllers\PerusahaanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MdLokerController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PerusahaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +21,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Route::post('/formulir/submit/', [MKaryawanController::class, 'submit_loker']);
 Route::post('/formulir/submit/', [MdLokerController::class, 'submit_loker']);
-Route::post('/formulir/submit_custom/', [MdLokerController::class, 'submit_loker_custom']);
+// Route::post('/formulir/submit_custom/', [MdLokerController::class, 'submit_loker_custom']);
 
-Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
+// Route::get('/provinsi', [MdLokerController::class, 'provinsi']);
 // Route::get('/kabupaten/{id}', [MdLokerController::class, 'kabupaten']);
+// Route::get('/kecamatan/{id1}/{id2}', [MdLokerController::class, 'kecamatan']);
 Route::get('/kabupaten', [MdLokerController::class, 'kabupaten']);
-Route::get('/kecamatan/{id1}/{id2}', [MdLokerController::class, 'kecamatan']);
 
 Route::resource('form', MdLokerController::class);
 

@@ -37,7 +37,7 @@
         "@google-cloud/translate": "^8.1.0",
         "@hookform/resolvers": "^3.3.4",
         "@mui/icons-material": "^5.14.11",
-        "@mui/material": "^5.14.11",
+        "@mui/material": "^5.15.14",
         "@radix-ui/react-accordion": "^1.1.2",
         "@syncfusion/ej2-vue-richtexteditor": "^23.1.41",
         "@tanstack/react-query": "^5.8.1",
@@ -81,7 +81,7 @@
         "styled-components": "^6.0.8",
         "sweetalert2": "^11.7.32",
         "vanilla-javascript": "^1.1.1",
-        "yup": "^1.3.3",
+        "yup": "^1.4.0",
         "ziggy-js": "^1.8.1"
     },
     "peerDependencies": {

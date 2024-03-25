@@ -1,16 +1,11 @@
 <?php
 
-use App\Http\Controllers\FormController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use App\Http\Controllers\email;
-use App\Http\Controllers\LokerController;
-use Illuminate\Http\Request;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MdLokerController;
 use App\Http\Controllers\PerusahaanController;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +53,6 @@ Route::get('/loker/perusahaan/{id}', [MdLokerController::class, 'show_detail_per
 
 Route::get('/loker/pekerjaan/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
 
-
 Route::get('/faq', function () {
     return Inertia::render('Faq');
 });
@@ -70,6 +64,14 @@ Route::get('/contact', function () {
 Route::get('/loker/dropcv', function () {
     return Inertia::render('FormEmailCustom');
 });
+
+// Route::get('/loker/dropcvformik', function () {
+//     return Inertia::render('FormEmaill_Formik');
+// });
+
+// Route::get('/loker/dropcvformik1', function () {
+//     return Inertia::render('FormEmaill_Formik copy');
+// });
 
 Route::get('/finish', function () {
     return Inertia::render('Finish');
@@ -85,8 +87,6 @@ Route::get('/finish', function () {
 // Route::post('/search', [MdLokerController::class, 'search'])->withoutMiddleware(['verifyCsrfToken']);
 
 // Route::get('/login', [LoginController::class, 'index'])->name('login');
-
-
 
 Route::get('/form/view_pro', [MdLokerController::class, 'index_profesional']);
 Route::get('/form/view_intern', [MdLokerController::class, 'index_internship']);
@@ -134,7 +134,7 @@ Route::post('/forgot_proses', [LoginController::class, 'forgot_proses'])->name('
 // Route::get('/api_form', [MdLokerController::class, 'api_form']);
 // Route::get('/time_expired', [MdLokerController::class, 'time_expired']);
 
-Route::group(['prefix' => 'admin', 'middleware' =>  ['auth'], 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin.'], function () {
     Route::get('/dashboard', function () {
         return Inertia::render('DashboardPage');
         // })->middleware(['auth', 'verified'])->name('dashboard');
