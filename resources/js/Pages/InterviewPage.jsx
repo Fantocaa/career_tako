@@ -12,9 +12,9 @@ const InterviewPage = () => {
 
     // Objek yang menyimpan URL video untuk setiap bahasa
     const videoUrls = {
-        id: "https://www.youtube.com/embed/KKKd_aEVdew?si=j1QnnuwK_YtTtFf6",
-        en: "https://www.youtube.com/embed/your-english-video-id",
-        zh: "https://www.youtube.com/embed/your-chinese-video-id",
+        id: "https://www.youtube.com/embed/Zks9MAh8ppk?si=y_UdEHT54RerWIDx",
+        en: "https://www.youtube.com/embed/wphJTqG7eZ4?si=orjvg3eWUrKQKyPD",
+        zh: "https://www.youtube.com/embed/a4dltwf4tKA?si=0GevH1MJ2-bogRES",
     };
 
     // Memilih URL video berdasarkan bahasa yang dipilih
