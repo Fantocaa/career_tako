@@ -82,7 +82,7 @@
         "sweetalert2": "^11.7.32",
         "vanilla-javascript": "^1.1.1",
         "yup": "^1.4.0",
-        "ziggy-js": "^1.8.1"
+        "ziggy-js": "^1.8.2"
     },
     "peerDependencies": {
         "react": "^17.0.0 || ^18.0.0",

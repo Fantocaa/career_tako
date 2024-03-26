@@ -2,6 +2,7 @@ import React from "react";
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState } from "react";
 import { ArrowLeftCircle } from "lucide-react";
+import { Link } from "@inertiajs/react";
 
 const SidebarContext = createContext();
 
@@ -72,7 +73,8 @@ export default function Sidebar({ children }) {
                                 </li> */}
                                 <li>
                                     <a
-                                        href={route("admin.logout")}
+                                        href="/admin/logout"
+                                        // href={route("admin.logout")}
                                         className="font-bold"
                                     >
                                         <ArrowLeftCircle size={20} />
@@ -93,7 +95,7 @@ export function SidebarItem({ icon, text, active, alert }) {
     return (
         <li
             className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors text-DarkTako group
-        
+
         ${
             active
                 ? "bg-BlueTako bg-opacity-90 text-white text-opacity-100"

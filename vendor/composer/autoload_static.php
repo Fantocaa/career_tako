@@ -58,7 +58,7 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         'T' => 
         array (
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
-            'Tightenco\\Ziggy\\' => 16,
+            'Tighten\\Ziggy\\' => 14,
             'Tests\\' => 6,
             'Termwind\\' => 9,
         ),
@@ -228,11 +228,11 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         ),
         'Yajra\\DataTables\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-editor/src',
-            1 => __DIR__ . '/..' . '/yajra/laravel-datatables-fractal/src',
-            2 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
+            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
+            1 => __DIR__ . '/..' . '/yajra/laravel-datatables-editor/src',
+            2 => __DIR__ . '/..' . '/yajra/laravel-datatables-fractal/src',
             3 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
-            4 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
+            4 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
         ),
         'Whoops\\' => 
         array (
@@ -246,7 +246,7 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         array (
             0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
         ),
-        'Tightenco\\Ziggy\\' => 
+        'Tighten\\Ziggy\\' => 
         array (
             0 => __DIR__ . '/..' . '/tightenco/ziggy/src',
         ),
@@ -743,6 +743,7 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         'App\\Http\\Controllers\\FormController' => __DIR__ . '/../..' . '/app/Http/Controllers/FormController.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
         'App\\Http\\Controllers\\LokerController' => __DIR__ . '/../..' . '/app/Http/Controllers/LokerController.php',
+        'App\\Http\\Controllers\\MKaryawanController' => __DIR__ . '/../..' . '/app/Http/Controllers/MKaryawanController.php',
         'App\\Http\\Controllers\\MdLokerController' => __DIR__ . '/../..' . '/app/Http/Controllers/MdLokerController.php',
         'App\\Http\\Controllers\\PerusahaanController' => __DIR__ . '/../..' . '/app/Http/Controllers/PerusahaanController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
@@ -762,11 +763,13 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Http\\Requests\\StoreLokerRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreLokerRequest.php',
         'App\\Http\\Requests\\StoreformRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreformRequest.php',
+        'App\\Http\\Requests\\Storem_karyawanRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Storem_karyawanRequest.php',
         'App\\Http\\Requests\\Storemd_lokerRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Storemd_lokerRequest.php',
         'App\\Http\\Requests\\StoreperusahaanRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreperusahaanRequest.php',
         'App\\Http\\Requests\\StoreskillRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreskillRequest.php',
         'App\\Http\\Requests\\UpdateLokerRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateLokerRequest.php',
         'App\\Http\\Requests\\UpdateformRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateformRequest.php',
+        'App\\Http\\Requests\\Updatem_karyawanRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Updatem_karyawanRequest.php',
         'App\\Http\\Requests\\Updatemd_lokerRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Updatemd_lokerRequest.php',
         'App\\Http\\Requests\\UpdateperusahaanRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateperusahaanRequest.php',
         'App\\Http\\Requests\\UpdateskillRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateskillRequest.php',
@@ -775,6 +778,7 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         'App\\Models\\Loker' => __DIR__ . '/../..' . '/app/Models/Loker.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\form' => __DIR__ . '/../..' . '/app/Models/form.php',
+        'App\\Models\\m_karyawan' => __DIR__ . '/../..' . '/app/Models/m_karyawan.php',
         'App\\Models\\md_loker' => __DIR__ . '/../..' . '/app/Models/md_loker.php',
         'App\\Models\\perusahaan' => __DIR__ . '/../..' . '/app/Models/perusahaan.php',
         'App\\Models\\skill' => __DIR__ . '/../..' . '/app/Models/skill.php',
@@ -7754,14 +7758,14 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
-        'Tightenco\\Ziggy\\BladeRouteGenerator' => __DIR__ . '/..' . '/tightenco/ziggy/src/BladeRouteGenerator.php',
-        'Tightenco\\Ziggy\\CommandRouteGenerator' => __DIR__ . '/..' . '/tightenco/ziggy/src/CommandRouteGenerator.php',
-        'Tightenco\\Ziggy\\Output\\File' => __DIR__ . '/..' . '/tightenco/ziggy/src/Output/File.php',
-        'Tightenco\\Ziggy\\Output\\MergeScript' => __DIR__ . '/..' . '/tightenco/ziggy/src/Output/MergeScript.php',
-        'Tightenco\\Ziggy\\Output\\Script' => __DIR__ . '/..' . '/tightenco/ziggy/src/Output/Script.php',
-        'Tightenco\\Ziggy\\Output\\Types' => __DIR__ . '/..' . '/tightenco/ziggy/src/Output/Types.php',
-        'Tightenco\\Ziggy\\Ziggy' => __DIR__ . '/..' . '/tightenco/ziggy/src/Ziggy.php',
-        'Tightenco\\Ziggy\\ZiggyServiceProvider' => __DIR__ . '/..' . '/tightenco/ziggy/src/ZiggyServiceProvider.php',
+        'Tighten\\Ziggy\\BladeRouteGenerator' => __DIR__ . '/..' . '/tightenco/ziggy/src/BladeRouteGenerator.php',
+        'Tighten\\Ziggy\\CommandRouteGenerator' => __DIR__ . '/..' . '/tightenco/ziggy/src/CommandRouteGenerator.php',
+        'Tighten\\Ziggy\\Output\\File' => __DIR__ . '/..' . '/tightenco/ziggy/src/Output/File.php',
+        'Tighten\\Ziggy\\Output\\MergeScript' => __DIR__ . '/..' . '/tightenco/ziggy/src/Output/MergeScript.php',
+        'Tighten\\Ziggy\\Output\\Script' => __DIR__ . '/..' . '/tightenco/ziggy/src/Output/Script.php',
+        'Tighten\\Ziggy\\Output\\Types' => __DIR__ . '/..' . '/tightenco/ziggy/src/Output/Types.php',
+        'Tighten\\Ziggy\\Ziggy' => __DIR__ . '/..' . '/tightenco/ziggy/src/Ziggy.php',
+        'Tighten\\Ziggy\\ZiggyServiceProvider' => __DIR__ . '/..' . '/tightenco/ziggy/src/ZiggyServiceProvider.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Processor.php',

@@ -148,7 +148,7 @@ const HistoryTable = () => {
 
     return (
         <Layout pageTitle="Dashboard | Tako Karir">
-            <div className="bg-BgTako px-[14px] h-full py-8">
+            <div className="bg-BgTako h-full py-8">
                 <div className="bg-white container mx-auto p-8 rounded-lg h-full ">
                     <div className="flex justify-between">
                         <h1 className="font-bold text-2xl pb-6 text-DarkTako">

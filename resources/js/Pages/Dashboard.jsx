@@ -3,6 +3,7 @@ import { Head } from "@inertiajs/react";
 import SidebarLayout from "@/Components/Dashboard/SidebarLayout";
 import Sidebar from "@/Components/Sidebar";
 import { SidebarItem } from "@/Components/Sidebar";
+// import { route } from "ziggy-js";
 import {
     LifeBuoy,
     Receipt,
@@ -22,12 +23,12 @@ import { useEffect } from "react";
 
 export default function Dashboard({ auth }) {
     return (
-        <div className="w-1/4 2xl:w-1/6 fixed ">
+        <div className="2xl:w-1/6 fixed">
             <div className="w-full h-full">
                 <Sidebar>
                     {/* {page && ( */}
-                    {/* <Link href="/dashboard"> */}
-                    <Link href={route("admin.dashboard")}>
+                    <Link href="/admin/dashboard">
+                        {/* <Link href={route("admin.dashboard")}> */}
                         <SidebarItem
                             icon={<LayoutDashboard size={20} />}
                             text="Dashboard"
@@ -49,8 +50,8 @@ export default function Dashboard({ auth }) {
                     </Link> */}
                     {/* )} */}
                     {/* {page && ( */}
-                    {/* <Link href="/dashboard/lowongan_pekerjaan"> */}
-                    <Link href={route("admin.lowongan_pekerjaan")}>
+                    <Link href="/admin/dashboard/lowongan_pekerjaan">
+                        {/* <Link href={route("admin.lowongan_pekerjaan")}> */}
                         <SidebarItem
                             icon={<UserCircle size={20} />}
                             text="Lowongan"
@@ -64,7 +65,8 @@ export default function Dashboard({ auth }) {
                             // active={page.url === "/dashboard/beranda"}
                         />
                     </Link> */}
-                    <Link href={route("admin.history")}>
+                    <Link href="/admin/dashboard/history">
+                        {/* <Link href={route("admin.history")}> */}
                         <SidebarItem
                             icon={<History size={20} />}
                             text="Riwayat"

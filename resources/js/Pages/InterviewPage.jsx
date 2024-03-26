@@ -1,10 +1,24 @@
 import React from "react";
 import "../style.css";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "@inertiajs/react";
+import LanguageContext from "@/Components/Shared/Homepage/LanguageContext";
 
 const InterviewPage = () => {
     const { t } = useTranslation(); // Tambahkan ini
+
+    const { selectedLanguage } = useContext(LanguageContext);
+
+    // Objek yang menyimpan URL video untuk setiap bahasa
+    const videoUrls = {
+        id: "https://www.youtube.com/embed/KKKd_aEVdew?si=j1QnnuwK_YtTtFf6",
+        en: "https://www.youtube.com/embed/your-english-video-id",
+        zh: "https://www.youtube.com/embed/your-chinese-video-id",
+    };
+
+    // Memilih URL video berdasarkan bahasa yang dipilih
+    const selectedVideoUrl = videoUrls[selectedLanguage] || videoUrls["id"];
 
     return (
         <div className="container max-w-[1440px] mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-32 ">
@@ -31,20 +45,11 @@ const InterviewPage = () => {
                             </button>
                         </Link>
                     </div>
-                    <div className="bg-white p-4 rounded-xl">
-                        {/* <iframe
-                            width="318"
-                            height="178.88"
-                            src="https://www.youtube.com/embed/KKKd_aEVdew?si=j1QnnuwK_YtTtFf6"
-                            title="PT. TAKO ANUGERAH KOPORASI - Interview with MANAGER"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen
-                            className="rounded-xl"
-                        ></iframe> */}
-                        <div className="relative rounded-xl overflow-hidden lg:w-[480px] lg:h-full xl:w-[640px] xl:h-[360px] md:w-[318px] w-full h-[178.88px]">
+                    <div className="bg-white p-4 rounded-xl mx-auto">
+                        <div className="relative rounded-xl overflow-hidden w-full h-[178.88px] md:w-[318px] lg:w-[480px] lg:h-full xl:w-[480px] xl:h-[360px]">
                             <iframe
-                                src="https://www.youtube.com/embed/KKKd_aEVdew?si=j1QnnuwK_YtTtFf6"
+                                // src="https://www.youtube.com/embed/KKKd_aEVdew?si=j1QnnuwK_YtTtFf6"
+                                src={selectedVideoUrl}
                                 title="PT. TAKO ANUGERAH KOPORASI - Interview with MANAGER"
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -63,14 +68,15 @@ const InterviewPage = () => {
                 ></div> */}
                 </div>
                 <p className="text-white py-4 pb-8 lg:py-8 hidden md:block lg:hidden">
-                    Bergabunglah dengan kami untuk mengejar impian bersama PT.
+                    {/* Bergabunglah dengan kami untuk mengejar impian bersama PT.
                     TAKO ANUGERAH KOPORASI! Kamu adalah Talenta Terbaik yang
                     kami cari untuk membangun masa depan yang gemilang. Bersama,
                     kita akan menciptakan inovasi, menghadirkan solusi kreatif,
                     dan menjalani perjalanan karier yang penuh prestasi. Jadi,
                     siap untuk menjadi bagian dari tim unggul kami? Ayo,
                     bergabung dan wujudkan potensimu bersama PT. TAKO ANUGERAH
-                    KOPORASI!
+                    KOPORASI! */}
+                    {t("video.body")}
                 </p>
                 <Link href="/loker">
                     <button

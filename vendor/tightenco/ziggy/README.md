@@ -10,8 +10,6 @@
 
 Ziggy provides a JavaScript `route()` function that works like Laravel's, making it a breeze to use your named Laravel routes in JavaScript.
 
-Ziggy supports all versions of Laravel from `5.4` onward, and all modern browsers.
-
 - [**Installation**](#installation)
 - [**Usage**](#usage)
     - [`route()` function](#route-function)
@@ -270,7 +268,7 @@ php artisan ziggy:generate --types
 To make your IDE aware that Ziggy's `route()` helper is available globally, and to type it correctly, add a declaration like this in a `.d.ts` file somewhere in your project:
 
 ```ts
-import routeFn from 'ziggy-js';
+import { route as routeFn } from 'ziggy-js';
 
 declare global {
     var route: typeof routeFn;
@@ -336,7 +334,7 @@ export { Ziggy };
 You can import Ziggy like any other JavaScript library. Without the `@routes` Blade directive Ziggy's config is not available globally, so it must be passed to the `route()` function manually:
 
 ```js
-import route from '../../vendor/tightenco/ziggy/dist';
+import { route } from '../../vendor/tightenco/ziggy';
 import { Ziggy } from './ziggy.js';
 
 route('home', undefined, undefined, Ziggy);
@@ -350,8 +348,7 @@ To simplify importing the `route()` function, you can create an alias to the ven
 export default defineConfig({
     resolve: {
         alias: {
-            'ziggy-js': 'vendor/tightenco/ziggy/dist',
-            // 'vendor/tightenco/ziggy/dist/vue.es' if using the Vue plugin
+            'ziggy-js': path.resolve('vendor/tightenco/ziggy'),
         },
     },
 });
@@ -360,7 +357,7 @@ export default defineConfig({
 Now your imports can be shortened to:
 
 ```js
-import route from 'ziggy-js';
+import { route } from 'ziggy-js';
 ```
 
 ### Vue
@@ -391,8 +388,6 @@ import App from './App.vue';
 
 createApp(App).use(ZiggyVue, Ziggy);
 ```
-
-If you use the Vue plugin with the `ziggy-js` import alias shown above, make sure to update the alias to `vendor/tightenco/ziggy/dist/vue.es`.
 
 ### React
 
@@ -435,7 +430,7 @@ globalThis.Ziggy = Ziggy;
 
 Ziggy's `route()` function is available as an NPM package, for use in JavaScript projects managed separately from their Laravel backend (i.e. without Composer or a `vendor` directory). You can install the NPM package with `npm install ziggy-js`.
 
-To make your routes available on the frontend for this function to use, you can either run `php artisan ziggy:generate` and add the generated config file to your frontend project, or you can return Ziggy's config as JSON from an endpoint in your Laravel API (see [Retrieving Ziggy's config from an API endpoint](#retrieving-ziggys-routes-from-an-api-endpoint) below for an example of how to set this up).
+To make your routes available on the frontend for this function to use, you can either run `php artisan ziggy:generate` and add the generated config file to your frontend project, or you can return Ziggy's config as JSON from an endpoint in your Laravel API (see [Retrieving Ziggy's config from an API endpoint](#retrieving-ziggys-config-from-an-api-endpoint) below for an example of how to set this up).
 
 ## Filtering Routes
 
@@ -528,7 +523,7 @@ If you need to retrieve Ziggy's config from your Laravel backend over the networ
 ```php
 // routes/api.php
 
-use Tightenco\Ziggy\Ziggy;
+use Tighten\Ziggy\Ziggy;
 
 Route::get('api/ziggy', fn () => response()->json(new Ziggy));
 ```
