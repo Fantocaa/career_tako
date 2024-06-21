@@ -104,7 +104,7 @@ class MdLokerController extends Controller
         $program = DB::table('md_lokers')
             ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
             ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
-            ->where('md_lokers.jenis_pekerjaan', 'LIKE', '%'.$program.'%')
+            ->where('md_lokers.jenis_pekerjaan', 'LIKE', '%' . $program . '%')
             ->whereNull('md_lokers.deleted_at')
 
             ->get();
@@ -123,7 +123,7 @@ class MdLokerController extends Controller
 
             ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
 
-            ->where('md_lokers.jenis_pekerjaan', 'LIKE', '%'.$program.'%')
+            ->where('md_lokers.jenis_pekerjaan', 'LIKE', '%' . $program . '%')
 
             ->where('perusahaans.id', '=', $id)
 
@@ -173,7 +173,7 @@ class MdLokerController extends Controller
 
     public function kecamatan($id, $filter)
     {
-        $filter1 = $filter.'%';
+        $filter1 = $filter . '%';
         $query = DB::select("SELECT * FROM wilayah WHERE LEFT(kode, 2 )=$id AND CHAR_LENGTH(kode)=8 and kode LIKE '$filter1'  ORDER BY `wilayah`.`kode` ASC");
 
         return response()->json($query);
@@ -377,11 +377,8 @@ class MdLokerController extends Controller
     public function submit_loker(Request $request)
     {
         // dd($request);
-        // Memeriksa keberadaan token CSRF dalam permintaan
-        // if ($request->hasHeader('X-CSRF-TOKEN')) {
         if ($request->header('X-CSRF-TOKEN')) {
-            $request->validate([
-                // 'nama' => 'required|string|min:5',
+            $rules = [
                 'nama' => 'required|string|max:255',
                 'nik' => 'required|min:16|max:16',
                 'jenis_kelamin' => 'required',
@@ -389,55 +386,29 @@ class MdLokerController extends Controller
                 'tanggal_lahir' => 'required|max:255',
                 'emails' => 'required|max:255',
                 'no_telp' => 'required|max:255',
-                // 'provinsi' => 'required',
                 'kabupaten' => 'required',
-                // 'kecamatan' => 'required',
-                // 'kodepos' => 'required',
                 'alamat' => 'required|max:255',
                 'pendidikan' => 'required|max:255',
                 'instansi' => 'required|max:255',
                 'prodi' => 'required|max:255',
                 'thn_in' => 'required',
                 'thn_out' => 'required',
-                'riwayat_nama_perusahaan' => 'required|max:255',
-                'riwayat_alamat_perusahaan' => 'required|max:255',
-                'riwayat_tahun_in' => 'required',
-                'riwayat_tahun_out' => 'required',
-                'riwayat_posisi' => 'required|max:255',
-                'riwayat_tugas' => 'required|max:255',
-                'riwayat_berhenti' => 'required|max:255',
-                'gaji' => 'required|max:255',
-                // 'promosi' => 'required',
-            ],
-                [
-                    'nama.required' => 'Nama harus diisi.',
-                    'nik.required' => 'Nik harus diisi.',
-                    'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih.',
-                    'agama.required' => 'Agama harus dipilih.',
-                    'tanggal_lahir.required' => ' Tanggal Lahir harus diisi.',
-                    'emails.required' => 'Email harus diisi.',
-                    'no_telp.required' => 'Nomor Telepon harus diisi.',
-                    // 'provinsi.required' => 'Provinsi harus dipilih.',
-                    'kabupaten.required' => 'Kabupaten harus dipilih.',
-                    // 'kecamatan.required' => 'Kecamatan harus dipilih.',
-                    // 'kodepos.required' => 'Kode Pos harus dipilih.',
-                    'alamat.required' => 'Alamat harus diisi.',
-                    // 'promosi.required' => 'Promosi harus diisi.',
-                    'pendidikan.required' => 'Pendidikan harus diisi.',
-                    'instansi.required' => 'Instansi Pendidikan harus diisi.',
-                    'prodi.required' => 'Program Studi harus diisi.',
-                    'thn_in.required' => 'Tahun Masuk Pendidikan harus diisi.',
-                    'thn_out.required' => 'Tahun Keluar Pendidikan harus diisi.',
-                    'riwayat_nama_perusahaan.required' => 'Riwayat Nama Perusahaan harus diisi.',
-                    'riwayat_alamat_perusahaan.required' => 'Riwayat Alamat Perusahaan harus diisi.',
-                    'riwayat_tahun_in.required' => 'Tahun Masuk Perusahaan harus diisi.',
-                    'riwayat_tahun_out.required' => 'Tahun Keluar Perusahaan harus diisi.',
-                    'riwayat_posisi.required' => 'Riwayat Posisi Perusahaan harus diisi.',
-                    'riwayat_tugas.required' => 'Riwayat Tugas Perusahaan harus diisi.',
-                    'riwayat_berhenti.required' => 'Riwayat Berhenti Perusahaan harus diisi.',
-                    'gaji.required' => 'Gaji harus diisi.',
-                    // 'ipk.required' => 'IPK/GPA harus diisi.',
+            ];
+
+            if ($request->has('hasWorkExperience') && $request->hasWorkExperience) {
+                $rules = array_merge($rules, [
+                    'riwayat_nama_perusahaan' => 'required|max:255',
+                    'riwayat_alamat_perusahaan' => 'required|max:255',
+                    'riwayat_tahun_in' => 'required',
+                    'riwayat_tahun_out' => 'required',
+                    'riwayat_posisi' => 'required|max:255',
+                    'riwayat_tugas' => 'required|max:255',
+                    'riwayat_berhenti' => 'required|max:255',
+                    'gaji' => 'required|max:255',
                 ]);
+            }
+
+            $request->validate($rules);
 
             // $data["email"] = "fantocaa17@gmail.com";
             $data['email'] = 'recruitment@tako.co.id';
@@ -484,12 +455,14 @@ class MdLokerController extends Controller
 
                 if ($file->getSize() <= $maxSize) {
                     // Pastikan file ada sebelum melampirkannya
-                    Mail::send('Test_mail', $data, function ($message) use ($data, $file) {
+                    $fileName = 'CV_' . preg_replace('/[^a-zA-Z0-9]/', '_', $request->nama) . '.pdf';
+
+                    Mail::send('Test_mail', $data, function ($message) use ($data, $file, $fileName) {
                         $message->to($data['email'])
-                            ->subject($data['title'].' '.$data['pekerjaan'].' - '.$data['nama']); // Menggabungkan title dan pekerjaan dalam subjek
+                            ->subject($data['title'] . ' ' . $data['pekerjaan'] . ' - ' . $data['nama']); // Menggabungkan title dan pekerjaan dalam subjek
 
                         $message->attach($file->getRealPath(), [
-                            'as' => 'CV.pdf', // Nama file yang akan digunakan dalam email
+                            'as' => $fileName, // Nama file yang akan digunakan dalam email
                             'mime' => 'application/pdf', // MIME type file PDF
                         ]);
                     });
@@ -507,8 +480,6 @@ class MdLokerController extends Controller
         }
 
         // return response()->json([$request]);
-
-        // return redirect()->route('finish');
         return Inertia::render('Finish');
     }
 
@@ -645,15 +616,15 @@ class MdLokerController extends Controller
         if ($request->has('search') && $request->input('selection') == 'All') {
 
             $searchTerm = $request->input('search');
-            $query->where('md_lokers.pekerjaan', 'like', '%'.$searchTerm.'%');
+            $query->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
         }
 
         // jika search gak ada & select bukan all
         elseif ($request->input('search') == null && $request->input('selection') != 'All') {
 
             $selection = $request->input('selection');
-            $query->where('md_lokers.jenis_pekerjaan', '=', ''.$selection);
-        // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
+            $query->where('md_lokers.jenis_pekerjaan', '=', '' . $selection);
+            // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
         }
 
         // jika search ada & select bukan all
@@ -669,7 +640,7 @@ class MdLokerController extends Controller
                 } else {
                     $query
                         ->where('md_lokers.jenis_pekerjaan', '=', $selection)
-                        ->where('md_lokers.pekerjaan', 'like', '%'.$searchTerm.'%');
+                        ->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
                     // ->where('md_lokers.perusahaan', '=', $perusahaan);
 
                 }
@@ -703,14 +674,14 @@ class MdLokerController extends Controller
         //jika search ada isi dan select itu all
         if ($request->has('search') && $request->input('selection') == 'All') {
             $searchTerm = $request->input('search');
-            $query->where('md_lokers.pekerjaan', 'like', '%'.$searchTerm.'%');
+            $query->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%');
         }
 
         // jika search gak ada & select bukan all
         elseif ($request->input('search') == null && $request->input('selection') != 'All') {
             $selection = $request->input('selection');
-            $query->where('md_lokers.jenis_pekerjaan', '=', ''.$selection);
-        // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
+            $query->where('md_lokers.jenis_pekerjaan', '=', '' . $selection);
+            // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
         }
 
         // jika search ada & select bukan all
@@ -727,7 +698,7 @@ class MdLokerController extends Controller
                     $query
                         ->where('md_lokers.jenis_pekerjaan', '=', $selection)
                         // ->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%')
-                        ->where('md_lokers.pekerjaan', 'like', '%'.$searchTerm.'%')
+                        ->where('md_lokers.pekerjaan', 'like', '%' . $searchTerm . '%')
                         ->where('md_lokers.perusahaan', '=', $perusahaan);
 
                     // ->orWhere('perusahaans.perusahaan', 'like', '%' . $searchTerm . '%');
@@ -758,7 +729,7 @@ class MdLokerController extends Controller
             ->get();
 
         foreach ($query as $key => $value) {
-            if (! empty($value->id)) {
+            if (!empty($value->id)) {
                 $delete = md_loker::find($value->id);
 
                 // Check if the record is found before attempting to delete

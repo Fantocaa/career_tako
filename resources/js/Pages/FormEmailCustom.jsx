@@ -12,6 +12,11 @@ import he from "he";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import FormEmailJob from "./Email/FormEmailJob";
+import FormEmailStudy from "./Email/FormEmailStudy";
+import FormEmailPersonalData from "./Email/FormEmailPersonalData";
+import FormEmailFile from "./Email/FormEmailFile";
+import FormJobSelected from "./Email/FormJobSelected";
 
 const schema = yup.object().shape({
     nama: yup.string().required("Tolong Nama jangan sampai kosong"),
@@ -47,6 +52,8 @@ const FormEmail = () => {
     const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
 
     const [riwayatPekerjaan, setRiwayatPekerjaan] = useState([{}]);
+
+    const [hasWorkExperience, setHasWorkExperience] = useState(false);
 
     const disabledInputClasses =
         "text-DarkTako text-opacity-50 bg-grey bg-opacity-10";
@@ -141,6 +148,14 @@ const FormEmail = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = getCookie("XSRF-TOKEN");
+
     async function onSubmit(e, capca) {
         e.preventDefault();
         setIsLoading(true);
@@ -169,26 +184,39 @@ const FormEmail = () => {
                 // formData.append("kecamatan", values.kecamatan);
                 // formData.append("kodepos", values.kodepos);
                 formData.append("alamat", values.alamat);
-                formData.append("gaji", values.gaji);
+
                 // formData.append("promosi", values.promosi);
                 formData.append("pendidikan", values.pendidikan);
                 formData.append("prodi", values.prodi);
                 formData.append("thn_in", values.thn_in);
                 formData.append("thn_out", values.thn_out);
                 formData.append("instansi", values.instansi);
-                formData.append(
-                    "riwayat_nama_perusahaan",
-                    values.riwayat_nama_perusahaan,
-                );
-                formData.append(
-                    "riwayat_alamat_perusahaan",
-                    values.riwayat_alamat_perusahaan,
-                );
-                formData.append("riwayat_tahun_in", values.riwayat_tahun_in);
-                formData.append("riwayat_tahun_out", values.riwayat_tahun_out);
-                formData.append("riwayat_posisi", values.riwayat_posisi);
-                formData.append("riwayat_tugas", values.riwayat_tugas);
-                formData.append("riwayat_berhenti", values.riwayat_berhenti);
+                // Tambahkan data pengalaman kerja hanya jika hasWorkExperience bernilai true
+                if (hasWorkExperience) {
+                    formData.append(
+                        "riwayat_nama_perusahaan",
+                        values.riwayat_nama_perusahaan,
+                    );
+                    formData.append(
+                        "riwayat_alamat_perusahaan",
+                        values.riwayat_alamat_perusahaan,
+                    );
+                    formData.append(
+                        "riwayat_tahun_in",
+                        values.riwayat_tahun_in,
+                    );
+                    formData.append(
+                        "riwayat_tahun_out",
+                        values.riwayat_tahun_out,
+                    );
+                    formData.append("riwayat_posisi", values.riwayat_posisi);
+                    formData.append("riwayat_tugas", values.riwayat_tugas);
+                    formData.append(
+                        "riwayat_berhenti",
+                        values.riwayat_berhenti,
+                    );
+                    formData.append("gaji", values.gaji);
+                }
                 formData.append("pekerjaanyd", values.pekerjaanyd);
                 // formData.append("ipk", values.ipk);
 
@@ -305,233 +333,19 @@ const FormEmail = () => {
                             method="post"
                             encType="multipart/form-data"
                         >
-                            <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako mb-8">
-                                {t("form.tab.1")}
-                            </h1>
-                            {/* Nama */}
-                            <div className="flex gap-4 flex-wrap pt-4">
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
-                                    <h1 className="pb-2">
-                                        {t("form.name")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("nama", {
-                                            required: true,
-                                        })}
-                                        className="w-full border-grey border-opacity-30 p-2 rounded"
-                                        placeholder={t("form.name.ph")}
-                                        value={values.nama}
-                                        id="nama"
-                                        onChange={handleChange}
-                                        aria-invalid={
-                                            errors.nama ? "true" : "false"
-                                        }
-                                    />
-                                    {errors.nama?.type === "required" && (
-                                        <p role="alert">
-                                            Tolong Nama jangan sampai kosong
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
-                                    <h1 className="pb-2">
-                                        {t("form.nik")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("nik", {
-                                            required: true,
-                                        })}
-                                        className="w-full border-grey border-opacity-30 p-2 rounded"
-                                        placeholder={t("form.nik.ph")}
-                                        value={values.nik}
-                                        id="nik"
-                                        type="number"
-                                        onChange={handleChange}
-                                        aria-invalid={
-                                            errors.nik ? "true" : "false"
-                                        }
-                                    />
-                                    {errors.nik?.type === "required" && (
-                                        <p role="alert">
-                                            Tolong Nama jangan sampai kosong
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="flex gap-4 flex-wrap">
-                                {/* Gender */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4">
-                                    <h1 className="pb-2">
-                                        {t("form.gender")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <select
-                                        {...register("jenis_kelamin", {
-                                            required: true,
-                                        })}
-                                        value={values.jenis_kelamin} // Gunakan
-                                        className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
-                                        placeholder="Pilih Jenis Kelamin Anda"
-                                        id="jenis_kelamin"
-                                        onChange={handleChange}
-                                    >
-                                        <option>{t("form.gender.ph.1")}</option>
-                                        <option value="Laki-Laki">
-                                            {t("form.gender.ph.2")}
-                                        </option>
-                                        <option value="Perempuan">
-                                            {t("form.gender.ph.3")}
-                                        </option>
-                                        {/* <option value="Lainnya">Lainnya</option> */}
-                                    </select>
-                                    {errors.gender && (
-                                        <span className="text-RedTako">
-                                            Jenis Kelamin harus dipilih
-                                        </span>
-                                    )}
-                                </div>
-                                {/* Agama */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
-                                    <h1 className="pb-2">
-                                        {t("form.agama")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <select
-                                        {...register("agama", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
-                                        placeholder={t("form.agama.ph")}
-                                        value={values.agama}
-                                        id="agama"
-                                        onChange={handleChange}
-                                    >
-                                        <option>{t("form.agama.ph")}</option>
-                                        <option value="Islam">Islam</option>
-                                        <option value="Kristen">Kristen</option>
-                                        <option value="Katholik">
-                                            Katholik
-                                        </option>
-                                        <option value="Hindu">Hindu</option>
-                                        <option value="Budha">Budha</option>
-                                        <option value="Kong Hu Chu">
-                                            Kong Hu Chu
-                                        </option>
-                                    </select>
-                                    {errors.agama && (
-                                        <span className="text-RedTako">
-                                            Program harus dipilih
-                                        </span>
-                                    )}
-                                </div>
-
-                                {/* Tanggal Lahir */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] relative">
-                                    <h1 className="pb-2">
-                                        {t("form.lahir")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    {/* <div className="absolute items-center opacity-75 right-2 bottom-1 scale-75 pointer-events-none ">
-                                        <img
-                                            src="/images/calendar.svg"
-                                            alt=""
-                                            className=""
-                                        />
-                                    </div> */}
-                                    <input
-                                        {...register("tanggal_lahir", {
-                                            required: true,
-                                        })}
-                                        type="date"
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        value={values.tanggal_lahir}
-                                        id="tanggal_lahir"
-                                        onChange={handleChange}
-                                        max={dateString}
-                                    />
-                                    {errors.tanggal_lahir && (
-                                        <span className="text-RedTako">
-                                            Tanggal Lahir jangan sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-
-                                {/* Email */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 md:pt-0">
-                                    <h1 className="pb-2">
-                                        {t("form.email")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("emails", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder={t("form.email.ph")}
-                                        type="email"
-                                        value={values.emails}
-                                        id="emails"
-                                        onChange={handleChange}
-                                    />
-                                    {errors.emails && (
-                                        <span className="text-RedTako">
-                                            Email jangan sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-
-                                {/* No Telp*/}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] py-4">
-                                    <h1 className="pb-2">
-                                        {t("form.phone")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("nomor", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder={t("form.phone.ph")}
-                                        value={values.no_telp}
-                                        id="no_telp"
-                                        type="number"
-                                        onChange={handleChange}
-                                    />
-                                    {errors.nomor && (
-                                        <span className="text-RedTako">
-                                            No. Telpon jangan sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] py-4">
-                                    <h2 className="pb-2">
-                                        {t("form.kabupaten")}
-                                    </h2>
-                                    <Select
-                                        options={kabupatenOptions}
-                                        onChange={handleKabupatenChange}
-                                        value={kabupatenOptions.find(
-                                            (option) =>
-                                                option.label ===
-                                                values.kabupaten,
-                                        )}
-                                        id="kabupaten"
-                                        placeholder={t("form.kabupaten.ph")}
-                                        styles={{
-                                            control: (base) => ({
-                                                ...base,
-                                                padding: "2px",
-                                            }),
-                                        }}
-                                    />
-                                </div>
-                            </div>
+                            <FormEmailPersonalData
+                                register={register}
+                                errors={errors}
+                                values={values}
+                                handleChange={handleChange}
+                                dateString={dateString}
+                                kabupatenOptions={kabupatenOptions}
+                                handleKabupatenChange={handleKabupatenChange}
+                            />
                             {/* Tempat Lahir*/}
 
                             {/* Alamat Tempat Tinggal*/}
-                            <div className="w-full pb-8">
+                            {/* <div className="w-full pb-8">
                                 <h1 className="pb-2">
                                     {t("form.address")}
                                     <span className="text-RedTako">*</span>
@@ -550,509 +364,69 @@ const FormEmail = () => {
                                         kosong
                                     </span>
                                 )}
-                            </div>
+                            </div> */}
 
                             {/* <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
                             </div> */}
-                            <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako">
-                                {t("form.tab.2")}
-                            </h1>
-                            <div className="flex gap-4 flex-wrap pt-4">
-                                {/* Pendidikan Terakhir */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pb-4 md:pb-0">
-                                    <h1 className="pb-2">
-                                        {t("form.edu")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <select
-                                        {...register("pendidikan", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
-                                        placeholder={t("form.edu.ph")}
-                                        value={values.pendidikan}
-                                        id="pendidikan"
-                                        onChange={handleChange}
-                                    >
-                                        <option>{t("form.edu.ph")}</option>
-                                        <option value="SD">
-                                            {t("form.edu.sd")}
-                                        </option>
-                                        <option value="SMP">
-                                            {t("form.edu.smp")}
-                                        </option>
-                                        <option value="SMA/SMK">
-                                            {t("form.edu.sma")}
-                                        </option>
-                                        <option value="D3/D4">
-                                            {t("form.edu.d3")}
-                                        </option>
-                                        <option value="S1">
-                                            {t("form.edu.s1")}
-                                        </option>
-                                        <option value="S2">
-                                            {t("form.edu.s2")}
-                                        </option>
-                                        <option value="S3">
-                                            {t("form.edu.s3")}
-                                        </option>
-                                    </select>
-                                    {errors.agama && (
-                                        <span className="text-RedTako">
-                                            Pendidikan Terakhir harus dipilih
-                                        </span>
-                                    )}
-                                </div>
-
-                                {/* Intansi Pendidikan */}
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                    <h1 className="pb-2">
-                                        {t("form.school")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("instansi", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder={t("form.school.ph")}
-                                        type="text"
-                                        value={values.instansi}
-                                        id="instansi"
-                                        onChange={handleChange}
-                                    />
-                                    {errors.instansi && (
-                                        <span className="text-RedTako">
-                                            Intansi Pendidikan Terakhir jangan
-                                            sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                                    <h1 className="pb-2">
-                                        {t("form.major")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <input
-                                        {...register("prodi", {
-                                            required: true,
-                                        })}
-                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                        placeholder={t("form.major.ph")}
-                                        type="text"
-                                        value={values.prodi}
-                                        id="prodi"
-                                        onChange={handleChange}
-                                    />
-                                    {errors.prodi && (
-                                        <span className="text-RedTako">
-                                            Jurusan/Program Studi Terakhir
-                                            jangan sampai kosong
-                                        </span>
-                                    )}
-                                </div>
-
-                                <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
-                                    <div className="w-full">
-                                        <h1 className="pb-2">
-                                            {t("form.year.1")}
-                                            <span className="text-RedTako">
-                                                *
-                                            </span>
-                                        </h1>
-                                        <input
-                                            {...register("thn_in", {
-                                                required: true,
-                                            })}
-                                            className="w-full p-2 border-grey border-opacity-30 rounded"
-                                            placeholder={t("form.year.1.ph")}
-                                            type="month"
-                                            value={values.thn_in}
-                                            id="thn_in"
-                                            onChange={handleChange}
-                                            max={monthString}
-                                        />
-                                        {errors.thn_in && (
-                                            <span className="text-RedTako">
-                                                Tahun Masuk jangan sampai kosong
-                                            </span>
-                                        )}
-                                    </div>
-                                    <div className="w-full pb-8">
-                                        <h1 className="pb-2">
-                                            {t("form.year.2")}
-                                            <span className="text-RedTako">
-                                                *
-                                            </span>
-                                        </h1>
-                                        <input
-                                            {...register("thn_out", {
-                                                required: true,
-                                            })}
-                                            className="w-full p-2 border-grey border-opacity-30 rounded"
-                                            placeholder={t("form.year.2.ph")}
-                                            type="month"
-                                            value={values.thn_out}
-                                            id="thn_out"
-                                            onChange={handleChange}
-                                            max={monthString}
-                                        />
-                                        {errors.thn_out && (
-                                            <span className="text-RedTako">
-                                                Tahun Keluar jangan sampai
-                                                kosong
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
+                            <FormEmailStudy
+                                register={register}
+                                errors={errors}
+                                values={values}
+                                handleChange={handleChange}
+                                monthString={monthString}
+                            />
                             {/* <div className="py-4 md:py-8">
                                 <div className="border-t w-full border-DarkTako border-opacity-25" />
                             </div> */}
                             {/* Gaji*/}
-                            <h1 className="text-2xl font-semibold text-white text-center py-4 rounded-lg bg-BlueTako">
-                                {t("form.tab.3")}
-                            </h1>
-                            <div>
-                                {riwayatPekerjaan.map((riwayat, index) => (
-                                    <div key={index}>
-                                        <div className="flex gap-4 flex-wrap pt-4">
-                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                                                <h1 className="pb-2">
-                                                    {t("form.company")}
-                                                    <span className="text-RedTako">
-                                                        *
-                                                    </span>
-                                                </h1>
-                                                <input
-                                                    {...register(
-                                                        "riwayat_nama_perusahaan",
-                                                        {
-                                                            required: true,
-                                                        },
-                                                    )}
-                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder={t(
-                                                        "form.company.ph",
-                                                    )}
-                                                    value={
-                                                        values.riwayat_nama_perusahaan
-                                                    }
-                                                    id="riwayat_nama_perusahaan"
-                                                    onChange={handleChange}
-                                                />
-                                                {errors.nomor && (
-                                                    <span className="text-RedTako">
-                                                        Nama Perusahaan jangan
-                                                        sampai kosong
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                                                <h1 className="pb-2">
-                                                    {t("form.company.address")}
-                                                    <span className="text-RedTako">
-                                                        *
-                                                    </span>
-                                                </h1>
-                                                <input
-                                                    {...register(
-                                                        "riwayat_alamat_perusahaan",
-                                                        {
-                                                            required: true,
-                                                        },
-                                                    )}
-                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder={t(
-                                                        "form.company.address.ph",
-                                                    )}
-                                                    value={
-                                                        values.riwayat_alamat_perusahaan
-                                                    }
-                                                    id="riwayat_alamat_perusahaan"
-                                                    onChange={handleChange}
-                                                />
-                                                {/* {errors.nomor && (
-                                                    <span className="text-RedTako">
-                                                        No. Telpon jangan sampai
-                                                        kosong
-                                                    </span>
-                                                )} */}
-                                            </div>
-                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
-                                                <div className="w-full">
-                                                    <h1 className="pb-2">
-                                                        {t("form.year.1")}
-                                                        <span className="text-RedTako">
-                                                            *
-                                                        </span>
-                                                    </h1>
-                                                    <input
-                                                        {...register(
-                                                            "riwayat_tahun_in",
-                                                            {
-                                                                required: true,
-                                                            },
-                                                        )}
-                                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                        placeholder={t(
-                                                            "form.year.1.ph",
-                                                        )}
-                                                        type="month"
-                                                        value={
-                                                            values.riwayat_tahun_in
-                                                        }
-                                                        id="riwayat_tahun_in"
-                                                        onChange={handleChange}
-                                                        max={monthString}
-                                                    />
-                                                    {errors.riwayat_tahun_in && (
-                                                        <span className="text-RedTako">
-                                                            Tahun Masuk jangan
-                                                            sampai kosong
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                <div className="w-full">
-                                                    <h1 className="pb-2">
-                                                        {t("form.year.2")}
-                                                        <span className="text-RedTako">
-                                                            *
-                                                        </span>
-                                                    </h1>
-                                                    <input
-                                                        {...register(
-                                                            "riwayat_tahun_out",
-                                                            {
-                                                                required: true,
-                                                            },
-                                                        )}
-                                                        className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                        placeholder={t(
-                                                            "form.year.2.ph",
-                                                        )}
-                                                        type="month"
-                                                        value={
-                                                            values.riwayat_tahun_out
-                                                        }
-                                                        id="riwayat_tahun_out"
-                                                        onChange={handleChange}
-                                                        max={monthString}
-                                                    />
-                                                    {errors.riwayat_tahun_out && (
-                                                        <span className="text-RedTako">
-                                                            Tahun Keluar jangan
-                                                            sampai kosong
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                                                <h1 className="pb-2">
-                                                    {t("form.position")}
-                                                    <span className="text-RedTako">
-                                                        *
-                                                    </span>
-                                                </h1>
-                                                <input
-                                                    {...register(
-                                                        "riwayat_posisi",
-                                                        {
-                                                            required: true,
-                                                        },
-                                                    )}
-                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder={t(
-                                                        "form.position.ph",
-                                                    )}
-                                                    value={
-                                                        values.riwayat_posisi
-                                                    }
-                                                    id="riwayat_posisi"
-                                                    onChange={handleChange}
-                                                />
-                                                {errors.riwayat_posisi && (
-                                                    <span className="text-RedTako">
-                                                        No. Telpon jangan sampai
-                                                        kosong
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <div className="w-full pt-4">
-                                                <h1 className="pb-2">
-                                                    {t("form.job")}
-                                                    <span className="text-RedTako">
-                                                        *
-                                                    </span>
-                                                </h1>
-                                                <textarea
-                                                    {...register(
-                                                        "riwayat_tugas",
-                                                        {
-                                                            required: true,
-                                                        },
-                                                    )}
-                                                    className="w-full p-2 border-grey border-opacity-30 rounded h-32"
-                                                    placeholder={t(
-                                                        "form.job.ph",
-                                                    )}
-                                                    value={values.riwayat_tugas}
-                                                    id="riwayat_tugas"
-                                                    onChange={handleChange}
-                                                />
-                                                {errors.riwayat_tugas && (
-                                                    <span className="text-RedTako">
-                                                        Uraian Tugas jangan
-                                                        sampai kosong
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                                                <h1 className="pb-2">
-                                                    {t("form.stop")}
-                                                    <span className="text-RedTako">
-                                                        *
-                                                    </span>
-                                                </h1>
-                                                <input
-                                                    {...register(
-                                                        "riwayat_berhenti",
-                                                        {
-                                                            required: true,
-                                                        },
-                                                    )}
-                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder={t(
-                                                        "form.stop.ph",
-                                                    )}
-                                                    value={
-                                                        values.riwayat_berhenti
-                                                    }
-                                                    id="riwayat_berhenti"
-                                                    onChange={handleChange}
-                                                />
-                                                {errors.nomor && (
-                                                    <span className="text-RedTako">
-                                                        No. Telpon jangan sampai
-                                                        kosong
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                                                <h1 className="pb-2">
-                                                    {t("form.salary")}
-                                                    <span className="text-RedTako">
-                                                        *
-                                                    </span>
-                                                </h1>
-                                                <input
-                                                    {...register("gaji", {
-                                                        required: true,
-                                                    })}
-                                                    className="w-full p-2 border-grey border-opacity-30 rounded"
-                                                    placeholder={t(
-                                                        "form.salary.ph",
-                                                    )}
-                                                    value={values.gaji}
-                                                    id="gaji"
-                                                    onChange={handleChange}
-                                                />
-                                                {errors.nomor && (
-                                                    <span className="text-RedTako">
-                                                        No. Telpon jangan sampai
-                                                        kosong
-                                                    </span>
-                                                )}
-                                            </div>
-                                            {/* Pekerjaan yang Diharapkan */}
-                                            <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
-                                                <h1 className="pb-2">
-                                                    {t("form.job.expected")}
-                                                    {/* <span className="text-RedTako">
+
+                            <FormEmailJob
+                                register={register}
+                                errors={errors}
+                                values={values}
+                                handleChange={handleChange}
+                                monthString={monthString}
+                                hasWorkExperience={hasWorkExperience}
+                                setHasWorkExperience={setHasWorkExperience}
+                            />
+
+                            {/* Pekerjaan yang Diharapkan */}
+                            <div className="w-full pb-4 md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                <h1 className="pb-2">
+                                    {t("form.job.expected")}
+                                    {/* <span className="text-RedTako">
                                                         *
                                                     </span> */}
-                                                </h1>
-                                                <input
-                                                    {...register(
-                                                        "pekerjaanyd",
-                                                        {
-                                                            required: true,
-                                                        },
-                                                    )}
-                                                    className="w-full border-grey border-opacity-30 p-2 rounded"
-                                                    placeholder={t(
-                                                        "form.job.expected.ph",
-                                                    )}
-                                                    value={values.pekerjaanyd}
-                                                    id="pekerjaanyd"
-                                                    onChange={handleChange}
-                                                    aria-invalid={
-                                                        errors.pekerjaanyd
-                                                            ? "true"
-                                                            : "false"
-                                                    }
-                                                />
-                                                {errors.pekerjaanyd?.type ===
-                                                    "required" && (
-                                                    <p role="alert">
-                                                        Tolong Nama jangan
-                                                        sampai kosong
-                                                    </p>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                                {/* <button
-                                    type="button"
-                                    onClick={handleAddRiwayat}
-                                >
-                                    Tambah Riwayat Pekerjaan
-                                </button> */}
+                                </h1>
+                                <input
+                                    {...register("pekerjaanyd", {
+                                        required: true,
+                                    })}
+                                    className="w-full border-grey border-opacity-30 p-2 rounded"
+                                    placeholder={t("form.job.expected.ph")}
+                                    value={values.pekerjaanyd}
+                                    id="pekerjaanyd"
+                                    onChange={handleChange}
+                                    aria-invalid={
+                                        errors.pekerjaanyd ? "true" : "false"
+                                    }
+                                />
+                                {errors.pekerjaanyd?.type === "required" && (
+                                    <p role="alert">
+                                        Tolong Nama jangan sampai kosong
+                                    </p>
+                                )}
                             </div>
 
                             {/* File PDF*/}
-                            <div className="w-full pb-4 lg:pt-4 lg:flex justify-end lg:gap-40 xl:gap-56 lg:flex-row-reverse">
-                                <div>
-                                    <h1 className="pb-2">
-                                        {t("form.file")}
-                                        <span className="text-RedTako">*</span>
-                                    </h1>
-                                    <div className="w-full">
-                                        <input
-                                            {...register("fileUpload")} // Gunakan nama yang sesuai
-                                            type="file"
-                                            accept=".pdf" // Batasi hanya menerima file PDF
-                                            className="w-52 border-grey border-opacity-30 rounded"
-                                            value={values.file}
-                                            id="file"
-                                            onChange={handleChange}
-                                        />
-                                    </div>
-                                    <div className="text-xs pt-2">
-                                        <p>
-                                            <span className="text-RedTako">
-                                                *
-                                            </span>
-                                            {t("form.file.note.1")}
-                                        </p>
-                                        <p>
-                                            <span className="text-RedTako">
-                                                *
-                                            </span>
-                                            {t("form.file.note.2")}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="pt-8">
-                                    <ReCAPTCHA
-                                        sitekey="6LfoNxgpAAAAAGhZrxtSO_73hk2nPjPofQkAsmnd"
-                                        onChange={onChangeCaptcha}
-                                    />
-                                </div>
-                            </div>
+                            <FormEmailFile
+                                register={register}
+                                errors={errors}
+                                values={values}
+                                handleChange={handleChange}
+                                onChangeCaptcha={onChangeCaptcha}
+                            />
                             {/* Submit */}
                             <div className="w-full bg-BlueTako rounded-xl text-white text-center hover:bg-BlueTako hover:bg-opacity-90 transition-all">
                                 {isLoading ? (
