@@ -408,7 +408,7 @@ class MdLokerController extends Controller
                 ]);
             }
 
-            $request->validate($rules);
+            // $request->validate($rules);
 
             // $data["email"] = "fantocaa17@gmail.com";
             $data['email'] = 'recruitment@tako.co.id';

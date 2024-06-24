@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 export default function FormEmailJob({
     register,
@@ -10,9 +11,35 @@ export default function FormEmailJob({
     hasWorkExperience,
 }) {
     const { t } = useTranslation();
+    const [workExperiences, setWorkExperiences] = useState([{ id: 1 }]);
+    const [isAdding, setIsAdding] = useState(false);
+    const [isRemoving, setIsRemoving] = useState(false);
 
     const handleWorkExperienceToggle = (value) => {
         setHasWorkExperience(value);
+    };
+
+    const addWorkExperience = () => {
+        setIsAdding(true);
+        setTimeout(() => {
+            setWorkExperiences([
+                ...workExperiences,
+                { id: Date.now() }, // Gunakan Date.now() untuk id unik
+            ]);
+            setIsAdding(false);
+        }, 500); // Simulasi delay
+    };
+
+    const removeWorkExperience = (id) => {
+        if (workExperiences.length > 1) {
+            setIsRemoving(true);
+            setTimeout(() => {
+                setWorkExperiences(
+                    workExperiences.filter((exp) => exp.id !== id),
+                );
+                setIsRemoving(false);
+            }, 500); // Simulasi delay
+        }
     };
 
     return (
@@ -37,7 +64,6 @@ export default function FormEmailJob({
                                 : "bg-white hover:bg-opacity-5 text-DarkTako border border-BlueTako hover:bg-BlueTako"
                         }`}
                         type="button"
-                        // onClick={() => setHasWorkExperience(true)}
                         onClick={() => handleWorkExperienceToggle(true)}
                     >
                         Saya <span className="font-bold">MEMILIKI</span>{" "}
@@ -50,7 +76,6 @@ export default function FormEmailJob({
                                 : "bg-white hover:bg-opacity-5 text-DarkTako border border-BlueTako hover:bg-BlueTako"
                         }`}
                         type="button"
-                        // onClick={() => setHasWorkExperience(false)}
                         onClick={() => handleWorkExperienceToggle(false)}
                     >
                         Saya <span className="font-bold">TIDAK MEMILIKI</span>{" "}
@@ -59,179 +84,242 @@ export default function FormEmailJob({
                 </div>
             </div>
             {hasWorkExperience && (
-                <div className="flex gap-4 flex-wrap">
+                <div>
                     <h1 className="text-xl font-semibold text-center pt-8">
                         Baik, Jika Anda memiliki Pengalaman Kerja sebelumnya,
                         harap untuk mengisi Formulir berikut :
                     </h1>
-                    <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                        <h1 className="pb-2">
-                            {t("form.company")}
-                            <span className="text-RedTako">*</span>
-                        </h1>
-                        <input
-                            {...register("riwayat_nama_perusahaan", {
-                                required: true,
-                            })}
-                            className="w-full p-2 border-grey border-opacity-30 rounded"
-                            placeholder={t("form.company.ph")}
-                            value={values.riwayat_nama_perusahaan}
-                            id="riwayat_nama_perusahaan"
-                            onChange={handleChange}
-                        />
-                        {errors.riwayat_nama_perusahaan && (
-                            <span className="text-RedTako">
-                                {t("form.company.required")}
-                            </span>
-                        )}
-                    </div>
-                    <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                        <h1 className="pb-2">
-                            {t("form.company.address")}
-                            <span className="text-RedTako">*</span>
-                        </h1>
-                        <input
-                            {...register("riwayat_alamat_perusahaan", {
-                                required: true,
-                            })}
-                            className="w-full p-2 border-grey border-opacity-30 rounded"
-                            placeholder={t("form.company.address.ph")}
-                            value={values.riwayat_alamat_perusahaan}
-                            id="riwayat_alamat_perusahaan"
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
-                        <div className="w-full">
-                            <h1 className="pb-2">
-                                {t("form.year.1")}
-                                <span className="text-RedTako">*</span>
-                            </h1>
-                            <input
-                                {...register("riwayat_tahun_in", {
-                                    required: true,
-                                })}
-                                className="w-full p-2 border-grey border-opacity-30 rounded"
-                                placeholder={t("form.year.1.ph")}
-                                type="month"
-                                value={values.riwayat_tahun_in}
-                                id="riwayat_tahun_in"
-                                onChange={handleChange}
-                                max={monthString}
-                            />
-                            {errors.riwayat_tahun_in && (
-                                <span className="text-RedTako">
-                                    {t("form.year.1.required")}
-                                </span>
+                    {workExperiences.map((exp) => (
+                        <div
+                            key={exp.id}
+                            className="flex gap-4 flex-wrap border border-DarkTako border-opacity-25 p-8 rounded-xl mt-8"
+                        >
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                <h1 className="pb-2">
+                                    {t("form.company")}
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register(
+                                        `riwayat_nama_perusahaan_${exp.id}`,
+                                        {
+                                            required: true,
+                                        },
+                                    )}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    placeholder={t("form.company.ph")}
+                                    value={
+                                        values[
+                                            `riwayat_nama_perusahaan_${exp.id}`
+                                        ]
+                                    }
+                                    id={`riwayat_nama_perusahaan_${exp.id}`}
+                                    onChange={handleChange}
+                                />
+                                {errors[
+                                    `riwayat_nama_perusahaan_${exp.id}`
+                                ] && (
+                                    <span className="text-RedTako">
+                                        {t("form.company.required")}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%]">
+                                <h1 className="pb-2">
+                                    {t("form.company.address")}
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register(
+                                        `riwayat_alamat_perusahaan_${exp.id}`,
+                                        {
+                                            required: true,
+                                        },
+                                    )}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    placeholder={t("form.company.address.ph")}
+                                    value={
+                                        values[
+                                            `riwayat_alamat_perusahaan_${exp.id}`
+                                        ]
+                                    }
+                                    id={`riwayat_alamat_perusahaan_${exp.id}`}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
+                                <div className="w-full">
+                                    <h1 className="pb-2">
+                                        {t("form.year.1")}
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register(
+                                            `riwayat_tahun_in_${exp.id}`,
+                                            {
+                                                required: true,
+                                            },
+                                        )}
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                        placeholder={t("form.year.1.ph")}
+                                        type="month"
+                                        value={
+                                            values[`riwayat_tahun_in_${exp.id}`]
+                                        }
+                                        id={`riwayat_tahun_in_${exp.id}`}
+                                        onChange={handleChange}
+                                        max={monthString}
+                                    />
+                                    {errors[`riwayat_tahun_in_${exp.id}`] && (
+                                        <span className="text-RedTako">
+                                            {t("form.year.1.required")}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="w-full">
+                                    <h1 className="pb-2">
+                                        {t("form.year.2")}
+                                        <span className="text-RedTako">*</span>
+                                    </h1>
+                                    <input
+                                        {...register(
+                                            `riwayat_tahun_out_${exp.id}`,
+                                            {
+                                                required: true,
+                                            },
+                                        )}
+                                        className="w-full p-2 border-grey border-opacity-30 rounded"
+                                        placeholder={t("form.year.2.ph")}
+                                        type="month"
+                                        value={
+                                            values[
+                                                `riwayat_tahun_out_${exp.id}`
+                                            ]
+                                        }
+                                        id={`riwayat_tahun_out_${exp.id}`}
+                                        onChange={handleChange}
+                                        max={monthString}
+                                    />
+                                    {errors[`riwayat_tahun_out_${exp.id}`] && (
+                                        <span className="text-RedTako">
+                                            {t("form.year.2.required")}
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                <h1 className="pb-2">
+                                    {t("form.position")}
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register(`riwayat_posisi_${exp.id}`, {
+                                        required: true,
+                                    })}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    placeholder={t("form.position.ph")}
+                                    value={values[`riwayat_posisi_${exp.id}`]}
+                                    id={`riwayat_posisi_${exp.id}`}
+                                    onChange={handleChange}
+                                />
+                                {errors[`riwayat_posisi_${exp.id}`] && (
+                                    <span className="text-RedTako">
+                                        {t("form.position.required")}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="w-full pt-4">
+                                <h1 className="pb-2">
+                                    {t("form.job")}
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <textarea
+                                    {...register(`riwayat_tugas_${exp.id}`, {
+                                        required: true,
+                                    })}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded h-32"
+                                    placeholder={t("form.job.ph")}
+                                    value={values[`riwayat_tugas_${exp.id}`]}
+                                    id={`riwayat_tugas_${exp.id}`}
+                                    onChange={handleChange}
+                                />
+                                {errors[`riwayat_tugas_${exp.id}`] && (
+                                    <span className="text-RedTako">
+                                        {t("form.job.required")}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                <h1 className="pb-2">
+                                    {t("form.stop")}
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register(`riwayat_berhenti_${exp.id}`, {
+                                        required: true,
+                                    })}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    placeholder={t("form.stop.ph")}
+                                    value={values[`riwayat_berhenti_${exp.id}`]}
+                                    id={`riwayat_berhenti_${exp.id}`}
+                                    onChange={handleChange}
+                                />
+                                {errors[`riwayat_berhenti_${exp.id}`] && (
+                                    <span className="text-RedTako">
+                                        {t("form.stop.required")}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
+                                <h1 className="pb-2">
+                                    {t("form.salary")}
+                                    <span className="text-RedTako">*</span>
+                                </h1>
+                                <input
+                                    {...register(`gaji_${exp.id}`, {
+                                        required: true,
+                                    })}
+                                    className="w-full p-2 border-grey border-opacity-30 rounded"
+                                    placeholder={t("form.salary.ph")}
+                                    value={values[`gaji_${exp.id}`]}
+                                    id={`gaji_${exp.id}`}
+                                    onChange={handleChange}
+                                />
+                                {errors[`gaji_${exp.id}`] && (
+                                    <span className="text-RedTako">
+                                        {t("form.salary.required")}
+                                    </span>
+                                )}
+                            </div>
+                            {workExperiences.length > 1 && (
+                                <div className="w-full flex justify-end pt-4">
+                                    <button
+                                        type="button"
+                                        className="bg-RedTako text-white px-4 py-2 rounded-full"
+                                        onClick={() =>
+                                            removeWorkExperience(exp.id)
+                                        }
+                                        disabled={isRemoving}
+                                    >
+                                        {isRemoving
+                                            ? "Menghapus..."
+                                            : "Hapus Pengalaman Kerja"}
+                                    </button>
+                                </div>
                             )}
                         </div>
-                        <div className="w-full">
-                            <h1 className="pb-2">
-                                {t("form.year.2")}
-                                <span className="text-RedTako">*</span>
-                            </h1>
-                            <input
-                                {...register("riwayat_tahun_out", {
-                                    required: true,
-                                })}
-                                className="w-full p-2 border-grey border-opacity-30 rounded"
-                                placeholder={t("form.year.2.ph")}
-                                type="month"
-                                value={values.riwayat_tahun_out}
-                                id="riwayat_tahun_out"
-                                onChange={handleChange}
-                                max={monthString}
-                            />
-                            {errors.riwayat_tahun_out && (
-                                <span className="text-RedTako">
-                                    {t("form.year.2.required")}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                    <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                        <h1 className="pb-2">
-                            {t("form.position")}
-                            <span className="text-RedTako">*</span>
-                        </h1>
-                        <input
-                            {...register("riwayat_posisi", {
-                                required: true,
-                            })}
-                            className="w-full p-2 border-grey border-opacity-30 rounded"
-                            placeholder={t("form.position.ph")}
-                            value={values.riwayat_posisi}
-                            id="riwayat_posisi"
-                            onChange={handleChange}
-                        />
-                        {errors.riwayat_posisi && (
-                            <span className="text-RedTako">
-                                {t("form.position.required")}
-                            </span>
-                        )}
-                    </div>
-                    <div className="w-full pt-4">
-                        <h1 className="pb-2">
-                            {t("form.job")}
-                            <span className="text-RedTako">*</span>
-                        </h1>
-                        <textarea
-                            {...register("riwayat_tugas", {
-                                required: true,
-                            })}
-                            className="w-full p-2 border-grey border-opacity-30 rounded h-32"
-                            placeholder={t("form.job.ph")}
-                            value={values.riwayat_tugas}
-                            id="riwayat_tugas"
-                            onChange={handleChange}
-                        />
-                        {errors.riwayat_tugas && (
-                            <span className="text-RedTako">
-                                {t("form.job.required")}
-                            </span>
-                        )}
-                    </div>
-                    <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                        <h1 className="pb-2">
-                            {t("form.stop")}
-                            <span className="text-RedTako">*</span>
-                        </h1>
-                        <input
-                            {...register("riwayat_berhenti", {
-                                required: true,
-                            })}
-                            className="w-full p-2 border-grey border-opacity-30 rounded"
-                            placeholder={t("form.stop.ph")}
-                            value={values.riwayat_berhenti}
-                            id="riwayat_berhenti"
-                            onChange={handleChange}
-                        />
-                        {errors.riwayat_berhenti && (
-                            <span className="text-RedTako">
-                                {t("form.stop.required")}
-                            </span>
-                        )}
-                    </div>
-                    <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4">
-                        <h1 className="pb-2">
-                            {t("form.salary")}
-                            <span className="text-RedTako">*</span>
-                        </h1>
-                        <input
-                            {...register("gaji", {
-                                required: true,
-                            })}
-                            className="w-full p-2 border-grey border-opacity-30 rounded"
-                            placeholder={t("form.salary.ph")}
-                            value={values.gaji}
-                            id="gaji"
-                            onChange={handleChange}
-                        />
-                        {errors.gaji && (
-                            <span className="text-RedTako">
-                                {t("form.salary.required")}
-                            </span>
-                        )}
+                    ))}
+                    <div className="w-full flex pt-4">
+                        <button
+                            type="button"
+                            className="bg-GreenTako text-white px-4 py-2 rounded-full"
+                            onClick={addWorkExperience}
+                            disabled={isAdding}
+                        >
+                            {isAdding
+                                ? "Menambah..."
+                                : "Tambah Pengalaman Kerja"}
+                        </button>
                     </div>
                 </div>
             )}
