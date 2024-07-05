@@ -37,10 +37,20 @@
     {{-- Promosikan diri Anda : {{ $promosi }}<br /> --}}
     <br />
     *Riwayat Pekerjaan*<br />
-
+    {{-- @foreach ($riwayat as $index => $riwayatItem)
+        Nama Perusahaan : {{ $riwayatItem['riwayat_nama_perusahaan'] }}<br />
+        Alamat Perusahaan : {{ $riwayatItem['riwayat_alamat_perusahaan'] }}<br />
+        Tahun Masuk : {{ $riwayatItem['riwayat_tahun_in'] }}<br />
+        Tahun Keluar : {{ $riwayatItem['riwayat_tahun_out'] }}<br />
+        Posisi/Jabatan : {{ $riwayatItem['riwayat_posisi'] }}<br />
+        Uraian Tugas : {{ $riwayatItem['riwayat_tugas'] }}<br />
+        Alasan Keluar : {{ $riwayatItem['riwayat_berhenti'] }}<br />
+        Gaji : {{ $riwayatItem['gaji'] }}<br />
+        <br />
+    @endforeach --}}
     Nama Perusahaan : {{ $riwayat_nama_perusahaan }}<br />
     Alamat Perusahaan : {{ $riwayat_alamat_perusahaan }}<br />
-    Tahun Masuk : {{ $riwayat_tahun_out }}<br />
+    Tahun Masuk : {{ $riwayat_tahun_in }}<br />
     Tahun Keluar : {{ $riwayat_tahun_out }}<br />
     Posisi/Jabatan : {{ $riwayat_posisi }}<br />
     Uraian Tugas : {{ $riwayat_tugas }}<br />
