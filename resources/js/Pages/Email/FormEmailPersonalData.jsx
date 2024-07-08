@@ -180,7 +180,7 @@ export default function FormEmailPersonalData({
                         <span className="text-RedTako">*</span>
                     </h1>
                     <input
-                        {...register("nomor", {
+                        {...register("no_telp", {
                             required: true,
                         })}
                         className="w-full p-2 border-grey border-opacity-30 rounded"
@@ -190,7 +190,7 @@ export default function FormEmailPersonalData({
                         type="number"
                         onChange={handleChange}
                     />
-                    {errors.nomor && (
+                    {errors.no_telp && (
                         <span className="text-RedTako">
                             No. Telpon jangan sampai kosong
                         </span>

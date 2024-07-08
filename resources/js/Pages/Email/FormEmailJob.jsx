@@ -9,6 +9,7 @@ export default function FormEmailJob({
     monthString,
     setHasWorkExperience,
     hasWorkExperience,
+    setValues,
 }) {
     const { t } = useTranslation();
     const [workExperiences, setWorkExperiences] = useState([{ id: 1 }]);
@@ -22,10 +23,21 @@ export default function FormEmailJob({
     const addWorkExperience = () => {
         setIsAdding(true);
         setTimeout(() => {
-            setWorkExperiences([
-                ...workExperiences,
-                { id: Date.now() }, // Gunakan Date.now() untuk id unik
-            ]);
+            const newExperience = {
+                riwayat_nama_perusahaan: "",
+                riwayat_alamat_perusahaan: "",
+                riwayat_tahun_in: "",
+                riwayat_tahun_out: "",
+                riwayat_posisi: "",
+                riwayat_tugas: "",
+                riwayat_berhenti: "",
+                gaji: "",
+            };
+            setWorkExperiences([...workExperiences, { id: Date.now() }]);
+            setValues((values) => ({
+                ...values,
+                riwayat: [...values.riwayat, newExperience],
+            }));
             setIsAdding(false);
         }, 500); // Simulasi delay
     };
@@ -89,7 +101,7 @@ export default function FormEmailJob({
                         Baik, Jika Anda memiliki Pengalaman Kerja sebelumnya,
                         harap untuk mengisi Formulir berikut :
                     </h1>
-                    {workExperiences.map((exp) => (
+                    {workExperiences.map((exp, index) => (
                         <div
                             key={exp.id}
                             className="flex gap-4 flex-wrap border border-DarkTako border-opacity-25 p-8 rounded-xl mt-8"
@@ -101,7 +113,7 @@ export default function FormEmailJob({
                                 </h1>
                                 <input
                                     {...register(
-                                        `riwayat_nama_perusahaan_${exp.id}`,
+                                        `riwayat[${index}].riwayat_nama_perusahaan`,
                                         {
                                             required: true,
                                         },
@@ -109,15 +121,15 @@ export default function FormEmailJob({
                                     className="w-full p-2 border-grey border-opacity-30 rounded"
                                     placeholder={t("form.company.ph")}
                                     value={
-                                        values[
-                                            `riwayat_nama_perusahaan_${exp.id}`
-                                        ]
+                                        values.riwayat?.[index]
+                                            ?.riwayat_nama_perusahaan || ""
                                     }
-                                    id={`riwayat_nama_perusahaan_${exp.id}`}
-                                    onChange={handleChange}
+                                    id={`riwayat[${index}].riwayat_nama_perusahaan`}
+                                    name={`riwayat[${index}].riwayat_nama_perusahaan`}
+                                    onChange={(e) => handleChange(e, index)}
                                 />
                                 {errors[
-                                    `riwayat_nama_perusahaan_${exp.id}`
+                                    `riwayat[${index}].riwayat_nama_perusahaan`
                                 ] && (
                                     <span className="text-RedTako">
                                         {t("form.company.required")}
@@ -131,7 +143,7 @@ export default function FormEmailJob({
                                 </h1>
                                 <input
                                     {...register(
-                                        `riwayat_alamat_perusahaan_${exp.id}`,
+                                        `riwayat[${index}].riwayat_alamat_perusahaan`,
                                         {
                                             required: true,
                                         },
@@ -139,12 +151,12 @@ export default function FormEmailJob({
                                     className="w-full p-2 border-grey border-opacity-30 rounded"
                                     placeholder={t("form.company.address.ph")}
                                     value={
-                                        values[
-                                            `riwayat_alamat_perusahaan_${exp.id}`
-                                        ]
+                                        values.riwayat?.[index]
+                                            ?.riwayat_alamat_perusahaan || ""
                                     }
-                                    id={`riwayat_alamat_perusahaan_${exp.id}`}
-                                    onChange={handleChange}
+                                    id={`riwayat[${index}].riwayat_alamat_perusahaan`}
+                                    name={`riwayat[${index}].riwayat_alamat_perusahaan`}
+                                    onChange={(e) => handleChange(e, index)}
                                 />
                             </div>
                             <div className="w-full md:w-[48.7%] lg:w-[48.8%] xl:w-[49%] pt-4 flex gap-4">
@@ -155,7 +167,7 @@ export default function FormEmailJob({
                                     </h1>
                                     <input
                                         {...register(
-                                            `riwayat_tahun_in_${exp.id}`,
+                                            `riwayat[${index}].riwayat_tahun_in`,
                                             {
                                                 required: true,
                                             },
@@ -164,13 +176,15 @@ export default function FormEmailJob({
                                         placeholder={t("form.year.1.ph")}
                                         type="month"
                                         value={
-                                            values[`riwayat_tahun_in_${exp.id}`]
+                                            values.riwayat?.[index]
+                                                ?.riwayat_tahun_in || ""
                                         }
-                                        id={`riwayat_tahun_in_${exp.id}`}
-                                        onChange={handleChange}
+                                        id={`riwayat[${index}].riwayat_tahun_in`}
+                                        name={`riwayat[${index}].riwayat_tahun_in`}
+                                        onChange={(e) => handleChange(e, index)}
                                         max={monthString}
                                     />
-                                    {errors[`riwayat_tahun_in_${exp.id}`] && (
+                                    {errors[`riwayat_tahun_in${exp.id}`] && (
                                         <span className="text-RedTako">
                                             {t("form.year.1.required")}
                                         </span>
@@ -183,7 +197,7 @@ export default function FormEmailJob({
                                     </h1>
                                     <input
                                         {...register(
-                                            `riwayat_tahun_out_${exp.id}`,
+                                            `riwayat[${index}].riwayat_tahun_out`,
                                             {
                                                 required: true,
                                             },
@@ -192,15 +206,15 @@ export default function FormEmailJob({
                                         placeholder={t("form.year.2.ph")}
                                         type="month"
                                         value={
-                                            values[
-                                                `riwayat_tahun_out_${exp.id}`
-                                            ]
+                                            values.riwayat?.[index]
+                                                ?.riwayat_tahun_out || ""
                                         }
-                                        id={`riwayat_tahun_out_${exp.id}`}
-                                        onChange={handleChange}
+                                        id={`riwayat[${index}].riwayat_tahun_out`}
+                                        name={`riwayat[${index}].riwayat_tahun_out`}
+                                        onChange={(e) => handleChange(e, index)}
                                         max={monthString}
                                     />
-                                    {errors[`riwayat_tahun_out_${exp.id}`] && (
+                                    {errors[`riwayat_tahun_out${exp.id}`] && (
                                         <span className="text-RedTako">
                                             {t("form.year.2.required")}
                                         </span>
@@ -213,16 +227,23 @@ export default function FormEmailJob({
                                     <span className="text-RedTako">*</span>
                                 </h1>
                                 <input
-                                    {...register(`riwayat_posisi_${exp.id}`, {
-                                        required: true,
-                                    })}
+                                    {...register(
+                                        `riwayat[${index}].riwayat_posisi`,
+                                        {
+                                            required: true,
+                                        },
+                                    )}
                                     className="w-full p-2 border-grey border-opacity-30 rounded"
                                     placeholder={t("form.position.ph")}
-                                    value={values[`riwayat_posisi_${exp.id}`]}
-                                    id={`riwayat_posisi_${exp.id}`}
-                                    onChange={handleChange}
+                                    value={
+                                        values.riwayat?.[index]
+                                            ?.riwayat_posisi || ""
+                                    }
+                                    id={`riwayat[${index}].riwayat_posisi`}
+                                    name={`riwayat[${index}].riwayat_posisi`}
+                                    onChange={(e) => handleChange(e, index)}
                                 />
-                                {errors[`riwayat_posisi_${exp.id}`] && (
+                                {errors[`riwayat_posisi${exp.id}`] && (
                                     <span className="text-RedTako">
                                         {t("form.position.required")}
                                     </span>
@@ -234,16 +255,23 @@ export default function FormEmailJob({
                                     <span className="text-RedTako">*</span>
                                 </h1>
                                 <textarea
-                                    {...register(`riwayat_tugas_${exp.id}`, {
-                                        required: true,
-                                    })}
+                                    {...register(
+                                        `riwayat[${index}].riwayat_tugas`,
+                                        {
+                                            required: true,
+                                        },
+                                    )}
                                     className="w-full p-2 border-grey border-opacity-30 rounded h-32"
                                     placeholder={t("form.job.ph")}
-                                    value={values[`riwayat_tugas_${exp.id}`]}
-                                    id={`riwayat_tugas_${exp.id}`}
-                                    onChange={handleChange}
+                                    value={
+                                        values.riwayat?.[index]
+                                            ?.riwayat_tugas || ""
+                                    }
+                                    id={`riwayat[${index}].riwayat_tugas`}
+                                    name={`riwayat[${index}].riwayat_tugas`}
+                                    onChange={(e) => handleChange(e, index)}
                                 />
-                                {errors[`riwayat_tugas_${exp.id}`] && (
+                                {errors[`riwayat_tugas${exp.id}`] && (
                                     <span className="text-RedTako">
                                         {t("form.job.required")}
                                     </span>
@@ -255,16 +283,23 @@ export default function FormEmailJob({
                                     <span className="text-RedTako">*</span>
                                 </h1>
                                 <input
-                                    {...register(`riwayat_berhenti_${exp.id}`, {
-                                        required: true,
-                                    })}
+                                    {...register(
+                                        `riwayat[${index}].riwayat_berhenti`,
+                                        {
+                                            required: true,
+                                        },
+                                    )}
                                     className="w-full p-2 border-grey border-opacity-30 rounded"
                                     placeholder={t("form.stop.ph")}
-                                    value={values[`riwayat_berhenti_${exp.id}`]}
-                                    id={`riwayat_berhenti_${exp.id}`}
-                                    onChange={handleChange}
+                                    value={
+                                        values.riwayat?.[index]
+                                            ?.riwayat_berhenti || ""
+                                    }
+                                    id={`riwayat[${index}].riwayat_berhenti`}
+                                    name={`riwayat[${index}].riwayat_berhenti`}
+                                    onChange={(e) => handleChange(e, index)}
                                 />
-                                {errors[`riwayat_berhenti_${exp.id}`] && (
+                                {errors[`riwayat_berhenti${exp.id}`] && (
                                     <span className="text-RedTako">
                                         {t("form.stop.required")}
                                     </span>
@@ -276,21 +311,23 @@ export default function FormEmailJob({
                                     <span className="text-RedTako">*</span>
                                 </h1>
                                 <input
-                                    {...register(`gaji_${exp.id}`, {
+                                    {...register(`riwayat[${index}].gaji`, {
                                         required: true,
                                     })}
                                     className="w-full p-2 border-grey border-opacity-30 rounded"
                                     placeholder={t("form.salary.ph")}
-                                    value={values[`gaji_${exp.id}`]}
-                                    id={`gaji_${exp.id}`}
-                                    onChange={handleChange}
+                                    value={values.riwayat?.[index]?.gaji || ""}
+                                    id={`riwayat[${index}].gaji`}
+                                    name={`riwayat[${index}].gaji`}
+                                    onChange={(e) => handleChange(e, index)}
                                 />
-                                {errors[`gaji_${exp.id}`] && (
+                                {errors[`gaji${exp.id}`] && (
                                     <span className="text-RedTako">
                                         {t("form.salary.required")}
                                     </span>
                                 )}
                             </div>
+
                             {workExperiences.length > 1 && (
                                 <div className="w-full flex justify-end pt-4">
                                     <button

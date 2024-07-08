@@ -41,87 +41,18 @@ const FormEmail = () => {
     const { props } = usePage();
     const { md_loker } = props;
 
-    const [provinsiOptions, setProvinsiOptions] = useState([]);
+    // const [provinsiOptions, setProvinsiOptions] = useState([]);
     const [kabupatenOptions, setKabupatenOptions] = useState([]);
-    const [kecamatanOptions, setKecamatanOptions] = useState([]);
+    // const [kecamatanOptions, setKecamatanOptions] = useState([]);
 
-    const [selectedProvinsi, setSelectedProvinsi] = useState(null);
+    // const [selectedProvinsi, setSelectedProvinsi] = useState(null);
 
-    const [isProvinsiSelected, setIsProvinsiSelected] = useState(false);
+    // const [isProvinsiSelected, setIsProvinsiSelected] = useState(false);
+    // const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
     const [isKabupatenSelected, setIsKabupatenSelected] = useState(false);
-    const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
-
     const [riwayatPekerjaan, setRiwayatPekerjaan] = useState([{}]);
-
     const [hasWorkExperience, setHasWorkExperience] = useState(false);
-
-    // const disabledInputClasses =
-    //     "text-DarkTako text-opacity-50 bg-grey bg-opacity-10";
-
-    const [values, setValues] = useState({
-        // password: "meong",
-        pekerjaan: md_loker[0].pekerjaan,
-        jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
-        // perusahaan: md_loker[0].perusahaan,
-        nama: "",
-        nik: "",
-        jenis_kelamin: "",
-        agama: "",
-        tanggal_lahir: "",
-        emails: "",
-        // provinsi: "",
-        kabupaten: "",
-        // kecamatan: "",
-        // kodepos: "",
-        alamat: "",
-        no_telp: "",
-        gaji: "",
-        file: "",
-        // promosi: "",
-        pendidikan: "",
-        prodi: "",
-        thn_in: "",
-        thn_out: "",
-        instansi: "",
-        riwayat_nama_perusahaan: "",
-        riwayat_alamat_perusahaan: "",
-        riwayat_tahun_in: "",
-        riwayat_tahun_out: "",
-        riwayat_posisi: "",
-        riwayat_tugas: "",
-        riwayat_berhenti: "",
-        // ipk: "",
-    });
-
-    const handleChange = (e, index) => {
-        const key = e.target.id;
-        const value = e.target.value;
-
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
-
-            if (file.size > maxSize) {
-                alert("File with a maximum size of 2MB is allowed");
-                e.target.value = null;
-                // You can set an error state or display an alert here if needed
-                return; // Exit the function to prevent further execution
-            }
-        }
-
-        // const updatedRiwayat = [...riwayatPekerjaan];
-        // updatedRiwayat[index][e.target.name] = e.target.value;
-        // setRiwayatPekerjaan(updatedRiwayat);
-
-        setValues((values) => ({
-            ...values,
-            [key]: value,
-        }));
-    };
-
-    // const handleAddRiwayat = () => {
-    //     setRiwayatPekerjaan([...riwayatPekerjaan, {}]);
-    // };
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // Panggil API untuk mendapatkan daftar kabupaten/kota saat komponen dimuat
@@ -150,7 +81,95 @@ const FormEmail = () => {
         values.kabupaten = selectedOption.label;
     };
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [values, setValues] = useState({
+        // password: "meong",
+        pekerjaan: md_loker[0].pekerjaan,
+        jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
+        // perusahaan: md_loker[0].perusahaan,
+        nama: "",
+        nik: "",
+        jenis_kelamin: "",
+        agama: "",
+        tanggal_lahir: "",
+        emails: "",
+        kabupaten: "",
+        alamat: "",
+        no_telp: "",
+        file: "",
+        pendidikan: "",
+        prodi: "",
+        thn_in: "",
+        thn_out: "",
+        instansi: "",
+        riwayat: [
+            {
+                riwayat_nama_perusahaan: "",
+                riwayat_alamat_perusahaan: "",
+                riwayat_tahun_in: "",
+                riwayat_tahun_out: "",
+                riwayat_posisi: "",
+                riwayat_tugas: "",
+                riwayat_berhenti: "",
+                gaji: "",
+            },
+        ],
+    });
+
+    const handleChange = (e, index) => {
+        const key = e.target.id;
+        const value = e.target.value;
+
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+            if (file.size > maxSize) {
+                alert("File with a maximum size of 2MB is allowed");
+                e.target.value = null;
+                return;
+            }
+        }
+
+        // Update nested work experience fields
+        if (key.startsWith("riwayat[")) {
+            const fieldName = key.split(".").pop();
+            const newRiwayat = [...values.riwayat];
+            newRiwayat[index][fieldName] = value;
+
+            setValues((values) => ({
+                ...values,
+                [key]: value,
+                riwayat: newRiwayat,
+            }));
+        } else {
+            setValues((values) => ({
+                ...values,
+                [key]: value,
+            }));
+        }
+    };
+
+    // const handleChange = (e, index) => {
+    //     const key = e.target.id;
+    //     const value = e.target.value;
+
+    //     if (e.target.files && e.target.files[0]) {
+    //         const file = e.target.files[0];
+    //         const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+
+    //         if (file.size > maxSize) {
+    //             alert("File with a maximum size of 2MB is allowed");
+    //             e.target.value = null;
+    //             // You can set an error state or display an alert here if needed
+    //             return; // Exit the function to prevent further execution
+    //         }
+    //     }
+
+    //     setValues((values) => ({
+    //         ...values,
+    //         [key]: value,
+    //     }));
+    // };
 
     function getCookie(name) {
         const value = `; ${document.cookie}`;
@@ -159,6 +178,137 @@ const FormEmail = () => {
     }
 
     axios.defaults.headers.common["X-CSRF-TOKEN"] = getCookie("XSRF-TOKEN");
+
+    // async function onSubmit(e, capca) {
+    //     e.preventDefault();
+    //     setIsLoading(true);
+
+    //     if (capca === "") {
+    //         alert("Silakan isi CAPTCHA terlebih dahulu.");
+    //         setIsLoading(false);
+    //         return;
+    //     }
+
+    //     try {
+    //         const token = document.querySelector(
+    //             'meta[name="csrf-token"]',
+    //         ).content;
+
+    //         // Mempersiapkan data untuk dikirim
+    //         const formData = new FormData();
+    //         formData.append("_token", token);
+    //         formData.append("pekerjaan", values.pekerjaan);
+    //         formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
+    //         formData.append("nama", values.nama);
+    //         formData.append("nik", values.nik);
+    //         formData.append("jenis_kelamin", values.jenis_kelamin);
+    //         formData.append("tanggal_lahir", values.tanggal_lahir);
+    //         formData.append("agama", values.agama);
+    //         formData.append("emails", values.emails);
+    //         formData.append("no_telp", values.no_telp);
+    //         formData.append("kabupaten", values.kabupaten);
+    //         formData.append("alamat", values.alamat);
+    //         formData.append("pendidikan", values.pendidikan);
+    //         formData.append("prodi", values.prodi);
+    //         formData.append("thn_in", values.thn_in);
+    //         formData.append("thn_out", values.thn_out);
+    //         formData.append("instansi", values.instansi);
+
+    //         if (hasWorkExperience) {
+    //             values.riwayat.forEach((item, index) => {
+    //                 formData.append(
+    //                     `riwayat[${index}][riwayat_nama_perusahaan]`,
+    //                     item.riwayat_nama_perusahaan,
+    //                 );
+    //                 formData.append(
+    //                     `riwayat[${index}][riwayat_alamat_perusahaan]`,
+    //                     item.riwayat_alamat_perusahaan,
+    //                 );
+    //                 formData.append(
+    //                     `riwayat[${index}][riwayat_tahun_in]`,
+    //                     item.riwayat_tahun_in,
+    //                 );
+    //                 formData.append(
+    //                     `riwayat[${index}][riwayat_tahun_out]`,
+    //                     item.riwayat_tahun_out,
+    //                 );
+    //                 formData.append(
+    //                     `riwayat[${index}][riwayat_posisi]`,
+    //                     item.riwayat_posisi,
+    //                 );
+    //                 formData.append(
+    //                     `riwayat[${index}][riwayat_tugas]`,
+    //                     item.riwayat_tugas,
+    //                 );
+    //                 formData.append(
+    //                     `riwayat[${index}][riwayat_berhenti]`,
+    //                     item.riwayat_berhenti,
+    //                 );
+    //                 formData.append(`riwayat[${index}][gaji]`, item.gaji);
+    //             });
+    //         }
+
+    //         if (values.file) {
+    //             formData.append("file", values.file);
+    //         }
+
+    //         // Mengirim data menggunakan Axios
+    //         const response = await axios.post(
+    //             "/api/formulir/submit",
+    //             formData,
+    //             {
+    //                 headers: {
+    //                     "Content-Type": "multipart/form-data",
+    //                 },
+    //             },
+    //         );
+
+    //         // Jika berhasil, reset formulir
+    //         setValues({
+    //             pekerjaan: md_loker[0].pekerjaan,
+    //             jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
+    //             nama: "",
+    //             nik: "",
+    //             jenis_kelamin: "",
+    //             agama: "",
+    //             tanggal_lahir: "",
+    //             emails: "",
+    //             kabupaten: "",
+    //             alamat: "",
+    //             no_telp: "",
+    //             pendidikan: "",
+    //             prodi: "",
+    //             thn_in: "",
+    //             thn_out: "",
+    //             instansi: "",
+    //             riwayat: [
+    //                 {
+    //                     riwayat_nama_perusahaan: "",
+    //                     riwayat_alamat_perusahaan: "",
+    //                     riwayat_tahun_in: "",
+    //                     riwayat_tahun_out: "",
+    //                     riwayat_posisi: "",
+    //                     riwayat_tugas: "",
+    //                     riwayat_berhenti: "",
+    //                     gaji: "",
+    //                 },
+    //             ],
+    //             file: "",
+    //         });
+
+    //         // Navigasi ke halaman selesai
+    //         router.get("/finish");
+    //     } catch (error) {
+    //         console.error("Error sending data:", error);
+    //         if (error.response) {
+    //             alert(error.response.data.message); // Tampilkan pesan error dari backend
+    //         } else {
+    //             alert("Terjadi kesalahan saat mengirim data.");
+    //         }
+    //     } finally {
+    //         setIsLoading(false); // Menyembunyikan indikator loading setelah selesai
+    //     }
+    // }
 
     async function onSubmit(e, capca) {
         e.preventDefault();
@@ -169,13 +319,10 @@ const FormEmail = () => {
                 const token = document.querySelector(
                     'meta[name="csrf-token"]',
                 ).content; // Mengambil token CSRF dari elemen <meta>
-
                 const formData = new FormData();
                 formData.append("_token", token); // Menambahkan token CSRF ke FormData
-
                 formData.append("pekerjaan", values.pekerjaan);
                 formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
-                // formData.append("perusahaan", values.perusahaan);
                 formData.append("nama", values.nama);
                 formData.append("nik", values.nik);
                 formData.append("jenis_kelamin", values.jenis_kelamin);
@@ -183,12 +330,8 @@ const FormEmail = () => {
                 formData.append("agama", values.agama);
                 formData.append("emails", values.emails);
                 formData.append("no_telp", values.no_telp);
-                // formData.append("provinsi", values.provinsi);
                 formData.append("kabupaten", values.kabupaten);
-                // formData.append("kecamatan", values.kecamatan);
-                // formData.append("kodepos", values.kodepos);
                 formData.append("alamat", values.alamat);
-                // formData.append("promosi", values.promosi);
                 formData.append("pendidikan", values.pendidikan);
                 formData.append("prodi", values.prodi);
                 formData.append("thn_in", values.thn_in);
@@ -196,46 +339,38 @@ const FormEmail = () => {
                 formData.append("instansi", values.instansi);
                 // Tambahkan data pengalaman kerja hanya jika hasWorkExperience bernilai true
                 if (hasWorkExperience) {
-                    formData.append(
-                        "riwayat_nama_perusahaan",
-                        values.riwayat_nama_perusahaan,
-                    );
-                    formData.append(
-                        "riwayat_alamat_perusahaan",
-                        values.riwayat_alamat_perusahaan,
-                    );
-                    formData.append(
-                        "riwayat_tahun_in",
-                        values.riwayat_tahun_in,
-                    );
-                    formData.append(
-                        "riwayat_tahun_out",
-                        values.riwayat_tahun_out,
-                    );
-                    formData.append("riwayat_posisi", values.riwayat_posisi);
-                    formData.append("riwayat_tugas", values.riwayat_tugas);
-                    formData.append(
-                        "riwayat_berhenti",
-                        values.riwayat_berhenti,
-                    );
-                    formData.append("gaji", values.gaji);
+                    values.riwayat.forEach((item, index) => {
+                        formData.append(
+                            `riwayat[${index}][riwayat_nama_perusahaan]`,
+                            item.riwayat_nama_perusahaan,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_alamat_perusahaan]`,
+                            item.riwayat_alamat_perusahaan,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_tahun_in]`,
+                            item.riwayat_tahun_in,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_tahun_out]`,
+                            item.riwayat_tahun_out,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_posisi]`,
+                            item.riwayat_posisi,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_tugas]`,
+                            item.riwayat_tugas,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_berhenti]`,
+                            item.riwayat_berhenti,
+                        );
+                        formData.append(`riwayat[${index}][gaji]`, item.gaji);
+                    });
                 }
-
-                // formData.append(
-                //     "riwayat_nama_perusahaan",
-                //     values.riwayat_nama_perusahaan,
-                // );
-                // formData.append(
-                //     "riwayat_alamat_perusahaan",
-                //     values.riwayat_alamat_perusahaan,
-                // );
-                // formData.append("riwayat_tahun_in", values.riwayat_tahun_in);
-                // formData.append("riwayat_tahun_out", values.riwayat_tahun_out);
-                // formData.append("riwayat_posisi", values.riwayat_posisi);
-                // formData.append("riwayat_tugas", values.riwayat_tugas);
-                // formData.append("riwayat_berhenti", values.riwayat_berhenti);
-                // formData.append("ipk", values.ipk);
-
                 const file = e.target.fileUpload.files[0];
                 formData.append("file", file);
 
@@ -471,9 +606,6 @@ const FormEmail = () => {
                                 values={values}
                             />
 
-                            {/* <div className="py-4 md:py-8">
-                                <div className="border-t w-full border-DarkTako border-opacity-25" />
-                            </div> */}
                             <FormEmailPersonalData
                                 register={register}
                                 errors={errors}
@@ -483,11 +615,7 @@ const FormEmail = () => {
                                 kabupatenOptions={kabupatenOptions}
                                 handleKabupatenChange={handleKabupatenChange}
                             />
-                            {/* Tempat Lahir*/}
 
-                            {/* <div className="py-4 md:py-8">
-                                <div className="border-t w-full border-DarkTako border-opacity-25" />
-                            </div> */}
                             <FormEmailStudy
                                 register={register}
                                 errors={errors}
@@ -495,14 +623,12 @@ const FormEmail = () => {
                                 handleChange={handleChange}
                                 monthString={monthString}
                             />
-                            {/* <div className="py-4 md:py-8">
-                                <div className="border-t w-full border-DarkTako border-opacity-25" />
-                            </div> */}
 
                             <FormEmailJob
                                 register={register}
                                 errors={errors}
                                 values={values}
+                                setValues={setValues}
                                 handleChange={handleChange}
                                 monthString={monthString}
                                 hasWorkExperience={hasWorkExperience}

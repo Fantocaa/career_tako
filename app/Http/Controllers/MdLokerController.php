@@ -408,9 +408,8 @@ class MdLokerController extends Controller
                 ]);
             }
 
-            // $request->validate($rules);
+            $request->validate($rules);
 
-            // $data["email"] = "fantocaa17@gmail.com";
             $data['email'] = 'recruitment@tako.co.id';
             $data['title'] = '[Web Karir Tako] ';
             $data['body'] = 'Ada yang baru saja melamar Pekerjaan : ';
@@ -435,20 +434,31 @@ class MdLokerController extends Controller
             $data['prodi'] = $request->prodi;
             $data['thn_in'] = $request->thn_in;
             $data['thn_out'] = $request->thn_out;
-            $data['riwayat_nama_perusahaan'] = $request->riwayat_nama_perusahaan;
-            $data['riwayat_alamat_perusahaan'] = $request->riwayat_alamat_perusahaan;
-            $data['riwayat_tahun_in'] = $request->riwayat_tahun_in;
-            $data['riwayat_tahun_out'] = $request->riwayat_tahun_out;
-            $data['riwayat_posisi'] = $request->riwayat_posisi;
-            $data['riwayat_tugas'] = $request->riwayat_tugas;
-            $data['riwayat_berhenti'] = $request->riwayat_berhenti;
-            $data['gaji'] = $request->gaji;
             $data['pekerjaanyd'] = $request->pekerjaanyd;
             // $data['ipk'] = $request->ipk;
+
+            // Inisialisasi array untuk riwayat pekerjaan
+            $data['riwayat'] = [];
+            if ($request->has('riwayat')) {
+                foreach ($request->riwayat as $index => $riwayat) {
+                    $data['riwayat'][] = [
+                        'riwayat_nama_perusahaan' => $riwayat['riwayat_nama_perusahaan'],
+                        'riwayat_alamat_perusahaan' => $riwayat['riwayat_alamat_perusahaan'],
+                        'riwayat_tahun_in' => $riwayat['riwayat_tahun_in'],
+                        'riwayat_tahun_out' => $riwayat['riwayat_tahun_out'],
+                        'riwayat_posisi' => $riwayat['riwayat_posisi'],
+                        'riwayat_tugas' => $riwayat['riwayat_tugas'],
+                        'riwayat_berhenti' => $riwayat['riwayat_berhenti'],
+                        'gaji' => $riwayat['gaji'],
+                    ];
+                }
+            }
 
             // dd($data);
 
             $file = $request->file('file'); // Dapatkan objek file dari permintaan
+
+            // dd($file);
 
             if ($file) {
                 $maxSize = 2 * 1024 * 1024; // 2MB in bytes
@@ -459,7 +469,7 @@ class MdLokerController extends Controller
 
                     Mail::send('Test_mail', $data, function ($message) use ($data, $file, $fileName) {
                         $message->to($data['email'])
-                            ->subject($data['title'] . ' ' . $data['pekerjaan'] . ' - ' . $data['nama']); // Menggabungkan title dan pekerjaan dalam subjek
+                            ->subject($data['title'] . ' ' . $data['pekerjaan'] . ' - ' . $data['nama']);
 
                         $message->attach($file->getRealPath(), [
                             'as' => $fileName, // Nama file yang akan digunakan dalam email
