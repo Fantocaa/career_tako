@@ -118,6 +118,7 @@ const ImageSlider = () => {
                             src={image.url}
                             alt={`Image ${index}`}
                             className="md:mx-auto h-[800px] lg:h-screen object-cover bg-cover md:bg-center"
+                            loading="lazy"
                         />
                     </div>
                 ))}
