@@ -165,13 +165,10 @@ const FormEmail = () => {
                 const token = document.querySelector(
                     'meta[name="csrf-token"]',
                 ).content; // Mengambil token CSRF dari elemen <meta>
-
                 const formData = new FormData();
                 formData.append("_token", token); // Menambahkan token CSRF ke FormData
-
-                // formData.append("pekerjaan", values.pekerjaan);
-                // formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
-                // formData.append("perusahaan", values.perusahaan);
+                formData.append("pekerjaan", values.pekerjaan);
+                formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
                 formData.append("nama", values.nama);
                 formData.append("nik", values.nik);
                 formData.append("jenis_kelamin", values.jenis_kelamin);
@@ -179,47 +176,48 @@ const FormEmail = () => {
                 formData.append("agama", values.agama);
                 formData.append("emails", values.emails);
                 formData.append("no_telp", values.no_telp);
-                // formData.append("provinsi", values.provinsi);
                 formData.append("kabupaten", values.kabupaten);
-                // formData.append("kecamatan", values.kecamatan);
-                // formData.append("kodepos", values.kodepos);
                 formData.append("alamat", values.alamat);
-
-                // formData.append("promosi", values.promosi);
                 formData.append("pendidikan", values.pendidikan);
                 formData.append("prodi", values.prodi);
                 formData.append("thn_in", values.thn_in);
                 formData.append("thn_out", values.thn_out);
                 formData.append("instansi", values.instansi);
+                formData.append("pekerjaanyd", values.pekerjaanyd);
                 // Tambahkan data pengalaman kerja hanya jika hasWorkExperience bernilai true
                 if (hasWorkExperience) {
-                    formData.append(
-                        "riwayat_nama_perusahaan",
-                        values.riwayat_nama_perusahaan,
-                    );
-                    formData.append(
-                        "riwayat_alamat_perusahaan",
-                        values.riwayat_alamat_perusahaan,
-                    );
-                    formData.append(
-                        "riwayat_tahun_in",
-                        values.riwayat_tahun_in,
-                    );
-                    formData.append(
-                        "riwayat_tahun_out",
-                        values.riwayat_tahun_out,
-                    );
-                    formData.append("riwayat_posisi", values.riwayat_posisi);
-                    formData.append("riwayat_tugas", values.riwayat_tugas);
-                    formData.append(
-                        "riwayat_berhenti",
-                        values.riwayat_berhenti,
-                    );
-                    formData.append("gaji", values.gaji);
+                    values.riwayat.forEach((item, index) => {
+                        formData.append(
+                            `riwayat[${index}][riwayat_nama_perusahaan]`,
+                            item.riwayat_nama_perusahaan,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_alamat_perusahaan]`,
+                            item.riwayat_alamat_perusahaan,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_tahun_in]`,
+                            item.riwayat_tahun_in,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_tahun_out]`,
+                            item.riwayat_tahun_out,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_posisi]`,
+                            item.riwayat_posisi,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_tugas]`,
+                            item.riwayat_tugas,
+                        );
+                        formData.append(
+                            `riwayat[${index}][riwayat_berhenti]`,
+                            item.riwayat_berhenti,
+                        );
+                        formData.append(`riwayat[${index}][gaji]`, item.gaji);
+                    });
                 }
-                formData.append("pekerjaanyd", values.pekerjaanyd);
-                // formData.append("ipk", values.ipk);
-
                 const file = e.target.fileUpload.files[0];
                 formData.append("file", file);
 
@@ -230,8 +228,8 @@ const FormEmail = () => {
                         // Membersihkan formulir jika berhasil
                         setValues({
                             // password: "meong",
-                            // pekerjaan: md_loker.pekerjaan,
-                            // jenis_pekerjaan: md_loker.jenis_pekerjaan,
+                            pekerjaan: md_loker.pekerjaan,
+                            jenis_pekerjaan: md_loker.jenis_pekerjaan,
                             // perusahaan: md_loker[0].perusahaan,
                             nama: "",
                             nik: "",
@@ -247,7 +245,7 @@ const FormEmail = () => {
                             no_telp: "",
                             gaji: "",
                             file: "",
-                            // promosi: "",
+                            promosi: "",
                             pendidikan: "",
                             prodi: "",
                             thn_in: "",
@@ -260,7 +258,6 @@ const FormEmail = () => {
                             riwayat_posisi: "",
                             riwayat_tugas: "",
                             riwayat_berhenti: "",
-                            pekerjaanyd: "",
                         });
 
                         // console.log("Sukses:", response.data);
@@ -288,12 +285,12 @@ const FormEmail = () => {
                     });
             } catch (error) {
                 console.error("Error sending data:", error);
-                alert("2");
+                alert("2.");
             }
         } else {
             setTimeout(() => {
                 // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
-                alert("3");
+                alert("3.");
                 setIsLoading(false);
             }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         }

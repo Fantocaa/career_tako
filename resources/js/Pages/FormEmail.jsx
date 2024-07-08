@@ -179,137 +179,6 @@ const FormEmail = () => {
 
     axios.defaults.headers.common["X-CSRF-TOKEN"] = getCookie("XSRF-TOKEN");
 
-    // async function onSubmit(e, capca) {
-    //     e.preventDefault();
-    //     setIsLoading(true);
-
-    //     if (capca === "") {
-    //         alert("Silakan isi CAPTCHA terlebih dahulu.");
-    //         setIsLoading(false);
-    //         return;
-    //     }
-
-    //     try {
-    //         const token = document.querySelector(
-    //             'meta[name="csrf-token"]',
-    //         ).content;
-
-    //         // Mempersiapkan data untuk dikirim
-    //         const formData = new FormData();
-    //         formData.append("_token", token);
-    //         formData.append("pekerjaan", values.pekerjaan);
-    //         formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
-    //         formData.append("nama", values.nama);
-    //         formData.append("nik", values.nik);
-    //         formData.append("jenis_kelamin", values.jenis_kelamin);
-    //         formData.append("tanggal_lahir", values.tanggal_lahir);
-    //         formData.append("agama", values.agama);
-    //         formData.append("emails", values.emails);
-    //         formData.append("no_telp", values.no_telp);
-    //         formData.append("kabupaten", values.kabupaten);
-    //         formData.append("alamat", values.alamat);
-    //         formData.append("pendidikan", values.pendidikan);
-    //         formData.append("prodi", values.prodi);
-    //         formData.append("thn_in", values.thn_in);
-    //         formData.append("thn_out", values.thn_out);
-    //         formData.append("instansi", values.instansi);
-
-    //         if (hasWorkExperience) {
-    //             values.riwayat.forEach((item, index) => {
-    //                 formData.append(
-    //                     `riwayat[${index}][riwayat_nama_perusahaan]`,
-    //                     item.riwayat_nama_perusahaan,
-    //                 );
-    //                 formData.append(
-    //                     `riwayat[${index}][riwayat_alamat_perusahaan]`,
-    //                     item.riwayat_alamat_perusahaan,
-    //                 );
-    //                 formData.append(
-    //                     `riwayat[${index}][riwayat_tahun_in]`,
-    //                     item.riwayat_tahun_in,
-    //                 );
-    //                 formData.append(
-    //                     `riwayat[${index}][riwayat_tahun_out]`,
-    //                     item.riwayat_tahun_out,
-    //                 );
-    //                 formData.append(
-    //                     `riwayat[${index}][riwayat_posisi]`,
-    //                     item.riwayat_posisi,
-    //                 );
-    //                 formData.append(
-    //                     `riwayat[${index}][riwayat_tugas]`,
-    //                     item.riwayat_tugas,
-    //                 );
-    //                 formData.append(
-    //                     `riwayat[${index}][riwayat_berhenti]`,
-    //                     item.riwayat_berhenti,
-    //                 );
-    //                 formData.append(`riwayat[${index}][gaji]`, item.gaji);
-    //             });
-    //         }
-
-    //         if (values.file) {
-    //             formData.append("file", values.file);
-    //         }
-
-    //         // Mengirim data menggunakan Axios
-    //         const response = await axios.post(
-    //             "/api/formulir/submit",
-    //             formData,
-    //             {
-    //                 headers: {
-    //                     "Content-Type": "multipart/form-data",
-    //                 },
-    //             },
-    //         );
-
-    //         // Jika berhasil, reset formulir
-    //         setValues({
-    //             pekerjaan: md_loker[0].pekerjaan,
-    //             jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
-    //             nama: "",
-    //             nik: "",
-    //             jenis_kelamin: "",
-    //             agama: "",
-    //             tanggal_lahir: "",
-    //             emails: "",
-    //             kabupaten: "",
-    //             alamat: "",
-    //             no_telp: "",
-    //             pendidikan: "",
-    //             prodi: "",
-    //             thn_in: "",
-    //             thn_out: "",
-    //             instansi: "",
-    //             riwayat: [
-    //                 {
-    //                     riwayat_nama_perusahaan: "",
-    //                     riwayat_alamat_perusahaan: "",
-    //                     riwayat_tahun_in: "",
-    //                     riwayat_tahun_out: "",
-    //                     riwayat_posisi: "",
-    //                     riwayat_tugas: "",
-    //                     riwayat_berhenti: "",
-    //                     gaji: "",
-    //                 },
-    //             ],
-    //             file: "",
-    //         });
-
-    //         // Navigasi ke halaman selesai
-    //         router.get("/finish");
-    //     } catch (error) {
-    //         console.error("Error sending data:", error);
-    //         if (error.response) {
-    //             alert(error.response.data.message); // Tampilkan pesan error dari backend
-    //         } else {
-    //             alert("Terjadi kesalahan saat mengirim data.");
-    //         }
-    //     } finally {
-    //         setIsLoading(false); // Menyembunyikan indikator loading setelah selesai
-    //     }
-    // }
-
     async function onSubmit(e, capca) {
         e.preventDefault();
         setIsLoading(true);
@@ -590,7 +459,7 @@ const FormEmail = () => {
                     <h2 className="text-center py-4 rounded-lg mb-4">
                         {t("form.sub")}
                     </h2>
-                    <div className="bg-white mx-auto rounded-lg px-2 md:px-4 lg:pt-4">
+                    <div className="bg-white mx-auto rounded-lg px-2 md:px-4 pt-4">
                         <form
                             onSubmit={onSubmit}
                             // onSubmit={handleSubmit(onSubmit)}
