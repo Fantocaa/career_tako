@@ -49,7 +49,7 @@ Route::get('/loker', function () {
     return Inertia::render('LokerNew');
 });
 
-Route::get('/loker/perusahaan/{id}', [MdLokerController::class, 'show_detail_perusahaan_loker']);
+// Route::get('/loker/perusahaan/{id}', [MdLokerController::class, 'show_detail_perusahaan_loker']);
 
 Route::get('/loker/pekerjaan/{id}', [MdLokerController::class, 'show_detail_loker_intern']);
 

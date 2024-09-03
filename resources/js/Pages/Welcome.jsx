@@ -12,6 +12,7 @@ import WarnNew from "@/Components/Shared/Homepage/Section/WarnNew";
 import { useEffect, useState, useContext } from "react";
 import "../../css/app.css";
 import { useTranslation } from "react-i18next";
+import { Head } from "@inertiajs/react";
 
 export default function Welcome() {
     const [data, setData] = useState([]); // State untuk data perusahaan
@@ -38,7 +39,9 @@ export default function Welcome() {
 
     // Render halaman setelah data diambil dan halaman ter-load
     return (
-        <Layout pageTitle="Beranda | Tako Karier">
+        <>
+            {/* <Layout pageTitle="Beranda | Tako Karier"> */}
+            <Head title="Beranda" />
             {/* <Head>
             <title>Meong</title>
             // <meta name="description" content="Your page description" /> */}
@@ -64,6 +67,7 @@ export default function Welcome() {
                 <Footer />
             </section>
             {/* </Head> */}
-        </Layout>
+            {/* </Layout> */}
+        </>
     );
 }

@@ -15,6 +15,7 @@ import HeaderFAQ from "../Components/HeaderFAQ";
 import { Link } from "@inertiajs/react";
 import BackToTop from "@/Components/BackToTop";
 import Nav from "@/Components/Shared/Homepage/Nav";
+import { Head } from "@inertiajs/react";
 
 // import {
 //     Accordion,
@@ -247,7 +248,9 @@ const Faq = () => {
     ];
 
     return (
-        <Layout pageTitle="FAQ | Tako Karier">
+        <>
+            {/* <Layout pageTitle="FAQ | Tako Karier"> */}
+            <Head title="FAQ" />
             <section className="bg-BgTako font-inter text-DarkTako flex flex-col">
                 <Nav />
                 <HeaderFAQ />
@@ -286,7 +289,9 @@ const Faq = () => {
                 <BackToTop />
                 <Footer />
             </section>
-        </Layout>
+
+            {/* </Layout> */}
+        </>
     );
 };
 

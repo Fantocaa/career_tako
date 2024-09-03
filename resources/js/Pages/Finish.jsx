@@ -3,10 +3,13 @@ import NavElse from "@/Components/Shared/Else/NavElse";
 import Footer from "@/Components/Shared/Footer";
 import { Link } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
+import { Head } from "@inertiajs/react";
 
 const Finish = () => {
     return (
-        <Layout pageTitle="Finish | Tako Karier">
+        // <Layout pageTitle="Finish | Tako Karier">
+        <>
+            <Head title="Finish" />
             <section className="bg-BgTako font-inter text-DarkTako md:pt-16 mx-auto min-h-screen flex flex-col">
                 <NavElse />
                 <div className="flex flex-col justify-center pt-24 pb-16 md:pb-24 container mx-auto">
@@ -35,7 +38,8 @@ const Finish = () => {
 
                 <Footer />
             </section>
-        </Layout>
+        </>
+        // </Layout>
     );
 };
 

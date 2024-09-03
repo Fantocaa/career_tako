@@ -5,7 +5,7 @@ import Footer from "@/Components/Shared/Footer";
 import Nav from "@/Components/Shared/Homepage/Nav";
 import SectionLoker from "@/Components/Loker/SectionLoker";
 import axios from "axios";
-import { usePage } from "@inertiajs/react";
+import { usePage, Head } from "@inertiajs/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -129,7 +129,9 @@ const LokerNew = () => {
     }
 
     return (
-        <Layout pageTitle="Lowongan Pekerjaan | Tako Karier">
+        // <Layout pageTitle="Lowongan Pekerjaan | Tako Karier">
+        <>
+            <Head title="Lowongan Pekerjaan" />
             <SkeletonTheme baseColor="#202020" highlightColor="#444444">
                 <section className="bg-BgTako font-inter text-DarkTako">
                     <Nav />
@@ -140,7 +142,8 @@ const LokerNew = () => {
                     <Footer />
                 </section>
             </SkeletonTheme>
-        </Layout>
+        </>
+        // </Layout>
     );
 };
 

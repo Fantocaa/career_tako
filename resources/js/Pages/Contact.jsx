@@ -7,6 +7,7 @@ import Layout from "@/Layouts/Layout";
 import BackToTop from "@/Components/BackToTop";
 import HeaderContact from "@/Components/HeaderContact";
 import { useTranslation } from "react-i18next";
+import { Head } from "@inertiajs/react";
 
 const Contact = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan
@@ -38,7 +39,9 @@ const Contact = () => {
     // }
 
     return (
-        <Layout pageTitle="Contact | Tako Karier">
+        // <Layout pageTitle="Contact | Tako Karier">
+        <>
+            <Head title="Contact" />
             <section className="bg-BgTako font-inter text-DarkTako">
                 <Nav />
                 <HeaderContact />
@@ -86,7 +89,8 @@ const Contact = () => {
                 <BackToTop />
                 <Footer />
             </section>
-        </Layout>
+        </>
+        // </Layout>
     );
 };
 

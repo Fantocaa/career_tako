@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
-import { Link, router, usePage } from "@inertiajs/react";
+import { Link, router, usePage, Head } from "@inertiajs/react";
 import Select from "react-select";
 import axios from "axios";
 import Layout from "@/Layouts/Layout";
@@ -311,7 +311,9 @@ const FormEmail = () => {
     const monthString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
 
     return (
-        <Layout pageTitle="Drop Formulir | Tako Karier">
+        <>
+            <Head title="Drop Formulir" />
+            {/* <Layout pageTitle="Drop Formulir | Tako Karier"> */}
             <section className="flex-wrap items-center font-inter w-full bg-BgTako text-DarkTako">
                 <NavElse />
                 <div className="bg-BgTako py-32 container max-w-[1440px] px-4 md:px-8 xl:px-16 2xl:px-32 mx-auto">
@@ -443,7 +445,8 @@ const FormEmail = () => {
                 </div>
                 <Footer />
             </section>
-        </Layout>
+            {/* </Layout> */}
+        </>
     );
 };
 
