@@ -38,22 +38,47 @@ const FormEmail = () => {
 
     const formRef = useRef(null);
 
-    const { props } = usePage();
+    // const { props } = usePage();
     // const { md_loker } = props;
 
-    const [provinsiOptions, setProvinsiOptions] = useState([]);
+    // const [provinsiOptions, setProvinsiOptions] = useState([]);
     const [kabupatenOptions, setKabupatenOptions] = useState([]);
-    const [kecamatanOptions, setKecamatanOptions] = useState([]);
+    // const [kecamatanOptions, setKecamatanOptions] = useState([]);
 
-    const [selectedProvinsi, setSelectedProvinsi] = useState(null);
+    // const [selectedProvinsi, setSelectedProvinsi] = useState(null);
 
-    const [isProvinsiSelected, setIsProvinsiSelected] = useState(false);
+    // const [isProvinsiSelected, setIsProvinsiSelected] = useState(false);
+    // const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
     const [isKabupatenSelected, setIsKabupatenSelected] = useState(false);
-    const [isKecamatanSelected, setIsKecamatanSelected] = useState(false);
-
     const [riwayatPekerjaan, setRiwayatPekerjaan] = useState([{}]);
-
     const [hasWorkExperience, setHasWorkExperience] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        // Panggil API untuk mendapatkan daftar kabupaten/kota saat komponen dimuat
+        fetch("/api/kabupaten")
+            .then((response) => response.json())
+            .then((data) => {
+                // Memformat data kabupaten/kota menjadi format yang diperlukan oleh react-select
+                const formattedOptions = data.map((item) => ({
+                    label: item.nama,
+                    value: item.kode,
+                }));
+                setKabupatenOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error("Error fetching kabupaten/kota data:", error);
+            });
+    }, []);
+
+    const handleKabupatenChange = (selectedOption) => {
+        setIsKabupatenSelected(true); // Setel state menjadi true saat kabupaten/kota dipilih
+
+        // Ambil kode kabupaten/kota yang dipilih
+        const kodeKabupaten = selectedOption.value;
+
+        values.kabupaten = selectedOption.label;
+    };
 
     const disabledInputClasses =
         "text-DarkTako text-opacity-50 bg-grey bg-opacity-10";
@@ -83,17 +108,22 @@ const FormEmail = () => {
         thn_in: "",
         thn_out: "",
         instansi: "",
-        riwayat_nama_perusahaan: "",
-        riwayat_alamat_perusahaan: "",
-        riwayat_tahun_in: "",
-        riwayat_tahun_out: "",
-        riwayat_posisi: "",
-        riwayat_tugas: "",
-        riwayat_berhenti: "",
+        riwayat: [
+            {
+                riwayat_nama_perusahaan: "",
+                riwayat_alamat_perusahaan: "",
+                riwayat_tahun_in: "",
+                riwayat_tahun_out: "",
+                riwayat_posisi: "",
+                riwayat_tugas: "",
+                riwayat_berhenti: "",
+                gaji: "",
+            },
+        ],
         pekerjaanyd: "",
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e, index) => {
         const key = e.target.id;
         const value = e.target.value;
 
@@ -109,44 +139,29 @@ const FormEmail = () => {
             }
         }
 
-        setValues((values) => ({
-            ...values,
-            [key]: value,
-        }));
-    };
+        // Update nested work experience fields
+        if (key.startsWith("riwayat[")) {
+            const fieldName = key.split(".").pop();
+            const newRiwayat = [...values.riwayat];
+            newRiwayat[index][fieldName] = value;
 
-    useEffect(() => {
-        // Panggil API untuk mendapatkan daftar kabupaten/kota saat komponen dimuat
-        fetch("/api/kabupaten")
-            .then((response) => response.json())
-            .then((data) => {
-                // Memformat data kabupaten/kota menjadi format yang diperlukan oleh react-select
-                const formattedOptions = data.map((item) => ({
-                    label: item.nama,
-                    value: item.kode,
-                }));
-                setKabupatenOptions(formattedOptions);
-            })
-            .catch((error) => {
-                console.error("Error fetching kabupaten/kota data:", error);
-            });
-    }, []);
-
-    const handleKabupatenChange = (selectedOption) => {
-        setIsKabupatenSelected(true); // Setel state menjadi true saat kabupaten/kota dipilih
-
-        // Ambil kode kabupaten/kota yang dipilih
-        const kodeKabupaten = selectedOption.value;
-
-        values.kabupaten = selectedOption.label;
+            setValues((values) => ({
+                ...values,
+                [key]: value,
+                riwayat: newRiwayat,
+            }));
+        } else {
+            setValues((values) => ({
+                ...values,
+                [key]: value,
+            }));
+        }
     };
 
     let capca = "";
     const onChangeCaptcha = (value) => {
         capca = value;
     };
-
-    const [isLoading, setIsLoading] = useState(false);
 
     function getCookie(name) {
         const value = `; ${document.cookie}`;
@@ -167,8 +182,8 @@ const FormEmail = () => {
                 ).content; // Mengambil token CSRF dari elemen <meta>
                 const formData = new FormData();
                 formData.append("_token", token); // Menambahkan token CSRF ke FormData
-                formData.append("pekerjaan", values.pekerjaan);
-                formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
+                // formData.append("pekerjaan", values.pekerjaan);
+                // formData.append("jenis_pekerjaan", values.jenis_pekerjaan);
                 formData.append("nama", values.nama);
                 formData.append("nik", values.nik);
                 formData.append("jenis_kelamin", values.jenis_kelamin);
@@ -326,7 +341,7 @@ const FormEmail = () => {
                     <div className="bg-white mx-auto rounded-lg px-2 md:px-4 pt-8">
                         <form
                             onSubmit={onSubmit}
-                            ref={formRef}
+                            // ref={formRef}
                             className="items-center space-y-4 w-full px-4 mx-auto pb-8"
                             // action="/submit_loker"
                             method="post"
@@ -384,6 +399,7 @@ const FormEmail = () => {
                                 register={register}
                                 errors={errors}
                                 values={values}
+                                setValues={setValues}
                                 handleChange={handleChange}
                                 monthString={monthString}
                                 hasWorkExperience={hasWorkExperience}

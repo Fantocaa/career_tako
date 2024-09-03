@@ -366,7 +366,7 @@ const FormEmail = () => {
 
     const changeLanguage = (language) => {
         // setIsTranslating(true);
-        console.log(`Changing language to: ${language}`);
+        // console.log(`Changing language to: ${language}`);
         const elementsToTranslate = document.querySelectorAll(".translate");
 
         elementsToTranslate.forEach((element, index) => {
