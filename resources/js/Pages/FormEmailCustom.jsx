@@ -243,8 +243,8 @@ const FormEmail = () => {
                         // Membersihkan formulir jika berhasil
                         setValues({
                             // password: "meong",
-                            pekerjaan: md_loker.pekerjaan,
-                            jenis_pekerjaan: md_loker.jenis_pekerjaan,
+                            // pekerjaan: md_loker.pekerjaan,
+                            // jenis_pekerjaan: md_loker.jenis_pekerjaan,
                             // perusahaan: md_loker[0].perusahaan,
                             nama: "",
                             nik: "",
