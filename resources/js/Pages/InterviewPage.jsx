@@ -23,8 +23,8 @@ const InterviewPage = () => {
     return (
         <div className="container max-w-[1440px] mx-auto px-4 py-8 md:px-8 xl:px-16 2xl:px-32 pt-16 lg:pt-32 ">
             <div className="bg-BlueTako p-4 md:p-8 py-16 rounded-xl gap-8">
-                <div className="w-full md:flex gap-4">
-                    <div className="w-full md:w-[50%] lg:w-[40%] pb-8 md:pb-0 lg:pb-8 md:flex lg:block items-center">
+                <div className="w-full md:flex justify-between">
+                    <div className="w-full md:w-[50%] lg:w-[46%] pb-8 md:pb-0 lg:pb-8 md:flex lg:block items-center">
                         <h1 className="text-[36px] leading-[40px] font-bold text-white lg:w-[95%]">
                             {t("video.title.1")}{" "}
                             <span className="text-YellowTako">
@@ -45,7 +45,7 @@ const InterviewPage = () => {
                             </button>
                         </Link>
                     </div>
-                    <div className="bg-white p-4 rounded-xl mx-auto">
+                    <div className="bg-white p-4 rounded-xl">
                         <div className="relative rounded-xl overflow-hidden w-full h-[178.88px] md:w-[318px] lg:w-[480px] lg:h-full xl:w-[480px] xl:h-[360px]">
                             <iframe
                                 // src="https://www.youtube.com/embed/KKKd_aEVdew?si=j1QnnuwK_YtTtFf6"

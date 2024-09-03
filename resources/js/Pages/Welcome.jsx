@@ -9,10 +9,11 @@ import BackToTop from "@/Components/BackToTop";
 import Layout from "@/Layouts/Layout";
 import ContentRecruitmentNew from "@/Components/Shared/Homepage/Section/ContentRecruitmentNew";
 import WarnNew from "@/Components/Shared/Homepage/Section/WarnNew";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "../../css/app.css";
+import { useTranslation } from "react-i18next";
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome() {
     const [data, setData] = useState([]); // State untuk data perusahaan
     const [isPageLoaded, setIsPageLoaded] = useState(false);
 

@@ -41,7 +41,7 @@ const Footer = () => {
                             <img src="/images/x.svg" alt="" />
                         </Link> */}
                             <a
-                                href="https://www.linkedin.com/company/tako-anugerah-koporasi-pt/"
+                                href="https://www.linkedin.com/company/pt-tako-anugerah-koporasi/"
                                 target="_blank"
                                 alt="linkedin"
                                 aria-label="Linkedin"

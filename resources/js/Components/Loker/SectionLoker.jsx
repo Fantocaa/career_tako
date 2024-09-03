@@ -249,15 +249,15 @@ const SectionLoker = () => {
                                 value={selectedOption}
                                 onChange={handleSelectChange}
                             >
-                                <option value="All" className="">
+                                <option value="All">
                                     {/* Semua Program */}
                                     {t("job.all")}
                                 </option>
-                                <option value="Internship" className="">
+                                <option value="Internship">
                                     {/* Internship (Magang / Praktik Kerja) */}
                                     {t("job.intern")}
                                 </option>
-                                <option value="Profesional" className="">
+                                <option value="Profesional">
                                     {/* Profesional (Fresh Graduate / Berpengalaman) */}
                                     {t("job.pro")}
                                 </option>

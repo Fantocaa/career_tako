@@ -498,7 +498,7 @@ class MdLokerController extends Controller
      */
     public function store(Storemd_lokerRequest $request)
     {
-        // dd($request->all());
+        // dd($request);
 
         // Validasi
         $request->validate([
@@ -508,6 +508,7 @@ class MdLokerController extends Controller
             'deskripsi' => 'required',
             'isi_konten' => 'required',
             'batas_lamaran' => 'required',
+            'lokasi' => 'required',
             'skill.*' => 'required',
         ], [
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
@@ -515,6 +516,7 @@ class MdLokerController extends Controller
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
+            'lokasi.required' => 'Lokasi Lamaran harus diisi.',
             'skill.*.required' => 'Skill Harus Diisi',
         ]);
 
@@ -525,6 +527,7 @@ class MdLokerController extends Controller
         $form->isi_konten = $request->deskripsi;
         $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
+        $form->lokasi = $request->lokasi;
         $form->save();
 
         foreach ($request->skill as $skill => $value) {
@@ -559,6 +562,7 @@ class MdLokerController extends Controller
             'deskripsi' => 'required',
             'isi_konten' => 'required',
             'batas_lamaran' => 'required',
+            'lokasi' => 'required',
             'skill.*' => 'required',
         ], [
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
@@ -566,6 +570,7 @@ class MdLokerController extends Controller
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
+            'Lokasi.required' => 'Lokasi Lamaran harus diisi.',
             'skill.*.required' => 'Skill Harus Diisi',
         ]);
 
@@ -577,6 +582,7 @@ class MdLokerController extends Controller
         $form->isi_konten = $request->deskripsi;
         $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
+        $form->Lokasi = $request->Lokasi;
         $form->save();
 
         // $i itu sama dengan i++

@@ -52,14 +52,14 @@ const ImageSlider = () => {
                             {t("Jelajahi Peluang Karier Anda")}
                         </p>
                         <h1
-                            className="text-white text-4xl lg:text-6xl font-bold pb-2 md:pb-4 2xl:w-[80%]"
+                            className="text-white text-4xl lg:text-6xl font-bold pb-2 md:pb-4 xl:w-[80%] 2xl:w-[80%]"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >
                             Where Passion Meets Profession
                         </h1>
                         <p
-                            className="text-white text-xl 2xl:w-[75%] translate"
+                            className="text-white text-xl xl:w-[75%] 2xl:w-[75%] translate"
                             data-aos="fade-up"
                             data-aos-duration="1000"
                         >

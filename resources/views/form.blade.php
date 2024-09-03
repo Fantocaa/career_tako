@@ -99,6 +99,14 @@
                         <input type="date" name="batas_lamaran" required class="rounded-2xl w-full">
                     </label>
 
+                    <label for="lokasi" class="w-[49%] relative">
+                        <h1 class="mb-2">Lokasi</h1>
+                        {{-- <img src="/images/calendar.svg" alt=""
+                            class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
+                        <input type="text" name="lokasi" required class="rounded-2xl w-full"
+                            placeholder="Masukkan Lokasi">
+                    </label>
+
                     <div class="flex w-full gap-4 flex-wrap">
                         <template v-for="(item, index) in namaskill">
                             <div>
