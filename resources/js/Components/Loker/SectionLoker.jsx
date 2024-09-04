@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
 import Axios from "axios";
 import SelectJobPerusahaan from "../Shared/Job/SelectJob/SelectJobPerusahaan";
 import SelectJob2 from "../Shared/Job/SelectJob/SelectJob2";
@@ -189,7 +188,7 @@ const SectionLoker = () => {
 
     return (
         <SkeletonTheme baseColor="#202020" highlightColor="#444444">
-            <section className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16  pb-16 md:py-8 flex-wrap items-center text-DarkTako container max-w-[1440px]">
+            <section className="flex mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 pt-24 lg:pt-16 pb-16 md:py-8 flex-wrap items-center text-DarkTako container max-w-[1440px]">
                 <>
                     <div className="flex justify-between items-end pb-8 flex-wrap gap-4 w-full">
                         <h1 className="text-BlueTako font-bold text-2xl ">
@@ -283,7 +282,6 @@ const SectionLoker = () => {
                             onClick={handleMenu1Click}
                             disabled={menu1Active}
                         >
-                            {/* <img src="/images/logo/menu1.svg" alt="" className="" /> */}
                             <svg
                                 width="24"
                                 height="24"

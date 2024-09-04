@@ -52,26 +52,36 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                         key={item.id}
                     >
                         <div className="w-[75%]">
-                            <h1 className="font-bold translate">
+                            <h1 className="font-bold translate text-xl">
                                 {item.pekerjaan}
                             </h1>
                             {/* <h2 className="text-BlueTako pt-2">
                                 {item.perusahaan}
                             </h2> */}
-                            <p className="text-xs pt-4 translate">
+                            <p className="text-xs md:text-base pt-4 translate">
                                 {item.deskripsi}
                             </p>
-                            <div className="flex items-center gap-8 pt-2">
+                            <div className="flex items-center gap-8 pt-4 pb-1">
                                 <div className="flex gap-2">
-                                    <img src="/images/program.svg" alt="" />
+                                    <img
+                                        src="/images/program.svg"
+                                        alt="program"
+                                    />
                                     <h1>{item.jenis_pekerjaan}</h1>
                                 </div>
                                 <div className="flex gap-2">
-                                    <img src="/images/clock.svg" alt="" />
+                                    <img src="/images/clock.svg" alt="clock" />
                                     <h1>{item.batas_lamaran}</h1>
                                 </div>
+                                <div className="flex gap-2">
+                                    <img
+                                        src="/images/icon/location.svg"
+                                        alt="location"
+                                    />
+                                    <h1 className="">{item.lokasi}</h1>
+                                </div>
                             </div>
-                            <div className="pt-4 flex gap-4">
+                            <div className="pt-4 flex gap-2">
                                 {formDataSkill
                                     .filter(
                                         (skills) =>
@@ -81,7 +91,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                         <div key={skillItem.id}>
                                             {/* Tampilkan skill sesuai kebutuhan */}
 
-                                            <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs">
+                                            <div className="px-4 py-2 bg-BlueTako rounded-full text-white text-xs md:text-sm">
                                                 <p className="translate">
                                                     {skillItem.nama_skill}
                                                 </p>
@@ -90,7 +100,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                     ))}
                             </div>
                             {/* <div className="text-xs pt-4">
-                            
+
                             Batas Lamaran : {formatDate(item.batas_lamaran)}
                         </div> */}
                         </div>
