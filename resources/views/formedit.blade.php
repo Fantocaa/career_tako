@@ -155,9 +155,8 @@
                         <div>
                             <label for="isi_konten" class="w-full">
                                 <h1 class="mb-2">Deskripsi Singkat</h1>
-                                <input id="isi_konten" type="text" name="isi_konten"
-                                    value="{{ $md_loker[0]->deskripsi }}" required class="rounded-2xl w-full"
-                                    maxlength="255">
+                                <textarea id="isi_konten" type="text" name="isi_konten" value="{{ $md_loker[0]->deskripsi }}" required
+                                    class="rounded-2xl w-full h-32" maxlength="255"></textarea>
                                 @error('isi_konten')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -178,16 +177,16 @@
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </label>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="pt-8">
-                                <button type="submit"
-                                    class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
-                            </div>
-                            <div class="pt-[41px]">
-                                <a href="/admin/dashboard/lowongan_pekerjaan">
-                                    <span class="bg-RedTako text-white px-4 py-[9.5px] rounded-2xl">Batal</span>
-                                </a>
+                            <div class="flex gap-4">
+                                <div class="pt-8">
+                                    <button type="submit"
+                                        class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
+                                </div>
+                                <div class="pt-[41px]">
+                                    <a href="/admin/dashboard/lowongan_pekerjaan">
+                                        <span class="bg-RedTako text-white px-4 py-[9.5px] rounded-2xl">Batal</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <label for="deskripsi" class="w-full ">
