@@ -27,14 +27,6 @@ class MdLokerController extends Controller
     public function index(Request $request)
     {
         $posts = DB::table('md_lokers')  // Memulai query dengan tabel 'md_lokers'
-            // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan, skills.nama_skill')
-
-            // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, md_lokers.deleted_at, perusahaans.perusahaan')
-
-            // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
-
-            // ->leftjoin('skills', 'md_lokers.id', '=', 'skills.id_kotak_loker')
-
             ->whereNull('md_lokers.deleted_at')
 
             ->get();
@@ -509,6 +501,7 @@ class MdLokerController extends Controller
             'isi_konten' => 'required',
             'batas_lamaran' => 'required',
             'lokasi' => 'required',
+            'status' => 'required',
             'skill.*' => 'required',
         ], [
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
@@ -517,6 +510,7 @@ class MdLokerController extends Controller
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
             'lokasi.required' => 'Lokasi Lamaran harus diisi.',
+            'status.required' => 'Status harus diisi',
             'skill.*.required' => 'Skill Harus Diisi',
         ]);
 
@@ -528,6 +522,7 @@ class MdLokerController extends Controller
         $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
         $form->lokasi = $request->lokasi;
+        $form->status = $request->status;
         $form->save();
 
         foreach ($request->skill as $skill => $value) {
@@ -563,6 +558,7 @@ class MdLokerController extends Controller
             'isi_konten' => 'required',
             'batas_lamaran' => 'required',
             'lokasi' => 'required',
+            'status' => 'required',
             'skill.*' => 'required',
         ], [
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
@@ -571,6 +567,7 @@ class MdLokerController extends Controller
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
             'Lokasi.required' => 'Lokasi Lamaran harus diisi.',
+            'status.required' => 'Status harus diisi',
             'skill.*.required' => 'Skill Harus Diisi',
         ]);
 
@@ -583,6 +580,7 @@ class MdLokerController extends Controller
         $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
         $form->Lokasi = $request->Lokasi;
+        $form->status = $request->status;
         $form->save();
 
         // $i itu sama dengan i++

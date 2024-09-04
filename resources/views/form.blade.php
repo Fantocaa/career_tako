@@ -19,7 +19,9 @@
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
 
     <style>
-        trix-toolbar [data-trix-button-group= 'file-tools'] {
+        .trix-button--icon-decrease-nesting-level,
+        .trix-button--icon-strike,
+        .trix-button--icon-code {
             display: none;
         }
 
@@ -45,6 +47,10 @@
         }
     </style>
 
+    <script>
+        window.errors =
+            @json($errors->toArray());
+    </script>
 </head>
 
 <body class="bg-BgTako text-DarkTako h-full">
@@ -67,6 +73,9 @@
                         <h1 class="mb-2">Pekerjaan</h1>
                         <input type="text" name="pekerjaan" required class="rounded-2xl w-full"
                             placeholder="Masukkan Nama Pekerjaan">
+                        @error('pekerjaan')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </label>
 
                     {{-- <label for="perusahaan" class="w-[49%]">
@@ -90,6 +99,9 @@
                             <option value="Internship">Internship</option>
                             <option value="Profesional">Profesional</option>
                         </select>
+                        @error('jenis_pekerjaan')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </label>
 
                     <label for="batas_lamaran" class="w-[49%] relative">
@@ -97,6 +109,9 @@
                         {{-- <img src="/images/calendar.svg" alt=""
                             class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
                         <input type="date" name="batas_lamaran" required class="rounded-2xl w-full">
+                        @error('batas_lamaran')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </label>
 
                     <label for="lokasi" class="w-[49%] relative">
@@ -105,6 +120,9 @@
                             class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
                         <input type="text" name="lokasi" required class="rounded-2xl w-full"
                             placeholder="Masukkan Lokasi">
+                        @error('lokasi')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </label>
 
                     <div class="flex w-full gap-4 flex-wrap">
@@ -112,84 +130,75 @@
                             <div>
                                 <h1 class="mb-2">Skill</h1>
                                 <label for="skill" class="flex gap-2">
-                                    <input type="text" name="skill[]" required class="rounded-2xl w-full"
-                                        placeholder="Masukkan Nama Skill">
-                                    <span v-on:Click='hapusKonten(index, item)'
-                                        class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
-                                    </span>
+                                    <input type="text" :name="`skill[${index}]`" required class="rounded-2xl w-full"
+                                        placeholder="Masukkan Nama Skill" v-model="item.nama">
+                                    <span v-on:click='hapusKonten(index, item)'
+                                        class="cursor-pointer flex items-center bg-RedTako px-4 py-2 rounded-2xl text-white">Delete</span>
+                                    {{-- <span v-if="errors[`skill.${index}`]"
+                                        class="text-red-500">{{ errors[`skill.${index}`][0] }}</span> --}}
                                 </label>
                             </div>
                         </template>
                         <div class="flex items-end">
-                            <span v-on:Click='onClickSkill()'
-                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">Add
+                            <span v-on:click='onClickSkill()'
+                                class="cursor-pointer flex items-center bg-BlueTako px-4 py-2 rounded-2xl text-white">Add
                                 Req Skill +</span>
                         </div>
                     </div>
 
-                    {{-- <div class="flex w-full gap-4 flex-wrap">
-                        <template v-for="(item, index) in idskilldelete":key="index">
-                            <input type="text" name="idskilldelete[]" v-model="item.id" hidden>
-                        </template>
-                        <template v-for="(item, index) in namaskill" :key="index">
-                            <div>
-                                <h1 class="mb-2">Skill</h1>
-                                <label for="skill" class="flex gap-2">
-                                    <input type="text" name="idskill[]" v-model="item.id" hidden>
-                                    <input type="text" name="skill[]" v-model="item.nama" required
-                                        class="rounded-2xl w-full">
-                                    <span v-on:Click='hapusKonten(index, item.id)'
-                                        class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
-                                    </span>
-                                </label>
+
+                    <div class="grid grid-cols-2 gap-4 w-full">
+                        <div>
+                            <label for="isi_konten" class="w-full">Deskripsi Singkat
+                                <textarea id="isi_konten" type="text" name="isi_konten" required class="rounded-2xl w-full h-32"
+                                    placeholder="Masukkan Deskripsi" maxlength="255"></textarea>
+                                @error('isi_konten')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                                <div class="flex gap-2 justify-end pt-2">
+                                    <p>Maksimal Karakter =</p>
+                                    <p id="charCount"> 0 / 255</p>
+                                </div>
+                            </label>
+                            <label for="status" class="w-[49%]">
+                                <h1 class="mb-2">Status</h1>
+                                <select class="w-full rounded-2xl" name="status">
+                                    <option class="">Pilih Status Post</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Tidak Aktif">Tidak Aktif</option>
+                                </select>
+                                @error('status')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </label>
+                            <div class="flex gap-4 items-center">
+                                <div class="pt-8">
+                                    <button type="submit"
+                                        class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
+                                </div>
+                                <div class="pt-[33px]">
+                                    <a href="/admin/dashboard/lowongan_pekerjaan">
+                                        <span class="bg-RedTako text-white px-4 py-[9.5px] rounded-2xl">Batal</span>
+                                    </a>
+                                </div>
                             </div>
-                        </template>
-                        <div class="flex items-end">
-                            <span v-on:Click='onClickSkill()'
-                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">
-                                Add</span>
                         </div>
-                        <div class="flex items-end">
-                        </div>
-                    </div> --}}
 
-                    <label for="isi_konten" class="w-full">Deskripsi Singkat
-                        <input id="isi_konten" type="text" name="isi_konten" required class="rounded-2xl w-full"
-                            placeholder="Masukkan Deskripsi" maxlength="255">
-                        <div class="flex gap-2 justify-end pt-2">
-                            <p>Maksimal Karakter =</p>
-                            <p id="charCount"> 0 / 255</p>
-                        </div>
-                    </label>
+                        {{-- <label for="deskripsi">
+                            <h1 class="mb-2">Isi Konten</h1>
+                            <textarea id="summernote" type="text" name="deskripsi" class="rounded-2xl w-full"></textarea>
+                        </label> --}}
 
-                    {{-- <label for="deskripsi">
-                        <h1 class="mb-2">Isi Konten</h1>
-                        <textarea id="summernote" type="text" name="deskripsi" class="rounded-2xl w-full"></textarea>
-                    </label> --}}
-
-                    <label for="deskripsi" class="w-full">
-                        <h1 class="mb-2">Isi Konten</h1>
-                        <input id="deskripsi" type="hidden" name="deskripsi">
-                        <trix-editor input="deskripsi"
-                            class="h-64 overflow-scroll hover:cursor-auto overflow-x-hidden"></trix-editor>
-                    </label>
-                </div>
-
-                {{-- <div class="flex gap-4">
-                    <div class="pt-8">
-                        <button type="submit" class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
-                    </div>
-
-                </div> --}}
-
-                <div class="flex gap-4 items-center">
-                    <div class="pt-8">
-                        <button type="submit" class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
-                    </div>
-                    <div class="pt-[33px]">
-                        <a href="/admin/dashboard/lowongan_pekerjaan">
-                            <span class="bg-RedTako text-white px-4 py-[9.5px] rounded-2xl ">Batal</span>
-                        </a>
+                        <label for="deskripsi" class="w-full">
+                            <h1 class="mb-2">Isi Konten</h1>
+                            <input id="deskripsi" type="hidden" name="deskripsi">
+                            <trix-editor input="deskripsi"
+                                class="h-80 overflow-scroll hover:cursor-auto overflow-x-hidden rounded-2xl"
+                                placeholder="Masukkan Isi Konten"></trix-editor>
+                            @error('deskripsi')
+                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </label>
                     </div>
                 </div>
         </div>
@@ -204,29 +213,7 @@
 
     <script>
         $(document).ready(function() {
-            $('.js-example-basic-single').select2({
-                placeholder: 'Pilih Program',
-                ajax: {
-                    url: '/api/json_perusahaan', // Ganti dengan URL API yang sesuai
-                    dataType: 'json',
-                    // processResults: function(data) {
-                    //     return {
-                    //         results: data.perusahaan
-                    //     };
-                    // }
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.perusahaan,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
+            $('.js-example-basic-single').select2({});
         });
     </script>
 
@@ -254,6 +241,7 @@
                     namaskill: [],
                     id: [],
                     idskilldelete: [],
+                    errors: window.errors || {}, // Mengambil pesan error dari window.errors
                 };
             },
             mounted() {
@@ -275,58 +263,48 @@
                     // deleteEvent: function(event) {
                     //     this.events.splice(this.event);
                     // }
-                }
+                },
+                onSubmit() {
+                    // Reset error messages
+                    this.errors = {};
+
+                    // Validasi setiap field
+                    if (!this.pekerjaan) {
+                        this.errors.pekerjaan = "Pekerjaan harus diisi.";
+                    }
+                    if (!this.jenis_pekerjaan) {
+                        this.errors.jenis_pekerjaan = "Jenis pekerjaan harus dipilih.";
+                    }
+                    if (!this.batas_lamaran) {
+                        this.errors.batas_lamaran = "Batas lamaran harus diisi.";
+                    }
+                    if (!this.lokasi) {
+                        this.errors.lokasi = "Lokasi harus diisi.";
+                    }
+                    if (this.namaskill.length === 0) {
+                        this.errors.namaskill = "Minimal 1 skill harus diisi.";
+                    } else {
+                        this.namaskill.forEach((skill, index) => {
+                            if (!skill.nama) {
+                                this.errors[`namaskill_${index}`] = "Nama skill harus diisi.";
+                            }
+                        });
+                    }
+                    if (!this.isi_konten) {
+                        this.errors.isi_konten = "Deskripsi singkat harus diisi.";
+                    }
+                    if (!this.deskripsi) {
+                        this.errors.deskripsi = "Isi konten harus diisi.";
+                    }
+
+                    // Jika tidak ada error, submit form
+                    if (Object.keys(this.errors).length === 0) {
+                        this.$refs.form.submit();
+                    }
+                },
             },
         }).mount("#vue");
     </script>
-
-    {{-- <script>
-        Vue.createApp({
-            data() {
-                return {
-                    namaskill: [],
-                    id: [],
-                    idskilldelete: [],
-                };
-            },
-            mounted() {
-                this.viewSkill();
-            },
-            methods: {
-                viewSkill() {
-                    var id = $('#id').val();
-                    var self = this;
-                    $.ajax('/admin/table/viewskill/' + id, {
-                        type: 'GET',
-                        success: function(data, status, xhr) {
-                            console.log(data);
-                            self.namaskill = data[0].map(function(dt) {
-                                return {
-                                    nama: dt.nama_skill,
-                                    id: dt.id
-                                };
-                            });
-                        },
-                    });
-                },
-                onClickSkill() {
-                    if (this.namaskill.length < 6) {
-                        this.namaskill.push({
-                            nama: '',
-                            id: ''
-                        });
-                    }
-                },
-                hapusKonten(index, idLama) {
-                    this.namaskill.splice(index, 1);
-                    this.idskilldelete.push({
-                        id: idLama
-                    });
-                },
-            },
-        }).mount("#vue");
-    </script> --}}
-
 </body>
 
 </html>

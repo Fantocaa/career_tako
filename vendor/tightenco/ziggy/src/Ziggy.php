@@ -5,9 +5,14 @@ namespace Tighten\Ziggy;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Reflector;
 use Illuminate\Support\Str;
 use JsonSerializable;
+use Laravel\Folio\FolioManager;
+use Laravel\Folio\FolioRoutes;
+use Laravel\Folio\Pipeline\MatchedView;
+use Laravel\Folio\Pipeline\PotentiallyBindablePathSegment;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
@@ -16,21 +21,15 @@ class Ziggy implements JsonSerializable
 {
     protected static $cache;
 
-    protected $url;
-    protected $group;
-    protected $routes;
+    protected Collection $routes;
 
-    public function __construct($group = null, string $url = null)
-    {
-        $this->group = $group;
-
+    public function __construct(
+        protected $group = null,
+        protected ?string $url = null,
+    ) {
         $this->url = rtrim($url ?? url('/'), '/');
 
-        if (! static::$cache) {
-            static::$cache = $this->nameKeyedRoutes();
-        }
-
-        $this->routes = static::$cache;
+        $this->routes = static::$cache ??= $this->nameKeyedRoutes();
     }
 
     public static function clearRoutes()
@@ -44,16 +43,11 @@ class Ziggy implements JsonSerializable
             return $this->group($group);
         }
 
-        // return unfiltered routes if user set both config options.
-        if (config()->has('ziggy.except') && config()->has('ziggy.only')) {
-            return $this->routes;
-        }
-
-        if (config()->has('ziggy.except')) {
+        if (config()->has('ziggy.except') && ! config()->has('ziggy.only')) {
             return $this->filter(config('ziggy.except'), false)->routes;
         }
 
-        if (config()->has('ziggy.only')) {
+        if (config()->has('ziggy.only') && ! config()->has('ziggy.except')) {
             return $this->filter(config('ziggy.only'))->routes;
         }
 
@@ -89,9 +83,7 @@ class Ziggy implements JsonSerializable
     {
         $filters = Arr::wrap($filters);
 
-        $reject = collect($filters)->every(function (string $pattern) {
-            return Str::startsWith($pattern, '!');
-        });
+        $reject = collect($filters)->every(fn (string $pattern) => str_starts_with($pattern, '!'));
 
         $this->routes = $reject
             ? $this->routes->reject(function ($route, $name) use ($filters) {
@@ -107,7 +99,7 @@ class Ziggy implements JsonSerializable
                 }
 
                 foreach ($filters as $pattern) {
-                    if (Str::startsWith($pattern, '!') && Str::is(substr($pattern, 1), $name)) {
+                    if (str_starts_with($pattern, '!') && Str::is(substr($pattern, 1), $name)) {
                         return false;
                     }
                 }
@@ -121,65 +113,50 @@ class Ziggy implements JsonSerializable
     /**
      * Get a list of the application's named routes, keyed by their names.
      */
-    private function nameKeyedRoutes()
+    private function nameKeyedRoutes(): Collection
     {
         [$fallbacks, $routes] = collect(app('router')->getRoutes()->getRoutesByName())
-            ->reject(function ($route) {
-                return Str::startsWith($route->getName(), 'generated::');
-            })
-            ->partition(function ($route) {
-                return $route->isFallback;
-            });
+            ->reject(fn ($route) => str_starts_with($route->getName(), 'generated::'))
+            ->partition('isFallback');
 
         $bindings = $this->resolveBindings($routes->toArray());
 
-        $fallbacks->map(function ($route, $name) use ($routes) {
-            $routes->put($name, $route);
-        });
+        $fallbacks->each(fn ($route, $name) => $routes->put($name, $route));
 
-        return $routes->map(function ($route) use ($bindings) {
-            return collect($route)->only(['uri', 'methods', 'wheres'])
-                ->put('domain', $route->domain())
-                ->put('parameters', $route->parameterNames())
-                ->put('bindings', $bindings[$route->getName()] ?? [])
-                ->when($middleware = config('ziggy.middleware'), function ($collection) use ($middleware, $route) {
-                    if (is_array($middleware)) {
-                        return $collection->put('middleware', collect($route->middleware())->intersect($middleware)->values()->all());
-                    }
-
-                    return $collection->put('middleware', $route->middleware());
-                })->filter();
-        });
+        return tap($this->folioRoutes(), fn ($all) => $routes->each(
+            fn ($route, $name) => $all->put(
+                $name,
+                collect($route)->only(['uri', 'methods', 'wheres'])
+                    ->put('domain', $route->domain())
+                    ->put('parameters', $route->parameterNames())
+                    ->put('bindings', $bindings[$route->getName()] ?? [])
+                    ->when(config('ziggy.middleware'), fn ($collection, $middleware) => is_array($middleware)
+                        ? $collection->put('middleware', collect($route->middleware())->intersect($middleware)->values()->all())
+                        : $collection->put('middleware', $route->middleware()),
+                    )
+                    ->filter()
+            )
+        ));
     }
 
-    /**
-     * Convert this Ziggy instance to an array.
-     */
     public function toArray(): array
     {
         return [
             'url' => $this->url,
-            'port' => parse_url($this->url)['port'] ?? null,
-            'defaults' => method_exists(app('url'), 'getDefaultParameters')
-                ? app('url')->getDefaultParameters()
-                : [],
+            'port' => parse_url($this->url, PHP_URL_PORT) ?? null,
+            'defaults' => app('url')->getDefaultParameters(),
             'routes' => $this->applyFilters($this->group)->toArray(),
         ];
     }
 
-    /**
-     * Convert this Ziggy instance into something JSON serializable.
-     */
     public function jsonSerialize(): array
     {
-        return array_merge($routes = $this->toArray(), [
+        return [
+            ...($routes = $this->toArray()),
             'defaults' => (object) $routes['defaults'],
-        ]);
+        ];
     }
 
-    /**
-     * Convert this Ziggy instance to JSON.
-     */
     public function toJson(int $options = 0): string
     {
         return json_encode($this->jsonSerialize(), $options);
@@ -190,8 +167,6 @@ class Ziggy implements JsonSerializable
      */
     private function resolveBindings(array $routes): array
     {
-        $scopedBindings = method_exists(head($routes) ?: '', 'bindingFields');
-
         foreach ($routes as $name => $route) {
             $bindings = [];
 
@@ -200,9 +175,8 @@ class Ziggy implements JsonSerializable
                     break;
                 }
 
-                $model = class_exists(Reflector::class)
-                    ? Reflector::getParameterClassName($parameter)
-                    : $parameter->getType()->getName();
+                $model = Reflector::getParameterClassName($parameter);
+
                 $override = (new ReflectionClass($model))->isInstantiable() && (
                     (new ReflectionMethod($model, 'getRouteKeyName'))->class !== Model::class
                     || (new ReflectionMethod($model, 'getKeyName'))->class !== Model::class
@@ -213,9 +187,85 @@ class Ziggy implements JsonSerializable
                 $bindings[$parameter->getName()] = $override ? app($model)->getRouteKeyName() : 'id';
             }
 
-            $routes[$name] = $scopedBindings ? array_merge($bindings, $route->bindingFields()) : $bindings;
+            $routes[$name] = [...$bindings, ...$route->bindingFields()];
         }
 
         return $routes;
+    }
+
+    /**
+     * @see https://github.com/laravel/folio/blob/master/src/Console/ListCommand.php
+     */
+    private function folioRoutes(): Collection
+    {
+        if (! app()->has(FolioRoutes::class)) {
+            return collect();
+        }
+
+        // Use existing named Folio routes (instead of searching view files) to respect route caching
+        return collect(app(FolioRoutes::class)->routes())->map(function (array $route) {
+            $uri = rtrim($route['baseUri'], '/') . str_replace([$route['mountPath'], '.blade.php'], '', $route['path']);
+
+            $segments = explode('/', $uri);
+            $parameters = [];
+            $bindings = [];
+
+            foreach ($segments as $i => $segment) {
+                // Folio doesn't support sub-segment parameters
+                if (str_starts_with($segment, '[')) {
+                    $param = new PotentiallyBindablePathSegment($segment);
+
+                    $parameters[] = $name = $param->variable();
+                    $segments[$i] = "{{$name}}";
+
+                    if ($field = $param->field()) {
+                        $bindings[$name] = $field;
+                    } elseif ($param->bindable()) {
+                        $override = (new ReflectionClass($param->class()))->isInstantiable() && (
+                            (new ReflectionMethod($param->class(), 'getRouteKeyName'))->class !== Model::class
+                            || (new ReflectionMethod($param->class(), 'getKeyName'))->class !== Model::class
+                            || (new ReflectionProperty($param->class(), 'primaryKey'))->class !== Model::class
+                        );
+
+                        $bindings[$name] = $override ? app($param->class())->getRouteKeyName() : 'id';
+                    }
+                }
+            }
+
+            $uri = implode('/', $segments);
+            $uri = Str::replaceEnd('/index', '', $uri);
+
+            if ($route['domain'] && str_contains($route['domain'], '{')) {
+                preg_match_all('/{(.*?)}/', $route['domain'], $matches);
+                array_unshift($parameters, ...$matches[1]);
+            }
+
+            $middleware = [];
+
+            if ($ziggyMiddleware = config('ziggy.middleware')) {
+                $mountPath = Arr::first(
+                    app(FolioManager::class)->mountPaths(),
+                    fn ($mountPath) => $mountPath->path === realpath($route['mountPath'])
+                );
+                $matchedView = new MatchedView(realpath($route['path']), [], $route['mountPath']);
+
+                $middleware = $mountPath->middleware
+                    ->match($matchedView)
+                    ->prepend('web')
+                    ->merge($matchedView->inlineMiddleware())
+                    ->unique()
+                    ->when(is_array($ziggyMiddleware), fn ($middleware) => $middleware->intersect($ziggyMiddleware))
+                    ->values()->all();
+            }
+
+            return array_filter([
+                'uri' => $uri === '' ? '/' : trim($uri, '/'),
+                'methods' => ['GET'],
+                'domain' => $route['domain'],
+                'parameters' => $parameters,
+                'bindings' => $bindings,
+                'middleware' => $middleware,
+            ]);
+        });
     }
 }

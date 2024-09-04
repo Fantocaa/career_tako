@@ -6,14 +6,14 @@ import Layout from "@/Layouts/Layout";
 
 const TableDashboard = () => {
     const handleDelete = (id) => {
-        console.log(id);
+        // console.log(id);
         // Axios.delete(`/form/${id}`)
         Axios.get(`/admin/table/hapus/` + id)
             .then((response) => {
                 // Handle jika penghapusan berhasil
                 // Misalnya, Anda bisa memperbarui ulang dataFromAPI untuk merefresh tampilan tabel
                 const updatedData = dataFromAPI.filter(
-                    (item) => item.id !== id
+                    (item) => item.id !== id,
                 );
                 setDataFromAPI(updatedData);
                 // alert("Item berhasil dihapus.");
@@ -24,10 +24,6 @@ const TableDashboard = () => {
                 // alert("Terjadi kesalahan saat menghapus item.");
             });
     };
-
-    const [values, setValues] = useState({
-        id: "",
-    });
 
     const columns = [
         {
@@ -52,7 +48,10 @@ const TableDashboard = () => {
             name: "Batas Lamaran",
             selector: (row) => row.batas_lamaran,
         },
-
+        {
+            name: "Status",
+            selector: (row) => row.status,
+        },
         {
             name: "Aksi",
             cell: (row) => (
@@ -90,11 +89,11 @@ const TableDashboard = () => {
                         className="hapus-modal modal"
                     >
                         <div className="modal-box text-DarkTako bg-white ">
-                            <h3 className="font-bold text-lg">
+                            <h3 className="font-bold text-xl">
                                 Kamu yakin ingin mengshapus?
                             </h3>
                             <p className="py-4">
-                                Press ESC key or click the button below to close
+                                Kamu tidak akan bisa mengembalikannya lagi
                             </p>
                             <div className="modal-action ">
                                 <form method="dialog" className="flex gap-4">
@@ -175,19 +174,20 @@ const TableDashboard = () => {
                             />
                         </div>
                     </div>
-                    <div className="pb-8"></div>
-
-                    {Array.isArray(filteredData) && filteredData.length > 0 ? (
-                        <DataTable
-                            // title="Tambah Loker"
-                            columns={columns}
-                            data={filteredData}
-                            fixedHeader
-                            pagination
-                        />
-                    ) : (
-                        <p>Tunggu sebentar</p>
-                    )}
+                    <div className="pt-8">
+                        {Array.isArray(filteredData) &&
+                        filteredData.length > 0 ? (
+                            <DataTable
+                                // title="Tambah Loker"
+                                columns={columns}
+                                data={filteredData}
+                                fixedHeader
+                                pagination
+                            />
+                        ) : (
+                            <p>Tunggu sebentar</p>
+                        )}
+                    </div>
                 </div>
                 {/* Open the modal using document.getElementById('ID').showModal() method */}
             </div>

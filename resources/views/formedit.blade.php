@@ -18,8 +18,11 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
 
+
     <style>
-        trix-toolbar [data-trix-button-group= 'file-tools'] {
+        .trix-button--icon-decrease-nesting-level,
+        .trix-button--icon-strike,
+        .trix-button--icon-code {
             display: none;
         }
 
@@ -85,16 +88,6 @@
                         </select>
                     </label> --}}
 
-                    {{-- <label for="jenis_pekerjaan" class="w-[49%]">
-                        <h1>Jenis Pekerjaan</h1>
-
-                        <select class="js-example-basic-single full-height w-full h-full" name="jenis_pekerjaan"
-                            value="{{ $md_loker[0]->jenis_pekerjaan }}">
-                            <option value="Internship">Internship</option>
-                            <option value="Profesional">Profesional</option>
-                        </select>
-                    </label> --}}
-
                     <label for="jenis_pekerjaan" class="w-[49%]">
                         <h1 class="mb-2">Jenis Pekerjaan</h1>
                         <select class="w-full rounded-2xl" name="jenis_pekerjaan"
@@ -103,6 +96,9 @@
                             <option value="Internship">Internship</option>
                             <option value="Profesional">Profesional</option>
                         </select>
+                        @error('jenis_pekerjaan')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </label>
 
                     <label for="batas_lamaran" class="w-[49%] relative">
@@ -111,6 +107,9 @@
                             class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
                         <input type="date" name="batas_lamaran" value="{{ $md_loker[0]->batas_lamaran }}" required
                             class="rounded-2xl w-full">
+                        @error('batas_lamaran')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </label>
 
                     <label for="lokasi" class="w-[49%] relative">
@@ -119,6 +118,9 @@
                             class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
                         <input type="text" name="lokasi" required class="rounded-2xl w-full"
                             value="{{ $md_loker[0]->lokasi }}" placeholder="Masukkan Lokasi">
+                        @error('lokasi')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
                     </label>
 
                     <div class="flex w-full gap-4 flex-wrap">
@@ -149,32 +151,59 @@
                         </div>
                     </div>
 
-                    <label for="isi_konten" class="w-full">
-                        <h1 class="mb-2">Deskripsi Singkat</h1>
-                        <input id="isi_konten" type="text" name="isi_konten" value="{{ $md_loker[0]->deskripsi }}"
-                            required class="rounded-2xl w-full" maxlength="255">
-                        <div class="flex gap-2 justify-end pt-2">
-                            <p>Maksimal Karakter =</p>
-                            <p id="charCount"> 0 / 255</p>
+                    <div class="grid grid-cols-2 gap-4 w-full">
+                        <div>
+                            <label for="isi_konten" class="w-full">
+                                <h1 class="mb-2">Deskripsi Singkat</h1>
+                                <input id="isi_konten" type="text" name="isi_konten"
+                                    value="{{ $md_loker[0]->deskripsi }}" required class="rounded-2xl w-full"
+                                    maxlength="255">
+                                @error('isi_konten')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                                <div class="flex gap-2 justify-end pt-2">
+                                    <p>Maksimal Karakter =</p>
+                                    <p id="charCount"> 0 / 255</p>
+                                </div>
+                            </label>
+                            <label for="status" class="w-[49%]">
+                                <h1 class="mb-2">Status</h1>
+                                <select class="w-full rounded-2xl" name="status"
+                                    value="{{ $md_loker[0]->status }}">
+                                    <option class="">Pilih Status Post</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Tidak Aktif">Tidak Aktif</option>
+                                </select>
+                                @error('status')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </label>
                         </div>
-                    </label>
-                    <label for="deskripsi" class="w-full ">
-                        <h1 class="mb-2">Isi Konten</h1>
-                        <input id="deskripsi" type="hidden" name="deskripsi" value="{{ $md_loker[0]->isi_konten }}">
-                        <trix-editor input="deskripsi"
-                            class="h-64 overflow-scroll hover:cursor-auto overflow-x-hidden"></trix-editor>
-                    </label>
-                </div>
-                <div class="flex gap-4">
-                    <div class="pt-8">
-                        <button type="submit" class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
+                        <div class="flex gap-4">
+                            <div class="pt-8">
+                                <button type="submit"
+                                    class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
+                            </div>
+                            <div class="pt-[41px]">
+                                <a href="/admin/dashboard/lowongan_pekerjaan">
+                                    <span class="bg-RedTako text-white px-4 py-[9.5px] rounded-2xl">Batal</span>
+                                </a>
+                            </div>
+                        </div>
+                        <label for="deskripsi" class="w-full ">
+                            <h1 class="mb-2">Isi Konten</h1>
+                            <input id="deskripsi" type="hidden" name="deskripsi"
+                                value="{{ $md_loker[0]->isi_konten }}">
+                            <trix-editor input="deskripsi"
+                                class="h-64 overflow-scroll hover:cursor-auto overflow-x-hidden"></trix-editor>
+                            @error('deskripsi')
+                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </label>
                     </div>
-                    <div class="pt-[41px]">
-                        <a href="/admin/dashboard/lowongan_pekerjaan">
-                            <span class="bg-RedTako text-white px-4 py-[9.5px] rounded-2xl">Batal</span>
-                        </a>
-                    </div>
+
                 </div>
+
             </form>
         </div>
     </div>
@@ -203,29 +232,7 @@
 
     <script>
         $(document).ready(function() {
-            $('.js-example-basic-single').select2({
-                // placeholder: 'Pilih Perusahaan',
-                // ajax: {
-                //     url: '/json_perusahaan', // Ganti dengan URL API yang sesuai
-                //     dataType: 'json',
-                //     // processResults: function(data) {
-                //     //     return {
-                //     //         results: data.perusahaan
-                //     //     };
-                //     // }
-                //     processResults: function(data) {
-                //         return {
-                //             results: $.map(data, function(item) {
-                //                 return {
-                //                     text: item.perusahaan,
-                //                     id: item.id
-                //                 }
-                //             })
-                //         };
-                //     },
-                //     cache: true
-                // }
-            });
+            $('.js-example-basic-single').select2({});
         });
     </script>
 
@@ -236,6 +243,7 @@
                     namaskill: [],
                     id: [],
                     idskilldelete: [],
+                    errors: window.errors || {},
                 };
             },
             mounted() {
@@ -271,6 +279,44 @@
                     this.idskilldelete.push({
                         id: idLama
                     });
+                },
+                onSubmit() {
+                    // Reset error messages
+                    this.errors = {};
+
+                    // Validasi setiap field
+                    if (!this.pekerjaan) {
+                        this.errors.pekerjaan = "Pekerjaan harus diisi.";
+                    }
+                    if (!this.jenis_pekerjaan) {
+                        this.errors.jenis_pekerjaan = "Jenis pekerjaan harus dipilih.";
+                    }
+                    if (!this.batas_lamaran) {
+                        this.errors.batas_lamaran = "Batas lamaran harus diisi.";
+                    }
+                    if (!this.lokasi) {
+                        this.errors.lokasi = "Lokasi harus diisi.";
+                    }
+                    if (this.namaskill.length === 0) {
+                        this.errors.namaskill = "Minimal 1 skill harus diisi.";
+                    } else {
+                        this.namaskill.forEach((skill, index) => {
+                            if (!skill.nama) {
+                                this.errors[`namaskill_${index}`] = "Nama skill harus diisi.";
+                            }
+                        });
+                    }
+                    if (!this.isi_konten) {
+                        this.errors.isi_konten = "Deskripsi singkat harus diisi.";
+                    }
+                    if (!this.deskripsi) {
+                        this.errors.deskripsi = "Isi konten harus diisi.";
+                    }
+
+                    // Jika tidak ada error, submit form
+                    if (Object.keys(this.errors).length === 0) {
+                        this.$refs.form.submit();
+                    }
                 },
             },
         }).mount("#vue");
