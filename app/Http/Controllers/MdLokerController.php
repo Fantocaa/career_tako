@@ -546,7 +546,7 @@ class MdLokerController extends Controller
 
     public function update_loker(Updatemd_lokerRequest $request, md_loker $md_loker)
     {
-        // dd($request->all());
+        // dd($request);
         // dd($request->pekerjaan);
 
         // Validasi
@@ -566,7 +566,7 @@ class MdLokerController extends Controller
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
             'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
-            'Lokasi.required' => 'Lokasi Lamaran harus diisi.',
+            'lokasi.required' => 'lokasi Lamaran harus diisi.',
             'status.required' => 'Status harus diisi',
             'skill.*.required' => 'Skill Harus Diisi',
         ]);
@@ -579,8 +579,8 @@ class MdLokerController extends Controller
         $form->isi_konten = $request->deskripsi;
         $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
-        $form->Lokasi = $request->Lokasi;
         $form->status = $request->status;
+        $form->lokasi = $request->lokasi;
         $form->save();
 
         // $i itu sama dengan i++
@@ -622,7 +622,8 @@ class MdLokerController extends Controller
         $query = DB::table('md_lokers')
             // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi, md_lokers.isi_konten, perusahaans.perusahaan')
             // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
-            ->whereNull('md_lokers.deleted_at');
+            ->whereNull('md_lokers.deleted_at')
+            ->where('md_lokers.status', 'Aktif'); // Menambahkan filter status "Aktif"
 
         // Check if the search parameter exists in the request
 
