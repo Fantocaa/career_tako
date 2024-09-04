@@ -13,18 +13,6 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
     }
 
     useEffect(() => {
-        //     // Panggil fungsi API di sini saat komponen pertama kali di-mount
-        //     const fetchData = async () => {
-        //         try {
-        //             // Kirim data ke server
-        //             const response = await Axios.get("/api/form");
-        //             // const response = await Axios.post("/form");
-        //             setFormData(response.data);
-        //         } catch (error) {
-        //             console.error("Error sending data:", error);
-        //         }
-        //     };
-
         const fetchDataSkill = async () => {
             try {
                 // Kirim data ke server
@@ -36,11 +24,6 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
         };
 
         fetchDataSkill();
-
-        //     fetchData(); // Panggil fungsi fetchData saat komponen di-mount
-
-        //     // Hanya perlu dijalankan saat komponen pertama kali di-mount,
-        //     // sehingga dependensi di bawah ini kosong
     }, []);
 
     return (
@@ -81,7 +64,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                     <h1 className="">{item.lokasi}</h1>
                                 </div>
                             </div>
-                            <div className="pt-4 flex gap-2">
+                            <div className="pt-4 flex flex-wrap gap-2">
                                 {formDataSkill
                                     .filter(
                                         (skills) =>
