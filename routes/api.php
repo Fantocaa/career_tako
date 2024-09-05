@@ -46,6 +46,8 @@ Route::get('/api_program_perusahaan/{id}', [MdLokerController::class, 'api_progr
 
 Route::get('/api_program_id/{id1}/{id2}', [MdLokerController::class, 'api_program_id']);
 
+Route::get('/perusahaan', [MdLokerController::class, 'api_all_perusahaan']);
+
 Route::get('/perusahaan/{id}', [MdLokerController::class, 'api_perusahaan']);
 
 Route::get('/perusahaan_select/{id}', [MdLokerController::class, 'api_perusahaan_selected']);

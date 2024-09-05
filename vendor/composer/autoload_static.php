@@ -17,22 +17,22 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
-        '0b47d6d4a00ca9112ba3953b49e7c9a4' => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src/helper.php',
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
+        '0b47d6d4a00ca9112ba3953b49e7c9a4' => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src/helper.php',
         '47e1160838b5e5a10346ac4084b58c23' => __DIR__ . '/..' . '/laravel/prompts/src/helpers.php',
+        'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
+        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '35a6ad97d21e794e7e22a17d806652e4' => __DIR__ . '/..' . '/nunomaduro/termwind/src/Functions.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
-        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '40275907c8566c390185147049ef6e5d' => __DIR__ . '/..' . '/livewire/livewire/src/helpers.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
         'f57d353b41eb2e234b26064d63d8c5dd' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Filesystem/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '40275907c8566c390185147049ef6e5d' => __DIR__ . '/..' . '/livewire/livewire/src/helpers.php',
         '3bd81c9b8fcc150b69d8b63b4d2ccf23' => __DIR__ . '/..' . '/spatie/flare-client-php/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
@@ -233,6 +233,7 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         ),
         'A' => 
         array (
+            'Astrotomic\\Translatable\\' => 24,
             'App\\' => 4,
         ),
     );
@@ -248,12 +249,12 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         ),
         'Yajra\\DataTables\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-editor/src',
-            1 => __DIR__ . '/..' . '/yajra/laravel-datatables-fractal/src',
-            2 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
-            3 => __DIR__ . '/..' . '/yajra/laravel-datatables-export/src',
-            4 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
-            5 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
+            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
+            1 => __DIR__ . '/..' . '/yajra/laravel-datatables-editor/src',
+            2 => __DIR__ . '/..' . '/yajra/laravel-datatables-export/src',
+            3 => __DIR__ . '/..' . '/yajra/laravel-datatables-fractal/src',
+            4 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
+            5 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
         ),
         'Whoops\\' => 
         array (
@@ -402,8 +403,8 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         ),
         'Spatie\\Ignition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/ignition/src',
-            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
+            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
+            1 => __DIR__ . '/..' . '/spatie/ignition/src',
         ),
         'Spatie\\FlareClient\\' => 
         array (
@@ -447,8 +448,8 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -766,6 +767,10 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src',
         ),
+        'Astrotomic\\Translatable\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -840,6 +845,16 @@ class ComposerStaticInit42a4fcb43c7e588199a63efe8093888c
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'Astrotomic\\Translatable\\Contracts\\Translatable' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Contracts/Translatable.php',
+        'Astrotomic\\Translatable\\Exception\\LocalesNotDefinedException' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Exception/LocalesNotDefinedException.php',
+        'Astrotomic\\Translatable\\Locales' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Locales.php',
+        'Astrotomic\\Translatable\\Traits\\Relationship' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Traits/Relationship.php',
+        'Astrotomic\\Translatable\\Traits\\Scopes' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Traits/Scopes.php',
+        'Astrotomic\\Translatable\\Translatable' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Translatable.php',
+        'Astrotomic\\Translatable\\TranslatableServiceProvider' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/TranslatableServiceProvider.php',
+        'Astrotomic\\Translatable\\Validation\\RuleFactory' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Validation/RuleFactory.php',
+        'Astrotomic\\Translatable\\Validation\\Rules\\TranslatableExists' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Validation/Rules/TranslatableExists.php',
+        'Astrotomic\\Translatable\\Validation\\Rules\\TranslatableUnique' => __DIR__ . '/..' . '/astrotomic/laravel-translatable/src/Translatable/Validation/Rules/TranslatableUnique.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Barryvdh\\DomPDF\\Facade\\Pdf' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade/Pdf.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',

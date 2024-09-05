@@ -490,15 +490,21 @@ class MdLokerController extends Controller
      */
     public function store(Storemd_lokerRequest $request)
     {
-        // dd($request);
+        // dd($request->all());
 
         // Validasi
         $request->validate([
             'pekerjaan' => 'required|string|min:5',
             // 'perusahaan' => 'required',
             'jenis_pekerjaan' => 'required',
-            'deskripsi' => 'required',
-            'isi_konten' => 'required',
+            // 'deskripsi' => 'required',
+            'deskripsi' => 'required|array',
+            'deskripsi.id' => 'nullable|string',
+            'deskripsi.en' => 'nullable|string',
+            // 'isi_konten' => 'required',
+            'isi_konten' => 'required|array',
+            'isi_konten.id' => 'nullable|string',
+            'isi_konten.en' => 'nullable|string',
             'batas_lamaran' => 'required',
             'lokasi' => 'required',
             'status' => 'required',
@@ -507,7 +513,7 @@ class MdLokerController extends Controller
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
             // 'perusahaan.required' => 'Perusahaan harus diisi.',
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
-            'isi_konten.required' => 'Isi Konten harus diisi.',
+            // 'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
             'lokasi.required' => 'Lokasi Lamaran harus diisi.',
             'status.required' => 'Status harus diisi',
@@ -518,11 +524,24 @@ class MdLokerController extends Controller
         $form->pekerjaan = $request->pekerjaan;
         // $form->perusahaan = $request->perusahaan;
         $form->jenis_pekerjaan = $request->jenis_pekerjaan;
-        $form->isi_konten = $request->deskripsi;
-        $form->deskripsi = $request->isi_konten;
+        // $form->isi_konten = $request->deskripsi;
+        // $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
         $form->lokasi = $request->lokasi;
         $form->status = $request->status;
+        // $form->save();
+
+        // Menyimpan terjemahan deskripsi dan isi_konten berdasarkan bahasa
+        $form->translateOrNew('id')->isi_konten = $request->deskripsi;
+        $form->translateOrNew('en')->isi_konten = $request->deskripsi;
+
+        // Menyimpan deskripsi terjemahan
+        $form->translateOrNew('id')->deskripsi = $request->isi_konten; // Asumsi bahasa default adalah 'id'
+        $form->translateOrNew('en')->deskripsi = $request->isi_konten; // Bisa juga disesuaikan jika berbeda
+
+        dd($form);
+
+        // Simpan perubahan terjemahan
         $form->save();
 
         foreach ($request->skill as $skill => $value) {
@@ -532,16 +551,7 @@ class MdLokerController extends Controller
             $skill->save();
         }
 
-        return redirect('/admin/dashboard/lowongan_pekerjaan');
-
-        // Tanggapan JSON sukses
-        return response()->json(['message' => 'Data berhasil disimpan.']);
-
-        // Tanggapan jika validasi gagal
-        // return redirect()->back()->withErrors(['password' => 'Password tidak valid.']);
-
-        // Tanggapan JSON jika validasi gagal
-        return response()->json(['errors' => $request->validator->errors()]);
+        return redirect('/admin/dashboard/lowongan_pekerjaan')->with('success', 'Data berhasil disimpan');
     }
 
     public function update_loker(Updatemd_lokerRequest $request, md_loker $md_loker)
@@ -614,6 +624,17 @@ class MdLokerController extends Controller
         // return redirect()->back()->withErrors(['password' => 'Password tidak valid.']);
         // Tanggapan JSON jika validasi gagal
         return response()->json(['errors' => $request->validator->errors()]);
+    }
+
+    public function api_all_perusahaan()
+    {
+        // $data = [];
+        $query = DB::table('md_lokers')
+            ->whereNull('md_lokers.deleted_at')
+            ->where('md_lokers.status', 'Aktif') // Menambahkan filter status "Aktif"
+            ->get();
+
+        return response()->json($query);
     }
 
     public function api_perusahaan(Request $request, $req)

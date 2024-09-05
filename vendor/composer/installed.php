@@ -3,13 +3,22 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '9c3fff3166317525e5dd6436b04029cc8e341e56',
+        'reference' => '16eb866091b01b56bb5c563fb5729827e4242848',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'astrotomic/laravel-translatable' => array(
+            'pretty_version' => 'v11.15.1',
+            'version' => '11.15.1.0',
+            'reference' => '0d065da7fb06b4b957afce79fdda159764561345',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../astrotomic/laravel-translatable',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'barryvdh/laravel-dompdf' => array(
             'pretty_version' => 'v2.2.0',
             'version' => '2.2.0.0',
@@ -517,7 +526,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '9c3fff3166317525e5dd6436b04029cc8e341e56',
+            'reference' => '16eb866091b01b56bb5c563fb5729827e4242848',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -991,8 +1000,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(
