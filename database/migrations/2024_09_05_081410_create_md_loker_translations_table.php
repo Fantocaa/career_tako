@@ -18,10 +18,7 @@ return new class extends Migration
             $table->string('locale')->index(); // Kolom untuk bahasa
             $table->text('isi_konten')->nullable(); // Kolom terjemahan isi_konten
             $table->text('deskripsi')->nullable(); // Kolom terjemahan deskripsi
-
-            // $table->unique(['md_loker_id', 'locale']); // Pastikan kombinasi unik
             $table->foreign('md_loker_id')->references('id')->on('md_loker')->onDelete('cascade');
-
             $table->softDeletes();
             $table->timestamps();
         });

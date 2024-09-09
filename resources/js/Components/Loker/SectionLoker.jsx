@@ -21,8 +21,6 @@ const SectionLoker = () => {
     // Mendapatkan translasi dengan locale 'id' (Indonesia)
     const [locale, setLocale] = useState(document.documentElement.lang);
 
-    console.log(locale);
-
     const filterFormDataByLocale = (dataArray, locale) => {
         return dataArray.map((data) => {
             const translation = data.translations.find(

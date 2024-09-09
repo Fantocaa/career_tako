@@ -304,14 +304,6 @@ const FormEmail = () => {
     const { selectedLanguage } = useContext(LanguageContext);
     const { t } = useTranslation(); // Tambahkan ini
 
-    // useEffect(() => {
-    //     const storedLanguage = localStorage.getItem("language");
-    //     if (storedLanguage !== selectedLanguage) {
-    //         localStorage.setItem("language", selectedLanguage);
-    //     }
-    //     translatePekerjaan(selectedLanguage || storedLanguage || "id");
-    // }, [selectedLanguage]);
-
     useEffect(() => {
         const storedLanguage = localStorage.getItem("language");
         changeLanguage(storedLanguage);
@@ -413,14 +405,6 @@ const FormEmail = () => {
             }
         });
     };
-
-    // useEffect(() => {
-    //     const storedLanguage = localStorage.getItem("language");
-    //     if (storedLanguage !== selectedLanguage) {
-    //         localStorage.setItem("language", selectedLanguage);
-    //     }
-    //     translatePekerjaan(selectedLanguage || storedLanguage || "id");
-    // }, [selectedLanguage]);
 
     const today = new Date();
     const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;

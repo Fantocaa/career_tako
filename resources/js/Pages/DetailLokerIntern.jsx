@@ -84,8 +84,6 @@ const DetailLoker = () => {
 
     return (
         <>
-            {/* {formData.map((item) => ( */}
-            {/* <Layout pageTitle="Detail Loker | Tako Karier"> */}
             <Head title={values.pekerjaan} />
             <section
                 className="bg-BgTako font-inter text-DarkTako md:pt-16 min-h-screen flex flex-col"
@@ -134,13 +132,6 @@ const DetailLoker = () => {
                             </div>
                             <div className="pt-8 lg:pt-0 gap-2 w-36 hidden lg:block">
                                 <div className="w-full md:pb-2">
-                                    {/* <Link href="/">
-                                        <button className="bg-BlueTako text-BlueTako bg-opacity-10 py-2 rounded-lg w-full text-xs">
-                                            Share
-                                        </button>
-                                    </Link> */}
-
-                                    {/* You can open the modal using document.getElementById('ID').showModal() method */}
                                     <button
                                         className="bg-BlueTako text-BlueTako bg-opacity-10 py-2 rounded-lg w-full text-xs"
                                         onClick={() =>
@@ -162,11 +153,27 @@ const DetailLoker = () => {
                                             <h3 className="font-bold text-lg translate">
                                                 Bagikan
                                             </h3>
-                                            <p className="py-8 flex gap-8">
+                                            <div className="py-8 flex gap-8">
+                                                <div
+                                                    className="flex flex-col items-center gap-2"
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(
+                                                            urlLinkDekstop,
+                                                        );
+                                                        alert(
+                                                            "Link berhasil disalin!",
+                                                        );
+                                                    }}
+                                                >
+                                                    <img
+                                                        src="/images/icon/link.svg"
+                                                        alt="link"
+                                                        className="w-12 cursor-pointer"
+                                                    />
+                                                    Salin Link
+                                                </div>
                                                 <FacebookShareButton
-                                                    // url={urlLink}
                                                     url={urlLinkDekstop}
-                                                    quote="Meong uwu"
                                                     hashtag=""
                                                 >
                                                     <div className="flex flex-col items-center gap-2">
@@ -179,7 +186,6 @@ const DetailLoker = () => {
                                                 </FacebookShareButton>
                                                 <WhatsappShareButton
                                                     url={urlLinkDekstop}
-                                                    quote="Meong uwu"
                                                     hashtag=""
                                                 >
                                                     <div className="flex flex-col items-center gap-2">
@@ -190,7 +196,7 @@ const DetailLoker = () => {
                                                         <h1>Whatsapp</h1>
                                                     </div>
                                                 </WhatsappShareButton>
-                                            </p>
+                                            </div>
                                         </div>
                                     </dialog>
                                 </div>
@@ -215,13 +221,15 @@ const DetailLoker = () => {
                             dangerouslySetInnerHTML={{
                                 __html: values.deskripsi,
                             }}
-                            // dangerouslySetInnerHTML={{
-                            //     __html: item.isi_konten,
-                            // }}
-                            className="pt-6 translate"
-                        >
-                            {/* {values.deskripsi} */}
-                        </div>
+                            className="pt-6"
+                        ></div>
+
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: values.isi_konten,
+                            }}
+                            className="pt-6"
+                        ></div>
 
                         <div className="lg:hidden">
                             {/* <div className="w-fullb bg-BlueTako bg-opacity-10 p-[1px]"></div> */}
@@ -262,8 +270,6 @@ const DetailLoker = () => {
                 </div>
                 <Footer />
             </section>
-            {/* ))} */}
-            {/* </Layout> */}
         </>
     );
 };

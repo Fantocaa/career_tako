@@ -1,5 +1,4 @@
 import DataTable from "react-data-table-component";
-import { Link } from "@inertiajs/react";
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Layout from "@/Layouts/Layout";
