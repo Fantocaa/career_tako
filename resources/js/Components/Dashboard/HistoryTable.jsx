@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import Layout from "@/Layouts/Layout";
-import Axios from "axios";
-import { usePage } from "@inertiajs/react";
 
 const HistoryTable = () => {
     const [data, setData] = useState([]); // State untuk data perusahaan

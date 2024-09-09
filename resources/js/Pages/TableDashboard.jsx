@@ -6,6 +6,11 @@ import Layout from "@/Layouts/Layout";
 import { Head } from "@inertiajs/react";
 
 const TableDashboard = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [dataFromAPI, setDataFromAPI] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // Menyimpan halaman aktif
+    const [itemsPerPage, setItemsPerPage] = useState(10); // Jumlah item per halaman
+
     const handleDelete = (id) => {
         // console.log(id);
         // Axios.delete(`/form/${id}`)
@@ -29,7 +34,8 @@ const TableDashboard = () => {
     const columns = [
         {
             name: "Nomor",
-            selector: (row, index) => index + 1, // Use index to generate a sequential number
+            selector: (row, index) =>
+                (currentPage - 1) * itemsPerPage + index + 1,
             // sortable: true, // Mengaktifkan pengurutan untuk kolom ini
         },
         {
@@ -119,9 +125,6 @@ const TableDashboard = () => {
         },
     ];
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [dataFromAPI, setDataFromAPI] = useState([]);
-
     const handleSearch = (value) => {
         setSearchTerm(value);
     };
@@ -186,13 +189,14 @@ const TableDashboard = () => {
                                 data={filteredData}
                                 fixedHeader
                                 pagination
+                                paginationPerPage={itemsPerPage}
+                                onChangePage={(page) => setCurrentPage(page)}
                             />
                         ) : (
                             <p>Tunggu sebentar</p>
                         )}
                     </div>
                 </div>
-                {/* Open the modal using document.getElementById('ID').showModal() method */}
             </div>
         </>
         // </Layout>

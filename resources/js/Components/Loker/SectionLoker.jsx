@@ -332,7 +332,7 @@ const SectionLoker = () => {
                             <SelectJob2
                                 active={menu2Active}
                                 // formData={formDataLoker}
-                                formData={formData}
+                                formData={filteredFormData}
                                 // values={values}
                             />
                         </div>

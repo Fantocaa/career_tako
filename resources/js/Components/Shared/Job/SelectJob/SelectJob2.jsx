@@ -3,7 +3,6 @@ import { Link } from "@inertiajs/react";
 import Axios from "axios";
 
 const SelectJob2 = ({ active, formData: formDataProp }) => {
-    const [formData, setFormData] = useState([]);
     const [formDataSkill, setFormDataSkill] = useState([]);
 
     function formatDate(dateString) {
@@ -54,7 +53,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                                 </div>
                                 <div className="flex gap-2">
                                     <img src="/images/clock.svg" alt="clock" />
-                                    <h1>{item.batas_lamaran}</h1>
+                                    <h1>{formatDate(item.batas_lamaran)}</h1>
                                 </div>
                                 <div className="flex gap-2">
                                     <img
