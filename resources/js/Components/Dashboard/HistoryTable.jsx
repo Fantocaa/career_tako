@@ -144,8 +144,6 @@ const HistoryTable = () => {
         // Tambahkan kolom lain sesuai kebutuhan
     ];
 
-    console.log(data);
-
     return (
         <Layout pageTitle="Dashboard | Tako Karir">
             <div className="bg-BgTako h-full py-8">

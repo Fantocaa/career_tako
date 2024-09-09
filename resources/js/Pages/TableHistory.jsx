@@ -14,7 +14,7 @@ const History = () => {
                         <Dashboard />
                     </div>
                     <div
-                        className="ml-[328px] h-screen"
+                        className="ml-[328px] h-full mr-8"
                         // className="w-full"
                         // dangerouslySetInnerHTML={{ __html: bladeView }}
                     >

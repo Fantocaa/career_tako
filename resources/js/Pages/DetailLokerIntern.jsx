@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "@/Components/Shared/Else/NavElse";
 import Footer from "@/Components/Shared/Footer";
 import { Link } from "@inertiajs/react";
-import { router, usePage, Head } from "@inertiajs/react";
-import axios from "axios";
+import { usePage, Head } from "@inertiajs/react";
 import { shareOnMobile } from "react-mobile-share";
-import Layout from "@/Layouts/Layout";
 import {
     EmailShareButton,
     FacebookShareButton,
@@ -14,108 +12,75 @@ import {
     WhatsappShareButton,
     WorkplaceShareButton,
 } from "react-share";
-import { useTranslation } from "react-i18next";
-import LanguageContext from "@/Components/Shared/Homepage/LanguageContext";
-import he from "he";
 
 const DetailLoker = () => {
     // const [formData, setFormData] = useState([]);
     const { props } = usePage();
     const { md_loker } = props;
 
+    // Helper function untuk mendapatkan translasi sesuai locale
+    function getTranslation(locale) {
+        return md_loker.translations.find(
+            (translation) => translation.locale === locale,
+        );
+    }
+
+    // Mendapatkan translasi dengan locale 'id' (Indonesia)
+    const [locale, setLocale] = useState(document.documentElement.lang);
+
+    const [values, setValues] = useState({
+        // password: "meong",
+        id: md_loker.id,
+        pekerjaan: md_loker.pekerjaan,
+        // perusahaan: md_loker[0].perusahaan,
+        jenis_pekerjaan: md_loker.jenis_pekerjaan,
+        batas_lamaran: md_loker.batas_lamaran, // Inisialisasi properti batas_lamaran
+        isi_konten: "",
+        deskripsi: "",
+    });
+
+    // useEffect untuk memantau perubahan 'lang' pada elemen <html>
+    useEffect(() => {
+        // Fungsi untuk memperbarui nilai sesuai locale
+        const updateTranslation = (newLocale) => {
+            setLocale(newLocale);
+            const translation = getTranslation(newLocale);
+            if (translation) {
+                setValues((prevValues) => ({
+                    ...prevValues,
+                    isi_konten: translation.isi_konten,
+                    deskripsi: translation.deskripsi,
+                }));
+            }
+        };
+
+        // Pantau perubahan atribut lang menggunakan MutationObserver
+        const observer = new MutationObserver(() => {
+            const newLocale = document.documentElement.lang;
+            updateTranslation(newLocale);
+        });
+
+        // Mulai observasi perubahan atribut lang pada elemen <html>
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["lang"], // Hanya pantau perubahan atribut lang
+        });
+
+        // Update translasi saat komponen pertama kali dimuat
+        updateTranslation(locale);
+
+        // Bersihkan observer saat komponen di-unmount
+        return () => observer.disconnect();
+    }, [md_loker]); // Jalankan saat md_loker berubah
+
+    const urlLink = window.location.href;
+    const urlLinkDekstop = "karier.tako.co.id" + window.location.pathname;
+
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
         const date = new Date(dateString);
         return date.toLocaleDateString("id-ID", options);
     }
-
-    const [values, setValues] = useState({
-        // password: "meong",
-        id: md_loker[0].id,
-        pekerjaan: md_loker[0].pekerjaan,
-        // perusahaan: md_loker[0].perusahaan,
-        jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
-        batas_lamaran: md_loker[0].batas_lamaran, // Inisialisasi properti batas_lamaran
-        isi_konten: md_loker[0].deskripsi,
-        deskripsi: md_loker[0].isi_konten,
-    });
-    // console.log(md_loker);
-
-    const urlLink = window.location.href;
-    const urlLinkDekstop = "karier.tako.co.id" + window.location.pathname;
-
-    // console.log(urlLinkDekstop);
-
-    const { selectedLanguage } = useContext(LanguageContext);
-
-    useEffect(() => {
-        const storedLanguage = localStorage.getItem("language");
-        if (storedLanguage !== selectedLanguage) {
-            localStorage.setItem("language", selectedLanguage);
-        }
-        changeLanguage(selectedLanguage || storedLanguage || "id");
-    });
-
-    const changeLanguage = (language) => {
-        // console.log(`Changing language to: ${language}`);
-        const elementsToTranslate = document.querySelectorAll(".translate");
-
-        elementsToTranslate.forEach((element, index) => {
-            setTimeout(() => {
-                if (!element.dataset.originalText) {
-                    element.dataset.originalText = element.innerHTML;
-                }
-
-                let translatedText = localStorage.getItem(
-                    `translation-${language}-${element.dataset.originalText}`,
-                );
-
-                if (language === "id") {
-                    element.innerHTML = element.dataset.originalText;
-                } else if (translatedText) {
-                    element.innerHTML = translatedText;
-                } else {
-                    // Split the text into lines
-                    const lines = element.innerHTML.split("<br>");
-                    const translatedLines = lines.map(async (line) => {
-                        return axios
-                            .post("/api/translate", {
-                                text: line,
-                                target: language,
-                            })
-                            .then((response) => {
-                                // console.log(response.data); // Ensure the response is received correctly
-                                const translatedLine = he.decode(response.data);
-                                localStorage.setItem(
-                                    `translation-${language}-${line}`,
-                                    translatedLine,
-                                );
-                                // console.log(
-                                //     `translate '${line}' to '${translatedLine}'`,
-                                // );
-                                return translatedLine;
-                            })
-                            .catch((error) => {
-                                console.error(error);
-                            });
-                    });
-
-                    // Wait for all translations to complete and then join the lines back together
-                    Promise.all(translatedLines).then((translatedLines) => {
-                        element.innerHTML = translatedLines.join("<br>");
-                    });
-
-                    // console.log(
-                    //     `Translation request sent for '${element.dataset.originalText}'`,
-                    // );
-                }
-
-                if (index === elementsToTranslate.length - 1) {
-                    // setIsTranslating(false);
-                }
-            }, index * 100); // Delay each request by 1 second
-        });
-    };
 
     return (
         <>

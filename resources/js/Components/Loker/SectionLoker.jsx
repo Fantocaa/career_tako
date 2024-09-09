@@ -1,129 +1,43 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import SelectJobPerusahaan from "../Shared/Job/SelectJob/SelectJobPerusahaan";
 import SelectJob2 from "../Shared/Job/SelectJob/SelectJob2";
 import ReactPaginate from "react-paginate";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
-import LanguageContext from "../Shared/Homepage/LanguageContext";
-import he from "he";
 
 const SectionLoker = () => {
     const [selectedOption, setSelectedOption] = useState("All"); // State untuk menyimpan nilai yang dipilih
     const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk nilai pencarian
-
     const [formData, setFormData] = useState([]);
     const [jobCount, setJobCount] = useState(0); // State untuk menyimpan jumlah pekerjaan tersedia
-
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
-    const [globalPage, setglobalPage] = useState(0);
     const [loading, setLoading] = useState(true);
-
     const [menu1Active, setMenu1Active] = useState(true);
     const [menu2Active, setMenu2Active] = useState(false);
 
-    // const [filteredData, setFilteredData] = useState([]);
+    // Mendapatkan translasi dengan locale 'id' (Indonesia)
+    const [locale, setLocale] = useState(document.documentElement.lang);
 
-    function formatDate(dateString) {
-        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-        const date = new Date(dateString);
-        return date.toLocaleDateString("id-ID", options);
-    }
+    console.log(locale);
 
-    const handleMenu1Click = () => {
-        if (!menu1Active) {
-            setMenu1Active(true);
-            setMenu2Active(false);
-        } else {
-            setMenu1Active(false);
-        }
+    const filterFormDataByLocale = (dataArray, locale) => {
+        return dataArray.map((data) => {
+            const translation = data.translations.find(
+                (translation) => translation.locale === locale,
+            );
+
+            return {
+                ...data, // Tetap gunakan data asli termasuk `md_loker_id`
+                deskripsi: translation ? translation.deskripsi : data.deskripsi,
+                isi_konten: translation
+                    ? translation.isi_konten
+                    : data.isi_konten,
+            };
+        });
     };
-
-    const handleMenu2Click = () => {
-        if (!menu2Active) {
-            setMenu2Active(true);
-            setMenu1Active(false);
-        } else {
-            setMenu2Active(false);
-        }
-    };
-
-    // useEffect(() => {
-    //     const storedLanguage = localStorage.getItem("language");
-    //     if (storedLanguage !== selectedLanguage) {
-    //         localStorage.setItem("language", selectedLanguage);
-    //     }
-    //     changeLanguage(selectedLanguage || storedLanguage || "id");
-    // }, [selectedLanguage]);
-
-    const { selectedLanguage } = useContext(LanguageContext);
-    const { t } = useTranslation();
-    const [isTranslating, setIsTranslating] = useState(false);
-
-    useEffect(() => {
-        const storedLanguage = localStorage.getItem("language");
-        // changeLanguage(storedLanguage);
-    }); // kalau pakai [] dijalankan sekali . kalau dihapus dijalankan berkali kali
-
-    useEffect(() => {
-        const storedLanguage = localStorage.getItem(
-            "language",
-            selectedLanguage,
-        );
-        // changeLanguage(storedLanguage);
-    }, [selectedLanguage]);
-
-    // const changeLanguage = (language) => {
-    //     setIsTranslating(true);
-    //     console.log(`Changing language to: ${language}`);
-    //     const elementsToTranslate = document.querySelectorAll(".translate");
-
-    //     elementsToTranslate.forEach((element, index) => {
-    //         if (!element.dataset.originalText) {
-    //             element.dataset.originalText = element.innerText;
-    //         }
-
-    //         let translatedText = localStorage.getItem(
-    //             `translation-${language}-${element.dataset.originalText}`,
-    //         );
-
-    //         if (language === "id") {
-    //             element.innerText = element.dataset.originalText;
-    //         } else if (translatedText) {
-    //             element.innerText = translatedText;
-    //         } else {
-    //             axios
-    //                 .post("/api/translate", {
-    //                     text: element.innerText,
-    //                     target: language,
-    //                 })
-    //                 .then((response) => {
-    //                     console.log(response.data); // Pastikan respons diterima dengan benar
-    //                     element.innerText = he.decode(response.data);
-    //                     localStorage.setItem(
-    //                         `translation-${language}-${element.dataset.originalText}`,
-    //                         he.decode(response.data),
-    //                     );
-    //                     console.log(
-    //                         `translate '${element.dataset.originalText}' to '${he.decode(response.data)}'`,
-    //                     );
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error(error);
-    //                 });
-
-    //             console.log(
-    //                 `Translation request sent for '${element.dataset.originalText}'`,
-    //             );
-    //         }
-
-    //         if (index === elementsToTranslate.length - 1) {
-    //             setIsTranslating(false);
-    //         }
-    //     });
-    // };
 
     const fetchData = async (page) => {
         try {
@@ -144,9 +58,43 @@ const SectionLoker = () => {
         }
     };
 
-    // useEffect(() => {
-    //     fetchData(currentPage);
-    // }, [currentPage]);
+    // Pantau perubahan atribut lang dengan MutationObserver
+    useEffect(() => {
+        const observer = new MutationObserver(() => {
+            const newLocale = document.documentElement.lang;
+            setLocale(newLocale);
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true, // Hanya pantau perubahan atribut
+            attributeFilter: ["lang"], // Hanya pantau atribut lang
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    // Filter data form berdasarkan locale
+    const filteredFormData = filterFormDataByLocale(formData, locale);
+
+    const handleMenu1Click = () => {
+        if (!menu1Active) {
+            setMenu1Active(true);
+            setMenu2Active(false);
+        } else {
+            setMenu1Active(false);
+        }
+    };
+
+    const handleMenu2Click = () => {
+        if (!menu2Active) {
+            setMenu2Active(true);
+            setMenu1Active(false);
+        } else {
+            setMenu2Active(false);
+        }
+    };
+
+    const { t } = useTranslation();
 
     const handleSelectChange = async (event) => {
         const selectedValue = event.target.value;
@@ -158,13 +106,6 @@ const SectionLoker = () => {
     const handleSearchChange = (term) => {
         setSearchTerm(term);
     };
-
-    useEffect(() => {
-        // console.log("ini useeffect" + globalPage);
-        // setglobalPage(1);
-        fetchData(0); // Fetch data for the first page when searchTerm changes
-        setCurrentPage(1);
-    }, [searchTerm, selectedOption]);
 
     const handlePageClick = async (data) => {
         let nextPage = data.selected + 1; // Increment page number
@@ -185,6 +126,12 @@ const SectionLoker = () => {
             nextPage = currentPage;
         }
     };
+
+    useEffect(() => {
+        // setglobalPage(1);
+        fetchData(0); // Fetch data for the first page when searchTerm changes
+        setCurrentPage(1);
+    }, [searchTerm, selectedOption]);
 
     return (
         <SkeletonTheme baseColor="#202020" highlightColor="#444444">
@@ -373,7 +320,7 @@ const SectionLoker = () => {
                             <SelectJobPerusahaan
                                 active={menu1Active}
                                 // formData={formDataLoker}
-                                formData={formData}
+                                formData={filteredFormData}
                                 // values={values}
                             />
                         </div>

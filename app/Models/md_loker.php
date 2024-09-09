@@ -24,4 +24,9 @@ class md_loker extends Model implements TranslatableContract
     {
         return $this->hasMany(Skill::class, 'id_kotak_loker', 'id')->whereNull('deleted_at');
     }
+
+    public function md_lokerTranslation()
+    {
+        return $this->hasMany(md_lokerTranslation::class);
+    }
 }

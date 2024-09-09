@@ -252,28 +252,23 @@ class MdLokerController extends Controller
 
     public function edit_loker($id)
     {
-        // dd();
-        // Menggunakan Inertia::render
-        // return Inertia::render('EditLokerEdit', [
-        //     'md_loker' => $md_loker,
-        // ]);
 
-        $md_loker = db::table('md_lokers')->where('id', $id)->get();
-        $skill = db::table('skills')->where('id_kotak_loker', $md_loker[0]->id)->get();
-        $pt = db::table('perusahaans')->whereNull('deleted_at')->get();
+        $md_loker = md_loker::with('md_lokerTranslation')->findOrFail($id)->where('id', $id)->first();
 
-        return view(
-            'formedit',
-            ['skill' => $skill, 'md_loker' => $md_loker, 'pt' => $pt]
-        );
+        // Ambil skill terkait
+        $skills = skill::where('id_kotak_loker', $md_loker->id)->get();
+
+        // dd($md_loker);
+        // Kirim data ke view
+        return view('formedit', [
+            'md_loker' => $md_loker,
+            'skill' => $skills
+        ]);
     }
 
     public function delete_loker($id)
     {
-        // dd($id);
-        // $delete = md_loker::find($id);
-
-        $md_loker = db::table('md_lokers')->where('id', $id);
+        $md_loker = md_loker::findOrFail($id);
         $skill = db::table('skills')->where('id_kotak_loker', $id);
 
         $md_loker->delete();
@@ -308,21 +303,19 @@ class MdLokerController extends Controller
 
     public function show_detail_loker_intern($id)
     {
-        // dd($id);
+        // $md_loker = DB::table('md_lokers')
 
-        // $md_loker = md_loker::find($id);
+        //     ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten')
+        //     // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
+        //     ->where('md_lokers.id', '=', $id)
+        //     ->whereNull('md_lokers.deleted_at')
+        //     ->get();
 
-        $md_loker = DB::table('md_lokers')
-
-            ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten')
-
-            // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
-
-            ->where('md_lokers.id', '=', $id)
-
-            ->whereNull('md_lokers.deleted_at')
-
-            ->get();
+        // Ambil data md_loker berdasarkan ID dengan translation
+        $md_loker = md_loker::with('translations')
+            ->where('id', $id)
+            ->whereNull('deleted_at')
+            ->firstOrFail();
 
         // Menggunakan Inertia::render
         return Inertia::render('DetailLokerIntern', [
@@ -513,7 +506,7 @@ class MdLokerController extends Controller
             'pekerjaan.required' => 'Pekerjaan harus diisi.',
             // 'perusahaan.required' => 'Perusahaan harus diisi.',
             'jenis_pekerjaan.required' => 'Jenis Pekerjaan harus diisi.',
-            // 'isi_konten.required' => 'Isi Konten harus diisi.',
+            'isi_konten.required' => 'Isi Konten harus diisi.',
             'batas_lamaran.required' => 'Batas Lamaran harus diisi.',
             'lokasi.required' => 'Lokasi Lamaran harus diisi.',
             'status.required' => 'Status harus diisi',
@@ -529,17 +522,18 @@ class MdLokerController extends Controller
         $form->batas_lamaran = $request->batas_lamaran;
         $form->lokasi = $request->lokasi;
         $form->status = $request->status;
-        // $form->save();
 
         // Menyimpan terjemahan deskripsi dan isi_konten berdasarkan bahasa
-        $form->translateOrNew('id')->isi_konten = $request->deskripsi;
-        $form->translateOrNew('en')->isi_konten = $request->deskripsi;
+        $form->translateOrNew('id')->isi_konten = $request->deskripsi['id'];
+        $form->translateOrNew('en')->isi_konten = $request->deskripsi['en'];
+        $form->translateOrNew('zh')->isi_konten = $request->deskripsi['zh'];
 
         // Menyimpan deskripsi terjemahan
-        $form->translateOrNew('id')->deskripsi = $request->isi_konten; // Asumsi bahasa default adalah 'id'
-        $form->translateOrNew('en')->deskripsi = $request->isi_konten; // Bisa juga disesuaikan jika berbeda
+        $form->translateOrNew('id')->deskripsi = $request->isi_konten['id'];
+        $form->translateOrNew('en')->deskripsi = $request->isi_konten['en'];
+        $form->translateOrNew('zh')->deskripsi = $request->isi_konten['zh'];
 
-        dd($form);
+        // dd($form);
 
         // Simpan perubahan terjemahan
         $form->save();
@@ -557,15 +551,20 @@ class MdLokerController extends Controller
     public function update_loker(Updatemd_lokerRequest $request, md_loker $md_loker)
     {
         // dd($request);
-        // dd($request->pekerjaan);
 
         // Validasi
         $request->validate([
             'pekerjaan' => 'required|string|min:5',
             // 'perusahaan' => 'required',
             'jenis_pekerjaan' => 'required',
-            'deskripsi' => 'required',
-            'isi_konten' => 'required',
+            // 'deskripsi' => 'required',
+            'deskripsi' => 'required|array',
+            'deskripsi.id' => 'nullable|string',
+            'deskripsi.en' => 'nullable|string',
+            // 'isi_konten' => 'required',
+            'isi_konten' => 'required|array',
+            'isi_konten.id' => 'nullable|string',
+            'isi_konten.en' => 'nullable|string',
             'batas_lamaran' => 'required',
             'lokasi' => 'required',
             'status' => 'required',
@@ -582,15 +581,24 @@ class MdLokerController extends Controller
         ]);
 
         $form = md_loker::find($request->id);
-        // dd($form);
         $form->pekerjaan = $request->pekerjaan;
         // $form->perusahaan = $request->perusahaan;
         $form->jenis_pekerjaan = $request->jenis_pekerjaan;
-        $form->isi_konten = $request->deskripsi;
-        $form->deskripsi = $request->isi_konten;
+        // $form->isi_konten = $request->deskripsi;
+        // $form->deskripsi = $request->isi_konten;
         $form->batas_lamaran = $request->batas_lamaran;
-        $form->status = $request->status;
         $form->lokasi = $request->lokasi;
+        $form->status = $request->status;
+
+        // Memperbarui terjemahan deskripsi dan isi_konten berdasarkan bahasa
+        $form->translateOrNew('id')->isi_konten = $request->deskripsi['id'];
+        $form->translateOrNew('en')->isi_konten = $request->deskripsi['en'];
+        $form->translateOrNew('zh')->isi_konten = $request->deskripsi['zh'];
+
+        $form->translateOrNew('id')->deskripsi = $request->isi_konten['id'];
+        $form->translateOrNew('en')->deskripsi = $request->isi_konten['en'];
+        $form->translateOrNew('zh')->deskripsi = $request->isi_konten['zh'];
+
         $form->save();
 
         // $i itu sama dengan i++
@@ -617,21 +625,14 @@ class MdLokerController extends Controller
         }
 
         return redirect('/admin/dashboard/lowongan_pekerjaan');
-
-        // Tanggapan JSON sukses
-        return response()->json(['message' => 'Data berhasil diperbarui.']);
-
-        // return redirect()->back()->withErrors(['password' => 'Password tidak valid.']);
-        // Tanggapan JSON jika validasi gagal
-        return response()->json(['errors' => $request->validator->errors()]);
     }
 
     public function api_all_perusahaan()
     {
         // $data = [];
-        $query = DB::table('md_lokers')
+        $query = md_loker::with('translations')
             ->whereNull('md_lokers.deleted_at')
-            ->where('md_lokers.status', 'Aktif') // Menambahkan filter status "Aktif"
+            ->where('md_lokers.status', 'Aktif')
             ->get();
 
         return response()->json($query);
@@ -639,12 +640,13 @@ class MdLokerController extends Controller
 
     public function api_perusahaan(Request $request, $req)
     {
+        // dd($request);
         $data = [];
-        $query = DB::table('md_lokers')
+        $query = md_loker::with('translations')
             // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi, md_lokers.isi_konten, perusahaans.perusahaan')
             // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
             ->whereNull('md_lokers.deleted_at')
-            ->where('md_lokers.status', 'Aktif'); // Menambahkan filter status "Aktif"
+            ->where('md_lokers.status', 'Aktif');
 
         // Check if the search parameter exists in the request
 
@@ -764,13 +766,27 @@ class MdLokerController extends Controller
             ->where('batas_lamaran', '<', $time)
             ->get();
 
-        foreach ($query as $key => $value) {
-            if (!empty($value->id)) {
-                $delete = md_loker::find($value->id);
+        // foreach ($query as $key => $value) {
+        //     if (!empty($value->id)) {
+        //         $delete = md_loker::find($value->id);
 
-                // Check if the record is found before attempting to delete
-                if ($delete) {
-                    $delete->delete();
+        //         // Check if the record is found before attempting to delete
+        //         if ($delete) {
+        //             $delete->delete();
+        //         }
+        //     }
+        // }
+
+        foreach ($query as $key => $value) {
+            // Jika ID tidak kosong, cari record tersebut
+            if (!empty($value->id)) {
+                $loker = md_loker::find($value->id);
+
+                // Check jika record ditemukan sebelum melakukan update
+                if ($loker) {
+                    // Update status menjadi 'Tidak Aktif'
+                    $loker->status = 'Tidak Aktif';
+                    $loker->save();
                 }
             }
         }
@@ -778,18 +794,18 @@ class MdLokerController extends Controller
         return response()->json('meong');
     }
 
-    public function translate(Request $request)
-    {
-        $translate = new TranslateClient([
-            'key' => 'AIzaSyAIAyTqwdElG1l8dWkqzElE14zvg_-gc9I',
-        ]);
+    // public function translate(Request $request)
+    // {
+    //     $translate = new TranslateClient([
+    //         'key' => 'AIzaSyAIAyTqwdElG1l8dWkqzElE14zvg_-gc9I',
+    //     ]);
 
-        $result = $translate->translate($request->text, [
-            'target' => $request->target,
-        ]);
+    //     $result = $translate->translate($request->text, [
+    //         'target' => $request->target,
+    //     ]);
 
-        return response()->json($result['text']);
-    }
+    //     return response()->json($result['text']);
+    // }
 
     public function update(Updatemd_lokerRequest $request, md_loker $md_loker)
     {

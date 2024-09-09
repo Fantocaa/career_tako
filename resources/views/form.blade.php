@@ -82,6 +82,9 @@
                     <button type="button" @click="selectedLanguage = 'en'"
                         :class="{ 'bg-BlueTako text-white': selectedLanguage === 'en' }"
                         class="px-4 py-2 rounded-lg ">English</button>
+                    <button type="button" @click="selectedLanguage = 'zh'"
+                        :class="{ 'bg-BlueTako text-white': selectedLanguage === 'zh' }"
+                        class="px-4 py-2 rounded-lg ">Chinese</button>
                 </div>
                 <div class="grid grid-cols-2 pt-8 gap-4">
                     <div>
@@ -152,7 +155,7 @@
                         </div>
 
                         <div class="mt-8">
-                            <label for="status" class="w-full ">
+                            <label for="status" class="w-full">
                                 <h1 class="mb-2">Status</h1>
                                 <div class="grid grid-cols-3 items-center gap-4">
                                     <select class="w-full rounded-2xl col-span-2" name="status">
@@ -204,11 +207,15 @@
 
                                 <div v-show="selectedLanguage === 'id'">
                                     <textarea v-model="isi_konten.id" name="isi_konten[id]" class="w-full rounded-2xl h-44"
-                                        placeholder="Masukkan Deskripsi (ID)"></textarea>
+                                        placeholder="Masukkan Deskripsi (ID)" maxlength="255"></textarea>
                                 </div>
                                 <div v-show="selectedLanguage === 'en'">
                                     <textarea v-model="isi_konten.en" name="isi_konten[en]" class="w-full rounded-2xl h-44"
-                                        placeholder="Masukkan Deskripsi (EN)"></textarea>
+                                        placeholder="Masukkan Deskripsi (EN)" maxlength="255"></textarea>
+                                </div>
+                                <div v-show="selectedLanguage === 'zh'">
+                                    <textarea v-model="isi_konten.zh" name="isi_konten[zh]" class="w-full rounded-2xl h-44"
+                                        placeholder="Masukkan Deskripsi (ZH)" maxlength="255"></textarea>
                                 </div>
 
                                 @error('isi_konten')
@@ -219,8 +226,6 @@
                                     <p id="charCount"> 0 / 255</p>
                                 </div>
                             </label>
-
-
                         </div>
 
                         <div class="form-group">
@@ -234,6 +239,11 @@
                                 <div v-show="selectedLanguage === 'en'">
                                     <div id="quill-editor-en" class="mb-3" style="height: 300px;"></div>
                                     <textarea rows="3" class="mb-3 d-none" name="deskripsi[en]" id="quill-editor-area-en" style="display:none;"></textarea>
+                                </div>
+
+                                <div v-show="selectedLanguage === 'zh'">
+                                    <div id="quill-editor-zh" class="mb-3" style="height: 300px;"></div>
+                                    <textarea rows="3" class="mb-3 d-none" name="deskripsi[zh]" id="quill-editor-area-zh" style="display:none;"></textarea>
                                 </div>
 
                                 @error('deskripsi')
@@ -287,6 +297,22 @@
                     editorEn.root.innerHTML = quillEditorEn.value;
                 });
             }
+
+            // Quill instance for Chinese ('zh') language
+            if (document.getElementById('quill-editor-area-zh')) {
+                var editorZh = new Quill('#quill-editor-zh', {
+                    theme: 'snow',
+                    placeholder: 'Enter Main Content in English' // Placeholder untuk EN
+                });
+                var quillEditorZh = document.getElementById('quill-editor-area-zh');
+                editorZh.on('text-change', function() {
+                    quillEditorZh.value = editorZh.root.innerHTML;
+                });
+
+                quillEditorZh.addEventListener('input', function() {
+                    editorZh.root.innerHTML = quillEditorZh.value;
+                });
+            }
         });
     </script>
 
@@ -298,16 +324,43 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            const input = document.getElementById('isi_konten');
+            const textareaId = document.querySelector('textarea[name="isi_konten[id]"]');
+            const textareaEn = document.querySelector('textarea[name="isi_konten[en]"]');
+            const textareaZh = document.querySelector('textarea[name="isi_konten[zh]"]');
             const charCount = document.getElementById('charCount');
 
-            if (input && charCount) {
-                input.addEventListener('input', () => {
-                    charCount.textContent = `${input.value.length} / 255`;
+            function updateCharCount(textarea) {
+                if (charCount) {
+                    charCount.textContent = `${textarea.value.length} / 255`;
+                }
+            }
+
+            // Untuk textarea Bahasa Indonesia (isi_konten.id)
+            if (textareaId) {
+                textareaId.addEventListener('input', () => {
+                    updateCharCount(textareaId);
                 });
+                updateCharCount(textareaId); // Set initial count on load
+            }
+
+            // Untuk textarea Bahasa Inggris (isi_konten.en)
+            if (textareaEn) {
+                textareaEn.addEventListener('input', () => {
+                    updateCharCount(textareaEn);
+                });
+                updateCharCount(textareaEn); // Set initial count on load
+            }
+
+            // Untuk textarea Bahasa Inggris (isi_konten.en)
+            if (textareaZh) {
+                textareaZh.addEventListener('input', () => {
+                    updateCharCount(textareaZh);
+                });
+                updateCharCount(textareaZh); // Set initial count on load
             }
         });
     </script>
+
 
     <script>
         const {
@@ -325,12 +378,12 @@
                     isi_konten: {
                         id: '',
                         en: '',
-                        // zh: ''
+                        zh: ''
                     },
                     deskripsi: {
                         id: '',
                         en: '',
-                        // zh: ''
+                        zh: ''
                     },
                 };
             },
@@ -357,8 +410,9 @@
                 // Method untuk mengatur data berdasarkan bahasa
                 switchLanguage(lang) {
                     this.selectedLanguage = lang;
-                },
+                    console.log(this.selectedLanguage);
 
+                },
             },
         }).mount("#vue");
     </script>

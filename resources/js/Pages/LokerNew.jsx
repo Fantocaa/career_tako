@@ -20,7 +20,6 @@ import BackToTop from "@/Components/BackToTop";
 
 const LokerNew = () => {
     const { state } = usePage();
-    const [formData, setFormData] = useState([]);
     const [data, setData] = useState([]); // State untuk data perusahaan
     const [isPageLoaded, setIsPageLoaded] = useState(false);
 

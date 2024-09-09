@@ -7,22 +7,24 @@ import TableDashboard from "./TableDashboard";
 const LokerDS = () => {
     return (
         <>
-            <div className="flex h-full">
-                {/* sidebar */}
-                <div className="w-1/4 mr-[72px] xl:mr-20 2xl:mr-0 2xl:flex items-center justify-center">
+            {/* <div className="flex h-full"> */}
+            {/* sidebar */}
+            <section className="bg-BgTako font-inter">
+                <div>
                     <Dashboard active />
                 </div>
 
                 {/* table */}
-                <div className="w-full h-full">
+                <div className="ml-[328px] h-full mr-8">
                     <TableDashboard />
                 </div>
-            </div>
-            {/* <Box sx={{ display: "flex" }}>
+                {/* </div> */}
+                {/* <Box sx={{ display: "flex" }}>
                 <SidebarLayout />
                 <div>LokerDS</div>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
             </Box> */}
+            </section>
         </>
     );
 };

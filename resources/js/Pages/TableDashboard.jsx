@@ -3,6 +3,7 @@ import { Link } from "@inertiajs/react";
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Layout from "@/Layouts/Layout";
+import { Head } from "@inertiajs/react";
 
 const TableDashboard = () => {
     const handleDelete = (id) => {
@@ -148,8 +149,10 @@ const TableDashboard = () => {
     }, []); // Kosongkan array dependensi untuk memastikan permintaan hanya dipanggil sekali
 
     return (
-        <Layout pageTitle="Dashboard | Tako Karir">
-            <div className="bg-BgTako px-4 h-screen py-8">
+        // <Layout pageTitle="Dashboard | Tako Karir">
+        <>
+            <Head title="Input Lowongan Pekerjaan" />
+            <div className="bg-BgTako h-full py-8">
                 <div className="bg-white container mx-auto p-8 rounded-lg h-full ">
                     <h1 className="font-bold text-2xl pb-6 text-DarkTako">
                         Tambah Loker
@@ -191,7 +194,8 @@ const TableDashboard = () => {
                 </div>
                 {/* Open the modal using document.getElementById('ID').showModal() method */}
             </div>
-        </Layout>
+        </>
+        // </Layout>
     );
 };
 

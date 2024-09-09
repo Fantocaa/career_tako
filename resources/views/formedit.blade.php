@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
 
     <style>
         .trix-button--icon-decrease-nesting-level,
@@ -62,22 +64,37 @@
             </div>
             <form id="vue" action="{{ url('/admin/table/update_loker') }}" method="POST" class="w-full">
                 @csrf
-                <input class="" type="text" name="id" id="id" value="{{ $md_loker[0]->id }}"
-                    hidden>
-                <div class="flex flex-wrap pt-8 gap-4">
-                    <label for="nama" class="w-[49%]">
-                        <h1 class="mb-2">Pekerjaan</h1>
-                        <input type="text" name="pekerjaan" value="{{ $md_loker[0]->pekerjaan }}" required
-                            class="rounded-2xl w-full" placeholder="Masukkan Nama Pekerjaan">
-                    </label>
 
-                    {{-- <label for="perusahaan" class="w-[49%]">
+                <div class="w-full flex justify-end">
+                    <button type="button" @click="changeLanguage('id')"
+                        :class="{ 'bg-BlueTako text-white': selectedLanguage === 'id' }"
+                        class="px-4 py-2 rounded-lg">Bahasa Indonesia</button>
+                    <button type="button" @click="changeLanguage('en')"
+                        :class="{ 'bg-BlueTako text-white': selectedLanguage === 'en' }"
+                        class="px-4 py-2 rounded-lg">English</button>
+                    <button type="button" @click="changeLanguage('zh')"
+                        :class="{ 'bg-BlueTako text-white': selectedLanguage === 'zh' }"
+                        class="px-4 py-2 rounded-lg ">Chinese</button>
+                </div>
+
+                <input class="" type="text" name="id" id="id" value="{{ $md_loker->id }}" hidden>
+
+                <div class="grid grid-cols-2 pt-8 gap-4">
+                    <div>
+                        <label for="nama" class="w-[49%]">
+                            <h1 class="mb-2">Pekerjaan</h1>
+                            <input type="text" name="pekerjaan" value="{{ $md_loker->pekerjaan }}" required
+                                class="rounded-2xl w-full" placeholder="Masukkan Nama Pekerjaan">
+
+                        </label>
+
+                        {{-- <label for="perusahaan" class="w-[49%]">
                         <h1>Perusahaan</h1>
                         <input type="text" name="perusahaan" value="{{ $md_loker[0]->perusahaan }}" required
                             class="rounded-2xl w-full">
                     </label> --}}
 
-                    {{-- <label for="perusahaan" class="w-[49%]">
+                        {{-- <label for="perusahaan" class="w-[49%]">
                         <h1 class="mb-2">Perusahaan</h1>
                         <select class="js-example-basic-single w-full rounded-2xl" name="perusahaan" required
                             style="width: 100%;" value="{{ $md_loker[0]->perusahaan }}">
@@ -88,75 +105,114 @@
                         </select>
                     </label> --}}
 
-                    <label for="jenis_pekerjaan" class="w-[49%]">
-                        <h1 class="mb-2">Jenis Pekerjaan</h1>
-                        <select class="w-full rounded-2xl" name="jenis_pekerjaan"
-                            value="{{ $md_loker[0]->jenis_pekerjaan }}">
-                            <option class="">Pilih Program</option>
-                            <option value="Internship">Internship</option>
-                            <option value="Profesional">Profesional</option>
-                        </select>
-                        @error('jenis_pekerjaan')
-                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </label>
+                        <div class="grid grid-cols-3 gap-4 mt-4">
 
-                    <label for="batas_lamaran" class="w-[49%] relative">
-                        <h1 class="mb-2">Batas Lamaran</h1>
-                        {{-- <img src="/images/calendar.svg" alt=""
+                            <label for="jenis_pekerjaan" class="w-full">
+                                <h1 class="mb-2">Jenis Pekerjaan</h1>
+                                <select class="w-full rounded-2xl" name="jenis_pekerjaan"
+                                    value="{{ $md_loker->jenis_pekerjaan }}">
+                                    <option class="">Pilih Program</option>
+                                    <option value="Internship">Internship</option>
+                                    <option value="Profesional">Profesional</option>
+                                </select>
+                                @error('jenis_pekerjaan')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </label>
+
+                            <label for="batas_lamaran" class="w-full relative">
+                                <h1 class="mb-2">Batas Lamaran</h1>
+                                {{-- <img src="/images/calendar.svg" alt=""
                             class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
-                        <input type="date" name="batas_lamaran" value="{{ $md_loker[0]->batas_lamaran }}" required
-                            class="rounded-2xl w-full">
-                        @error('batas_lamaran')
-                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </label>
+                                <input type="date" name="batas_lamaran" value="{{ $md_loker->batas_lamaran }}"
+                                    required class="rounded-2xl w-full">
+                                @error('batas_lamaran')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </label>
 
-                    <label for="lokasi" class="w-[49%] relative">
-                        <h1 class="mb-2">Lokasi</h1>
-                        {{-- <img src="/images/calendar.svg" alt=""
-                            class="absolute right-2 bottom-1 pointer-events-none scale-90 opacity-75"> --}}
-                        <input type="text" name="lokasi" required class="rounded-2xl w-full"
-                            value="{{ $md_loker[0]->lokasi }}" placeholder="Masukkan Lokasi">
-                        @error('lokasi')
-                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                        @enderror
-                    </label>
-
-                    <div class="flex w-full gap-4 flex-wrap">
-                        <template v-for="(item, index) in idskilldelete":key="index">
-                            <input type="text" name="idskilldelete[]" v-model="item.id" hidden>
-                        </template>
-                        <template v-for="(item, index) in namaskill" :key="index">
-                            <div>
-                                <h1 class="mb-2">Skill</h1>
-                                <label for="skill" class="flex gap-2">
-                                    <input type="text" name="idskill[]" v-model="item.id" hidden>
-                                    <input type="text" name="skill[]" v-model="item.nama" required
-                                        class="rounded-2xl w-full">
-                                    <span v-on:Click='hapusKonten(index, item.id)'
-                                        class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
-                                    </span>
-                                </label>
-                            </div>
-                        </template>
-                        <div class="flex items-end">
-                            <span v-on:Click='onClickSkill()'
-                                class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">
-                                Add
-                                Req Skill +</span>
+                            <label for="lokasi" class="w-full relative">
+                                <h1 class="mb-2">Lokasi</h1>
+                                <input type="text" name="lokasi" required class="rounded-2xl w-full"
+                                    value="{{ $md_loker->lokasi }}" placeholder="Masukkan Lokasi">
+                                @error('lokasi')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </label>
                         </div>
-                        <div class="flex items-end">
 
+                        <div class="flex w-full gap-4 flex-wrap mt-4">
+                            <template v-for="(item, index) in idskilldelete":key="index">
+                                <input type="text" name="idskilldelete[]" v-model="item.id" hidden>
+                            </template>
+                            <template v-for="(item, index) in namaskill" :key="index">
+                                <div class="w-full">
+                                    <h1 class="mb-2">Skill</h1>
+                                    <label for="skill" class="flex gap-2">
+                                        <input type="text" name="idskill[]" v-model="item.id" hidden>
+                                        <input type="text" name="skill[]" v-model="item.nama" required
+                                            class="rounded-2xl w-full">
+                                        <span v-on:Click='hapusKonten(index, item.id)'
+                                            class="cursor-pointer flex items-center  bg-RedTako px-4 py-2 rounded-2xl text-white">Delete
+                                        </span>
+                                    </label>
+                                </div>
+                            </template>
+                            <div class="flex items-end">
+                                <span v-on:Click='onClickSkill()'
+                                    class="cursor-pointer flex items-center  bg-BlueTako px-4 py-2 rounded-2xl text-white">
+                                    Add
+                                    Req Skill +</span>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <label for="status" class="w-full">
+                                <h1 class="mb-2">Status</h1>
+                                <div class="grid grid-cols-3 items-center gap-4">
+                                    <select class="w-full rounded-2xl col-span-2" name="status"
+                                        value="{{ $md_loker->status }}">
+                                        <option class="">Pilih Status Post</option>
+                                        <option value="Aktif">Aktif</option>
+                                        <option value="Tidak Aktif">Tidak Aktif</option>
+                                    </select>
+
+                                    <div class="flex gap-2 items-center w-full">
+                                        <div class="w-full">
+                                            <button type="submit"
+                                                class="bg-BlueTako text-white px-4 py-2 rounded-2xl w-full">Simpan</button>
+                                        </div>
+                                        <div class="w-full">
+                                            <a href="/admin/dashboard/lowongan_pekerjaan">
+                                                <button
+                                                    class="bg-RedTako text-white px-4 py-2 rounded-2xl w-full">Batal</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @error('status')
+                                    <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                                @enderror
+                            </label>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 w-full">
+                    <div class="w-full">
                         <div>
                             <label for="isi_konten" class="w-full">
                                 <h1 class="mb-2">Deskripsi Singkat</h1>
-                                <textarea id="isi_konten" type="text" name="isi_konten" value="{{ $md_loker[0]->deskripsi }}" required
-                                    class="rounded-2xl w-full h-32" maxlength="255"></textarea>
+                                <div v-show="selectedLanguage === 'id'">
+                                    <textarea v-model="isi_konten.id" name="isi_konten[id]" class="w-full rounded-2xl h-44"
+                                        placeholder="Masukkan Deskripsi (ID)">{{ $md_loker->translate('id')->deskripsi }}</textarea>
+                                </div>
+                                <div v-show="selectedLanguage === 'en'">
+                                    <textarea v-model="isi_konten.en" name="isi_konten[en]" class="w-full rounded-2xl h-44"
+                                        placeholder="Masukkan Deskripsi (EN)">{{ $md_loker->translate('en')->deskripsi }}</textarea>
+                                </div>
+                                <div v-show="selectedLanguage === 'zh'">
+                                    <textarea v-model="isi_konten.zh" name="isi_konten[zh]" class="w-full rounded-2xl h-44"
+                                        placeholder="Masukkan Deskripsi (ZH)">{{ $md_loker->translate('zh')->deskripsi }}</textarea>
+                                </div>
+
                                 @error('isi_konten')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
@@ -165,47 +221,114 @@
                                     <p id="charCount"> 0 / 255</p>
                                 </div>
                             </label>
-                            <label for="status" class="w-[49%]">
-                                <h1 class="mb-2">Status</h1>
-                                <select class="w-full rounded-2xl" name="status"
-                                    value="{{ $md_loker[0]->status }}">
-                                    <option class="">Pilih Status Post</option>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Tidak Aktif">Tidak Aktif</option>
-                                </select>
-                                @error('status')
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deskripsi">
+                                <h1 class="mb-2">Isi Konten</h1>
+                                <div v-show="selectedLanguage === 'id'">
+                                    <div id="quill-editor-id" class="mb-3" style="height: 300px;"></div>
+                                    <textarea value="{{ $md_loker->translate('id')->isi_konten }}" rows="3" class="mb-3 d-none"
+                                        name="deskripsi[id]" id="quill-editor-area-id" style="display:none;"></textarea>
+                                </div>
+
+                                <div v-show="selectedLanguage === 'en'">
+                                    <div id="quill-editor-en" class="mb-3" style="height: 300px;"></div>
+                                    <textarea value="{{ $md_loker->translate('en')->isi_konten }}" rows="3" class="mb-3 d-none"
+                                        name="deskripsi[en]" id="quill-editor-area-en" style="display:none;"></textarea>
+                                </div>
+
+                                <div v-show="selectedLanguage === 'zh'">
+                                    <div id="quill-editor-zh" class="mb-3" style="height: 300px;"></div>
+                                    <textarea value="{{ $md_loker->translate('zh')->isi_konten }}" rows="3" class="mb-3 d-none"
+                                        name="deskripsi[zh]" id="quill-editor-area-zh" style="display:none;"></textarea>
+                                </div>
+
+                                @error('deskripsi')
                                     <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </label>
-                            <div class="flex gap-4">
-                                <div class="pt-8">
-                                    <button type="submit"
-                                        class="bg-BlueTako text-white px-4 py-2 rounded-2xl">Simpan</button>
-                                </div>
-                                <div class="pt-[41px]">
-                                    <a href="/admin/dashboard/lowongan_pekerjaan">
-                                        <span class="bg-RedTako text-white px-4 py-[9.5px] rounded-2xl">Batal</span>
-                                    </a>
-                                </div>
-                            </div>
                         </div>
-                        <label for="deskripsi" class="w-full ">
-                            <h1 class="mb-2">Isi Konten</h1>
-                            <input id="deskripsi" type="hidden" name="deskripsi"
-                                value="{{ $md_loker[0]->isi_konten }}">
-                            <trix-editor input="deskripsi"
-                                class="h-64 overflow-scroll hover:cursor-auto overflow-x-hidden"></trix-editor>
-                            @error('deskripsi')
-                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                            @enderror
-                        </label>
                     </div>
+
 
                 </div>
 
             </form>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Quill instance for Indonesian ('id') language
+            if (document.getElementById('quill-editor-area-id')) {
+                var editorId = new Quill('#quill-editor-id', {
+                    theme: 'snow',
+                    placeholder: 'Masukkan Isi Konten dalam Bahasa Indonesia'
+                });
+                var quillEditorId = document.getElementById('quill-editor-area-id');
+
+                // Set the initial content from the textarea
+                editorId.root.innerHTML = quillEditorId.value;
+
+                // Update textarea value when Quill content changes
+                editorId.on('text-change', function() {
+                    quillEditorId.value = editorId.root.innerHTML;
+                });
+
+                // Update Quill content if the textarea value changes manually (if needed)
+                quillEditorId.addEventListener('input', function() {
+                    editorId.root.innerHTML = quillEditorId.value;
+                });
+            }
+
+            // Quill instance for English ('en') language
+            if (document.getElementById('quill-editor-area-en')) {
+                var editorEn = new Quill('#quill-editor-en', {
+                    theme: 'snow',
+                    placeholder: 'Enter Main Content in English'
+                });
+                var quillEditorEn = document.getElementById('quill-editor-area-en');
+
+                // Set the initial content from the textarea
+                editorEn.root.innerHTML = quillEditorEn.value;
+
+                // Update textarea value when Quill content changes
+                editorEn.on('text-change', function() {
+                    quillEditorEn.value = editorEn.root.innerHTML;
+                });
+
+                // Update Quill content if the textarea value changes manually (if needed)
+                quillEditorEn.addEventListener('input', function() {
+                    editorEn.root.innerHTML = quillEditorEn.value;
+                });
+            }
+
+
+            if (document.getElementById('quill-editor-area-zh')) {
+                var editorZh = new Quill('#quill-editor-zh', {
+                    theme: 'snow',
+                    placeholder: 'Enter Main Content in Chinese'
+                });
+                var quillEditorZh = document.getElementById('quill-editor-area-zh');
+
+                // Set the initial content from the textarea
+                editorZh.root.innerHTML = quillEditorZh.value;
+
+                // Update textarea value when Quill content changes
+                editorZh.on('text-change', function() {
+                    quillEditorZh.value = editorZh.root.innerHTML;
+                });
+
+                // Update Quill content if the textarea value changes manually (if needed)
+                quillEditorZh.addEventListener('input', function() {
+                    editorZh.root.innerHTML = quillEditorZh.value;
+                });
+            }
+
+
+        });
+    </script>
 
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -214,17 +337,39 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            const input = document.getElementById('isi_konten');
+            const textareaId = document.querySelector('textarea[name="isi_konten[id]"]');
+            const textareaEn = document.querySelector('textarea[name="isi_konten[en]"]');
+            const textareaZh = document.querySelector('textarea[name="isi_konten[zh]"]');
             const charCount = document.getElementById('charCount');
 
-            if (input && charCount) {
-                // Initialize character count on page load
-                charCount.textContent = `${input.value.length} / 255`;
+            function updateCharCount(textarea) {
+                if (charCount) {
+                    charCount.textContent = `${textarea.value.length} / 255`;
+                }
+            }
 
-                // Update character count on input change
-                input.addEventListener('input', () => {
-                    charCount.textContent = `${input.value.length} / 255`;
+            // Untuk textarea Bahasa Indonesia (isi_konten.id)
+            if (textareaId) {
+                textareaId.addEventListener('input', () => {
+                    updateCharCount(textareaId);
                 });
+                updateCharCount(textareaId); // Set initial count on load
+            }
+
+            // Untuk textarea Bahasa Inggris (isi_konten.en)
+            if (textareaEn) {
+                textareaEn.addEventListener('input', () => {
+                    updateCharCount(textareaEn);
+                });
+                updateCharCount(textareaEn); // Set initial count on load
+            }
+
+            // Untuk textarea Bahasa Inggris (isi_konten.en)
+            if (textareaZh) {
+                textareaZh.addEventListener('input', () => {
+                    updateCharCount(textareaZh);
+                });
+                updateCharCount(textareaZh); // Set initial count on load
             }
         });
     </script>
@@ -243,6 +388,17 @@
                     id: [],
                     idskilldelete: [],
                     errors: window.errors || {},
+                    selectedLanguage: 'id',
+                    isi_konten: {
+                        id: '{{ $md_loker->translate('id')->deskripsi }}',
+                        en: '{{ $md_loker->translate('en')->deskripsi }}',
+                        zh: '{{ $md_loker->translate('zh')->deskripsi }}',
+                    },
+                    deskripsi: {
+                        id: '{{ $md_loker->translate('id')->isi_konten }}',
+                        en: '{{ $md_loker->translate('en')->isi_konten }}',
+                        zh: '{{ $md_loker->translate('zh')->isi_konten }}',
+                    },
                 };
             },
             mounted() {
@@ -255,7 +411,7 @@
                     $.ajax('/admin/table/viewskill/' + id, {
                         type: 'GET',
                         success: function(data, status, xhr) {
-                            console.log(data);
+
                             self.namaskill = data[0].map(function(dt) {
                                 return {
                                     nama: dt.nama_skill,
@@ -279,44 +435,11 @@
                         id: idLama
                     });
                 },
-                onSubmit() {
-                    // Reset error messages
-                    this.errors = {};
+                changeLanguage(lang) {
+                    this.selectedLanguage = lang;
+                    console.log(this.selectedLanguage);
+                }
 
-                    // Validasi setiap field
-                    if (!this.pekerjaan) {
-                        this.errors.pekerjaan = "Pekerjaan harus diisi.";
-                    }
-                    if (!this.jenis_pekerjaan) {
-                        this.errors.jenis_pekerjaan = "Jenis pekerjaan harus dipilih.";
-                    }
-                    if (!this.batas_lamaran) {
-                        this.errors.batas_lamaran = "Batas lamaran harus diisi.";
-                    }
-                    if (!this.lokasi) {
-                        this.errors.lokasi = "Lokasi harus diisi.";
-                    }
-                    if (this.namaskill.length === 0) {
-                        this.errors.namaskill = "Minimal 1 skill harus diisi.";
-                    } else {
-                        this.namaskill.forEach((skill, index) => {
-                            if (!skill.nama) {
-                                this.errors[`namaskill_${index}`] = "Nama skill harus diisi.";
-                            }
-                        });
-                    }
-                    if (!this.isi_konten) {
-                        this.errors.isi_konten = "Deskripsi singkat harus diisi.";
-                    }
-                    if (!this.deskripsi) {
-                        this.errors.deskripsi = "Isi konten harus diisi.";
-                    }
-
-                    // Jika tidak ada error, submit form
-                    if (Object.keys(this.errors).length === 0) {
-                        this.$refs.form.submit();
-                    }
-                },
             },
         }).mount("#vue");
     </script>

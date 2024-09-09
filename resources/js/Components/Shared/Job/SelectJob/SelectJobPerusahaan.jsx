@@ -1,31 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import Axios from "axios";
-import LanguageContext from "../../Homepage/LanguageContext";
 
 const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
-    const [formData, setFormData] = useState([]);
     const [formDataSkill, setFormDataSkill] = useState([]);
 
-    function formatDate(dateString) {
-        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-        const date = new Date(dateString);
-        return date.toLocaleDateString("id-ID", options);
-    }
-
     useEffect(() => {
-        // Panggil fungsi API di sini saat komponen pertama kali di-mount
-        // const fetchData = async () => {
-        //     try {
-        //         // Kirim data ke server
-        //         const response = await Axios.get("/api/form");
-        //         // const response = await Axios.post("/form");
-        //         setFormData(response.data);
-        //     } catch (error) {
-        //         console.error("Error sending data:", error);
-        //     }
-        // };
-
         const fetchDataSkill = async () => {
             try {
                 // Kirim data ke server
@@ -37,12 +17,13 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
         };
 
         fetchDataSkill();
-
-        // fetchData(); // Panggil fungsi fetchData saat komponen di-mount
-
-        // Hanya perlu dijalankan saat komponen pertama kali di-mount,
-        // sehingga dependensi di bawah ini kosong
     }, []);
+
+    function formatDate(dateString) {
+        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        const date = new Date(dateString);
+        return date.toLocaleDateString("id-ID", options);
+    }
 
     return (
         <div
@@ -74,17 +55,22 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                             </p>
                             <div className="flex flex-wrap items-center gap-4 pt-4">
                                 <div className="flex gap-2">
-                                    <img src="/images/program.svg" alt="" />
+                                    <img
+                                        src="/images/program.svg"
+                                        alt="program"
+                                    />
                                     <h1 className="">{item.jenis_pekerjaan}</h1>
                                 </div>
                                 <div className="flex gap-2">
-                                    <img src="/images/clock.svg" alt="" />
-                                    <h1 className="">{item.batas_lamaran}</h1>
+                                    <img src="/images/clock.svg" alt="clock" />
+                                    <h1 className="">
+                                        {formatDate(item.batas_lamaran)}
+                                    </h1>
                                 </div>
                                 <div className="flex gap-2">
                                     <img
                                         src="/images/icon/location.svg"
-                                        alt=""
+                                        alt="location"
                                     />
                                     <h1 className="">{item.lokasi}</h1>
                                 </div>
