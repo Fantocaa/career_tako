@@ -83,9 +83,26 @@
                     <div>
                         <label for="nama" class="w-[49%]">
                             <h1 class="mb-2">Pekerjaan</h1>
-                            <input type="text" name="pekerjaan" value="{{ $md_loker->pekerjaan }}" required
-                                class="rounded-2xl w-full" placeholder="Masukkan Nama Pekerjaan">
-
+                            {{-- <input type="text" name="pekerjaan" value="{{ $md_loker->pekerjaan }}" required
+                                class="rounded-2xl w-full" placeholder="Masukkan Nama Pekerjaan"> --}}
+                            <div v-show="selectedLanguage === 'id'">
+                                <input v-model="pekerjaan.id" name="pekerjaan[id]" class="rounded-2xl w-full"
+                                    placeholder="Masukkan Nama Pekerjaan (ID)"
+                                    maxlength="255">{{ $md_loker->translate('id')->pekerjaan ?? '' }}</input>
+                            </div>
+                            <div v-show="selectedLanguage === 'en'">
+                                <input v-model="pekerjaan.en" name="pekerjaan[en]" class="rounded-2xl w-full"
+                                    placeholder="Entry Name of Jobs (EN)"
+                                    maxlength="255">{{ $md_loker->translate('en')->pekerjaan ?? '' }}</input>
+                            </div>
+                            <div v-show="selectedLanguage === 'zh'">
+                                <input v-model="pekerjaan.zh" name="pekerjaan[zh]" class="rounded-2xl w-full"
+                                    placeholder="Masukkan Nama Pekerjaan (ZH)"
+                                    maxlength="255">{{ $md_loker->translate('zh')->pekerjaan ?? '' }}</input>
+                            </div>
+                            @error('pekerjaan')
+                                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </label>
 
                         {{-- <label for="perusahaan" class="w-[49%]">
@@ -202,15 +219,15 @@
                                 <h1 class="mb-2">Deskripsi Singkat</h1>
                                 <div v-show="selectedLanguage === 'id'">
                                     <textarea v-model="isi_konten.id" name="isi_konten[id]" class="w-full rounded-2xl h-44"
-                                        placeholder="Masukkan Deskripsi (ID)">{{ $md_loker->translate('id')->deskripsi }}</textarea>
+                                        placeholder="Masukkan Deskripsi (ID)">{{ $md_loker->translate('id')->deskripsi ?? '' }}</textarea>
                                 </div>
                                 <div v-show="selectedLanguage === 'en'">
                                     <textarea v-model="isi_konten.en" name="isi_konten[en]" class="w-full rounded-2xl h-44"
-                                        placeholder="Masukkan Deskripsi (EN)">{{ $md_loker->translate('en')->deskripsi }}</textarea>
+                                        placeholder="Masukkan Deskripsi (EN)">{{ $md_loker->translate('en')->deskripsi ?? '' }}</textarea>
                                 </div>
                                 <div v-show="selectedLanguage === 'zh'">
                                     <textarea v-model="isi_konten.zh" name="isi_konten[zh]" class="w-full rounded-2xl h-44"
-                                        placeholder="Masukkan Deskripsi (ZH)">{{ $md_loker->translate('zh')->deskripsi }}</textarea>
+                                        placeholder="Masukkan Deskripsi (ZH)">{{ $md_loker->translate('zh')->deskripsi ?? '' }}</textarea>
                                 </div>
 
                                 @error('isi_konten')
@@ -228,19 +245,19 @@
                                 <h1 class="mb-2">Isi Konten</h1>
                                 <div v-show="selectedLanguage === 'id'">
                                     <div id="quill-editor-id" class="mb-3" style="height: 300px;"></div>
-                                    <textarea value="{{ $md_loker->translate('id')->isi_konten }}" rows="3" class="mb-3 d-none"
+                                    <textarea value="{{ $md_loker->translate('id')->isi_konten ?? '' }}" rows="3" class="mb-3 d-none"
                                         name="deskripsi[id]" id="quill-editor-area-id" style="display:none;"></textarea>
                                 </div>
 
                                 <div v-show="selectedLanguage === 'en'">
                                     <div id="quill-editor-en" class="mb-3" style="height: 300px;"></div>
-                                    <textarea value="{{ $md_loker->translate('en')->isi_konten }}" rows="3" class="mb-3 d-none"
+                                    <textarea value="{{ $md_loker->translate('en')->isi_konten ?? '' }}" rows="3" class="mb-3 d-none"
                                         name="deskripsi[en]" id="quill-editor-area-en" style="display:none;"></textarea>
                                 </div>
 
                                 <div v-show="selectedLanguage === 'zh'">
                                     <div id="quill-editor-zh" class="mb-3" style="height: 300px;"></div>
-                                    <textarea value="{{ $md_loker->translate('zh')->isi_konten }}" rows="3" class="mb-3 d-none"
+                                    <textarea value="{{ $md_loker->translate('zh')->isi_konten ?? '' }}" rows="3" class="mb-3 d-none"
                                         name="deskripsi[zh]" id="quill-editor-area-zh" style="display:none;"></textarea>
                                 </div>
 
@@ -389,15 +406,20 @@
                     idskilldelete: [],
                     errors: window.errors || {},
                     selectedLanguage: 'id',
+                    pekerjaan: {
+                        id: '{{ $md_loker->translate('id')->pekerjaan ?? '' }}',
+                        en: '{{ $md_loker->translate('en')->pekerjaan ?? '' }}',
+                        zh: '{{ $md_loker->translate('zh')->pekerjaan ?? '' }}',
+                    },
                     isi_konten: {
-                        id: '{{ $md_loker->translate('id')->deskripsi }}',
-                        en: '{{ $md_loker->translate('en')->deskripsi }}',
-                        zh: '{{ $md_loker->translate('zh')->deskripsi }}',
+                        id: '{{ $md_loker->translate('id')->deskripsi ?? '' }}',
+                        en: '{{ $md_loker->translate('en')->deskripsi ?? '' }}',
+                        zh: '{{ $md_loker->translate('zh')->deskripsi ?? '' }}',
                     },
                     deskripsi: {
-                        id: '{{ $md_loker->translate('id')->isi_konten }}',
-                        en: '{{ $md_loker->translate('en')->isi_konten }}',
-                        zh: '{{ $md_loker->translate('zh')->isi_konten }}',
+                        id: '{{ $md_loker->translate('id')->isi_konten ?? '' }}',
+                        en: '{{ $md_loker->translate('en')->isi_konten ?? '' }}',
+                        zh: '{{ $md_loker->translate('zh')->isi_konten ?? '' }}',
                     },
                 };
             },

@@ -12,7 +12,7 @@ class md_lokerTranslation extends Model
 
     // Tentukan atribut yang dapat diterjemahkan
     public $timestamps = false;
-    protected $fillable = ['isi_konten', 'deskripsi'];
+    protected $fillable = ['pekerjaan', 'isi_konten', 'deskripsi'];
 
     // Relasi ke model utama
     public function mdLoker()

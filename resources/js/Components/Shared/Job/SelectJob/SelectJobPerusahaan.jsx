@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import Axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
     const [formDataSkill, setFormDataSkill] = useState([]);
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchDataSkill = async () => {
@@ -40,7 +42,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                         key={item.id}
                     >
                         <div>
-                            <h1 className="font-bold translate text-xl">
+                            <h1 className="font-bold text-xl">
                                 {item.pekerjaan}
                             </h1>
                             {/* {values && (
@@ -50,7 +52,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                             {/* <h2 className="text-BlueTako pt-2">
                             {item.perusahaan}
                         </h2> */}
-                            <p className="text-base pt-4 translate lg:text-sm xl:text-base line-clamp-6">
+                            <p className="text-base pt-4 lg:text-sm xl:text-base line-clamp-6">
                                 {item.deskripsi}
                             </p>
                             <div className="flex flex-wrap items-center gap-4 pt-4">
@@ -102,7 +104,7 @@ const SelectJobPerusahaan = ({ active, formData: formDataProp }) => {
                             <div className="w-full">
                                 <Link href={`/loker/pekerjaan/${item.id}`}>
                                     <button className="bg-BlueTako text-BlueTako bg-opacity-10  py-2 rounded-lg w-full translate">
-                                        Lihat Detail
+                                        {t("loker.detail")}
                                     </button>
                                 </Link>
                             </div>

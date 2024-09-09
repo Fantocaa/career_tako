@@ -12,6 +12,7 @@ import {
     WhatsappShareButton,
     WorkplaceShareButton,
 } from "react-share";
+import { useTranslation } from "react-i18next";
 
 const DetailLoker = () => {
     // const [formData, setFormData] = useState([]);
@@ -27,11 +28,13 @@ const DetailLoker = () => {
 
     // Mendapatkan translasi dengan locale 'id' (Indonesia)
     const [locale, setLocale] = useState(document.documentElement.lang);
+    const { t } = useTranslation(); // Tambahkan ini
 
     const [values, setValues] = useState({
         // password: "meong",
         id: md_loker.id,
-        pekerjaan: md_loker.pekerjaan,
+        // pekerjaan: md_loker.pekerjaan,
+        pekerjaan: "",
         // perusahaan: md_loker[0].perusahaan,
         jenis_pekerjaan: md_loker.jenis_pekerjaan,
         batas_lamaran: md_loker.batas_lamaran, // Inisialisasi properti batas_lamaran
@@ -48,6 +51,7 @@ const DetailLoker = () => {
             if (translation) {
                 setValues((prevValues) => ({
                     ...prevValues,
+                    pekerjaan: translation.pekerjaan,
                     isi_konten: translation.isi_konten,
                     deskripsi: translation.deskripsi,
                 }));
@@ -94,7 +98,7 @@ const DetailLoker = () => {
                     <div className="bg-white p-4 rounded-lg py-8 md:px-8">
                         <div className="flex items-end">
                             <div className="w-full">
-                                <h1 className="font-bold lg:text-2xl translate">
+                                <h1 className="font-bold lg:text-2xl">
                                     {values.pekerjaan}
                                     {/* {item.pekerjaan} */}
                                 </h1>
@@ -120,8 +124,8 @@ const DetailLoker = () => {
                                             alt=""
                                             className="scale-150 lg:ml-2"
                                         />
-                                        <p className="translate">
-                                            Batas Lamaran :{" "}
+                                        <p>
+                                            {t("expired")}:{" "}
                                             {formatDate(
                                                 // item.batas_lamaran
                                                 values.batas_lamaran,
@@ -150,7 +154,7 @@ const DetailLoker = () => {
                                                     ✕
                                                 </button>
                                             </form>
-                                            <h3 className="font-bold text-lg translate">
+                                            <h3 className="font-bold text-lg">
                                                 Bagikan
                                             </h3>
                                             <div className="py-8 flex gap-8">

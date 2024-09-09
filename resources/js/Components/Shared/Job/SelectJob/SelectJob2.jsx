@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "@inertiajs/react";
 import Axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const SelectJob2 = ({ active, formData: formDataProp }) => {
     const [formDataSkill, setFormDataSkill] = useState([]);
+    const { t } = useTranslation();
 
     function formatDate(dateString) {
         const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -90,7 +92,7 @@ const SelectJob2 = ({ active, formData: formDataProp }) => {
                             <div className="w-full">
                                 <Link href={`/loker/pekerjaan/${item.id}`}>
                                     <button className="bg-BlueTako text-BlueTako bg-opacity-10 py-2 rounded-lg w-full">
-                                        Lihat Detail
+                                        {t("loker.detail")}
                                     </button>
                                 </Link>
                             </div>

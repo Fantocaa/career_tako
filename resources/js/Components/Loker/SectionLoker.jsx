@@ -29,6 +29,7 @@ const SectionLoker = () => {
 
             return {
                 ...data, // Tetap gunakan data asli termasuk `md_loker_id`
+                pekerjaan: translation ? translation.pekerjaan : data.pekerjaan,
                 deskripsi: translation ? translation.deskripsi : data.deskripsi,
                 isi_konten: translation
                     ? translation.isi_konten

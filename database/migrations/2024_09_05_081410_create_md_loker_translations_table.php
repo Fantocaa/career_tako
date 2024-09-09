@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('md_loker_id'); // Foreign key ke tabel md_loker
             $table->string('locale')->index(); // Kolom untuk bahasa
+            $table->text('pekerjaan')->nullable();
             $table->text('isi_konten')->nullable(); // Kolom terjemahan isi_konten
             $table->text('deskripsi')->nullable(); // Kolom terjemahan deskripsi
             $table->foreign('md_loker_id')->references('id')->on('md_loker')->onDelete('cascade');

@@ -487,7 +487,9 @@ class MdLokerController extends Controller
 
         // Validasi
         $request->validate([
-            'pekerjaan' => 'required|string|min:5',
+            'pekerjaan' => 'required|array',
+            'pekerjaan.id' => 'nullable|string',
+            'pekerjaan.en' => 'nullable|string',
             // 'perusahaan' => 'required',
             'jenis_pekerjaan' => 'required',
             // 'deskripsi' => 'required',
@@ -514,7 +516,11 @@ class MdLokerController extends Controller
         ]);
 
         $form = new md_loker();
-        $form->pekerjaan = $request->pekerjaan;
+        // $form->pekerjaan = $request->pekerjaan;
+        $form->translateOrNew('id')->pekerjaan = $request->pekerjaan['id'];
+        $form->translateOrNew('en')->pekerjaan = $request->pekerjaan['en'];
+        $form->translateOrNew('zh')->pekerjaan = $request->pekerjaan['zh'];
+
         // $form->perusahaan = $request->perusahaan;
         $form->jenis_pekerjaan = $request->jenis_pekerjaan;
         // $form->isi_konten = $request->deskripsi;
@@ -554,7 +560,9 @@ class MdLokerController extends Controller
 
         // Validasi
         $request->validate([
-            'pekerjaan' => 'required|string|min:5',
+            'pekerjaan' => 'required|array',
+            'pekerjaan.id' => 'nullable|string',
+            'pekerjaan.en' => 'nullable|string',
             // 'perusahaan' => 'required',
             'jenis_pekerjaan' => 'required',
             // 'deskripsi' => 'required',
@@ -581,7 +589,10 @@ class MdLokerController extends Controller
         ]);
 
         $form = md_loker::find($request->id);
-        $form->pekerjaan = $request->pekerjaan;
+        // $form->pekerjaan = $request->pekerjaan;
+        $form->translateOrNew('id')->pekerjaan = $request->pekerjaan['id'];
+        $form->translateOrNew('en')->pekerjaan = $request->pekerjaan['en'];
+        $form->translateOrNew('zh')->pekerjaan = $request->pekerjaan['zh'];
         // $form->perusahaan = $request->perusahaan;
         $form->jenis_pekerjaan = $request->jenis_pekerjaan;
         // $form->isi_konten = $request->deskripsi;
