@@ -87,18 +87,15 @@
                                 class="rounded-2xl w-full" placeholder="Masukkan Nama Pekerjaan"> --}}
                             <div v-show="selectedLanguage === 'id'">
                                 <input v-model="pekerjaan.id" name="pekerjaan[id]" class="rounded-2xl w-full"
-                                    placeholder="Masukkan Nama Pekerjaan (ID)"
-                                    maxlength="255">{{ $md_loker->translate('id')->pekerjaan ?? '' }}</input>
+                                    placeholder="Masukkan Nama Pekerjaan (ID)" maxlength="255"></input>
                             </div>
                             <div v-show="selectedLanguage === 'en'">
                                 <input v-model="pekerjaan.en" name="pekerjaan[en]" class="rounded-2xl w-full"
-                                    placeholder="Entry Name of Jobs (EN)"
-                                    maxlength="255">{{ $md_loker->translate('en')->pekerjaan ?? '' }}</input>
+                                    placeholder="Entry Name of Jobs (EN)" maxlength="255"></input>
                             </div>
                             <div v-show="selectedLanguage === 'zh'">
                                 <input v-model="pekerjaan.zh" name="pekerjaan[zh]" class="rounded-2xl w-full"
-                                    placeholder="Masukkan Nama Pekerjaan (ZH)"
-                                    maxlength="255">{{ $md_loker->translate('zh')->pekerjaan ?? '' }}</input>
+                                    placeholder="Masukkan Nama Pekerjaan (ZH)" maxlength="255"></input>
                             </div>
                             @error('pekerjaan')
                                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>

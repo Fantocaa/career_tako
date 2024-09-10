@@ -65,14 +65,6 @@ Route::get('/loker/dropcv', function () {
     return Inertia::render('FormEmailCustom');
 });
 
-// Route::get('/loker/dropcvformik', function () {
-//     return Inertia::render('FormEmaill_Formik');
-// });
-
-// Route::get('/loker/dropcvformik1', function () {
-//     return Inertia::render('FormEmaill_Formik copy');
-// });
-
 Route::get('/finish', function () {
     return Inertia::render('Finish');
 })->name('finish');

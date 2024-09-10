@@ -3,12 +3,8 @@ import { useForm } from "react-hook-form";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
 import { Link, router, usePage, Head } from "@inertiajs/react";
-import Select from "react-select";
 import axios from "axios";
 import Layout from "@/Layouts/Layout";
-import ReCAPTCHA from "react-google-recaptcha";
-import LanguageContext from "@/Components/Shared/Homepage/LanguageContext";
-import he from "he";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -53,37 +49,26 @@ const FormEmail = () => {
     const [riwayatPekerjaan, setRiwayatPekerjaan] = useState([{}]);
     const [hasWorkExperience, setHasWorkExperience] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [locale, setLocale] = useState(document.documentElement.lang);
 
-    useEffect(() => {
-        // Panggil API untuk mendapatkan daftar kabupaten/kota saat komponen dimuat
-        fetch("/api/kabupaten")
-            .then((response) => response.json())
-            .then((data) => {
-                // Memformat data kabupaten/kota menjadi format yang diperlukan oleh react-select
-                const formattedOptions = data.map((item) => ({
-                    label: item.nama,
-                    value: item.kode,
-                }));
-                setKabupatenOptions(formattedOptions);
-            })
-            .catch((error) => {
-                console.error("Error fetching kabupaten/kota data:", error);
-            });
-    }, []);
+    const filterFormDataByLocale = (dataArray, locale) => {
+        return dataArray.map((data) => {
+            const translation = data.translations.find(
+                (translation) => translation.locale === locale,
+            );
 
-    // Fungsi yang dipanggil saat memilih kabupaten/kota
-    const handleKabupatenChange = (selectedOption) => {
-        setIsKabupatenSelected(true); // Setel state menjadi true saat kabupaten/kota dipilih
-
-        // Ambil kode kabupaten/kota yang dipilih
-        const kodeKabupaten = selectedOption.value;
-
-        values.kabupaten = selectedOption.label;
+            return {
+                ...md_loker, // Tetap gunakan md_loker asli termasuk `md_loker_id`
+                pekerjaan: translation
+                    ? translation.pekerjaan
+                    : md_loker.pekerjaan,
+            };
+        });
     };
 
     const [values, setValues] = useState({
         // password: "meong",
-        pekerjaan: md_loker[0].pekerjaan,
+        pekerjaan: "",
         jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
         // perusahaan: md_loker[0].perusahaan,
         nama: "",
@@ -114,6 +99,51 @@ const FormEmail = () => {
             },
         ],
     });
+
+    // Pantau perubahan atribut lang dengan MutationObserver
+    useEffect(() => {
+        const observer = new MutationObserver(() => {
+            const newLocale = document.documentElement.lang;
+            setLocale(newLocale);
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true, // Hanya pantau perubahan atribut
+            attributeFilter: ["lang"], // Hanya pantau atribut lang
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    // Filter data form berdasarkan locale
+    const filteredFormData = filterFormDataByLocale(md_loker, locale);
+
+    useEffect(() => {
+        // Panggil API untuk mendapatkan daftar kabupaten/kota saat komponen dimuat
+        fetch("/api/kabupaten")
+            .then((response) => response.json())
+            .then((data) => {
+                // Memformat data kabupaten/kota menjadi format yang diperlukan oleh react-select
+                const formattedOptions = data.map((item) => ({
+                    label: item.nama,
+                    value: item.kode,
+                }));
+                setKabupatenOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error("Error fetching kabupaten/kota data:", error);
+            });
+    }, []);
+
+    // Fungsi yang dipanggil saat memilih kabupaten/kota
+    const handleKabupatenChange = (selectedOption) => {
+        setIsKabupatenSelected(true); // Setel state menjadi true saat kabupaten/kota dipilih
+
+        // Ambil kode kabupaten/kota yang dipilih
+        const kodeKabupaten = selectedOption.value;
+
+        values.kabupaten = selectedOption.label;
+    };
 
     const handleChange = (e, index) => {
         const key = e.target.id;
@@ -301,110 +331,7 @@ const FormEmail = () => {
         capca = value;
     };
 
-    // const { selectedLanguage } = useContext(LanguageContext);
     const { t } = useTranslation(); // Tambahkan ini
-
-    useEffect(() => {
-        const storedLanguage = localStorage.getItem("language");
-        changeLanguage(storedLanguage);
-    }); // kalau pakai [] dijalankan sekali . kalau dihapus dijalankan berkali kali
-
-    useEffect(() => {
-        const storedLanguage = localStorage.getItem(
-            "language",
-            selectedLanguage,
-        );
-        changeLanguage(storedLanguage);
-    }, [selectedLanguage]);
-
-    const translateText = async (text, language) => {
-        let translatedText = localStorage.getItem(
-            `translation-${language}-${text}`,
-        );
-
-        if (language === "id") {
-            return text;
-        } else if (translatedText) {
-            return translatedText;
-        } else {
-            try {
-                const response = await axios.post("/api/translate", {
-                    text: text,
-                    target: language,
-                });
-                translatedText = he.decode(response.data);
-                localStorage.setItem(
-                    `translation-${language}-${text}`,
-                    translatedText,
-                );
-                return translatedText;
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    };
-
-    const [translatedPekerjaan, setTranslatedPekerjaan] = useState("");
-
-    useEffect(() => {
-        (async () => {
-            const result = await translateText(
-                values.pekerjaan,
-                selectedLanguage,
-            );
-            setTranslatedPekerjaan(result);
-        })();
-    }, [values.pekerjaan, selectedLanguage]);
-
-    const changeLanguage = (language) => {
-        // setIsTranslating(true);
-        // console.log(`Changing language to: ${language}`);
-        const elementsToTranslate = document.querySelectorAll(".translate");
-
-        elementsToTranslate.forEach((element, index) => {
-            if (!element.dataset.originalText) {
-                element.dataset.originalText = element.innerText;
-            }
-
-            let translatedText = localStorage.getItem(
-                `translation-${language}-${element.dataset.originalText}`,
-            );
-
-            if (language === "id") {
-                element.innerText = element.dataset.originalText;
-            } else if (translatedText) {
-                element.innerText = translatedText;
-            } else {
-                axios
-                    .post("/api/translate", {
-                        text: element.innerText,
-                        target: language,
-                    })
-                    .then((response) => {
-                        console.log(response.data); // Pastikan respons diterima dengan benar
-                        element.innerText = he.decode(response.data);
-                        localStorage.setItem(
-                            `translation-${language}-${element.dataset.originalText}`,
-                            he.decode(response.data),
-                        );
-                        console.log(
-                            `translate '${element.dataset.originalText}' to '${he.decode(response.data)}'`,
-                        );
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-
-                console.log(
-                    `Translation request sent for '${element.dataset.originalText}'`,
-                );
-            }
-
-            if (index === elementsToTranslate.length - 1) {
-                // setIsTranslating(false);
-            }
-        });
-    };
 
     const today = new Date();
     const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
@@ -435,8 +362,8 @@ const FormEmail = () => {
                         >
                             <FormJobSelected
                                 register={register}
-                                translatedPekerjaan={translatedPekerjaan}
                                 values={values}
+                                filteredFormData={filteredFormData}
                             />
 
                             <FormEmailPersonalData

@@ -3,10 +3,15 @@ import { useTranslation } from "react-i18next";
 
 export default function FormJobSelected({
     register,
-    translatedPekerjaan,
     values,
+    filteredFormData,
 }) {
-    const { t } = useTranslation(); // Tambahkan ini
+    const { t } = useTranslation();
+
+    // Jika filteredFormData tidak kosong, akses elemen pertama dari array
+    const pekerjaan =
+        filteredFormData.length > 0 ? filteredFormData[0].pekerjaan : "";
+
     return (
         <>
             <div className="flex gap-4 flex-wrap">
@@ -19,7 +24,7 @@ export default function FormJobSelected({
                         })}
                         className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
                         disabled
-                        value={translatedPekerjaan}
+                        value={pekerjaan}
                         id="pekerjaan"
                     />
                 </div>

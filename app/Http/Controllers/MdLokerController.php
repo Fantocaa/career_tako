@@ -279,26 +279,16 @@ class MdLokerController extends Controller
 
     public function show_lamar_loker($id)
     {
-
-        $md_loker = DB::table('md_lokers')
-
+        $md_loker = md_loker::with('translations')
             // ->selectRaw('md_lokers.id, md_lokers.pekerjaan, md_lokers.jenis_pekerjaan, md_lokers.batas_lamaran, md_lokers.deskripsi,md_lokers.isi_konten, perusahaans.perusahaan')
-
             // ->join('perusahaans', 'md_lokers.perusahaan', 'perusahaans.id')
-
             ->where('md_lokers.id', '=', $id)
-
             ->whereNull('md_lokers.deleted_at')
-
             ->get();
 
         return Inertia::render('FormEmail', [
-            // return Inertia::render('FormEmaill_Formik', [
             'md_loker' => $md_loker,
         ]);
-        // return Inertia::render('Form', [
-        //     'md_loker' => $md_loker,
-        // ]);
     }
 
     public function show_detail_loker_intern($id)
@@ -322,17 +312,6 @@ class MdLokerController extends Controller
             'md_loker' => $md_loker,
         ]);
     }
-
-    // public function show_detail_loker_pro($id)
-    // {
-    //     // dd();
-    //     $md_loker = md_loker::find($id);
-
-    //     // Menggunakan Inertia::render
-    //     return Inertia::render('DetailLokerPro', [
-    //         'md_loker' => $md_loker,
-    //     ]);
-    // }
 
     public function show_detail_perusahaan_loker($id)
     {
