@@ -61,12 +61,9 @@ export default function FormEmailJob({
             </h1>
             <div className="pt-8 pb-4">
                 <h1 className="text-xl font-semibold text-center pb-2">
-                    Apakah Anda Memiliki Pengalaman Pekerjaan Sebelumnya?
+                    {t("job.mail.title")}
                 </h1>
-                <p className="text-center pb-4">
-                    Baik Anda sudah berpengalaman kerja atau baru memulai
-                    karier, silakan pilih salah satu opsi di bawah ini.
-                </p>
+                <p className="text-center pb-4">{t("job.mail.subtitle")}</p>
 
                 <div className="md:flex gap-8 items-center my-4 mx-auto justify-center">
                     <button
@@ -78,8 +75,9 @@ export default function FormEmailJob({
                         type="button"
                         onClick={() => handleWorkExperienceToggle(true)}
                     >
-                        Saya <span className="font-bold">MEMILIKI</span>{" "}
-                        Pengalaman Kerja
+                        {t("job.mail.i")}{" "}
+                        <span className="font-bold">{t("job.mail.have")}</span>{" "}
+                        {t("job.mail.job")}
                     </button>
                     <button
                         className={`px-4 md:px-8 py-4 md:py-2 rounded-full w-full md:w-fit ${
@@ -90,16 +88,20 @@ export default function FormEmailJob({
                         type="button"
                         onClick={() => handleWorkExperienceToggle(false)}
                     >
-                        Saya <span className="font-bold">TIDAK MEMILIKI</span>{" "}
-                        Pengalaman Kerja
+                        {t("job.mail.i")}{" "}
+                        <span className="font-bold">
+                            {t("job.mail.donthave")}
+                        </span>{" "}
+                        {t("job.mail.job")}
                     </button>
                 </div>
             </div>
             {hasWorkExperience && (
                 <div>
                     <h1 className="text-xl font-semibold text-center pt-8">
-                        Baik, Jika Anda memiliki Pengalaman Kerja sebelumnya,
-                        harap untuk mengisi Formulir berikut :
+                        {/* Baik, Jika Anda memiliki Pengalaman Kerja sebelumnya,
+                        harap untuk mengisi Formulir berikut : */}
+                        {t("job.mail.havejob")}
                     </h1>
                     {workExperiences.map((exp, index) => (
                         <div
