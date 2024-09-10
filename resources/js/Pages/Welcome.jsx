@@ -9,7 +9,7 @@ import BackToTop from "@/Components/BackToTop";
 import Layout from "@/Layouts/Layout";
 import ContentRecruitmentNew from "@/Components/Shared/Homepage/Section/ContentRecruitmentNew";
 import WarnNew from "@/Components/Shared/Homepage/Section/WarnNew";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import "../../css/app.css";
 import { useTranslation } from "react-i18next";
 import { Head } from "@inertiajs/react";

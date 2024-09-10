@@ -1,16 +1,51 @@
 import React, { useState } from "react";
 import "aos/dist/aos.css";
+import { useTranslation } from "react-i18next";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "../../css/app.css";
-import { useTranslation } from "react-i18next";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 const GalleryPage = () => {
-    const [hover, setHover] = useState(false);
     const { t } = useTranslation(); // Tambahkan ini
+    const [open, setOpen] = useState(false); // State untuk Lightbox
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    // Fungsi untuk membuka lightbox di gambar yang dipilih
+    const handleImageClick = (index) => {
+        setCurrentIndex(index);
+        setOpen(true);
+    };
+
+    const images = [
+        {
+            id: 1,
+            src: "/images/photo/DSC08028 (1)_1_11zon.webp",
+        },
+        {
+            id: 2,
+            src: "/images/photo/DSC08059 (1)_4_11zon.webp",
+        },
+        {
+            id: 3,
+            src: "/images/photo/DSC08042 (1)_3_11zon.webp",
+        },
+        {
+            id: 4,
+            src: "/images/photo/DSC08110 (1)_1_11zon.webp",
+        },
+        {
+            id: 5,
+            src: "/images/photo/DSC08141 (1)_5_11zon.webp",
+        },
+        {
+            id: 6,
+            src: "/images/photo/DSC08116 (1)_2_11zon.webp",
+        },
+    ];
 
     return (
-        // <div className="container mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:pt-16 lg:pt-64 pb-16">
         <div className="container max-w-[1440px] mx-auto px-4 md:px-8 xl:px-16 2xl:px-32 md:pt-16 pb-16">
             <div className="pb-8 flex flex-col items-center">
                 <h1
@@ -25,17 +60,7 @@ const GalleryPage = () => {
                     data-aos="fade-up"
                     data-aos-duration="800"
                 >
-                    {/* Kami memiliki tempat kerja yang menyenangkan dan penuh
-                    semangat. Kami bangga dengan budaya kerja kami yang positif
-                    dan produktif. Lihatlah galeri kami untuk mengetahui lebih
-                    lanjut! */}
                     {t("gal.title")}
-                    {/* PT. Tako Anugerah Koporasi adalah perusahaan yang
-                    berkomitmen untuk menciptakan lingkungan dengan kerjasama
-                    tim yang kuat, solutif, inovatif, dan saling percaya. Budaya
-                    kerja tersebut tercermin dalam setiap aspek kehidupan
-                    perusahaan, mulai dari cara kami bekerja hingga cara kami
-                    berinteraksi satu sama lain. */}
                 </p>
                 <h1
                     className="pt-2 md:pt-0 font-bold text-2xl text-center translate"
@@ -43,10 +68,39 @@ const GalleryPage = () => {
                     data-aos-duration="800"
                 >
                     {t("gal.body")}
-                    {/* Cek galeri untuk melihat keseruannya! */}
                 </h1>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-full">
+
+            <>
+                {/* Tampilkan gambar dengan LazyLoadImage */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {images.map((image, index) => (
+                        <div
+                            key={image.id}
+                            onClick={() => handleImageClick(index)}
+                        >
+                            <LazyLoadImage
+                                src={image.src}
+                                className="object-cover w-full cursor-pointer rounded-2xl"
+                                effect="blur"
+                                alt={`image-${index + 1}`}
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Lightbox */}
+                <Lightbox
+                    open={open}
+                    close={() => setOpen(false)} // Tutup Lightbox
+                    index={currentIndex} // Tampilkan gambar yang sesuai dengan index
+                    slides={images.map((image) => ({
+                        src: image.src, // Gunakan src dari array images
+                        alt: `image-${image.id}`,
+                    }))}
+                />
+            </>
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-full">
                 <div
                     className=" overflow-hidden rounded-xl h-full"
                     data-aos="zoom-in"
@@ -146,7 +200,7 @@ const GalleryPage = () => {
                             </form>
                             <LazyLoadImage
                                 src="/images/photo/DSC08059 (1)_4_11zon.webp"
-                                className="object-cover w-full"
+                                className="object-cover w-full h-96"
                                 alt="Galery"
                                 effect="blur"
                             />
@@ -368,7 +422,7 @@ const GalleryPage = () => {
                         </div>
                     </dialog>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

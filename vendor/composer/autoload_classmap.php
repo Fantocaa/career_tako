@@ -55,6 +55,7 @@ return array(
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\form' => $baseDir . '/app/Models/form.php',
     'App\\Models\\md_loker' => $baseDir . '/app/Models/md_loker.php',
+    'App\\Models\\md_lokerTranslation' => $baseDir . '/app/Models/md_lokerTranslation.php',
     'App\\Models\\perusahaan' => $baseDir . '/app/Models/perusahaan.php',
     'App\\Models\\skill' => $baseDir . '/app/Models/skill.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
