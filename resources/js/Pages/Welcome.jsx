@@ -11,7 +11,6 @@ import ContentRecruitmentNew from "@/Components/Shared/Homepage/Section/ContentR
 import WarnNew from "@/Components/Shared/Homepage/Section/WarnNew";
 import { useEffect, useState } from "react";
 import "../../css/app.css";
-import { useTranslation } from "react-i18next";
 import { Head } from "@inertiajs/react";
 
 export default function Welcome() {

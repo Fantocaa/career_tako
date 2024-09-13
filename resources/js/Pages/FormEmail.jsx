@@ -32,7 +32,7 @@ const FormEmail = () => {
         resolver: yupResolver(schema),
     });
 
-    const formRef = useRef(null);
+    // const formRef = useRef(null);
 
     const { props } = usePage();
     const { md_loker } = props;
@@ -68,7 +68,7 @@ const FormEmail = () => {
 
     const [values, setValues] = useState({
         // password: "meong",
-        pekerjaan: "",
+        pekerjaan: md_loker[0].pekerjaan,
         jenis_pekerjaan: md_loker[0].jenis_pekerjaan,
         // perusahaan: md_loker[0].perusahaan,
         nama: "",
@@ -331,7 +331,7 @@ const FormEmail = () => {
         capca = value;
     };
 
-    const { t } = useTranslation(); // Tambahkan ini
+    const { t } = useTranslation();
 
     const today = new Date();
     const dateString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
