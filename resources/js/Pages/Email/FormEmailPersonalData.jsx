@@ -31,7 +31,7 @@ export default function FormEmailPersonalData({
                         className="w-full p-2 border-grey border-opacity-30 rounded"
                         placeholder={t("form.name.ph")}
                         type="text"
-                        value={values.nama}
+                        value={values.nama || ""}
                         id="nama"
                         onChange={handleChange}
                         aria-invalid={errors.nama ? "true" : "false"}
@@ -51,7 +51,7 @@ export default function FormEmailPersonalData({
                         })}
                         className="w-full border-grey border-opacity-30 p-2 rounded"
                         placeholder={t("form.nik.ph")}
-                        value={values.nik}
+                        value={values.nik || ""}
                         id="nik"
                         type="number"
                         onChange={handleChange}
@@ -73,7 +73,7 @@ export default function FormEmailPersonalData({
                         {...register("jenis_kelamin", {
                             required: true,
                         })}
-                        value={values.jenis_kelamin} // Gunakan
+                        value={values.jenis_kelamin || ""}
                         className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
                         placeholder="Pilih Jenis Kelamin Anda"
                         id="jenis_kelamin"
@@ -106,7 +106,7 @@ export default function FormEmailPersonalData({
                         })}
                         className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
                         placeholder={t("form.agama.ph")}
-                        value={values.agama}
+                        value={values.agama || ""}
                         id="agama"
                         onChange={handleChange}
                     >
@@ -137,7 +137,7 @@ export default function FormEmailPersonalData({
                         })}
                         type="date"
                         className="w-full p-2 border-grey border-opacity-30 rounded"
-                        value={values.tanggal_lahir}
+                        value={values.tanggal_lahir || ""}
                         id="tanggal_lahir"
                         onChange={handleChange}
                         max={dateString}
@@ -162,7 +162,7 @@ export default function FormEmailPersonalData({
                         className="w-full p-2 border-grey border-opacity-30 rounded"
                         placeholder={t("form.email.ph")}
                         type="email"
-                        value={values.emails}
+                        value={values.emails || ""}
                         id="emails"
                         onChange={handleChange}
                     />
@@ -185,7 +185,7 @@ export default function FormEmailPersonalData({
                         })}
                         className="w-full p-2 border-grey border-opacity-30 rounded"
                         placeholder={t("form.phone.ph")}
-                        value={values.no_telp}
+                        value={values.no_telp || ""}
                         id="no_telp"
                         type="number"
                         onChange={handleChange}
@@ -202,7 +202,7 @@ export default function FormEmailPersonalData({
                         options={kabupatenOptions}
                         onChange={handleKabupatenChange}
                         value={kabupatenOptions.find(
-                            (option) => option.label === values.kabupaten,
+                            (option) => option.label === values.kabupaten || "",
                         )}
                         id="kabupaten"
                         placeholder={t("form.kabupaten.ph")}
@@ -225,7 +225,7 @@ export default function FormEmailPersonalData({
                     {...register("alamat", { required: true })}
                     className="w-full p-2 border-grey border-opacity-30 rounded"
                     placeholder={t("form.address.ph")}
-                    value={values.alamat}
+                    value={values.alamat || ""}
                     id="alamat"
                     onChange={handleChange}
                 />

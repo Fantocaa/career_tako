@@ -24,7 +24,7 @@ export default function FormEmailFile({
                             type="file"
                             accept=".pdf" // Batasi hanya menerima file PDF
                             className="w-52 border-grey border-opacity-30 rounded"
-                            value={values.file}
+                            value={values.file || ""}
                             id="file"
                             onChange={handleChange}
                         />

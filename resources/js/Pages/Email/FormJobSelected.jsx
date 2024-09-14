@@ -24,7 +24,7 @@ export default function FormJobSelected({
                         })}
                         className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
                         disabled
-                        value={pekerjaan}
+                        value={pekerjaan || ""}
                         id="pekerjaan"
                     />
                 </div>
@@ -38,7 +38,7 @@ export default function FormJobSelected({
                         })}
                         className="w-full border-grey border-opacity-30 p-2 rounded text-DarkTako text-opacity-50 bg-grey bg-opacity-10"
                         disabled
-                        value={values.jenis_pekerjaan}
+                        value={values.jenis_pekerjaan || ""}
                         id="program"
                     />
                 </div>

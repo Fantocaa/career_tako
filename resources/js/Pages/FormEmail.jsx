@@ -32,7 +32,14 @@ const FormEmail = () => {
         resolver: yupResolver(schema),
     });
 
-    // const formRef = useRef(null);
+    const formRef = useRef(null);
+
+    // Mencegah pengiriman formulir secara otomatis ketika "Enter" ditekan
+    const handleKeyPress = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    };
 
     const { props } = usePage();
     const { md_loker } = props;
@@ -354,16 +361,18 @@ const FormEmail = () => {
                         <form
                             onSubmit={onSubmit}
                             // onSubmit={handleSubmit(onSubmit)}
-                            // ref={formRef}
+                            ref={formRef}
                             className="items-center space-y-4 w-full px-4 mx-auto pb-8"
                             // action="/submit_loker"
                             method="post"
                             encType="multipart/form-data"
+                            onKeyDown={handleKeyPress}
                         >
                             <FormJobSelected
                                 register={register}
                                 values={values}
                                 filteredFormData={filteredFormData}
+                                // onKeyPress={handleKeyPress}
                             />
 
                             <FormEmailPersonalData
@@ -374,6 +383,7 @@ const FormEmail = () => {
                                 dateString={dateString}
                                 kabupatenOptions={kabupatenOptions}
                                 handleKabupatenChange={handleKabupatenChange}
+                                // onKeyPress={handleKeyPress}
                             />
 
                             <FormEmailStudy
@@ -382,6 +392,7 @@ const FormEmail = () => {
                                 values={values}
                                 handleChange={handleChange}
                                 monthString={monthString}
+                                // onKeyPress={handleKeyPress}
                             />
 
                             <FormEmailJob
@@ -393,6 +404,7 @@ const FormEmail = () => {
                                 monthString={monthString}
                                 hasWorkExperience={hasWorkExperience}
                                 setHasWorkExperience={setHasWorkExperience}
+                                // onKeyPress={handleKeyPress}
                             />
                             {/* File PDF*/}
                             <FormEmailFile
@@ -401,6 +413,7 @@ const FormEmail = () => {
                                 values={values}
                                 handleChange={handleChange}
                                 onChangeCaptcha={onChangeCaptcha}
+                                // onKeyPress={handleKeyPress}
                             />
                             {/* Submit */}
                             <div className="w-full bg-BlueTako rounded-xl text-white text-center hover:bg-BlueTako hover:bg-opacity-90 transition-all">
@@ -409,11 +422,19 @@ const FormEmail = () => {
                                         Loading
                                     </span>
                                 ) : (
-                                    <input
+                                    // <input
+                                    //     type="submit"
+                                    //     className="w-full py-3 cursor-pointer text-white"
+                                    //     value={t("form.submit")}
+                                    // />
+
+                                    <button
                                         type="submit"
                                         className="w-full py-3 cursor-pointer text-white"
-                                        value={t("form.submit")}
-                                    />
+                                        // value={t("form.submit")}
+                                    >
+                                        {t("form.submit")}
+                                    </button>
                                 )}
                             </div>
                         </form>

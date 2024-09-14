@@ -27,7 +27,7 @@ export default function FormEmailStudy({
                         })}
                         className="w-full p-2 border-grey border-opacity-30 rounded cursor-pointer"
                         placeholder={t("form.edu.ph")}
-                        value={values.pendidikan}
+                        value={values.pendidikan || ""}
                         id="pendidikan"
                         onChange={handleChange}
                     >
@@ -60,7 +60,7 @@ export default function FormEmailStudy({
                         className="w-full p-2 border-grey border-opacity-30 rounded"
                         placeholder={t("form.school.ph")}
                         type="text"
-                        value={values.instansi}
+                        value={values.instansi || ""}
                         id="instansi"
                         onChange={handleChange}
                     />
@@ -83,7 +83,7 @@ export default function FormEmailStudy({
                         className="w-full p-2 border-grey border-opacity-30 rounded"
                         placeholder={t("form.major.ph")}
                         type="text"
-                        value={values.prodi}
+                        value={values.prodi || ""}
                         id="prodi"
                         onChange={handleChange}
                     />
@@ -107,7 +107,7 @@ export default function FormEmailStudy({
                             className="w-full p-2 border-grey border-opacity-30 rounded"
                             placeholder={t("form.year.1.ph")}
                             type="month"
-                            value={values.thn_in}
+                            value={values.thn_in || ""}
                             id="thn_in"
                             onChange={handleChange}
                             max={monthString}
@@ -130,7 +130,7 @@ export default function FormEmailStudy({
                             className="w-full p-2 border-grey border-opacity-30 rounded"
                             placeholder={t("form.year.2.ph")}
                             type="month"
-                            value={values.thn_out}
+                            value={values.thn_out || ""}
                             id="thn_out"
                             onChange={handleChange}
                             max={monthString}
