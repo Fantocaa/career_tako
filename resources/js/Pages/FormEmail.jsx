@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import Footer from "@/Components/Shared/Footer";
 import NavElse from "@/Components/Shared/Else/NavElse";
-import { Link, router, usePage, Head } from "@inertiajs/react";
+import { router, usePage, Head } from "@inertiajs/react";
 import axios from "axios";
 import Layout from "@/Layouts/Layout";
 import { useTranslation } from "react-i18next";
@@ -299,12 +299,12 @@ const FormEmail = () => {
                             setTimeout(() => {
                                 // The request was made and the server responded with a status code
                                 // that falls out of the range of 2xx
-                                console.log(error.response.data);
-                                console.log(error.response.status);
-                                console.log(error.response.headers);
-                                alert(error.response.data.message); // Tampilkan pesan error dari backend
+                                // console.log(error.response.data);
+                                // console.log(error.response.status);
+                                // console.log(error.response.headers);
+                                // alert(error.response.data.message); // Tampilkan pesan error dari backend
                                 setIsLoading(false);
-                            }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
+                            }, 500); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
                         } else if (error.request) {
                             // The request was made but no response was received
                             console.log(error.request);
@@ -322,7 +322,7 @@ const FormEmail = () => {
                 // Setelah operasi selesai, tampilkan kembali tombol dan sembunyikan elemen loading
                 alert("3.");
                 setIsLoading(false);
-            }, 1000); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
+            }, 500); // Ganti 2000 dengan waktu yang sesuai dengan kebutuhan Anda
         }
     }
 

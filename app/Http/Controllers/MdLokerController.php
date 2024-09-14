@@ -403,7 +403,10 @@ class MdLokerController extends Controller
 
             // Inisialisasi array untuk riwayat pekerjaan
             $data['riwayat'] = [];
-            if ($request->has('riwayat')) {
+            // if ($request->has('riwayat')) {
+
+            // Jika pengguna memiliki riwayat pekerjaan
+            if ($request->has('hasWorkExperience') && $request->hasWorkExperience && $request->has('riwayat')) {
                 foreach ($request->riwayat as $index => $riwayat) {
                     $data['riwayat'][] = [
                         'riwayat_nama_perusahaan' => $riwayat['riwayat_nama_perusahaan'],
